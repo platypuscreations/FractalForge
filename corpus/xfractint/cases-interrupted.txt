@@ -1,0 +1,14 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+# One interrupted interactive XFractint render per line:
+#   <name> <seconds before pressing "s"> <xfractint parameters...>
+# Slow deep views are used so the save lands mid-render. Timing is not
+# deterministic (especially under emulation): keep whatever was saved and
+# record it; never regenerate a committed file.
+int-pass1-early 6  type=mandel maxiter=20000 corners=-0.75/-0.74/0.10/0.11 passes=1
+int-pass1-late  20 type=mandel maxiter=20000 corners=-0.75/-0.74/0.10/0.11 passes=1
+int-pass2       10 type=mandel maxiter=20000 corners=-0.75/-0.74/0.10/0.11 passes=2
+int-passg       10 type=mandel maxiter=20000 corners=-0.75/-0.74/0.10/0.11 passes=g
+int-passb       10 type=mandel maxiter=20000 corners=-0.75/-0.74/0.10/0.11 passes=b inside=1
+int-float       10 type=mandel maxiter=20000 corners=-0.75/-0.74/0.10/0.11 passes=1 float=yes
+int-julia       10 type=julia maxiter=20000 params=-0.8/0.156 passes=1

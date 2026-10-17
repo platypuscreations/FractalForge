@@ -1,0 +1,23 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+# One completed XFractint batch render per line: <name> <xfractint parameters...>
+# Each case changes one thing from the baseline so block bytes can be diffed.
+mandel-base         type=mandel maxiter=150
+mandel-maxiter-1000 type=mandel maxiter=1000
+mandel-maxiter-255  type=mandel maxiter=255
+mandel-corners      type=mandel maxiter=150 corners=-0.75/-0.70/0.10/0.14
+mandel-centermag    type=mandel maxiter=150 center-mag=-0.745/0.113/50
+mandel-float        type=mandel maxiter=150 float=yes
+mandel-pass1        type=mandel maxiter=150 passes=1
+mandel-pass2        type=mandel maxiter=150 passes=2
+mandel-passg        type=mandel maxiter=150 passes=g
+mandel-passb        type=mandel maxiter=150 passes=b
+mandel-inside-0     type=mandel maxiter=150 inside=0
+mandel-inside-bof60 type=mandel maxiter=150 inside=bof60
+mandel-outside-real type=mandel maxiter=150 outside=real
+mandel-bailout-100  type=mandel maxiter=150 bailout=100
+mandel-biomorph     type=mandel maxiter=150 biomorph=0
+mandel-decomp-2     type=mandel maxiter=150 decomp=2
+mandel-periodicity0 type=mandel maxiter=150 periodicity=0
+julia-base          type=julia maxiter=150
+julia-params        type=julia maxiter=150 params=-0.8/0.156
