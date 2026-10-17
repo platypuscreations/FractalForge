@@ -1,0 +1,1 @@
+Boundary tracing cannot be used with inside=0 or outside=0
