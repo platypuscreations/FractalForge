@@ -1,0 +1,5 @@
+
+Error(32) at line 2:  Negative exponent must be enclosed in parens
+  c=pixel^-1
+          ^
+

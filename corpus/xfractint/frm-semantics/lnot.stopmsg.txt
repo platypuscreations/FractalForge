@@ -1,0 +1,5 @@
+
+Error(4) at line 4:  Undefined Operator
+  !(real(z)<0)
+  ^
+
