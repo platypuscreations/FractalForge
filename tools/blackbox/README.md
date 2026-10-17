@@ -16,6 +16,8 @@ docker run --rm -v "$PWD/out:/work" --entrypoint run-interrupt \
 
 - `run-batch` (the default entrypoint) adds `batch=yes` and passes the
   remaining arguments to XFractint.
+- `inputs/` holds formula, L-system, IFS and map files we wrote ourselves.
+  `gen-corpus.sh` copies them into each case's work directory.
 - `run-interrupt DELAY ...` starts an interactive render, presses **s** after
   DELAY seconds and keeps the partial save.
 
