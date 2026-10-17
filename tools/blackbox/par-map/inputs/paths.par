@@ -1,0 +1,14 @@
+; SPDX-License-Identifier: GPL-3.0-or-later
+; file-name resolution probes
+maprel {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=ff.map
+}
+colorsrel {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 colors=@ff.map
+}
+frmabs {
+  type=formula formulafile=/work/ff.frm formulaname=ffcube maxiter=200
+}
+frmnameonly {
+  type=formula formulaname=ffcube maxiter=200
+}

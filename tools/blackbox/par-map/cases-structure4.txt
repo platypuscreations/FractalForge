@@ -1,0 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Which side of the entry-name length limit crashes.
+s4-req-long-absent  @len2.par/abcdefghijklmnopqrstuvwxyz viewwindows=2
+s4-req-long-present @len2.par/n123456789012345678901234 viewwindows=2
+s4-req-18-prefix    @len2.par/n12345678901234567 viewwindows=2

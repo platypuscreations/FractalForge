@@ -1,0 +1,6 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# reset= probes (inputs/reset.par).
+r-resetmid  @reset.par/resetmid viewwindows=2
+r-reset1700 map=ff.map @reset.par/reset1700 viewwindows=2
+r-reset2004 @reset.par/reset2004 viewwindows=2
+r-resetbad  @reset.par/resetbad viewwindows=2

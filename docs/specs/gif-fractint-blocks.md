@@ -2,6 +2,12 @@
 
 # Fractint-format GIF extension blocks
 
+> **Superseded in part.** The resume data (§4), the §5.4 recipe and the
+> "resume" rows of §8 are corrected by [fractint-resume.md](fractint-resume.md)
+> (its §9): loading with `filename=` and pressing Enter recalculates from
+> scratch, and `fractint002` is a work list. Colour notes in §9 are refined
+> by [types.md](types.md) and [coloring.md](coloring.md).
+
 Status: **Phase 1 draft, derived from black-box analysis only.** Every field
 below is justified by bytes of files that XFractint saved, or by how XFractint
 behaved when it loaded files we made. No Fractint, XFractint or Iterated
@@ -745,25 +751,31 @@ Added by the implementer, not part of the black-box analysis. Code:
   type numbers are recognised but not rendered.
 - **Write:** §5.2 on top of the Appendix A baseline, with the seed and time
   zeroed and 70/72 set to the image size. Finished renders get status 4 and
-  their pass mode. Unfinished renders get the §5.4 "calculate from the start"
-  `fractint002` block and pass mode `1`; resuming Fractint-style partial
-  progress isn't implemented yet. Our `FRCTFRGE` block goes after the image,
+  their pass mode. Unfinished renders get a one-item `fractint002` work list
+  starting at our first unfinished pixel, pass mode `1`, no mirroring
+  (fractint-resume.md §6.2). Our `FRCTFRGE` block goes after the image,
   before the Fractint blocks.
-- **Iteration and colour conventions** adopted to match §9:
-  the start point isn't tested, escape counts n run 1..=maxiter, and colour
-  = (n − 1) mod 256, drawn as 1 where that is 0. Inside is colour 0.
+- **Resume reading:** fractint-resume.md §4 decides which pixels of an
+  unfinished Fractint image are final; FractalForge keeps those and computes
+  the rest in one pass.
+- **Iteration and colour conventions:** see types.md §1.2 and coloring.md
+  §3 (they supersede §9 here; "n mod 256" was wrong above 255).
 
 Interop results (`tools/blackbox/interop.sh`, `crates/formats/tests/fractint_interop.rs`):
 
-- Our main block equals XFractint's for the same settings, except the seed,
-  the time, and bailout (we write 4 where XFractint writes 0 for "default").
+- Our main block equals XFractint's for the same settings, except the seed
+  and the time.
 - XFractint batch-reloads a GIF we wrote with the right parameters and every
   colour unchanged. It tolerates our `FRCTFRGE` block (and drops it on
   re-save). When re-saving, XFractint merges palette entries that are equal
   at 6 bits, so palette *indices* can change while colours don't.
-- XFractint calculating an unfinished GIF of ours from our blocks matches our
-  own render in 99.47% of pixels.
+- XFractint loading an unfinished GIF of ours with `filename=` recalculates
+  it from our parameter block (it doesn't resume, fractint-resume.md §5.1)
+  and matches our own render in all but 65 of 480,000 pixels.
+- XFractint loading an unfinished GIF of ours with its `r` command resumes
+  from our work list: finished pixels (including a marker row) are kept and
+  the rest match our own render in all but 46 of 115,600 pixels.
 - Rendering corpus parameters with FractalForge matches XFractint's pixels in
-  99.4–99.8% of pixels. The rest are near the set boundary, mostly pixels
-  where XFractint's count is 16 lower (or occasionally 1 higher) than ours.
-  The cause is unknown and is a good next black-box question.
+  99.9% or more once palette entries with equal colours are treated as
+  equal: XFractint's saver stores the first index of each colour (types.md
+  §1.3), which explained the earlier "16 lower" pixels.

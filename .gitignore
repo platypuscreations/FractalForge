@@ -2,3 +2,4 @@
 .DS_Store
 # Black-box work area; only curated files are copied into corpus/.
 /tools/blackbox/out/
+__pycache__/

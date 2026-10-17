@@ -1,0 +1,13 @@
+; SPDX-License-Identifier: GPL-3.0-or-later
+split510 {
+  type=julia params=-0.8/0.156 corners=-1.5/1.5/-1.125/1.125 maxiter=200                                                                                                                                                                                                                                                                                                                                                                                                                                                       maxiter=100
+}
+split511 {
+  type=julia params=-0.8/0.156 corners=-1.5/1.5/-1.125/1.125 maxiter=200                                                                                                                                                                                                                                                                                                                                                                                                                                                        maxiter=100
+}
+split512 {
+  type=julia params=-0.8/0.156 corners=-1.5/1.5/-1.125/1.125 maxiter=200                                                                                                                                                                                                                                                                                                                                                                                                                                                         maxiter=100
+}
+split513 {
+  type=julia params=-0.8/0.156 corners=-1.5/1.5/-1.125/1.125 maxiter=200                                                                                                                                                                                                                                                                                                                                                                                                                                                          maxiter=100
+}

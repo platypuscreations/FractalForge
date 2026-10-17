@@ -1,0 +1,31 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+B ref-MO-1 MO passes=1
+B ref-JB-1 JB passes=1
+B ref-JB-2 JB passes=2
+B ref-MO-2 MO passes=2
+I i-MO-1-12 12 MO passes=1
+I i-JB-1-12 12 JB passes=1
+I i-MO-2-12 12 MO passes=2
+I i-JB-2-12 12 JB passes=2
+I i-MO-1-20 20 MO passes=1
+I i-JB-1-20 20 JB passes=1
+I i-MO-2-20 20 MO passes=2
+I i-JB-2-20 20 JB passes=2
+I i-MO-1-30 30 MO passes=1
+I i-JB-1-30 30 JB passes=1
+I i-MO-2-30 30 MO passes=2
+I i-JB-2-30 30 JB passes=2
+L rr-MS-1-12 out/i-MS-1-12.gif 10 15
+L rr-MS-2-12 out/i-MS-2-12.gif 10 15
+L rr-MSG-g-10 out/i-MSG-g-10.gif 10 12
+L rr-MN-1-12 out/i-MN-1-12.gif 10 15
+L m-M1 craft2/M1.gif 10 170
+L m-M2 craft2/M2.gif 10 170
+L m-M3 craft2/M3.gif 10 170
+L m-M3b craft2/M3b.gif 10 170
+L m-M4 craft2/M4.gif 10 170
+L m-M5 craft2/M5.gif 10 170
+L m-M6 craft2/M6.gif 10 170
+L m-M7 craft2/M7.gif 10 170
+L m-M8 craft2/M8.gif 10 170
+L m-M9 craft2/M9.gif 10 170

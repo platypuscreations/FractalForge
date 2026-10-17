@@ -47,20 +47,125 @@ impl Window {
     }
 }
 
-/// Colour used for points that never escape.
+/// Colour used for points that never escape. All but `Color` and
+/// `MaxIter` follow docs/specs/coloring.md §6 and need orbit colouring.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Inside {
     /// A fixed palette index.
     Color(u8),
-    /// The colour an outside point would get at the maximum iteration count.
+    /// The colour of the maximum iteration count.
     MaxIter,
+    /// By the magnitude of the last iterate.
+    ZMag,
+    /// By how close the orbit came to the origin.
+    Bof60,
+    /// By when the orbit came closest to the origin.
+    Bof61,
+    /// By the angle of the last iterate.
+    Atan,
+    /// By the last iterate close to the origin.
+    Fmod,
+    /// Marks orbits that come close to an axis (also recolours outside).
+    EpsCross,
 }
 
-/// Colouring for points that escape.
+/// Colouring for points that escape (docs/specs/coloring.md §5).
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Outside {
-    /// Colour by escape iteration count.
+    /// By escape count.
     Iter,
+    /// A fixed palette index.
+    Color(u8),
+    /// Escape count plus the real part of the final value.
+    Real,
+    /// Escape count plus the imaginary part of the final value.
+    Imag,
+    /// Escape count times the final value's real/imaginary ratio.
+    Mult,
+    /// Escape count plus the final value's real and imaginary parts.
+    Summ,
+    /// By the angle of the final value.
+    Atan,
+    /// By the last iterate close to the origin.
+    Fmod,
+    /// By the length of the orbit's path.
+    Tdis,
+}
+
+impl Inside {
+    pub const ALL: [Inside; 8] = [
+        Inside::Color(0),
+        Inside::MaxIter,
+        Inside::ZMag,
+        Inside::Bof60,
+        Inside::Bof61,
+        Inside::Atan,
+        Inside::Fmod,
+        Inside::EpsCross,
+    ];
+
+    pub fn name(self) -> &'static str {
+        match self {
+            Inside::Color(_) => "colour",
+            Inside::MaxIter => "maxiter",
+            Inside::ZMag => "zmag",
+            Inside::Bof60 => "bof60",
+            Inside::Bof61 => "bof61",
+            Inside::Atan => "atan",
+            Inside::Fmod => "fmod",
+            Inside::EpsCross => "epscross",
+        }
+    }
+
+    /// Parses a mode name or a palette index (wrapped as Fractint does).
+    pub fn parse(s: &str) -> Option<Self> {
+        if let Ok(n) = s.parse::<u32>() {
+            return Some(Inside::Color(crate::color::wrap(n) as u8));
+        }
+        Self::ALL[1..]
+            .iter()
+            .copied()
+            .find(|m| m.name().eq_ignore_ascii_case(s))
+    }
+}
+
+impl Outside {
+    pub const ALL: [Outside; 9] = [
+        Outside::Iter,
+        Outside::Color(0),
+        Outside::Real,
+        Outside::Imag,
+        Outside::Mult,
+        Outside::Summ,
+        Outside::Atan,
+        Outside::Fmod,
+        Outside::Tdis,
+    ];
+
+    pub fn name(self) -> &'static str {
+        match self {
+            Outside::Iter => "iter",
+            Outside::Color(_) => "colour",
+            Outside::Real => "real",
+            Outside::Imag => "imag",
+            Outside::Mult => "mult",
+            Outside::Summ => "summ",
+            Outside::Atan => "atan",
+            Outside::Fmod => "fmod",
+            Outside::Tdis => "tdis",
+        }
+    }
+
+    /// Parses a mode name or a palette index 0..=255.
+    pub fn parse(s: &str) -> Option<Self> {
+        if let Ok(n) = s.parse::<u8>() {
+            return Some(Outside::Color(n));
+        }
+        Self::ALL
+            .iter()
+            .copied()
+            .find(|m| m.name().eq_ignore_ascii_case(s) && *m != Outside::Color(0))
+    }
 }
 
 /// Highest allowed iteration limit. Larger values collide with the buffer's
@@ -78,6 +183,14 @@ pub struct Params {
     pub bailout: f64,
     pub inside: Inside,
     pub outside: Outside,
+    /// Decomposition: colour outside points by the angle of the final value
+    /// in this many sectors (rounded as in coloring.md §7); 0 = off.
+    pub decomp: u32,
+    /// Biomorph: outside points near an axis get this colour value.
+    pub biomorph: Option<u32>,
+    /// Copy mirrored pixels where the type is symmetric (the usual
+    /// setting). Off computes every pixel; off-centre views then differ.
+    pub use_symmetry: bool,
 }
 
 impl Params {
@@ -88,9 +201,12 @@ impl Params {
             window: fractal.default_window,
             params: fractal.default_params,
             max_iter: 150,
-            bailout: 4.0,
+            bailout: fractal.default_bailout,
             inside: Inside::Color(0),
             outside: Outside::Iter,
+            decomp: 0,
+            biomorph: None,
+            use_symmetry: true,
         }
     }
 
@@ -99,7 +215,41 @@ impl Params {
         types::lookup(name).map(Self::new)
     }
 
+    /// Whether any colouring option needs per-orbit statistics.
+    pub fn needs_orbit_coloring(&self) -> bool {
+        !matches!(self.inside, Inside::Color(_) | Inside::MaxIter)
+            || self.outside != Outside::Iter
+            || self.decomp != 0
+            || self.biomorph.is_some()
+    }
+
+    /// Colouring options with which Fractint-format renderers compute every
+    /// pixel instead of copying mirrored ones (coloring.md §13).
+    pub fn coloring_breaks_symmetry(&self) -> bool {
+        self.decomp != 0
+            || matches!(
+                self.outside,
+                Outside::Imag | Outside::Summ | Outside::Mult | Outside::Tdis
+            )
+    }
+
+    /// The bailout used when none is chosen: the type's, or 100 with
+    /// biomorph (coloring.md §8).
+    pub fn default_bailout(&self) -> f64 {
+        if self.biomorph.is_some() {
+            100.0
+        } else {
+            self.fractal.default_bailout
+        }
+    }
+
     pub fn validate(&self) -> Result<(), String> {
+        if self.needs_orbit_coloring() && !self.fractal.orbit_coloring {
+            return Err(format!(
+                "type {} supports only the default inside and outside colouring",
+                self.fractal.name
+            ));
+        }
         if !self.window.is_valid() {
             return Err(format!("invalid window {:?}", self.window));
         }

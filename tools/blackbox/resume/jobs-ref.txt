@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+B ref-MS-1 MS passes=1
+B ref-MS-2 MS passes=2
+B ref-MS-g MS passes=g
+B ref-MN-1 MN passes=1
+B ref-MN-2 MN passes=2
+B ref-MN-g MN passes=g
+B ref-J-1 J passes=1
+B ref-J-2 J passes=2
+B ref-J-g J passes=g

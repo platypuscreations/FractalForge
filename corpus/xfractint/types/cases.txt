@@ -1,0 +1,78 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+# Fractal-type evidence (docs/specs/types.md). One case per line: NAME ARGS.
+# Each file NAME.gif was made by tools/blackbox/types/render.sh, i.e. by
+#   xfractint batch=yes passes=1 periodicity=0 viewwindows=2 ARGS savename=ff.gif
+# (400x300 image). Regenerate with: tools/blackbox/types/gen.sh OUTDIR
+lambda-def type=lambda
+lambda-p type=lambda params=1.2/0.3
+mandellambda-def type=mandellambda
+mandellambda-p type=mandellambda params=0.1/0.2
+mandel4-def type=mandel4
+mandel4-p type=mandel4 params=0.2/0.1
+julia4-def type=julia4
+julia4-p type=julia4 params=0.4/0.3
+manowar-def type=manowar
+manowar-p type=manowar params=0.1/0.1
+manowarj-def type=manowarj
+manowarj-p type=manowarj params=0.2/0.3
+barnsleym1-def type=barnsleym1
+barnsleym1-p type=barnsleym1 params=0.2/0.1
+barnsleyj1-def type=barnsleyj1
+barnsleyj1-pa type=barnsleyj1 params=1.1/0.6
+spider-def type=spider
+spider-p type=spider params=0.1/0.1
+magnet1m-def type=magnet1m
+magnet1m-p type=magnet1m params=0.3/0.2
+magnet1j-def type=magnet1j
+magnet1j-p type=magnet1j params=1.5/0.5
+newton-def type=newton
+newton-p5 type=newton params=5
+newtbasin-def type=newtbasin
+newtbasin-p5 type=newtbasin params=5
+newtbasin-p5-1 type=newtbasin params=5/1
+phoenix-def type=phoenix
+phoenix-p type=phoenix params=0.3/0.2
+phoenix-p3d3 type=phoenix params=0.56667/-0.5/3
+mandphoenix-def type=mandphoenix
+mandphoenix-p type=mandphoenix params=0.1/0.1
+mandphoenix-p3d3 type=mandphoenix params=0/0/3
+mandel4-off type=mandel4 corners=-2/2/-1/1.5
+mandel4-offnosym type=mandel4 corners=-2/2/-1/1.5 symmetry=none
+mandel4-w2 type=mandel4 corners=-2/2/-1.5/1.0
+mandel4-w2n type=mandel4 corners=-2/2/-1.5/1.0 symmetry=none
+newtbasin-off type=newtbasin corners=-1.5/2/-1/1.5
+newtbasin-offnosym type=newtbasin corners=-1.5/2/-1/1.5 symmetry=none
+julia4-off type=julia4 corners=-1.5/2/-1/1.5
+julia4-offnosym type=julia4 corners=-1.5/2/-1/1.5 symmetry=none
+barnsleym1-xy-s type=barnsleym1 corners=-1.2/2/-1.2/1.5
+barnsleym1-xy-sn type=barnsleym1 corners=-1.2/2/-1.2/1.5 symmetry=none
+magnet1j-pr-s type=magnet1j params=1.5/0 corners=-8/8/-4/6
+magnet1j-pr-sn type=magnet1j params=1.5/0 corners=-8/8/-4/6 symmetry=none
+magnet1m-pr-s type=magnet1m params=0.3/0 corners=-4/4/-2/3
+magnet1m-pr-sn type=magnet1m params=0.3/0 corners=-4/4/-2/3 symmetry=none
+lambda-mi300 type=lambda maxiter=300
+newton-mi20 type=newton maxiter=20
+magnet1m-bo10 type=magnet1m bailout=10
+newton-bo100 type=newton bailout=100
+newton-p2 type=newton params=2
+newton-p8 type=newton params=8
+lambda-bo100 type=lambda bailout=100
+manowar-bo16 type=manowar bailout=16
+magnet1j-bo1000 type=magnet1j bailout=1000
+barnsleyj1-o-s type=barnsleyj1 corners=-1.2/2/-1.2/1.5
+barnsleyj1-o-sn type=barnsleyj1 corners=-1.2/2/-1.2/1.5 symmetry=none
+mandellambda-v-s type=mandellambda corners=-2/5/-3/3
+mandellambda-v-sn type=mandellambda corners=-2/5/-3/3 symmetry=none
+lambda-w1 type=lambda corners=-1/2/-1/1.5
+lambda-w1n type=lambda corners=-1/2/-1/1.5 symmetry=none
+manowarj-off type=manowarj corners=-2.5/1.5/-1/1.5
+manowarj-offnosym type=manowarj corners=-2.5/1.5/-1/1.5 symmetry=none
+mandel4-w1 type=mandel4 corners=-2/2/-1.2/1.5
+mandel4-w1n type=mandel4 corners=-2/2/-1.2/1.5 symmetry=none
+mandel4-w3 type=mandel4 corners=-2/2/-0.2/1.5
+mandel4-w3n type=mandel4 corners=-2/2/-0.2/1.5 symmetry=none
+mandel4-w4 type=mandel4 corners=-2/2/-0.6/1.5
+mandel4-w4n type=mandel4 corners=-2/2/-0.6/1.5 symmetry=none
+mandel4-w5 type=mandel4 corners=-2/2/0.1/1.5
+mandel4-w5n type=mandel4 corners=-2/2/0.1/1.5 symmetry=none

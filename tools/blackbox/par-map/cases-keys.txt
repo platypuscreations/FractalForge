@@ -1,0 +1,36 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Same settings from a .par entry (k-*) and from the command line (kc-*).
+k-c256 @keys.par/c256 viewwindows=2
+k-c257 @keys.par/c257 viewwindows=2
+k-c256run @keys.par/c256run viewwindows=2
+k-cmagrs @keys.par/cmagrs viewwindows=2
+k-cmagxr @keys.par/cmagxr viewwindows=2
+k-cmagneg @keys.par/cmagneg viewwindows=2
+k-periodicity @keys.par/k-periodicity viewwindows=2
+kc-periodicity type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 periodicity=0 viewwindows=2
+k-biomorph @keys.par/k-biomorph viewwindows=2
+kc-biomorph type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 biomorph=5 viewwindows=2
+k-decomp @keys.par/k-decomp viewwindows=2
+kc-decomp type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 decomp=4 viewwindows=2
+k-potential @keys.par/k-potential viewwindows=2
+kc-potential type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 potential=255/820/200 viewwindows=2
+k-invert @keys.par/k-invert viewwindows=2
+kc-invert type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 invert=1/0.5/0.25 viewwindows=2
+k-fillcolor @keys.par/k-fillcolor viewwindows=2
+kc-fillcolor type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 fillcolor=5 passes=b viewwindows=2
+k-bailout @keys.par/k-bailout viewwindows=2
+kc-bailout type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 bailout=100 bailoutest=real viewwindows=2
+k-passes @keys.par/k-passes viewwindows=2
+kc-passes type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 passes=1 viewwindows=2
+k-inout @keys.par/k-inout viewwindows=2
+kc-inout type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 inside=bof60 outside=summ viewwindows=2
+k-function @keys.par/k-function viewwindows=2
+kc-function type=fn*fn function=cos/sinh maxiter=200 viewwindows=2
+k-formula @keys.par/k-formula viewwindows=2
+kc-formula type=formula formulafile=ff.frm formulaname=ffcube maxiter=200 viewwindows=2
+k-logmap @keys.par/k-logmap viewwindows=2
+kc-logmap type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 logmap=7 viewwindows=2
+k-symmetry @keys.par/k-symmetry viewwindows=2
+kc-symmetry type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 symmetry=none viewwindows=2
+k-float @keys.par/k-float viewwindows=2
+kc-float type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 float=yes viewwindows=2

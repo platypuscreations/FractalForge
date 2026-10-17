@@ -1,0 +1,165 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+# Colouring cases: <name> <xfractint parameters...>
+# render.sh adds: passes=1 periodicity=0 viewwindows=2 map=uniq.map savename=ff.gif
+# Views: default (-2.5..1.5 x -1.5..1.5); Z = corners=-0.80/-0.70/0.05/0.15
+m-iter          type=mandel maxiter=150
+m-in-7          type=mandel maxiter=150 inside=7
+m-in-maxiter    type=mandel maxiter=150 inside=maxiter
+m-in-zmag       type=mandel maxiter=150 inside=zmag
+m-in-bof60      type=mandel maxiter=150 inside=bof60
+m-in-bof61      type=mandel maxiter=150 inside=bof61
+m-in-period     type=mandel maxiter=150 inside=period
+m-in-atan       type=mandel maxiter=150 inside=atan
+m-in-epscross   type=mandel maxiter=150 inside=epscross
+m-in-startrail  type=mandel maxiter=150 inside=startrail
+m-in-fmod       type=mandel maxiter=150 inside=fmod
+m-out-real      type=mandel maxiter=150 outside=real
+m-out-imag      type=mandel maxiter=150 outside=imag
+m-out-mult      type=mandel maxiter=150 outside=mult
+m-out-summ      type=mandel maxiter=150 outside=summ
+m-out-atan      type=mandel maxiter=150 outside=atan
+m-out-fmod      type=mandel maxiter=150 outside=fmod
+m-out-tdis      type=mandel maxiter=150 outside=tdis
+m-out-9         type=mandel maxiter=150 outside=9
+m-decomp-2      type=mandel maxiter=150 decomp=2
+m-decomp-4      type=mandel maxiter=150 decomp=4
+m-decomp-8      type=mandel maxiter=150 decomp=8
+m-decomp-16     type=mandel maxiter=150 decomp=16
+m-decomp-256    type=mandel maxiter=150 decomp=256
+m-bio-0         type=mandel maxiter=150 biomorph=0
+m-bio-5         type=mandel maxiter=150 biomorph=5
+m-in-300        type=mandel maxiter=150 inside=300
+m-iter-float    type=mandel maxiter=150 float=yes
+m-in-maxiter-1000 type=mandel maxiter=1000 inside=maxiter
+m-in-maxiter-255  type=mandel maxiter=255 inside=maxiter
+m-in-maxiter-256  type=mandel maxiter=256 inside=maxiter
+# zoomed view, maxiter 1000
+z-iter-1000     type=mandel maxiter=1000 corners=-0.80/-0.70/0.05/0.15
+z-out-real      type=mandel maxiter=1000 corners=-0.80/-0.70/0.05/0.15 outside=real
+z-out-imag      type=mandel maxiter=1000 corners=-0.80/-0.70/0.05/0.15 outside=imag
+z-out-mult      type=mandel maxiter=1000 corners=-0.80/-0.70/0.05/0.15 outside=mult
+z-out-summ      type=mandel maxiter=1000 corners=-0.80/-0.70/0.05/0.15 outside=summ
+z-out-atan      type=mandel maxiter=1000 corners=-0.80/-0.70/0.05/0.15 outside=atan
+z-decomp-4      type=mandel maxiter=1000 corners=-0.80/-0.70/0.05/0.15 decomp=4
+z-bio-0         type=mandel maxiter=1000 corners=-0.80/-0.70/0.05/0.15 biomorph=0
+# bailout changes
+b-out-real      type=mandel maxiter=150 bailout=100 outside=real
+b-out-mult      type=mandel maxiter=150 bailout=100 outside=mult
+b-out-summ      type=mandel maxiter=150 bailout=100 outside=summ
+b-decomp-8      type=mandel maxiter=150 bailout=100 decomp=8
+b-bio-0         type=mandel maxiter=150 bailout=100 biomorph=0
+b-in-zmag       type=mandel maxiter=150 bailout=100 inside=zmag
+# julia
+j-iter          type=julia maxiter=150
+j-in-zmag       type=julia maxiter=150 inside=zmag
+j-in-bof60      type=julia maxiter=150 inside=bof60
+j-in-bof61      type=julia maxiter=150 inside=bof61
+j-in-period     type=julia maxiter=150 inside=period
+j-in-atan       type=julia maxiter=150 inside=atan
+j-in-maxiter    type=julia maxiter=150 inside=maxiter
+j-out-real      type=julia maxiter=150 outside=real
+j-out-imag      type=julia maxiter=150 outside=imag
+j-out-mult      type=julia maxiter=150 outside=mult
+j-out-summ      type=julia maxiter=150 outside=summ
+j-out-atan      type=julia maxiter=150 outside=atan
+j-decomp-16     type=julia maxiter=150 decomp=16
+j-bio-0         type=julia maxiter=150 biomorph=0
+j2-iter         type=julia maxiter=500 params=-0.8/0.156
+j2-in-zmag      type=julia maxiter=500 params=-0.8/0.156 inside=zmag
+j2-out-real     type=julia maxiter=500 params=-0.8/0.156 outside=real
+j2-decomp-256   type=julia maxiter=500 params=-0.8/0.156 decomp=256
+j2-bio-3        type=julia maxiter=500 params=-0.8/0.156 biomorph=3
+# second round: scaling with maxiter, julia insides, edge values, combinations
+m300-in-zmag    type=mandel maxiter=300 inside=zmag
+m300-in-bof60   type=mandel maxiter=300 inside=bof60
+m300-in-bof61   type=mandel maxiter=300 inside=bof61
+m300-in-atan    type=mandel maxiter=300 inside=atan
+m300-out-tdis   type=mandel maxiter=300 outside=tdis
+m300-out-atan   type=mandel maxiter=300 outside=atan
+m300-in-fmod    type=mandel maxiter=300 inside=fmod
+m50-in-zmag     type=mandel maxiter=50 inside=zmag
+m50-in-bof60    type=mandel maxiter=50 inside=bof60
+m50-out-atan    type=mandel maxiter=50 outside=atan
+m50-out-tdis    type=mandel maxiter=50 outside=tdis
+m-in-period-p1  type=mandel maxiter=150 inside=period periodicity=1
+m-in-period-p3  type=mandel maxiter=150 inside=period periodicity=3
+m-in-period-pn  type=mandel maxiter=150 inside=period periodicity=-3
+m-iter-p1       type=mandel maxiter=150 periodicity=1
+m-in-eps-p1     type=mandel maxiter=150 inside=epscross periodicity=1
+m-in-star-p1    type=mandel maxiter=150 inside=startrail periodicity=1
+m-in-0          type=mandel maxiter=150 inside=0
+m-in-255        type=mandel maxiter=150 inside=255
+m-in-256        type=mandel maxiter=150 inside=256
+m-in-511        type=mandel maxiter=150 inside=511
+m-out-0         type=mandel maxiter=150 outside=0
+m-out-255       type=mandel maxiter=150 outside=255
+m-decomp-3      type=mandel maxiter=150 decomp=3
+m-decomp-128    type=mandel maxiter=150 decomp=128
+m-decomp-512    type=mandel maxiter=150 decomp=512
+m-decomp-4-50   type=mandel maxiter=150 decomp=4/50
+m-decomp-4-out-real type=mandel maxiter=150 decomp=4 outside=real
+m-decomp-4-in-zmag type=mandel maxiter=150 decomp=4 inside=zmag
+m-bio-0-out-real type=mandel maxiter=150 biomorph=0 outside=real
+m-bio-0-decomp-4 type=mandel maxiter=150 biomorph=0 decomp=4
+m-bio-0-b4      type=mandel maxiter=150 biomorph=0 bailout=4
+m-bio-0-b50     type=mandel maxiter=150 biomorph=0 bailout=50
+m-bio-0-b1000   type=mandel maxiter=150 biomorph=0 bailout=1000
+m-bio-300       type=mandel maxiter=150 biomorph=300
+m-bio-0-in-zmag type=mandel maxiter=150 biomorph=0 inside=zmag
+b-out-tdis      type=mandel maxiter=150 bailout=100 outside=tdis
+b-out-atan      type=mandel maxiter=150 bailout=100 outside=atan
+b-in-bof60      type=mandel maxiter=150 bailout=100 inside=bof60
+b-out-imag      type=mandel maxiter=150 bailout=100 outside=imag
+m-b16-iter      type=mandel maxiter=150 bailout=16
+j2-in-bof60     type=julia maxiter=500 params=-0.8/0.156 inside=bof60
+j2-in-bof61     type=julia maxiter=500 params=-0.8/0.156 inside=bof61
+j2-in-atan      type=julia maxiter=500 params=-0.8/0.156 inside=atan
+j2-in-fmod      type=julia maxiter=500 params=-0.8/0.156 inside=fmod
+j2-in-maxiter   type=julia maxiter=500 params=-0.8/0.156 inside=maxiter
+j2-out-tdis     type=julia maxiter=500 params=-0.8/0.156 outside=tdis
+j2-out-fmod     type=julia maxiter=500 params=-0.8/0.156 outside=fmod
+j2-out-atan     type=julia maxiter=500 params=-0.8/0.156 outside=atan
+j2-out-mult     type=julia maxiter=500 params=-0.8/0.156 outside=mult
+j2-out-summ     type=julia maxiter=500 params=-0.8/0.156 outside=summ
+j2-out-imag     type=julia maxiter=500 params=-0.8/0.156 outside=imag
+j3-iter         type=julia maxiter=150 params=-0.12/0.75
+j3-in-zmag      type=julia maxiter=150 params=-0.12/0.75 inside=zmag
+j3-in-bof60     type=julia maxiter=150 params=-0.12/0.75 inside=bof60
+j3-in-bof61     type=julia maxiter=150 params=-0.12/0.75 inside=bof61
+j3-in-atan      type=julia maxiter=150 params=-0.12/0.75 inside=atan
+j3-in-fmod      type=julia maxiter=150 params=-0.12/0.75 inside=fmod
+j3-in-period-p1 type=julia maxiter=150 params=-0.12/0.75 inside=period periodicity=1
+j3-decomp-8     type=julia maxiter=150 params=-0.12/0.75 decomp=8
+j3-bio-0        type=julia maxiter=150 params=-0.12/0.75 biomorph=0
+j3-out-tdis     type=julia maxiter=150 params=-0.12/0.75 outside=tdis
+# decomposition level counts
+m-decomp-1      type=mandel maxiter=150 decomp=1
+m-decomp-5      type=mandel maxiter=150 decomp=5
+m-decomp-6      type=mandel maxiter=150 decomp=6
+m-decomp-32     type=mandel maxiter=150 decomp=32
+m-decomp-64     type=mandel maxiter=150 decomp=64
+m-decomp-100    type=mandel maxiter=150 decomp=100
+m-decomp-200    type=mandel maxiter=150 decomp=200
+m-decomp-255    type=mandel maxiter=150 decomp=255
+m-decomp-257    type=mandel maxiter=150 decomp=257
+m-decomp-1024   type=mandel maxiter=150 decomp=1024
+m-decomp-2048   type=mandel maxiter=150 decomp=2048
+m-decomp-4096   type=mandel maxiter=150 decomp=4096
+m-decomp-7 type=mandel maxiter=150 decomp=7
+m-decomp-9 type=mandel maxiter=150 decomp=9
+m-decomp-15 type=mandel maxiter=150 decomp=15
+m-decomp-17 type=mandel maxiter=150 decomp=17
+m-decomp-31 type=mandel maxiter=150 decomp=31
+m-decomp-33 type=mandel maxiter=150 decomp=33
+m-decomp-129 type=mandel maxiter=150 decomp=129
+m-decomp-300 type=mandel maxiter=150 decomp=300
+m-decomp-511 type=mandel maxiter=150 decomp=511
+# epsilon cross on julia
+j3-in-epscross  type=julia maxiter=150 params=-0.12/0.75 inside=epscross
+j2-in-epscross  type=julia maxiter=500 params=-0.8/0.156 inside=epscross
+# Rejected by XFractint ("couldn't understand the argument"), no image saved:
+#   outside=256, outside=300
+# Default-palette evidence (rendered with FFMAP= so map=uniq.map is NOT added):
+#   defpal-m-iter       type=mandel maxiter=150
+#   defpal-z-iter-1000  type=mandel maxiter=1000 corners=-0.80/-0.70/0.05/0.15

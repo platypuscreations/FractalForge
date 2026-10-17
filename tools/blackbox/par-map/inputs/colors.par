@@ -1,0 +1,68 @@
+; SPDX-License-Identifier: GPL-3.0-or-later
+; colors= decoding probes (our own palettes)
+cdigits {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=0z01y72xE3wL4vS5uZ6te7sl8rs9qzAp6BoDCnKDmRElYFkdGjkHirIhyJg5KfCLeJMdQN\
+  cXObcPajQ`qR_xSZ4TYBUXIVWPWVWXUbYTiZSp_Rw`Q3aPAbOHcNOdMVeLafKhgJohIviH\
+  2jG9kFGlENmDUnC`oBgpAnq9ur81s78t6Fu5Mv4Tw3_x2fy1mz0t0z01y72xE3wL4vS5uZ\
+  6te7sl8rs9qzAp6BoDCnKDmRElYFkdGjkHirIhyJg5KfCLeJMdQNcXObcPajQ`qR_xSZ4T\
+  YBUXIVWPWVWXUbYTiZSp_Rw`Q3aPAbOHcNOdMVeLafKhgJohIviH2jG9kFGlENmDUnC`oB\
+  gpAnq9ur81s78t6Fu5Mv4Tw3_x2fy1mz0t0z01y72xE3wL4vS5uZ6te7sl8rs9qzAp6BoD\
+  CnKDmRElYFkdGjkHirIhyJg5KfCLeJMdQNcXObcPajQ`qR_xSZ4TYBUXIVWPWVWXUbYTiZ\
+  Sp_Rw`Q3aPAbOHcNOdMVeLafKhgJohIviH2jG9kFGlENmDUnC`oBgpAnq9ur81s78t6Fu5\
+  Mv4Tw3_x2fy1mz0t0z01y72xE3wL4vS5uZ6te7sl8rs9qzAp6BoDCnKDmRElYFkdGjkHir\
+  IhyJg5KfCLeJMdQNcXObcPajQ`qR_xSZ4TYBUXIVWPWVWXUbYTiZSp_Rw`Q3aPAbOHcNOd\
+  MVeLafKhgJohIviH2jG9kFGlENmDUnC`oBgpAnq9ur81s78t6Fu5Mv4Tw3_x2fy1mz0t
+}
+cinterp1 {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=000<4>00z<9>z00<2>0z0<6>zzz<1>000<3>111<5>777<2>333<200>000
+}
+cinterp2 {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=000<254>zzz
+}
+cinterp3 {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=zzz<254>000
+}
+cinterp4 {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=05A<6>A50<6>2b7<6>b2_<6>`9z<100>z00<120>00z
+}
+cshort16 {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00
+}
+cshort1 {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=z0z
+}
+cstartrun {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=<3>zzzz00z00z00z00z00z00z00z00z00z00
+}
+coverrun {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=000<300>zzz
+}
+cbadchar {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=000[[[\\\]]]^^^{{{|||~~~!!!###zzz
+}
+cpartial {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=z00z00z00z00z00z0
+}
+cmapref {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=@ff.map
+}
+cmapref2 {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=@nosuch.map
+}
+crun0 {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=000<0>zzzz00z00z00z00z00z00z00z00z00z00
+}

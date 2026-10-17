@@ -1,0 +1,4 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+B ref-MSG-g MSG passes=g
+B ref-MNG-g MNG passes=g
+B ref-JG-g JG passes=g

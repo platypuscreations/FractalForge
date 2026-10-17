@@ -1,0 +1,34 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# More .par structure tests (batch mode, amd64).
+s2-len8 @len.par/n0000000 viewwindows=2
+s2-len12 @len.par/n00000000000 viewwindows=2
+s2-len15 @len.par/n00000000000000 viewwindows=2
+s2-len16 @len.par/n000000000000000 viewwindows=2
+s2-len17 @len.par/n0000000000000000 viewwindows=2
+s2-len18 @len.par/n00000000000000000 viewwindows=2
+s2-len19 @len.par/n000000000000000000 viewwindows=2
+s2-len20 @len.par/n0000000000000000000 viewwindows=2
+s2-len24 @len.par/n00000000000000000000000 viewwindows=2
+s2-len30 @len.par/n00000000000000000000000000000 viewwindows=2
+s2-len31 @len.par/n000000000000000000000000000000 viewwindows=2
+s2-len32 @len.par/n0000000000000000000000000000000 viewwindows=2
+s2-len33 @len.par/n00000000000000000000000000000000 viewwindows=2
+s2-len40 @len.par/n000000000000000000000000000000000000000 viewwindows=2
+s2-nest-nested   @nest.par/nested viewwindows=2
+s2-nest-after    @nest.par/after viewwindows=2
+s2-nextl-nextline @nextl.par/nextline viewwindows=2
+s2-nextl-after   @nextl.par/after viewwindows=2
+s2-spname-name   @spname.par/name viewwindows=2
+s2-spname-after  @spname.par/after viewwindows=2
+s2-nospace       @misc.par/nospace viewwindows=2
+s2-indented      @misc.par/indented viewwindows=2
+s2-cbefore       @misc.par/cbefore viewwindows=2
+s2-keycase       @misc.par/keycase viewwindows=2
+s2-valcase       @misc.par/valcase viewwindows=2
+s2-punct         @misc.par/punct-name.x_1 viewwindows=2
+s2-closesame     @misc.par/closesame viewwindows=2
+s2-afterclosesame type=julia params=-0.8/0.156 corners=-1.5/1.5/-1.125/1.125 @misc.par/afterclosesame viewwindows=2
+s2-two-entries   @misc.par/keycase @misc.par/two viewwindows=2
+s2-longline      @longl.par/longline viewwindows=2
+s2-long2         @longl.par/long2 viewwindows=2
+s2-reset-cmdline maxiter=77 inside=5 reset type=julia params=-0.8/0.156 corners=-1.5/1.5/-1.125/1.125 viewwindows=2

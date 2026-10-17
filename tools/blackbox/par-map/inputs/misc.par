@@ -1,0 +1,27 @@
+; SPDX-License-Identifier: GPL-3.0-or-later
+nospace{
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+}
+  indented {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+}
+cbefore ; comment {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+}
+keycase {
+  MaxIter=200 type=julia params=-0.8/0.156 corners=-1.5/1.5/-1.125/1.125
+}
+valcase {
+  maxiter=200 type=JULIA params=-0.8/0.156 corners=-1.5/1.5/-1.125/1.125
+}
+two {
+  maxiter=100
+}
+punct-name.x_1 {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+}
+closesame {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 }
+afterclosesame {
+  maxiter=100
+}

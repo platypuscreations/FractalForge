@@ -15,9 +15,12 @@ Fractint source code and is not affiliated with the Stone Soup Group.
 
 ## Status
 
-Phase 1 (engine and command line). There is no GUI yet. The CLI renders
-Mandelbrot and Julia sets and can stop a render, save it as a GIF, and resume
-it later with identical results:
+Phase 2 (desktop app, toward v0.1). FractalForge has a desktop app and a
+command-line renderer. It renders 17 escape-time types (mandel, julia,
+lambda, mandellambda, mandel4, julia4, manowar, manowarj, barnsleym1,
+barnsleyj1, spider, magnet1m, magnet1j, newton, newtbasin, phoenix,
+mandphoenix) with the same pixels as Fractint-format renderers, and can stop
+a render, save it as a GIF and resume it later with identical results:
 
 ```sh
 cargo run --release -p fractalforge-cli -- render -o big.gif --size 3840x2160 --maxiter 5000 --stop-after 30
@@ -60,6 +63,24 @@ tools/blackbox   container that runs XFractint as a black box to make reference 
 corpus/          reference files saved by XFractint, used for interop tests
 docs/            clean-room rules and our own file-format specs
 ```
+
+## Installing on macOS
+
+Download `FractalForge-<version>-macos-universal.dmg` and drag FractalForge
+to Applications. It runs on Apple silicon and Intel Macs with macOS 11 or
+later.
+
+The app isn't notarized by Apple yet, so the first time you open it macOS
+says it can't check it for malicious software. To open it anyway:
+
+1. Try to open FractalForge once, and close the warning.
+2. Open **System Settings → Privacy & Security**, scroll down, and click
+   **Open Anyway** next to the FractalForge message.
+3. Confirm with your password. After that it opens normally.
+
+Or, in Terminal: `xattr -dr com.apple.quarantine /Applications/FractalForge.app`
+
+Building from source (below) avoids the warning entirely.
 
 ## Building
 

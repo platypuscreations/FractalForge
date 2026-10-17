@@ -1,0 +1,5 @@
+wfrm               { ; our comment one
+  reset=2004 type=formula formulafile=ff.frm formulaname=ffcube
+  center-mag=0/0/0.6666667 float=y inside=0 viewwindows=2/0.75/yes/0/0
+  }
+

@@ -79,6 +79,17 @@ impl Render {
         Self::resume(params, state, IterBuffer::new(width, height))
     }
 
+    /// Starts a render whose buffer already holds some final pixels (from a
+    /// partial image made elsewhere). Only the unknown pixels are computed.
+    pub fn from_partial(
+        params: Params,
+        buffer: IterBuffer,
+        pass_mode: PassMode,
+    ) -> Result<Self, ResumeError> {
+        let state = RenderState::new(pass_mode, buffer.width(), buffer.height());
+        Self::resume(params, state, buffer)
+    }
+
     /// Continues from a checkpoint.
     pub fn resume(
         params: Params,
@@ -157,8 +168,14 @@ impl Render {
 
     /// Processes up to [`BATCH_ROWS`] rows of the current stage.
     pub fn step(&mut self) {
+        self.step_cancellable(&AtomicBool::new(false));
+    }
+
+    /// Like [`Render::step`], but gives up mid-batch once `cancel` is set,
+    /// leaving the state as it was. Returns whether the batch was applied.
+    pub fn step_cancellable(&mut self, cancel: &AtomicBool) -> bool {
         if self.is_complete() {
-            return;
+            return true;
         }
         let started = Instant::now();
         let stage = self.state.stage as usize;
@@ -166,12 +183,17 @@ impl Render {
         let end = (self.state.row + BATCH_ROWS).min(rows);
 
         let (plan, params, buffer) = (&self.plan, &self.params, &self.buffer);
-        let results: Vec<_> = (self.state.row..end)
+        let results: Option<Vec<_>> = (self.state.row..end)
             .into_par_iter()
-            .map(|i| plan.row_work(stage, i, params, buffer))
+            .map(|i| {
+                (!cancel.load(Ordering::Relaxed)).then(|| plan.row_work(stage, i, params, buffer))
+            })
             .collect();
+        let Some(results) = results.filter(|_| !cancel.load(Ordering::Relaxed)) else {
+            return false;
+        };
         for (y, values) in &results {
-            self.plan.apply(&mut self.buffer, *y, values);
+            self.plan.apply(&mut self.buffer, *y, values, &self.params);
         }
 
         self.state.row = end;
@@ -180,6 +202,7 @@ impl Render {
             self.state.row = 0;
         }
         self.state.elapsed_us += started.elapsed().as_micros() as u64;
+        true
     }
 
     /// Renders until complete, cancelled, or past `stop_after`.
@@ -191,7 +214,11 @@ impl Render {
             if control.stop_after.is_some_and(|f| self.progress() >= f) {
                 return Outcome::Stopped;
             }
-            self.step();
+            if let Some(cancel) = control.cancel {
+                self.step_cancellable(cancel);
+            } else {
+                self.step();
+            }
         }
         Outcome::Complete
     }
@@ -216,6 +243,47 @@ mod tests {
         let mut r = Render::new(params.clone(), w, h, mode).unwrap();
         assert_eq!(r.run(&Control::default()), Outcome::Complete);
         r.buffer().clone()
+    }
+
+    fn all_types() -> Vec<Params> {
+        fractalforge_core::types::all()
+            .iter()
+            .map(|t| Params::new(t))
+            .collect()
+    }
+
+    /// Off-centre views exercise every symmetry kind's partial copying.
+    fn off_centre(mut p: Params) -> Params {
+        let w = p.window;
+        let (dx, dy) = ((w.x_max - w.x_min) * 0.17, (w.y_max - w.y_min) * 0.23);
+        p.window = Window::new(w.x_min + dx, w.x_max + dx, w.y_min + dy, w.y_max + dy * 0.5);
+        p
+    }
+
+    #[test]
+    fn all_types_fill_every_pixel_and_resume_identically() {
+        for base in all_types() {
+            for params in [base.clone(), off_centre(base)] {
+                for mode in [PassMode::One, PassMode::Guess] {
+                    let expected = full(&params, 61, 47, mode);
+                    assert_eq!(
+                        expected.unknown_count(),
+                        0,
+                        "{} {mode:?}",
+                        params.fractal.name
+                    );
+                    let mut r = Render::new(params.clone(), 61, 47, mode).unwrap();
+                    r.run(&Control {
+                        stop_after: Some(0.4),
+                        ..Default::default()
+                    });
+                    let (p, s, b) = r.into_parts();
+                    let mut r = Render::resume(p, s, b).unwrap();
+                    r.run(&Control::default());
+                    assert_eq!(r.buffer(), &expected, "{} {mode:?}", params.fractal.name);
+                }
+            }
+        }
     }
 
     #[test]
@@ -333,6 +401,40 @@ mod tests {
             r = Render::resume(p, s, b).unwrap();
         }
         assert_eq!(r.buffer(), &expected);
+    }
+
+    #[test]
+    fn partial_buffers_keep_known_pixels() {
+        let p = julia();
+        let expected = full(&p, 64, 48, PassMode::One);
+        let mut partial = IterBuffer::new(64, 48);
+        for y in 0..20 {
+            for x in 0..64 {
+                partial.set(x, y, expected.get(x, y));
+            }
+        }
+        partial.set(5, 5, 12345); // a known pixel is never recomputed
+        let mut r = Render::from_partial(p, partial, PassMode::One).unwrap();
+        r.run(&Control::default());
+        assert_eq!(r.buffer().get(5, 5), 12345);
+        let diff = r
+            .buffer()
+            .data()
+            .iter()
+            .zip(expected.data())
+            .filter(|(a, b)| a != b)
+            .count();
+        // The planted pixel and its copy through the origin (julia symmetry).
+        assert_eq!(diff, 2);
+    }
+
+    #[test]
+    fn cancelled_step_changes_nothing() {
+        let flag = AtomicBool::new(true);
+        let mut r = Render::new(mandel(), 50, 50, PassMode::Guess).unwrap();
+        assert!(!r.step_cancellable(&flag));
+        assert_eq!(r.checkpoint(), RenderState::new(PassMode::Guess, 50, 50));
+        assert_eq!(r.buffer().unknown_count(), 2500);
     }
 
     #[test]

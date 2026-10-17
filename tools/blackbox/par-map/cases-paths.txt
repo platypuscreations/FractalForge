@@ -1,0 +1,9 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# How file names given to map=, colors=@ and formulafile= are resolved.
+pa-cmd-mapabs      type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=/work/ff.map viewwindows=2
+pa-cmd-colorsat    type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 colors=@ff.map viewwindows=2
+pa-cmd-colorsatabs type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 colors=@/work/ff.map viewwindows=2
+pa-par-frmabs      @paths.par/frmabs viewwindows=2
+pa-par-frmnameonly formulafile=ff.frm @paths.par/frmnameonly viewwindows=2
+pa-cmd-formula     type=formula formulafile=ff.frm formulaname=ffcube maxiter=200 viewwindows=2
+pa-nofile          @nosuch.par/plain viewwindows=2

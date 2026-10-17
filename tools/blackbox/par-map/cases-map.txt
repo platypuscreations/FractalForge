@@ -1,0 +1,24 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# .map reading probes: map=<file> on the command line, batch mode.
+m-m6bit type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=m6bit.map viewwindows=2
+m-mblank type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mblank.map viewwindows=2
+m-mcomm type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mcomm.map viewwindows=2
+m-mcommas type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mcommas.map viewwindows=2
+m-mcrlf type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mcrlf.map viewwindows=2
+m-mfloat type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mfloat.map viewwindows=2
+m-mfull type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mfull.map viewwindows=2
+m-mhex type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mhex.map viewwindows=2
+m-mlead type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mlead.map viewwindows=2
+m-mlong type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mlong.map viewwindows=2
+m-mnoeol type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mnoeol.map viewwindows=2
+m-mone type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mone.map viewwindows=2
+m-mover type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mover.map viewwindows=2
+m-mpad type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mpad.map viewwindows=2
+m-mshort type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mshort.map viewwindows=2
+m-mtabs type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mtabs.map viewwindows=2
+m-mtrail type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mtrail.map viewwindows=2
+m-mtwo type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mtwo.map viewwindows=2
+m-mword type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mword.map viewwindows=2
+m-noext type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mfull viewwindows=2
+m-missing type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=nosuch.map viewwindows=2
+m-twice type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mfull.map map=mshort.map viewwindows=2

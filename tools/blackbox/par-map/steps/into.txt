@@ -1,0 +1,21 @@
+sleep 4
+key b
+sleep 1
+type /work/r1.par
+key Down
+type addedentry
+key Down Down Down Down Down
+type no
+key Return
+sleep 3
+key b
+sleep 1
+type /work/r1.par
+key Down
+type samelinebrace
+key Down Down Down Down Down
+type no
+key Return
+sleep 2
+key Return
+sleep 3

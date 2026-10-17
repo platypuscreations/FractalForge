@@ -1,0 +1,5 @@
+wnewton            { ; our comment one
+  reset=2004 type=newton center-mag=0/0/0.6666667 params=3 float=y
+  inside=0 viewwindows=2/0.75/yes/0/0
+  }
+

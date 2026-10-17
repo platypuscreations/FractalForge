@@ -1,0 +1,89 @@
+; SPDX-License-Identifier: GPL-3.0-or-later
+; Value-syntax probes. Base image: julia -0.8/0.156, 400x300.
+paramsfirst {
+  params=-0.8/0.156 corners=-1.5/1.5/-1.125/1.125 type=julia maxiter=200
+}
+cornersfirst {
+  corners=-1.5/1.5/-1.125/1.125 type=julia params=-0.8/0.156 maxiter=200
+}
+bothcorncm {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 center-mag=0.1/0.2/2
+}
+bothcmcorn {
+  type=julia params=-0.8/0.156 maxiter=200 center-mag=0.1/0.2/2 corners=-1.5/1.5/-1.125/1.125
+}
+numexp {
+  type=julia params=-8e-1/1.56E-1 maxiter=2e2 corners=-1.5e0/15e-1/-1.125/+1.125
+}
+numdot {
+  type=julia params=-.8/.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+}
+maxfrac {
+  type=julia params=-0.8/0.156 maxiter=200.7 corners=-1.5/1.5/-1.125/1.125
+}
+maxplus {
+  type=julia params=-0.8/0.156 maxiter=+200 corners=-1.5/1.5/-1.125/1.125
+}
+paramsshort {
+  type=julia params=-0.8 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+}
+paramsempty {
+  type=julia params=/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+}
+corners3 {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125
+}
+cmag2 {
+  type=julia params=-0.8/0.156 maxiter=200 center-mag=0.1/0.2
+}
+cmag3 {
+  type=julia params=-0.8/0.156 maxiter=200 center-mag=0/0/0.888888888888888889
+}
+cmag4 {
+  type=julia params=-0.8/0.156 maxiter=200 center-mag=0/0/0.888888888888888889/1.5
+}
+cmag5 {
+  type=julia params=-0.8/0.156 maxiter=200 center-mag=0/0/0.888888888888888889/1/30
+}
+cmag6 {
+  type=julia params=-0.8/0.156 maxiter=200 center-mag=0/0/0.888888888888888889/1/0/20
+}
+cmagmandel {
+  type=mandel center-mag=-0.5/0/0.66666666666666667
+}
+floaty {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 float=y finattract=y
+}
+floatyes {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 float=yes finattract=yes
+}
+floatn {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 float=n finattract=n
+}
+logmapy {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 logmap=y
+}
+logmapyes {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 logmap=yes
+}
+logmapold {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 logmap=old
+}
+logmapno {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 logmap=no
+}
+insideabbr {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 inside=bof6
+}
+insidemax {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 inside=max
+}
+passesG {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 passes=G
+}
+symxaxis {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 symmetry=xaxis
+}
+symorigin {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 symmetry=origin
+}

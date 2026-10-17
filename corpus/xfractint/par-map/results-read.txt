@@ -1,0 +1,228 @@
+c-cbadchar               NO IMAGE | message: 'cbadchar' file entry item not found | (exit status 1)
+c-cdigits                image; vs s-ref: palette differs; pixels differ (11022)
+c-cinterp1               NO IMAGE | message: Oops. I couldn't understand the argument: / colors=000<4>00z<9>z00<2>0z0<6>zzz<1>000<3>111<5>777<2>333<200>000 | (exit status 1)
+c-cinterp2               image; vs s-ref: palette differs; pixels differ (96768)
+c-cinterp3               image; vs s-ref: palette differs; pixels differ (96768)
+c-cinterp4               image; vs s-ref: palette differs; pixels differ (6280)
+c-cmapref                NO IMAGE | message: Could not load color map /usr/share/xfractint/maps/ff.map | (exit status 1)
+c-cmapref2               NO IMAGE | message: Could not load color map /usr/share/xfractint/maps/nosuch.map | (exit status 1)
+c-colorsthenmap          NO IMAGE | message: Could not load color map /usr/share/xfractint/maps/ff.map | (exit status 1)
+c-coverrun               NO IMAGE | message: Oops. I couldn't understand the argument: / colors=000<300>zzz | (exit status 1)
+c-cpartial               NO IMAGE | message: Oops. I couldn't understand the argument: / colors=z00z00z00z00z00z0 | (exit status 1)
+c-crun0                  NO IMAGE | message: Oops. I couldn't understand the argument: / colors=000<0>zzzz00z00z00z00z00z00z00z00z00z00 | (exit status 1)
+c-cshort1                image; vs s-ref: palette differs; pixels differ (62834)
+c-cshort16               image; vs s-ref: palette differs; pixels differ (112540)
+c-cstartrun              NO IMAGE | message: Oops. I couldn't understand the argument: / colors=<3>zzzz00z00z00z00z00z00z00z00z00z00 | (exit status 1)
+c-map-cmdline-after      NO IMAGE | message: Could not load color map /usr/share/xfractint/maps/ff.map | (exit status 1)
+c-map-cmdline-before     image; vs s-ref: palette differs; pixels differ (728)
+c-mapthencolors          NO IMAGE | message: Could not load color map /usr/share/xfractint/maps/ff.map | (exit status 1)
+c-nocolors               image; vs s-ref: SAME
+c-nofile                 image; vs s-ref: SAME
+c-short16-after-map      image; vs s-ref: palette differs; pixels differ (112540)
+c3-c256                  NO IMAGE | message: Oops. I couldn't understand the argument: / colors=z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00 | (exit status 1)
+c3-c257                  NO IMAGE | message: Oops. I couldn't understand the argument: / colors=z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00 | (exit status 1)
+c3-cbad0                 NO IMAGE | message: Oops. I couldn't understand the argument: / colors=000[[[zzz | (exit status 1)
+c3-cbad1                 NO IMAGE | message: Oops. I couldn't understand the argument: / colors=000\\\zzz | (exit status 1)
+c3-cbad2                 NO IMAGE | message: Oops. I couldn't understand the argument: / colors=000]]]zzz | (exit status 1)
+c3-cbad3                 NO IMAGE | message: Oops. I couldn't understand the argument: / colors=000^^^zzz | (exit status 1)
+c3-cbad4                 NO IMAGE | message: Oops. I couldn't understand the argument: / colors=000|||zzz | (exit status 1)
+c3-cbad5                 NO IMAGE | message: Oops. I couldn't understand the argument: / colors=000~~~zzz | (exit status 1)
+c3-cbad6                 NO IMAGE | message: Oops. I couldn't understand the argument: / colors=000!!!zzz | (exit status 1)
+c3-cbad7                 NO IMAGE | message: Oops. I couldn't understand the argument: / colors=000###zzz | (exit status 1)
+c3-cinterp1b             NO IMAGE | message: Oops. I couldn't understand the argument: / colors=000<4>00z<9>z00<2>0z0<6>zzz<1>000<3>111<5>777<2>333 | (exit status 1)
+c3-clower                image; vs s-ref: palette differs; pixels differ (108016)
+c3-cmapabs               NO IMAGE | message: Could not load color map /usr/share/xfractint/maps/ff.map | (exit status 1)
+c3-cmapdot               NO IMAGE | message: Could not load color map /usr/share/xfractint/maps/ff.map | (exit status 1)
+c3-crun1                 NO IMAGE | message: Oops. I couldn't understand the argument: / colors=000<1>zzz | (exit status 1)
+c3-crun2                 image; vs s-ref: palette differs; pixels differ (35768)
+c3-crun200               image; vs s-ref: palette differs; pixels differ (85684)
+c3-crun3                 image; vs s-ref: palette differs; pixels differ (32870)
+c3-crun9                 image; vs s-ref: palette differs; pixels differ (26480)
+c3-cspace                NO IMAGE | message: Oops. I couldn't understand the argument: / z00 | (exit status 1)
+c3-cupper                image; vs s-ref: palette differs; pixels differ (108016)
+c3-mapabs                NO IMAGE | message: Could not load color map /usr/share/xfractint/maps/ff.map | (exit status 1)
+c3-mapbare               NO IMAGE | message: Could not load color map /usr/share/xfractint/maps/ff.map | (exit status 1)
+c3-mapdot                NO IMAGE | message: Could not load color map /usr/share/xfractint/maps/ff.map | (exit status 1)
+c3-reset-cmdline         image; vs s-ref: 001 offs [8, 18, 19, 26, 27, 34, 42, 44, 45, 46, 47, 48] ; palette differs; pixels differ (67026)
+c3-reset-palette         image; vs s-ref: 001 offs [8, 104, 408] ; palette differs; pixels differ (10872)
+k-bailout                image; vs s-ref: 001 offs [212, 402, 406] ; pixels differ (111734)
+k-biomorph               image; vs s-ref: 001 offs [102, 103] ; pixels differ (110880)
+k-c256                   image; vs s-ref: palette differs; pixels differ (112042)
+k-c256run                NO IMAGE | message: Oops. I couldn't understand the argument: / colors=000<254>zzzz00 | (exit status 1)
+k-c257                   NO IMAGE | message: Oops. I couldn't understand the argument: / colors=z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00 | (exit status 1)
+k-cmagneg                image; vs s-ref: 001 offs [12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24] ; pixels differ (80791)
+k-cmagrs                 image; vs s-ref: 001 offs [12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24] ; pixels differ (72767)
+k-cmagxr                 image; vs s-ref: 001 offs [12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24] ; pixels differ (83897)
+k-decomp                 image; vs s-ref: 001 offs [120] ; pixels differ (95471)
+k-fillcolor              image; vs s-ref: 001 offs [200, 286, 287] ; pixels differ (112042) | message: Boundary tracing cannot be used with inside=0 or outside=0
+k-float                  image; vs s-ref: SAME
+k-formula                image; vs s-ref: apps ['fractint001'] vs ['fractint001', 'fractint003']; 001 offs [10, 18, 19, 26, 27, 34, 42, 44, 45, 46, 47, 48] ; pixels differ (70190) | message: 'ffcube' file entry item not found / Could not open file where formula located
+k-function               image; vs s-ref: 001 offs [10, 18, 19, 26, 27, 34, 35, 42, 43, 44, 45, 46] ; pixels differ (65716)
+k-inout                  image; vs s-ref: 001 offs [104, 105, 182] ; pixels differ (75242)
+k-invert                 image; vs s-ref: 001 offs [110, 111, 115, 118, 119, 434, 435, 442, 443, 450, 451] ; pixels differ (102510)
+k-logmap                 image; vs s-ref: 001 offs [106, 420] ; pixels differ (62730)
+k-passes                 image; vs s-ref: 001 offs [200] ; pixels differ (66)
+k-periodicity            image; vs s-ref: 001 offs [240] ; pixels differ (12)
+k-potential              image; vs s-ref: 001 offs [88, 89, 92, 93, 96, 97] ; pixels differ (62106)
+k-symmetry               image; vs s-ref: 001 offs [124, 125] ; pixels differ (39)
+kc-bailout               image; vs s-ref: 001 offs [212, 402, 406] ; pixels differ (111734)
+kc-biomorph              image; vs s-ref: 001 offs [102, 103] ; pixels differ (110880)
+kc-decomp                image; vs s-ref: 001 offs [120] ; pixels differ (95471)
+kc-fillcolor             image; vs s-ref: 001 offs [200, 286, 287] ; pixels differ (112042) | message: Boundary tracing cannot be used with inside=0 or outside=0
+kc-float                 image; vs s-ref: SAME
+kc-formula               image; vs s-ref: apps ['fractint001'] vs ['fractint001', 'fractint003']; 001 offs [10, 18, 19, 26, 27, 34, 42, 44, 45, 46, 47, 48] ; pixels differ (66626)
+kc-function              image; vs s-ref: 001 offs [10, 18, 19, 26, 27, 34, 35, 42, 43, 44, 45, 46] ; pixels differ (65716)
+kc-inout                 image; vs s-ref: 001 offs [104, 105, 182] ; pixels differ (75242)
+kc-invert                image; vs s-ref: 001 offs [110, 111, 115, 118, 119, 434, 435, 442, 443, 450, 451] ; pixels differ (102510)
+kc-logmap                image; vs s-ref: 001 offs [106, 420] ; pixels differ (62730)
+kc-passes                image; vs s-ref: 001 offs [200] ; pixels differ (66)
+kc-periodicity           image; vs s-ref: 001 offs [240] ; pixels differ (12)
+kc-potential             image; vs s-ref: 001 offs [88, 89, 92, 93, 96, 97] ; pixels differ (62106)
+kc-symmetry              image; vs s-ref: 001 offs [124, 125] ; pixels differ (39)
+m-m6bit                  image; vs s-ref: palette differs; pixels differ (103188)
+m-mblank                 image; vs s-ref: palette differs; pixels differ (79046)
+m-mcomm                  image; vs s-ref: palette differs; pixels differ (70950)
+m-mcommas                image; vs s-ref: palette differs; pixels differ (100464)
+m-mcrlf                  image; vs s-ref: palette differs; pixels differ (60896)
+m-mfloat                 image; vs s-ref: palette differs; pixels differ (58006)
+m-mfull                  image; vs s-ref: palette differs; pixels differ (60896)
+m-mhex                   image; vs s-ref: palette differs; pixels differ (62564)
+m-missing                NO IMAGE | message: Could not load color map ./nosuch.map | (exit status 1)
+m-mlead                  image; vs s-ref: palette differs; pixels differ (60896)
+m-mlong                  image; vs s-ref: palette differs; pixels differ (60896)
+m-mnoeol                 image; vs s-ref: palette differs; pixels differ (60896)
+m-mone                   image; vs s-ref: palette differs; pixels differ (62834)
+m-mover                  image; vs s-ref: palette differs; pixels differ (8196)
+m-mpad                   image; vs s-ref: palette differs; pixels differ (60896)
+m-mshort                 image; vs s-ref: palette differs; pixels differ (78524)
+m-mtabs                  image; vs s-ref: palette differs; pixels differ (60896)
+m-mtrail                 image; vs s-ref: palette differs; pixels differ (60896)
+m-mtwo                   image; vs s-ref: palette differs; pixels differ (58006)
+m-mword                  image; vs s-ref: palette differs; pixels differ (62564)
+m-noext                  image; vs s-ref: palette differs; pixels differ (60896)
+m-twice                  image; vs s-ref: palette differs; pixels differ (78524)
+pa-cmd-colorsat          NO IMAGE | message: Could not load color map /usr/share/xfractint/maps/ff.map | (exit status 1)
+pa-cmd-colorsatabs       NO IMAGE | message: Could not load color map /usr/share/xfractint/maps/ff.map | (exit status 1)
+pa-cmd-formula           image; vs s-ref: apps ['fractint001'] vs ['fractint001', 'fractint003']; 001 offs [10, 18, 19, 26, 27, 34, 42, 44, 45, 46, 47, 48] ; pixels differ (66626)
+pa-cmd-mapabs            image; vs s-ref: palette differs; pixels differ (728)
+pa-nofile                image; vs s-ref: SAME
+pa-par-frmabs            image; vs s-ref: apps ['fractint001'] vs ['fractint001', 'fractint003']; 001 offs [10, 18, 19, 26, 27, 34, 42, 44, 45, 46, 47, 48] ; pixels differ (70190) | message: 'ffcube' file entry item not found / Could not open file where formula located
+pa-par-frmnameonly       image; vs s-ref: apps ['fractint001'] vs ['fractint001', 'fractint003']; 001 offs [10, 18, 19, 26, 27, 34, 42, 44, 45, 46, 47, 48] ; pixels differ (66626)
+r-reset1700              image; vs s-ref: palette differs; pixels differ (728)
+r-reset2004              image; vs s-ref: SAME
+r-resetbad               NO IMAGE | message: Oops. I couldn't understand the argument: / reset=abc | (exit status 1)
+r-resetmid               image; vs s-ref: 001 offs [8, 104, 408] ; pixels differ (10144)
+s-after-par              image; vs s-ref: 001 offs [8, 408] ; pixels differ (6518)
+s-afterclose             image; vs s-ref: SAME
+s-badvalue               NO IMAGE | message: Oops. I couldn't understand the argument: / maxiter=abc | (exit status 1)
+s-before-par             image; vs s-ref: SAME
+s-blanklines             image; vs s-ref: SAME
+s-case-exact             image; vs s-ref: SAME
+s-case-lower             image; vs s-ref: SAME
+s-comments               image; vs s-ref: SAME
+s-contin                 image; vs s-ref: SAME
+s-continkey              image; vs s-ref: SAME
+s-continspace            image; vs s-ref: SAME
+s-crlf                   image; vs s-ref: SAME
+s-dup                    image; vs s-ref: SAME
+s-dupkey                 image; vs s-ref: 001 offs [8, 408] ; pixels differ (6518)
+s-indirect               image; vs s-ref: SAME
+s-inherit-noreset        image; vs s-ref: 001 offs [8, 104, 408] ; pixels differ (16416)
+s-inherit-reset          image; vs s-ref: 001 offs [8, 104, 408] ; pixels differ (10144)
+s-inherit-reset2004      image; vs s-ref: 001 offs [8, 104, 408] ; pixels differ (10144)
+s-longname               NO IMAGE | *** buffer overflow detected ***: terminated | (exit status 134)
+s-missing                NO IMAGE | message: 'doesnotexist' file entry item not found | (exit status 1)
+s-namespace              image; vs s-ref: SAME
+s-nested-inner           image; vs s-ref: 001 offs [8, 10, 18, 19, 34, 42, 44, 45, 46, 47, 48, 49] ; pixels differ (63229)
+s-nested                 NO IMAGE | message: 'nested' file entry item not found | (exit status 1)
+s-nextlinebrace          NO IMAGE | message: 'nextlinebrace' file entry item not found | (exit status 1)
+s-noentry                NO IMAGE | message: Oops. I couldn't understand the argument: / text | (exit status 1)
+s-partial                image; vs s-ref: SAME
+s-plain-upper            image; vs s-ref: SAME
+s-plain                  image; vs s-ref: SAME
+s-prefix                 NO IMAGE | message: 'plai' file entry item not found | (exit status 1)
+s-ref-100                image; vs s-ref: 001 offs [8, 408] ; pixels differ (6518)
+s-ref                    image; vs s-ref: SAME
+s-samelinebrace          image; vs s-ref: SAME
+s-spaceeq                NO IMAGE | message: Oops. I couldn't understand the argument: / maxiter | (exit status 1)
+s-tabs                   image; vs s-ref: SAME
+s-unknownbare            NO IMAGE | message: Oops. I couldn't understand the argument: / frobnicate | (exit status 1)
+s-unknownkey             NO IMAGE | message: Oops. I couldn't understand the argument: / frobnicate=7 | (exit status 1)
+s-upper                  NO IMAGE | message: Oops. I couldn't understand the argument: / TYPE=JULIA | (exit status 1)
+s2-afterclosesame        image; vs s-ref: 001 offs [8, 408] ; pixels differ (6518)
+s2-cbefore               NO IMAGE | message: 'cbefore' file entry item not found | (exit status 1)
+s2-closesame             image; vs s-ref: SAME
+s2-indented              image; vs s-ref: SAME
+s2-keycase               NO IMAGE | message: Oops. I couldn't understand the argument: / MaxIter=200 | (exit status 1)
+s2-len12                 image; vs s-ref: SAME
+s2-len15                 image; vs s-ref: SAME
+s2-len16                 image; vs s-ref: SAME
+s2-len17                 image; vs s-ref: SAME
+s2-len18                 image; vs s-ref: SAME
+s2-len19                 NO IMAGE | *** buffer overflow detected ***: terminated | (exit status 134)
+s2-len20                 NO IMAGE | *** buffer overflow detected ***: terminated | (exit status 134)
+s2-len24                 NO IMAGE | *** buffer overflow detected ***: terminated | (exit status 134)
+s2-len30                 NO IMAGE | *** buffer overflow detected ***: terminated | (exit status 134)
+s2-len31                 NO IMAGE | *** buffer overflow detected ***: terminated | (exit status 134)
+s2-len32                 NO IMAGE | *** buffer overflow detected ***: terminated | (exit status 134)
+s2-len33                 NO IMAGE | *** buffer overflow detected ***: terminated | (exit status 134)
+s2-len40                 NO IMAGE | *** buffer overflow detected ***: terminated | (exit status 134)
+s2-len8                  image; vs s-ref: SAME
+s2-long2                 image; vs s-ref: SAME
+s2-longline              NO IMAGE | message: Oops. I couldn't understand the argument: / maxite | (exit status 1)
+s2-nest-after            image; vs s-ref: SAME
+s2-nest-nested           NO IMAGE | message: 'nested' file entry item not found | (exit status 1)
+s2-nextl-after           image; vs s-ref: SAME
+s2-nextl-nextline        NO IMAGE | message: 'nextline' file entry item not found | (exit status 1)
+s2-nospace               image; vs s-ref: SAME
+s2-punct                 image; vs s-ref: SAME
+s2-reset-cmdline         image; vs s-ref: 001 offs [8, 104, 408] ; pixels differ (10144)
+s2-spname-after          image; vs s-ref: SAME
+s2-spname-name           image; vs s-ref: SAME
+s2-two-entries           NO IMAGE | message: Oops. I couldn't understand the argument: / MaxIter=200 | (exit status 1)
+s2-valcase               NO IMAGE | message: Oops. I couldn't understand the argument: / type=JULIA | (exit status 1)
+s3-after-longname        image; vs s-ref: SAME
+s3-bracecomment          image; vs s-ref: SAME
+s3-bracevalue            NO IMAGE | message: 'bracevalue' file entry item not found | (exit status 1)
+s3-split510              NO IMAGE | message: Oops. I couldn't understand the argument: / m | (exit status 1)
+s3-split511              image; vs s-ref: 001 offs [8, 408] ; pixels differ (6518)
+s3-split512              image; vs s-ref: 001 offs [8, 408] ; pixels differ (6518)
+s3-split513              image; vs s-ref: 001 offs [8, 408] ; pixels differ (6518)
+s3-two-entries-rev       image; vs s-ref: SAME
+s3-two-entries           image; vs s-ref: 001 offs [8, 408] ; pixels differ (6518)
+s4-req-18-prefix         image; vs s-ref: 001 offs [8, 10, 18, 19, 34, 42, 44, 45, 46, 47, 48, 49] ; pixels differ (63229)
+s4-req-long-absent       NO IMAGE | *** buffer overflow detected ***: terminated | (exit status 134)
+s4-req-long-present      NO IMAGE | *** buffer overflow detected ***: terminated | (exit status 134)
+v-bothcmcorn             image; vs s-ref: SAME
+v-bothcorncm             image; vs s-ref: 001 offs [12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24] ; pixels differ (116849)
+v-cmag2                  NO IMAGE | message: Oops. I couldn't understand the argument: / center-mag=0.1/0.2 | (exit status 1)
+v-cmag3                  image; vs s-ref: SAME
+v-cmag4                  image; vs s-ref: 001 offs [18, 26, 190] ; pixels differ (72124)
+v-cmag5                  image; vs s-ref: 001 offs [12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24] ; pixels differ (77272)
+v-cmag6                  image; vs s-ref: 001 offs [12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24] ; pixels differ (62017)
+v-cmagmandel             image; vs s-ref: 001 offs [8, 10, 18, 19, 34, 42, 44, 45, 46, 47, 48, 49] ; pixels differ (63256)
+v-corners3               NO IMAGE | message: Oops. I couldn't understand the argument: / corners=-1.5/1.5/-1.125 | (exit status 1)
+v-cornersfirst           image; vs s-ref: SAME
+v-floatn                 image; vs s-ref: SAME
+v-floaty                 image; vs s-ref: 001 offs [222]
+v-floatyes               image; vs s-ref: 001 offs [222]
+v-insideabbr             NO IMAGE | message: Oops. I couldn't understand the argument: / inside=bof6 | (exit status 1)
+v-insidemax              NO IMAGE | message: Oops. I couldn't understand the argument: / inside=max | (exit status 1)
+v-logmapno               image; vs s-ref: SAME
+v-logmapold              image; vs s-ref: 001 offs [106, 107, 420, 421, 422, 423] ; pixels differ (62734)
+v-logmapy                image; vs s-ref: 001 offs [106, 420]
+v-logmapyes              image; vs s-ref: 001 offs [106, 420]
+v-maxfrac                image; vs s-ref: SAME
+v-maxplus                image; vs s-ref: SAME
+v-numdot                 image; vs s-ref: SAME
+v-numexp                 image; vs s-ref: SAME
+v-paramsempty            image; vs s-ref: 001 offs [44, 45, 46, 47, 48, 49, 50, 51] ; pixels differ (70190)
+v-paramsfirst            image; vs s-ref: SAME
+v-paramsshort            image; vs s-ref: 001 offs [52, 53, 54, 55, 56, 57, 58, 59] ; pixels differ (55216)
+v-passesG                NO IMAGE | message: Oops. I couldn't understand the argument: / passes=G | (exit status 1)
+v-symorigin              image; vs s-ref: 001 offs [124, 125]
+v-symxaxis               image; vs s-ref: 001 offs [124, 125] ; pixels differ (34566)
+x-asp1-cmag              image; vs s-ref: SAME
+x-asp1-corners           image; vs s-ref: SAME
+x-nofile-crlf            image; vs s-ref: SAME
+x-nofile-none            NO IMAGE | message: 'zzzz' file entry item not found | (exit status 1)

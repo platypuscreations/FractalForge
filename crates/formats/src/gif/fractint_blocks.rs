@@ -6,7 +6,8 @@
 //! which was derived by black-box analysis of saved files. Never from Fractint
 //! source.
 
-use fractalforge_core::{Inside, Outside, Params, Window, types};
+use fractalforge_core::color::wrap;
+use fractalforge_core::{FractalType, Inside, IterBuffer, Outside, Params, Window, types};
 use fractalforge_render::PassMode;
 
 use super::container::{AppExtension, GifImage, Placement};
@@ -161,42 +162,75 @@ fn read_params(b: &Bytes, modern: bool, p: &mut Params, warnings: &mut Vec<Strin
     if !modern {
         return;
     }
-    // 0 means the type's default (§5.2).
+    // Biomorph and decomposition come first: biomorph changes the default
+    // bailout (coloring.md §8).
+    if let Some(b) = b.i16(102).filter(|&v| v >= 0) {
+        p.biomorph = Some(b as u32);
+    }
+    p.decomp = b.u16(120).unwrap_or(0) as u32;
+
+    // 0 means the default bailout (§5.2).
     let bailout = b
         .i32(402)
         .filter(|&v| v > 0)
         .or(b.i16(212).filter(|&v| v > 0).map(i32::from));
-    if let Some(v) = bailout {
-        p.bailout = v as f64;
+    p.bailout = bailout.map_or_else(|| p.default_bailout(), |v| v as f64);
+    // 999 = automatic, 0 = none; other forced values aren't supported.
+    match b.i16(124).unwrap_or(999) {
+        999 => {}
+        0 => p.use_symmetry = false,
+        v => warnings.push(format!(
+            "forced symmetry setting {v} isn't supported; using automatic"
+        )),
     }
     if b.i16(406).unwrap_or(0) != 0 {
         warnings.push("bailout tests other than the default modulus test are ignored".into());
     }
 
     p.inside = match b.i16(104).unwrap_or(0) {
-        n @ 0..=255 => Inside::Color(n as u8),
-        n if n > 255 => Inside::Color((n % 256) as u8),
-        -1 => Inside::MaxIter,
-        n => {
-            warnings.push(format!(
-                "inside colouring {n} isn't supported; using colour 0"
-            ));
-            Inside::Color(0)
+        n if n >= 0 => Inside::Color(wrap(n as u32) as u8),
+        -102 => {
+            warnings.push("inside=period isn't supported; using the maxiter colour".into());
+            Inside::MaxIter
         }
+        n => INSIDE_CODES.iter().find(|(c, _)| *c == n).map_or_else(
+            || {
+                warnings.push(format!(
+                    "inside colouring {n} isn't supported; using colour 0"
+                ));
+                Inside::Color(0)
+            },
+            |(_, m)| *m,
+        ),
     };
     p.outside = match b.i16(182).unwrap_or(-1) {
-        -1 => Outside::Iter,
-        n => {
-            warnings.push(format!(
-                "outside colouring {n} isn't supported; colouring by iteration"
-            ));
-            Outside::Iter
-        }
+        n @ 0..=255 => Outside::Color(n as u8),
+        n => OUTSIDE_CODES.iter().find(|(c, _)| *c == n).map_or_else(
+            || {
+                warnings.push(format!(
+                    "outside colouring {n} isn't supported; colouring by iteration"
+                ));
+                Outside::Iter
+            },
+            |(_, m)| *m,
+        ),
     };
+    if p.needs_orbit_coloring() && !p.fractal.orbit_coloring {
+        warnings.push(format!(
+            "inside/outside/decomposition/biomorph options aren't supported for {} yet and were ignored",
+            p.fractal.name
+        ));
+        p.inside = match p.inside {
+            Inside::Color(c) => Inside::Color(c),
+            _ => Inside::MaxIter,
+        };
+        p.outside = Outside::Iter;
+        p.decomp = 0;
+        p.biomorph = None;
+        p.bailout = bailout.map_or(p.fractal.default_bailout, |v| v as f64);
+    }
 
     let unsupported = [
-        (b.i16(102).unwrap_or(-1) != -1, "biomorph"),
-        (b.u16(120).unwrap_or(0) != 0, "decomposition"),
         (b.i32(420).unwrap_or(0) != 0, "logarithmic palette"),
         (b.i32(424).unwrap_or(0) != 0, "distance estimator"),
         (b.f64(428).unwrap_or(0.0) != 0.0, "inversion"),
@@ -209,14 +243,171 @@ fn read_params(b: &Bytes, modern: bool, p: &mut Params, warnings: &mut Vec<Strin
     }
 }
 
+/// Pixels of an unfinished Fractint-format image that are certainly final:
+/// everything outside the resume block's work items, and inside them the
+/// final pixels and exact block origins of fractint-resume.md §4. Returns
+/// those pixels' colour indices, with every other pixel unknown; `None` when
+/// the image is finished or carries no usable resume data.
+pub fn partial_buffer(image: &GifImage, fractal: &FractalType) -> Option<IterBuffer> {
+    let main = image.extension(IDENTIFIER, MAIN_AUTH)?.data();
+    let resume = image.extension(IDENTIFIER, RESUME_AUTH)?.data();
+    let b = Bytes(&main);
+    // Fractint resumes only with status 2 and a resume block (§7).
+    if b.i16(202) != Some(2) {
+        return None;
+    }
+    let (w, h) = (image.width as i64, image.height as i64);
+    let r = Bytes(&resume);
+    let count = r.i32(4)?.clamp(0, 12) as usize;
+    let mode = b.u8(200)?;
+    // Guessing pass count, hypothesis for unseen sizes (§3.3).
+    let guess_passes = (64 - ((w / 50).max(1) as u64).leading_zeros() as i64 - 1).max(1);
+
+    let mut known = vec![true; (w * h) as usize];
+    for k in 0..count {
+        let at = 8 + 32 * k;
+        let v = |i: usize| r.i32(at + 4 * i).unwrap_or(0) as i64;
+        let (left, right) = (v(0).clamp(0, w - 1), v(1).clamp(0, w - 1));
+        let (top, bottom) = (v(2).clamp(0, h - 1), v(3).clamp(0, h - 1));
+        let (row, sym, pass, col) = (v(4), v(5), v(6), v(7));
+        if row < 0 {
+            // Fractint recomputes everything (§7).
+            return Some(IterBuffer::new(w as u32, h as u32));
+        }
+        let mirrored = sym == 17 || sym == 51;
+        let last = if mirrored {
+            top + (bottom - top) / 2
+        } else {
+            bottom
+        };
+        let xy = sym == 51 && fractal.symmetry_kind_is_xy();
+        let origin = sym == 51 && !xy;
+        let last_col = if xy { left + (right - left) / 2 } else { right };
+        for y in top..=bottom {
+            for x in left..=right {
+                // State of the computed partner of a copied pixel (§2.2).
+                let (mut ry, mut rx) = (y, x);
+                if y > last {
+                    ry = top + bottom - y;
+                    if origin {
+                        rx = left + right - x;
+                    }
+                }
+                if x > last_col {
+                    rx = left + right - x;
+                }
+                known[(y * w + x) as usize] =
+                    inner_known(mode, guess_passes, row, col, pass, ry, rx);
+            }
+        }
+    }
+    let data = known
+        .iter()
+        .zip(&image.pixels)
+        .map(|(&k, &px)| {
+            if k {
+                px as u32
+            } else {
+                fractalforge_core::UNKNOWN
+            }
+        })
+        .collect();
+    IterBuffer::from_data(w as u32, h as u32, data)
+}
+
+/// Whether pixel (r, c) of a work item is final or an exact block origin
+/// (§4.1). Unanalysed modes keep nothing (§4.3).
+fn inner_known(mode: u8, n: i64, row: i64, col: i64, pass: i64, r: i64, c: i64) -> bool {
+    let before = r < row || (r == row && c < col);
+    match (mode, pass) {
+        (b'1', _) => before,
+        (b'2', 0) => {
+            let block_before = (r - r % 2) < row || ((r - r % 2) == row && (c - c % 2) < col);
+            block_before && r % 2 == 0 && c % 2 == 0
+        }
+        (b'2', _) => before || (r % 2 == 0 && c % 2 == 0),
+        (b'g', p) if p < n => {
+            let b = 1i64 << (n - 1 - p);
+            let band = 2 * b;
+            if r < row {
+                b == 1 || (r % b == 0 && c % b == 0)
+            } else if r == row {
+                c % band == 0
+            } else if r >= row + band && p > 0 {
+                r % band == 0 && c % band == 0
+            } else {
+                false
+            }
+        }
+        _ => false,
+    }
+}
+
+/// Inside colouring codes at offset 104 (coloring.md §6; n ≥ 0 = colour n).
+const INSIDE_CODES: [(i16, Inside); 7] = [
+    (-1, Inside::MaxIter),
+    (-59, Inside::ZMag),
+    (-60, Inside::Bof60),
+    (-61, Inside::Bof61),
+    (-104, Inside::Atan),
+    (-103, Inside::Fmod),
+    (-100, Inside::EpsCross),
+];
+
+/// Outside colouring codes at offset 182 (coloring.md §5; n ≥ 0 = colour n).
+const OUTSIDE_CODES: [(i16, Outside); 8] = [
+    (-1, Outside::Iter),
+    (-2, Outside::Real),
+    (-3, Outside::Imag),
+    (-4, Outside::Mult),
+    (-5, Outside::Summ),
+    (-6, Outside::Atan),
+    (-7, Outside::Fmod),
+    (-8, Outside::Tdis),
+];
+
+/// The inside mode for a Fractint code (negative), if supported.
+pub(crate) fn inside_from_code(code: i16) -> Option<Inside> {
+    INSIDE_CODES
+        .iter()
+        .find(|(c, _)| *c == code)
+        .map(|(_, m)| *m)
+}
+
+/// The outside mode for a Fractint code (negative), if supported.
+pub(crate) fn outside_from_code(code: i16) -> Option<Outside> {
+    OUTSIDE_CODES
+        .iter()
+        .find(|(c, _)| *c == code)
+        .map(|(_, m)| *m)
+}
+
+fn inside_code(m: Inside) -> i16 {
+    match m {
+        Inside::Color(c) => c.into(),
+        m => INSIDE_CODES.iter().find(|(_, x)| *x == m).unwrap().0,
+    }
+}
+
+fn outside_code(m: Outside) -> i16 {
+    match m {
+        Outside::Color(c) => c.into(),
+        m => OUTSIDE_CODES.iter().find(|(_, x)| *x == m).unwrap().0,
+    }
+}
+
 /// Builds the Fractint-format blocks for an image: a resume block when the
 /// render is unfinished, then the main block (always last, §1.2).
 ///
 /// Returns the blocks and notes about anything that couldn't be expressed.
+///
+/// `resume_at` is `None` for a finished image, otherwise the first pixel
+/// (row, column) in row order that isn't final: every pixel before it must
+/// be final.
 pub fn write(
     params: &Params,
     pass_mode: PassMode,
-    finished: bool,
+    resume_at: Option<(u32, u32)>,
     width: u32,
     height: u32,
     elapsed_us: u64,
@@ -245,9 +436,13 @@ pub fn write(
     put(&mut m, 408, &max_iter.to_le_bytes());
     put(&mut m, 8, &(max_iter.min(32767) as i16).to_le_bytes());
 
-    // Fractint stores an integer bailout.
-    let bailout = params.bailout.round().clamp(1.0, i32::MAX as f64) as i32;
-    if bailout as f64 != params.bailout {
+    // Fractint stores an integer bailout; 0 means the type's default.
+    let bailout = if params.bailout == params.default_bailout() {
+        0
+    } else {
+        params.bailout.round().clamp(1.0, i32::MAX as f64) as i32
+    };
+    if bailout != 0 && bailout as f64 != params.bailout {
         notes.push(format!(
             "Fractint stores whole-number bailouts; wrote {bailout} for {}",
             params.bailout
@@ -257,15 +452,23 @@ pub fn write(
     let bailout16 = if bailout <= 32767 { bailout as i16 } else { 0 };
     put(&mut m, 212, &bailout16.to_le_bytes());
 
-    let inside: i16 = match params.inside {
-        Inside::Color(c) => c.into(),
-        Inside::MaxIter => -1,
-    };
-    put(&mut m, 104, &inside.to_le_bytes());
-    let outside: i16 = match params.outside {
-        Outside::Iter => -1,
-    };
+    put(&mut m, 104, &inside_code(params.inside).to_le_bytes());
+    let outside = outside_code(params.outside);
     put(&mut m, 182, &outside.to_le_bytes());
+    let symmetry: i16 = if params.use_symmetry { 999 } else { 0 };
+    let biomorph = params
+        .biomorph
+        .map_or(-1, |b| b.min(i16::MAX as u32) as i16);
+    put(&mut m, 102, &biomorph.to_le_bytes());
+    let decomp = params.decomp.min(u16::MAX as u32) as u16;
+    if decomp as u32 != params.decomp {
+        notes.push(format!(
+            "Fractint stores decomposition up to {}; wrote that",
+            u16::MAX
+        ));
+    }
+    put(&mut m, 120, &decomp.to_le_bytes());
+    put(&mut m, 124, &symmetry.to_le_bytes());
 
     // Screen size (hypothesis, §2.1 offsets 70/72).
     put(&mut m, 70, &(width.min(32767) as i16).to_le_bytes());
@@ -275,7 +478,7 @@ pub fn write(
     put(&mut m, 214, &time.to_le_bytes());
 
     let mut blocks = Vec::new();
-    let pass = if finished {
+    let pass = if resume_at.is_none() {
         put(&mut m, 202, &4i16.to_le_bytes());
         match pass_mode {
             PassMode::One => b'1',
@@ -283,22 +486,26 @@ pub fn write(
             PassMode::Guess => b'g',
         }
     } else {
-        // Ask Fractint to calculate the image from the start (§5.4): the
-        // resume semantics of our pass modes don't map onto Fractint's yet.
+        // A one-pass work item from the first unfinished pixel, without
+        // mirroring (fractint-resume.md §6.2, §6.5): Fractint keeps every
+        // pixel before it and computes the rest, whatever our pass mode was.
+        let (row, col) = resume_at.unwrap_or((0, 0));
         put(&mut m, 202, &2i16.to_le_bytes());
-        notes.push("Fractint will recalculate this unfinished image from the start".into());
+        if pass_mode != PassMode::One {
+            notes.push("Fractint continues this unfinished image in one-pass mode".into());
+        }
         let mut r = [0u8; RESUME_LEN];
         for (off, v) in [
             (0, 2),
             (4, 1),
             (8, 0),
             (12, width as i32 - 1),
-            (16, 0),
+            (16, row as i32),
             (20, height as i32 - 1),
-            (24, 0),
+            (24, row as i32),
             (28, 16),
             (32, 0),
-            (36, 0),
+            (36, col as i32),
         ] {
             put(&mut r, off, &v.to_le_bytes());
         }

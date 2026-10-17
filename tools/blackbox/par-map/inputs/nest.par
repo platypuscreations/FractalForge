@@ -1,0 +1,8 @@
+; SPDX-License-Identifier: GPL-3.0-or-later
+nested {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  inner { maxiter=100 }
+}
+after {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+}

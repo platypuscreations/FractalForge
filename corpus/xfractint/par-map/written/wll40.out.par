@@ -1,0 +1,22 @@
+wll40              { ; our comment one
+  reset=2004 type=julia
+  corners=-1.5/1.5/-1.125/1.125
+  params=-0.80000000000000004/0.156
+  float=y maxiter=200 inside=0
+  viewwindows=2/0.75/yes/0/0
+  colors=00000e0e00eee00e0eeL0eeeLLLLLzLzL\
+  LzzzLLzLzzzLzzz000555<3>HHHKKKOOO<3>ccch\
+  hhmmmssszzz00z<3>z0z<3>z00<3>zz0<3>0z0<3\
+  >0zz<2>0GzVVz<3>zVz<3>zVV<3>zzV<3>VzV<3>\
+  Vzz<2>Vbzhhz<3>zhz<3>zhh<3>zzh<3>hzh<3>h\
+  zz<2>hlz00S<3>S0S<3>S00<3>SS0<3>0S0<3>0S\
+  S<2>07SEES<3>SES<3>SEE<3>SSE<3>ESE<3>ESS\
+  <2>EHSKKS<2>QKSSKSSKQSKOSKMSKK<2>SQKSSKQ\
+  SKOSKMSKKSK<2>KSQKSSKQSKOSKMS00G<3>G0G<3\
+  >G00<3>GG0<3>0G0<3>0GG<2>04G88G<2>E8GG8G\
+  G8EG8CG8AG88<2>GE8GG8EG8CG8AG88G8<2>8GE8\
+  GG8EG8CG8AGBBG<2>FBGGBGGBFGBDGBCGBB<2>GF\
+  BGGBFGBDGBCGBBGB<2>BGFBGGBFGBDGBCG000<6>\
+  000
+  }
+
