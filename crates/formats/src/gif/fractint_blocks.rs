@@ -266,6 +266,22 @@ const OUTSIDE_CODES: [(i16, Outside); 8] = [
     (-8, Outside::Tdis),
 ];
 
+/// The inside mode for a Fractint code (negative), if supported.
+pub(crate) fn inside_from_code(code: i16) -> Option<Inside> {
+    INSIDE_CODES
+        .iter()
+        .find(|(c, _)| *c == code)
+        .map(|(_, m)| *m)
+}
+
+/// The outside mode for a Fractint code (negative), if supported.
+pub(crate) fn outside_from_code(code: i16) -> Option<Outside> {
+    OUTSIDE_CODES
+        .iter()
+        .find(|(c, _)| *c == code)
+        .map(|(_, m)| *m)
+}
+
 fn inside_code(m: Inside) -> i16 {
     match m {
         Inside::Color(c) => c.into(),

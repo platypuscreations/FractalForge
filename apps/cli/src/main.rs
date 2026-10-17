@@ -10,6 +10,7 @@ use std::sync::atomic::{AtomicBool, Ordering};
 use clap::{Args, Parser, Subcommand, ValueEnum};
 use fractalforge_core::{Complex, Inside, Outside, PRESETS, Palette, Params, Window, types};
 use fractalforge_formats::gif::{self, Checkpoint, Content};
+use fractalforge_formats::par;
 use fractalforge_render::{Control, Outcome, PassMode, Render};
 
 #[derive(Parser)]
@@ -31,6 +32,8 @@ enum Command {
     Info { file: PathBuf },
     /// List the available fractal types.
     Types,
+    /// List the entries in a .par file.
+    Entries { file: PathBuf },
     /// Compare the pixels (and iteration data, when both have it) of two
     /// GIFs. Fails if more than the tolerated share of pixels differ.
     Compare {
@@ -48,12 +51,23 @@ enum Command {
 
 #[derive(Args)]
 struct RenderArgs {
-    /// A GIF saved by FractalForge to take parameters (and with --resume,
-    /// progress) from.
+    /// A saved GIF (FractalForge or Fractint) or a .par file to take
+    /// parameters (and with --resume, progress) from.
     input: Option<PathBuf>,
-    /// Output file: .gif (resumable, Fractint-compatible) or .png.
+    /// Entry to use from a .par INPUT (default: the first), or the entry
+    /// name to write to a .par OUTPUT (default: the file name).
+    #[arg(long)]
+    entry: Option<String>,
+    /// Output file: .gif (resumable, Fractint-compatible), .png, .par
+    /// (parameters only; adds or replaces the entry) or .map (palette only).
     #[arg(short, long)]
     output: PathBuf,
+    /// Description for a .par entry.
+    #[arg(long)]
+    comment: Option<String>,
+    /// Palette from a Fractint-format .map file.
+    #[arg(long, conflicts_with = "palette")]
+    map: Option<PathBuf>,
     /// Continue the unfinished render saved in INPUT.
     #[arg(long, requires = "input")]
     resume: bool,
@@ -202,6 +216,7 @@ fn main() -> ExitCode {
             tolerance,
             colors,
         } => compare(&a, &b, tolerance, colors),
+        Command::Entries { file } => list_entries(&file),
         Command::Types => {
             for t in types::all() {
                 println!("{:<10} {}", t.name, t.description);
@@ -263,19 +278,71 @@ fn compare(a: &Path, b: &Path, tolerance: f64, colors: bool) -> Result<(), Strin
     Ok(())
 }
 
-/// What a saved GIF can start a render from.
+/// What an input file can start a render from. (Made once per command, so
+/// its size doesn't matter.)
+#[allow(clippy::large_enum_variant)]
 enum Source {
     Checkpoint(Box<Checkpoint>),
-    /// Parameters from Fractint-format blocks: no usable progress.
+    /// Parameters from Fractint-format blocks or a .par entry: no usable
+    /// progress.
     Fractint {
         params: Params,
-        pass_mode: PassMode,
-        size: (u32, u32),
+        pass_mode: Option<PassMode>,
+        size: Option<(u32, u32)>,
         finished: bool,
+        palette: Option<Palette>,
     },
 }
 
-fn load_source(path: &Path) -> Result<Source, String> {
+fn is_ext(path: &Path, ext: &str) -> bool {
+    path.extension()
+        .is_some_and(|e| e.eq_ignore_ascii_case(ext))
+}
+
+fn load_par(path: &Path, entry: Option<&str>) -> Result<Source, String> {
+    let text = std::fs::read_to_string(path).map_err(|e| format!("{}: {e}", path.display()))?;
+    let all = par::entries(&text);
+    let raw = match entry {
+        Some(name) => par::find(&all, name)
+            .ok_or_else(|| format!("{}: no entry named {name}", path.display()))?,
+        None => all
+            .first()
+            .ok_or_else(|| format!("{}: no entries", path.display()))?,
+    };
+    let loaded = par::load(raw, path.parent()).map_err(|e| e.to_string())?;
+    for w in &loaded.warnings {
+        eprintln!("note: {}: {w}", raw.name);
+    }
+    Ok(Source::Fractint {
+        params: loaded.params,
+        pass_mode: loaded.pass_mode,
+        size: None,
+        finished: true,
+        palette: loaded.palette,
+    })
+}
+
+fn list_entries(path: &Path) -> Result<(), String> {
+    let text = std::fs::read_to_string(path).map_err(|e| format!("{}: {e}", path.display()))?;
+    for e in par::entries(&text) {
+        let kind = par::load(&e, path.parent()).map_or_else(
+            |err| format!("({err})"),
+            |l| l.params.fractal.name.to_owned(),
+        );
+        println!(
+            "{:<19} {:<12} {}",
+            e.name,
+            kind,
+            e.comment.as_deref().unwrap_or("")
+        );
+    }
+    Ok(())
+}
+
+fn load_source(path: &Path, entry: Option<&str>) -> Result<Source, String> {
+    if is_ext(path, "par") {
+        return load_par(path, entry);
+    }
     let loaded = load(path)?;
     let size = (loaded.image.width as u32, loaded.image.height as u32);
     match loaded.content {
@@ -290,11 +357,16 @@ fn load_source(path: &Path) -> Result<Source, String> {
                     path.display()
                 )
             })?;
+            let mut colors = [[0u8; 3]; 256];
+            for (c, p) in colors.iter_mut().zip(&loaded.image.palette) {
+                *c = *p;
+            }
             Ok(Source::Fractint {
                 params,
-                pass_mode: info.pass_mode,
-                size,
+                pass_mode: Some(info.pass_mode),
+                size: Some(size),
                 finished: info.finished,
+                palette: Some(Palette(colors)),
             })
         }
         Content::Image => Err(format!(
@@ -305,7 +377,29 @@ fn load_source(path: &Path) -> Result<Source, String> {
 }
 
 fn render(args: RenderArgs) -> Result<(), String> {
-    let source = args.input.as_deref().map(load_source).transpose()?;
+    let source = args
+        .input
+        .as_deref()
+        .map(|p| load_source(p, args.entry.as_deref()))
+        .transpose()?;
+    let mut palette = match &source {
+        Some(Source::Checkpoint(c)) => Some(c.palette.clone()),
+        Some(Source::Fractint { palette, .. }) => palette.clone(),
+        None => None,
+    };
+    if let Some(path) = &args.map {
+        let text = std::fs::read_to_string(path).map_err(|e| format!("{}: {e}", path.display()))?;
+        let (p, warnings) = fractalforge_formats::map::read(&text);
+        for w in warnings {
+            eprintln!("note: {}: {w}", path.display());
+        }
+        palette = Some(p);
+    }
+    if let Some(p) = &args.palette {
+        palette = Some(p.clone());
+    }
+    let palette = palette.unwrap_or_default();
+
     let mut render = match source {
         Some(Source::Checkpoint(c)) if args.resume => {
             if !args.fractal.is_empty() || args.size.is_some() || args.passes.is_some() {
@@ -327,13 +421,14 @@ fn render(args: RenderArgs) -> Result<(), String> {
                     pass_mode,
                     size,
                     finished,
+                    ..
                 }) => {
                     if args.resume && !finished {
                         eprintln!(
                             "note: resuming from Fractint resume data isn't supported yet; calculating from the start"
                         );
                     }
-                    (params, size, Some(pass_mode))
+                    (params, size.unwrap_or((800, 600)), pass_mode)
                 }
                 None => {
                     let name = args.fractal.fractal_type.as_deref().unwrap_or("mandel");
@@ -349,6 +444,9 @@ fn render(args: RenderArgs) -> Result<(), String> {
                 .map(PassMode::from)
                 .or(file_mode)
                 .unwrap_or(PassMode::Guess);
+            if is_ext(&args.output, "par") || is_ext(&args.output, "map") {
+                return write_settings(&args, &params, mode, &palette);
+            }
             Render::new(params, w, h, mode).map_err(|e| e.to_string())?
         }
     };
@@ -372,7 +470,7 @@ fn render(args: RenderArgs) -> Result<(), String> {
         params,
         state,
         buffer,
-        palette: args.palette.clone().unwrap_or_default(),
+        palette,
     };
     let png = args
         .output
@@ -409,6 +507,35 @@ fn render(args: RenderArgs) -> Result<(), String> {
             args.output.display()
         ),
     }
+    Ok(())
+}
+
+/// Writes a .par entry or a .map palette instead of rendering.
+fn write_settings(
+    args: &RenderArgs,
+    params: &Params,
+    mode: PassMode,
+    palette: &Palette,
+) -> Result<(), String> {
+    let out = &args.output;
+    let text = if is_ext(out, "map") {
+        fractalforge_formats::map::write(palette)
+    } else {
+        let stem = out
+            .file_stem()
+            .map(|s| s.to_string_lossy().into_owned())
+            .unwrap_or_default();
+        let name = args
+            .entry
+            .clone()
+            .unwrap_or_else(|| stem.chars().take(18).collect());
+        let entry = par::write_entry(&name, args.comment.as_deref(), params, mode, Some(palette))
+            .map_err(|e| e.to_string())?;
+        let existing = std::fs::read_to_string(out).unwrap_or_default();
+        par::upsert(&existing, &name, &entry)
+    };
+    std::fs::write(out, text).map_err(|e| format!("{}: {e}", out.display()))?;
+    println!("wrote {}", out.display());
     Ok(())
 }
 

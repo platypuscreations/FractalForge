@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-//! File formats: GIF89a and PNG now; `.par` and `.map` later.
+//! File formats: GIF89a, PNG, and Fractint-format `.par` and `.map`.
 
 pub mod gif;
+pub mod map;
+pub mod par;
 pub mod png;
 
 use std::fmt;

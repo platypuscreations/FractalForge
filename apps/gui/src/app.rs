@@ -11,6 +11,7 @@ use eframe::egui::{
 };
 use fractalforge_core::{Inside, Outside, PRESETS, Palette, Params, Window, types};
 use fractalforge_formats::gif::{self, Checkpoint, Content};
+use fractalforge_formats::{map, par};
 use fractalforge_render::{PassMode, Render};
 use rayon::prelude::*;
 
@@ -98,6 +99,10 @@ pub struct App {
     title: String,
 
     drag: Option<Drag>,
+    /// A .par file with several entries, waiting for the user to pick one.
+    par_choice: Option<(PathBuf, Vec<String>)>,
+    /// "Save parameters" dialog: file, entry name, comment.
+    par_save: Option<(PathBuf, String, String)>,
     /// Test hook: `FRACTALFORGE_SCREENSHOT=out.ppm` saves a screenshot of
     /// the window once the first render completes, then quits.
     screenshot: Option<(PathBuf, bool)>,
@@ -143,6 +148,8 @@ impl App {
             messages: Vec::new(),
             title: String::new(),
             drag: None,
+            par_choice: None,
+            par_save: None,
             screenshot: std::env::var_os("FRACTALFORGE_SCREENSHOT")
                 .map(|p| (PathBuf::from(p), false)),
         };
@@ -308,7 +315,7 @@ impl App {
 
     fn open_dialog(&mut self, ctx: &egui::Context) {
         if let Some(path) = rfd::FileDialog::new()
-            .add_filter("GIF image", &["gif"])
+            .add_filter("Fractal files", &["gif", "par", "map"])
             .pick_file()
         {
             self.open(&path, ctx);
@@ -316,6 +323,12 @@ impl App {
     }
 
     pub fn open(&mut self, path: &Path, ctx: &egui::Context) {
+        let ext = path.extension().map(|e| e.to_string_lossy().to_lowercase());
+        match ext.as_deref() {
+            Some("par") => return self.open_par(path, ctx),
+            Some("map") => return self.open_map(path),
+            _ => {}
+        }
         let loaded = std::fs::read(path)
             .map_err(|e| e.to_string())
             .and_then(|b| gif::load(&b).map_err(|e| e.to_string()));
@@ -330,6 +343,8 @@ impl App {
         match loaded.content {
             Content::Native(c) => {
                 let c = *c;
+                self.palette = c.palette.clone();
+                self.recolor = true;
                 self.pass_mode = c.state.pass_mode;
                 self.size_mode = SizeMode::Fixed(size.0, size.1);
                 match Render::resume(c.params, c.state, c.buffer) {
@@ -364,6 +379,10 @@ impl App {
                 }
                 self.params = params;
                 self.pass_mode = info.pass_mode;
+                for (c, p) in self.palette.0.iter_mut().zip(&loaded.image.palette) {
+                    *c = *p;
+                }
+                self.recolor = true;
                 self.size_mode = SizeMode::Fixed(size.0, size.1);
                 self.render_size = size;
                 self.restart(ctx);
@@ -378,6 +397,172 @@ impl App {
         }
         self.file = Some(path.to_owned());
         self.record_history();
+    }
+
+    fn open_par(&mut self, path: &Path, ctx: &egui::Context) {
+        let text = match std::fs::read_to_string(path) {
+            Ok(t) => t,
+            Err(e) => return self.messages.push(format!("{}: {e}", path.display())),
+        };
+        let names: Vec<String> = par::entries(&text).into_iter().map(|e| e.name).collect();
+        match names.as_slice() {
+            [] => self
+                .messages
+                .push(format!("{}: no entries", path.display())),
+            [only] => {
+                let only = only.clone();
+                self.load_par_entry(path, &only, ctx);
+            }
+            _ => self.par_choice = Some((path.to_owned(), names)),
+        }
+    }
+
+    fn load_par_entry(&mut self, path: &Path, name: &str, ctx: &egui::Context) {
+        let text = std::fs::read_to_string(path).unwrap_or_default();
+        let all = par::entries(&text);
+        let Some(raw) = par::find(&all, name) else {
+            return;
+        };
+        match par::load(raw, path.parent()) {
+            Ok(l) => {
+                self.messages
+                    .extend(l.warnings.iter().map(|w| format!("{name}: {w}")));
+                self.params = l.params;
+                if let Some(m) = l.pass_mode {
+                    self.pass_mode = m;
+                }
+                if let Some(p) = l.palette {
+                    self.palette = p;
+                    self.recolor = true;
+                }
+                self.params.window = view::fit_aspect(&self.params.window, self.aspect());
+                self.record_history();
+                self.restart(ctx);
+            }
+            Err(e) => self.messages.push(e.to_string()),
+        }
+    }
+
+    fn open_map(&mut self, path: &Path) {
+        match std::fs::read_to_string(path) {
+            Ok(text) => {
+                let (p, warnings) = map::read(&text);
+                self.messages
+                    .extend(warnings.iter().map(|w| format!("{}: {w}", path.display())));
+                self.palette = p;
+                self.cycle_offset = 0.0;
+                self.recolor = true;
+            }
+            Err(e) => self.messages.push(format!("{}: {e}", path.display())),
+        }
+    }
+
+    fn save_par_dialog(&mut self) {
+        if let Some(path) = rfd::FileDialog::new()
+            .add_filter("Fractint parameter file", &["par"])
+            .set_file_name("fractals.par")
+            .save_file()
+        {
+            let stem: String = path
+                .file_stem()
+                .map(|s| s.to_string_lossy().chars().take(18).collect())
+                .unwrap_or_default();
+            self.par_save = Some((path, stem, String::new()));
+        }
+    }
+
+    fn export_map(&mut self) {
+        let Some(path) = rfd::FileDialog::new()
+            .add_filter("Fractint palette", &["map"])
+            .set_file_name("palette.map")
+            .save_file()
+        else {
+            return;
+        };
+        let pal = self.palette.rotated(self.cycle_offset as i32);
+        match std::fs::write(&path, map::write(&pal)) {
+            Ok(()) => self.messages.push(format!("exported {}", path.display())),
+            Err(e) => self.messages.push(format!("{}: {e}", path.display())),
+        }
+    }
+
+    /// Entry picker and "save parameters" windows.
+    fn dialogs(&mut self, ctx: &egui::Context) {
+        if let Some((path, names)) = self.par_choice.clone() {
+            let mut open = true;
+            let mut chosen = None;
+            egui::Window::new("Choose an entry")
+                .anchor(egui::Align2::CENTER_CENTER, [0.0, 0.0])
+                .collapsible(false)
+                .open(&mut open)
+                .show(ctx, |ui| {
+                    egui::ScrollArea::vertical()
+                        .max_height(400.0)
+                        .show(ui, |ui| {
+                            for n in &names {
+                                if ui.button(n).clicked() {
+                                    chosen = Some(n.clone());
+                                }
+                            }
+                        });
+                });
+            if let Some(n) = chosen {
+                self.par_choice = None;
+                self.load_par_entry(&path, &n, ctx);
+            } else if !open {
+                self.par_choice = None;
+            }
+        }
+        if let Some((path, mut name, mut comment)) = self.par_save.take() {
+            let mut open = true;
+            let mut save = false;
+            egui::Window::new("Save parameters")
+                .anchor(egui::Align2::CENTER_CENTER, [0.0, 0.0])
+                .collapsible(false)
+                .open(&mut open)
+                .show(ctx, |ui| {
+                    ui.label(path.display().to_string());
+                    ui.horizontal(|ui| {
+                        ui.label("Entry name");
+                        ui.text_edit_singleline(&mut name);
+                    });
+                    ui.horizontal(|ui| {
+                        ui.label("Comment");
+                        ui.text_edit_singleline(&mut comment);
+                    });
+                    ui.label(
+                        "An entry with the same name is replaced; the rest of the file is kept.",
+                    );
+                    save = ui.button("Save").clicked();
+                });
+            if save {
+                let pal = self.palette.rotated(self.cycle_offset as i32);
+                let result = par::write_entry(
+                    &name,
+                    Some(&comment),
+                    &self.params,
+                    self.pass_mode,
+                    Some(&pal),
+                )
+                .map_err(|e| e.to_string())
+                .and_then(|entry| {
+                    let existing = std::fs::read_to_string(&path).unwrap_or_default();
+                    std::fs::write(&path, par::upsert(&existing, &name, &entry))
+                        .map_err(|e| format!("{}: {e}", path.display()))
+                });
+                match result {
+                    Ok(()) => self
+                        .messages
+                        .push(format!("saved {name} to {}", path.display())),
+                    Err(e) => {
+                        self.messages.push(e);
+                        self.par_save = Some((path, name, comment));
+                    }
+                }
+            } else if open {
+                self.par_save = Some((path, name, comment));
+            }
+        }
     }
 
     /// Saves the current image (finished or not) as a GIF. With `stop`,
@@ -574,6 +759,13 @@ impl App {
                 }
                 if ui.button("Export PNG…").clicked() {
                     self.export_png();
+                }
+                ui.separator();
+                if ui.button("Save Parameters (.par)…").clicked() {
+                    self.save_par_dialog();
+                }
+                if ui.button("Export Palette (.map)…").clicked() {
+                    self.export_map();
                 }
                 ui.separator();
                 ui.checkbox(&mut self.autosave, "Autosave while rendering");
@@ -1016,6 +1208,7 @@ impl eframe::App for App {
             .default_size(260.0)
             .show(ui, |ui| self.controls(ui));
         egui::CentralPanel::no_frame().show(ui, |ui| self.canvas(ui));
+        self.dialogs(&ctx);
 
         if let Some(at) = self.restart_at {
             let now = Instant::now();
