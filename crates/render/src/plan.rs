@@ -1,33 +1,24 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-//! The render plan: which rows are visited in which order, derived
-//! deterministically from the parameters, image size and render state.
+//! The render plan: which pixels are computed in which order and which are
+//! copied by symmetry, derived deterministically from the parameters, image
+//! size and render state.
+//!
+//! Symmetry copies exactly the pixels Fractint-format renderers copy
+//! (docs/specs/types.md §1.6), because off-centre views give different
+//! pixels when copied than when computed.
 
 use fractalforge_core::{Complex, IterBuffer, Params, Symmetry, UNKNOWN};
 
 use crate::checkpoint::{PassMode, RenderState};
 
-/// How computed pixels are copied to the other side of a symmetry axis.
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub(crate) enum Mirror {
-    None,
-    /// Row `y` is copied to row `k - y`.
-    Rows {
-        k: i64,
-    },
-    /// Pixel `(x, y)` is copied to `(kx - x, ky - y)`.
-    Origin {
-        kx: i64,
-        ky: i64,
-    },
-}
-
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub(crate) enum Stage {
-    /// Visit the grid of pixels whose coordinates (relative to the region)
-    /// are multiples of `step`.
+    /// Visit the grid of computed pixels whose positions in the computed
+    /// row and column lists are multiples of `step`.
     Level { step: u32, first: bool, guess: bool },
-    /// Compute pixels outside the region that no mirror filled.
+    /// Compute pixels of copied rows that no mirror filled (origin
+    /// symmetry, where the mirrored column falls outside the image).
     Residue,
 }
 
@@ -35,18 +26,71 @@ pub(crate) enum Stage {
 pub(crate) struct Plan {
     pub width: u32,
     pub height: u32,
-    /// Rows `r0..=r1` are computed; the rest are filled by mirroring.
-    pub r0: u32,
-    pub r1: u32,
-    pub mirror: Mirror,
     pub stages: Vec<Stage>,
-    /// Rows outside the region, for the residue stage.
+    symmetry: Symmetry,
+    /// Rows and columns that are computed, in order.
+    rows: Vec<u32>,
+    cols: Vec<u32>,
+    /// For a computed row/column, the row/column copied from it, if any.
+    row_copy: Vec<Option<u32>>,
+    col_copy: Vec<Option<u32>>,
+    /// Origin symmetry: the column reflection constant T.
+    t: i64,
+    /// Copied rows, for the residue stage.
     residue_rows: Vec<u32>,
+}
+
+/// Rows `r` with `s/2 < r <= s` are copies of row `s - r` (§1.6). Returns
+/// for each index the index it is copied from, if any.
+fn copies(n: u32, s: Option<i64>) -> Vec<Option<u32>> {
+    (0..n as i64)
+        .map(|r| match s {
+            Some(s) if 2 * r > s && r <= s => Some((s - r) as u32),
+            _ => None,
+        })
+        .collect()
 }
 
 impl Plan {
     pub fn new(params: &Params, width: u32, height: u32, state: &RenderState) -> Self {
-        let (mirror, r0, r1) = symmetry_region(params, width, height);
+        let w = &params.window;
+        let symmetry = if params.use_symmetry {
+            (params.fractal.symmetry)(params)
+        } else {
+            Symmetry::None
+        };
+        // S = round(2·ymax/Δy) and T = round(−2·xmin/Δx).
+        let s = (height > 1)
+            .then(|| (2.0 * w.y_max / ((w.y_max - w.y_min) / (height - 1) as f64)).round() as i64);
+        let t = (width > 1)
+            .then(|| (2.0 * -w.x_min / ((w.x_max - w.x_min) / (width - 1) as f64)).round() as i64);
+        let (row_from, col_from) = match symmetry {
+            Symmetry::None => (copies(height, None), copies(width, None)),
+            Symmetry::XAxis | Symmetry::Origin => (copies(height, s), copies(width, None)),
+            Symmetry::XY => (copies(height, s), copies(width, t)),
+        };
+
+        let invert = |from: &[Option<u32>]| {
+            let mut to = vec![None; from.len()];
+            for (i, f) in from.iter().enumerate() {
+                if let Some(src) = f {
+                    to[*src as usize] = Some(i as u32);
+                }
+            }
+            to
+        };
+        let rows: Vec<u32> = (0..height)
+            .filter(|&r| row_from[r as usize].is_none())
+            .collect();
+        let cols: Vec<u32> = (0..width)
+            .filter(|&c| col_from[c as usize].is_none())
+            .collect();
+        let residue_rows: Vec<u32> = match symmetry {
+            Symmetry::Origin => (0..height)
+                .filter(|&r| row_from[r as usize].is_some())
+                .collect(),
+            _ => Vec::new(),
+        };
 
         let mut stages = Vec::new();
         let guess = state.pass_mode == PassMode::Guess;
@@ -57,11 +101,6 @@ impl Plan {
             first = false;
             step /= 2;
         }
-
-        let residue_rows: Vec<u32> = match mirror {
-            Mirror::Origin { .. } => (0..height).filter(|y| !(r0..=r1).contains(y)).collect(),
-            _ => Vec::new(),
-        };
         if !residue_rows.is_empty() {
             stages.push(Stage::Residue);
         }
@@ -69,22 +108,21 @@ impl Plan {
         Self {
             width,
             height,
-            r0,
-            r1,
-            mirror,
             stages,
+            symmetry,
+            row_copy: invert(&row_from),
+            col_copy: invert(&col_from),
+            rows,
+            cols,
+            t: t.unwrap_or(0),
             residue_rows,
         }
-    }
-
-    fn region_height(&self) -> u32 {
-        self.r1 - self.r0 + 1
     }
 
     /// Number of rows in a stage.
     pub fn stage_rows(&self, stage: usize) -> u32 {
         match self.stages[stage] {
-            Stage::Level { step, .. } => self.region_height().div_ceil(step),
+            Stage::Level { step, .. } => (self.rows.len() as u32).div_ceil(step),
             Stage::Residue => self.residue_rows.len() as u32,
         }
     }
@@ -115,17 +153,18 @@ impl Plan {
         match self.stages[stage] {
             Stage::Level { step, first, guess } => {
                 let vy = index * step;
-                let y = self.r0 + vy;
+                let y = self.rows[vy as usize];
                 let (start, stride) = if first || vy % (2 * step) != 0 {
                     (0, step)
                 } else {
                     (step, 2 * step)
                 };
-                let out = (start..self.width)
+                let out = (start..self.cols.len() as u32)
                     .step_by(stride as usize)
-                    .map(|x| {
+                    .map(|vx| {
+                        let x = self.cols[vx as usize];
                         let guessed = if guess && !first {
-                            self.guess(buf, x, vy, step)
+                            self.guess(buf, vx, vy, step)
                         } else {
                             None
                         };
@@ -149,18 +188,19 @@ impl Plan {
     }
 
     /// The value to fill without computing, if the 4×4 neighbourhood of
-    /// coarser-grid points around this pixel's cell is uniform.
-    fn guess(&self, buf: &IterBuffer, x: u32, vy: u32, step: u32) -> Option<u32> {
+    /// coarser-grid points around this pixel's cell is uniform. Positions
+    /// are indices into the computed row and column lists.
+    fn guess(&self, buf: &IterBuffer, vx: u32, vy: u32, step: u32) -> Option<u32> {
         let s2 = 2 * step as i64;
-        let last_x = (self.width as i64 - 1) / s2 * s2;
-        let last_y = (self.region_height() as i64 - 1) / s2 * s2;
-        let cx0 = x as i64 / s2 * s2;
+        let last_x = (self.cols.len() as i64 - 1) / s2 * s2;
+        let last_y = (self.rows.len() as i64 - 1) / s2 * s2;
+        let cx0 = vx as i64 / s2 * s2;
         let cy0 = vy as i64 / s2 * s2;
         let mut value = None;
         for j in -1..=2 {
-            let cy = (cy0 + j * s2).clamp(0, last_y) as u32 + self.r0;
+            let cy = self.rows[(cy0 + j * s2).clamp(0, last_y) as usize];
             for i in -1..=2 {
-                let cx = (cx0 + i * s2).clamp(0, last_x) as u32;
+                let cx = self.cols[(cx0 + i * s2).clamp(0, last_x) as usize];
                 let v = buf.get(cx, cy);
                 match value {
                     None => value = Some(v),
@@ -172,63 +212,42 @@ impl Plan {
         value.filter(|&v| v != UNKNOWN)
     }
 
-    /// Writes one row's results and their mirror images.
-    pub fn apply(&self, buf: &mut IterBuffer, y: u32, values: &[(u32, u32)]) {
+    /// Writes one row's results and their mirror copies.
+    pub fn apply(&self, buf: &mut IterBuffer, y: u32, values: &[(u32, u32)], params: &Params) {
+        let mirror = params.fractal.mirror_value;
+        let reflect = |v: u32| mirror.map_or(v, |f| f(v, params));
+        let row_copy = self.row_copy[y as usize];
         for &(x, v) in values {
             buf.set(x, y, v);
-            if let Some((mx, my)) = self.mirror_of(x, y) {
-                buf.set(mx, my, v);
-            }
-        }
-    }
-
-    fn mirror_of(&self, x: u32, y: u32) -> Option<(u32, u32)> {
-        let (mx, my) = match self.mirror {
-            Mirror::None => return None,
-            Mirror::Rows { k } => (x as i64, k - y as i64),
-            Mirror::Origin { kx, ky } => (kx - x as i64, ky - y as i64),
-        };
-        let in_image =
-            (0..self.width as i64).contains(&mx) && (0..self.height as i64).contains(&my);
-        let in_region = (self.r0 as i64..=self.r1 as i64).contains(&my);
-        (in_image && !in_region).then_some((mx as u32, my as u32))
-    }
-}
-
-/// Picks the mirror and the contiguous row range to compute.
-fn symmetry_region(params: &Params, width: u32, height: u32) -> (Mirror, u32, u32) {
-    let all = (Mirror::None, 0, height - 1);
-    if height < 3 {
-        return all;
-    }
-    let w = &params.window;
-    // Twice the (fractional) row index of the line im = 0.
-    let ky = (2.0 * w.y_max / ((w.y_max - w.y_min) / (height - 1) as f64)).round();
-    let rows_ok = ky > 0.0 && ky < 2.0 * (height - 1) as f64;
-
-    let mirror = match (params.fractal.symmetry)(params) {
-        Symmetry::None => return all,
-        Symmetry::XAxis if rows_ok => Mirror::Rows { k: ky as i64 },
-        Symmetry::Origin if rows_ok && width >= 3 => {
-            let kx = (2.0 * -w.x_min / ((w.x_max - w.x_min) / (width - 1) as f64)).round();
-            if kx > 0.0 && kx < 2.0 * (width - 1) as f64 {
-                Mirror::Origin {
-                    kx: kx as i64,
-                    ky: ky as i64,
+            match self.symmetry {
+                Symmetry::None => {}
+                Symmetry::XAxis => {
+                    if let Some(ry) = row_copy {
+                        buf.set(x, ry, reflect(v));
+                    }
                 }
-            } else {
-                return all;
+                Symmetry::XY => {
+                    let col_copy = self.col_copy[x as usize];
+                    if let Some(rx) = col_copy {
+                        buf.set(rx, y, v);
+                    }
+                    if let Some(ry) = row_copy {
+                        buf.set(x, ry, v);
+                        if let Some(rx) = col_copy {
+                            buf.set(rx, ry, v);
+                        }
+                    }
+                }
+                Symmetry::Origin => {
+                    let mx = self.t - x as i64;
+                    if let Some(ry) = row_copy
+                        && (0..self.width as i64).contains(&mx)
+                    {
+                        buf.set(mx as u32, ry, v);
+                    }
+                }
             }
         }
-        _ => return all,
-    };
-
-    // Compute the larger side so the computed rows stay contiguous.
-    let k = ky as u32;
-    if k < height {
-        (mirror, k.div_ceil(2), height - 1)
-    } else {
-        (mirror, 0, k / 2)
     }
 }
 
@@ -260,5 +279,22 @@ impl<'a> Pixels<'a> {
         let w = &self.params.window;
         let c = Complex::new(w.x_min + x as f64 * self.dx, w.y_max - y as f64 * self.dy);
         (self.params.fractal.iterate)(c, self.params)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn copy_rule() {
+        // S = 6: rows 4, 5, 6 copy rows 2, 1, 0; row 3 (the axis) is computed.
+        let c = copies(9, Some(6));
+        assert_eq!(c[..4], [None, None, None, None]);
+        assert_eq!(c[4..7], [Some(2), Some(1), Some(0)]);
+        assert_eq!(c[7..], [None, None]);
+        // Axis outside the view: nothing copied.
+        assert!(copies(9, Some(-4)).iter().all(Option::is_none));
+        assert!(copies(9, Some(40)).iter().all(Option::is_none));
     }
 }

@@ -80,8 +80,8 @@ fn reports_what_it_cannot_use() {
         "{:?}",
         i.warnings
     );
-    let i = info("complete/lambda-base.gif");
-    assert_eq!(i.type_number, 75);
+    let i = info("complete/popcorn-base.gif");
+    assert_eq!(i.type_number, 61);
     assert!(i.params.is_none());
     let i = info("interrupted/int-pass1-early.gif");
     assert!(!i.finished);
@@ -113,12 +113,6 @@ fn writes_the_same_main_block_as_xfractint() {
         assert_eq!(ours.len(), theirs.len());
         let diffs: Vec<usize> = (0..ours.len())
             .filter(|&i| ours[i] != theirs[i] && !matches!(i, 98..=99 | 214..=217))
-            .collect();
-        // XFractint stores 0 ("type default") when no bailout was given; we
-        // always write the value.
-        let diffs: Vec<usize> = diffs
-            .into_iter()
-            .filter(|i| !(212..=213).contains(i) && !(402..=405).contains(i))
             .collect();
         assert!(diffs.is_empty(), "{file}: bytes differ at {diffs:?}");
     }
@@ -190,40 +184,81 @@ fn unfinished_save_asks_fractint_to_recalculate() {
     assert_eq!(i32::from_le_bytes(resume[20..24].try_into().unwrap()), 29);
 }
 
+/// Share of pixels where rendering the file's own parameters reproduces
+/// XFractint's image. Palette indices are compared after mapping each to the
+/// lowest index with the same colour, because XFractint's saver does that
+/// (types spec §1.3).
+fn match_rate(path: &str) -> f64 {
+    let img = image(path);
+    let p = params(path);
+    let mut r = Render::new(
+        p.clone(),
+        img.width.into(),
+        img.height.into(),
+        PassMode::One,
+    )
+    .unwrap();
+    r.run(&Control::default());
+    let canon: Vec<u8> = (0..256usize)
+        .map(|i| {
+            let c = img.palette.get(i);
+            img.palette.iter().position(|x| Some(x) == c).unwrap_or(i) as u8
+        })
+        .collect();
+    let same = r
+        .buffer()
+        .data()
+        .iter()
+        .zip(&img.pixels)
+        .filter(|&(&v, &px)| canon[color_index(v, &p) as usize] == canon[px as usize])
+        .count();
+    same as f64 / img.pixels.len() as f64
+}
+
 /// Rendering a corpus file's parameters must reproduce XFractint's pixels.
-/// A small share differs: XFractint escapes some pixels near the set
-/// boundary exactly 16 iterations earlier, for reasons not yet understood.
+/// These saves used guessing, which can differ slightly from a full
+/// calculation.
 #[test]
 fn renders_match_xfractint_pixels() {
     for (file, min_match) in [
-        ("complete/mandel-pass1.gif", 0.997),
-        ("complete/mandel-bailout-100.gif", 0.997),
-        ("complete/mandel-corners.gif", 0.994),
-        ("complete/mandel-maxiter-1000.gif", 0.996),
-        ("complete/julia-params.gif", 0.995),
+        ("complete/mandel-pass1.gif", 0.999),
+        ("complete/mandel-bailout-100.gif", 0.999),
+        ("complete/mandel-corners.gif", 0.999),
+        ("complete/mandel-maxiter-1000.gif", 0.999),
+        ("complete/julia-params.gif", 0.999),
     ] {
-        let img = image(file);
-        let p = params(file);
-        let mut r = Render::new(
-            p.clone(),
-            img.width.into(),
-            img.height.into(),
-            PassMode::One,
-        )
-        .unwrap();
-        r.run(&Control::default());
-        let same = r
-            .buffer()
-            .data()
-            .iter()
-            .zip(&img.pixels)
-            .filter(|&(&v, &px)| color_index(v, &p) == px)
-            .count();
-        let share = same as f64 / img.pixels.len() as f64;
+        let share = match_rate(file);
         assert!(
             share >= min_match,
             "{file}: only {:.3}% of pixels match",
             share * 100.0
         );
     }
+}
+
+/// Every reference render of the types spec (1-pass, no periodicity check).
+#[test]
+fn all_types_match_xfractint_pixels() {
+    let dir = corpus("types");
+    let mut names: Vec<String> = std::fs::read_dir(&dir)
+        .unwrap()
+        .map(|e| e.unwrap().file_name().to_string_lossy().into_owned())
+        .filter(|n| n.ends_with(".gif"))
+        .collect();
+    names.sort();
+    let mut worst = (1.0f64, String::new());
+    for name in &names {
+        let share = match_rate(&format!("types/{name}"));
+        eprintln!("{name:<28} {:.3}%", share * 100.0);
+        if share < worst.0 {
+            worst = (share, name.clone());
+        }
+    }
+    assert!(names.len() > 50);
+    assert!(
+        worst.0 >= 0.999,
+        "worst: {} at {:.3}%",
+        worst.1,
+        worst.0 * 100.0
+    );
 }

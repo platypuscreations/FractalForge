@@ -8,9 +8,9 @@ use crate::{Inside, Outside, Params};
 
 /// Palette index for one iteration-buffer value. Unknown pixels get index 0.
 ///
-/// Escape count n maps to `(n - 1) mod 256`, drawn as 1 where that is 0, so
-/// index 0 stays free for the default inside colour. This is the mapping
-/// Fractint-format images use (docs/specs/gif-fractint-blocks.md §9).
+/// Buffer values are colour values (see [`crate::types`]): values 1..=255
+/// are used as they are, and larger ones wrap through 1..=255, so index 0
+/// stays free for the default inside colour (docs/specs/types.md §1.2).
 pub fn color_index(value: u32, params: &Params) -> u8 {
     match value {
         UNKNOWN => 0,
@@ -24,10 +24,7 @@ pub fn color_index(value: u32, params: &Params) -> u8 {
 
 fn outside_index(n: u32, params: &Params) -> u8 {
     match params.outside {
-        Outside::Iter => match (n.wrapping_sub(1) % 256) as u8 {
-            0 => 1,
-            c => c,
-        },
+        Outside::Iter => ((n.max(1) - 1) % 255 + 1) as u8,
     }
 }
 
@@ -144,15 +141,15 @@ mod tests {
     fn indices() {
         let mut p = Params::for_type("mandel").unwrap();
         assert_eq!(color_index(1, &p), 1);
-        assert_eq!(color_index(2, &p), 1);
-        assert_eq!(color_index(3, &p), 2);
-        assert_eq!(color_index(256, &p), 255);
-        assert_eq!(color_index(257, &p), 1);
-        assert_eq!(color_index(258, &p), 1);
+        assert_eq!(color_index(2, &p), 2);
+        assert_eq!(color_index(255, &p), 255);
+        assert_eq!(color_index(256, &p), 1);
+        assert_eq!(color_index(257, &p), 2);
+        assert_eq!(color_index(286, &p), 31);
         assert_eq!(color_index(INSIDE, &p), 0);
         assert_eq!(color_index(UNKNOWN, &p), 0);
         p.inside = Inside::MaxIter;
-        assert_eq!(color_index(INSIDE, &p), 149);
+        assert_eq!(color_index(INSIDE, &p), 150);
     }
 
     #[test]

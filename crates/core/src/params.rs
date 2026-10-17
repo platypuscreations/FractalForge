@@ -78,6 +78,9 @@ pub struct Params {
     pub bailout: f64,
     pub inside: Inside,
     pub outside: Outside,
+    /// Copy mirrored pixels where the type is symmetric (the usual
+    /// setting). Off computes every pixel; off-centre views then differ.
+    pub use_symmetry: bool,
 }
 
 impl Params {
@@ -88,9 +91,10 @@ impl Params {
             window: fractal.default_window,
             params: fractal.default_params,
             max_iter: 150,
-            bailout: 4.0,
+            bailout: fractal.default_bailout,
             inside: Inside::Color(0),
             outside: Outside::Iter,
+            use_symmetry: true,
         }
     }
 

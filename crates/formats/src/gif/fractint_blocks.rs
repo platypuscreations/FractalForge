@@ -169,6 +169,14 @@ fn read_params(b: &Bytes, modern: bool, p: &mut Params, warnings: &mut Vec<Strin
     if let Some(v) = bailout {
         p.bailout = v as f64;
     }
+    // 999 = automatic, 0 = none; other forced values aren't supported.
+    match b.i16(124).unwrap_or(999) {
+        999 => {}
+        0 => p.use_symmetry = false,
+        v => warnings.push(format!(
+            "forced symmetry setting {v} isn't supported; using automatic"
+        )),
+    }
     if b.i16(406).unwrap_or(0) != 0 {
         warnings.push("bailout tests other than the default modulus test are ignored".into());
     }
@@ -245,9 +253,13 @@ pub fn write(
     put(&mut m, 408, &max_iter.to_le_bytes());
     put(&mut m, 8, &(max_iter.min(32767) as i16).to_le_bytes());
 
-    // Fractint stores an integer bailout.
-    let bailout = params.bailout.round().clamp(1.0, i32::MAX as f64) as i32;
-    if bailout as f64 != params.bailout {
+    // Fractint stores an integer bailout; 0 means the type's default.
+    let bailout = if params.bailout == params.fractal.default_bailout {
+        0
+    } else {
+        params.bailout.round().clamp(1.0, i32::MAX as f64) as i32
+    };
+    if bailout != 0 && bailout as f64 != params.bailout {
         notes.push(format!(
             "Fractint stores whole-number bailouts; wrote {bailout} for {}",
             params.bailout
@@ -266,6 +278,8 @@ pub fn write(
         Outside::Iter => -1,
     };
     put(&mut m, 182, &outside.to_le_bytes());
+    let symmetry: i16 = if params.use_symmetry { 999 } else { 0 };
+    put(&mut m, 124, &symmetry.to_le_bytes());
 
     // Screen size (hypothesis, §2.1 offsets 70/72).
     put(&mut m, 70, &(width.min(32767) as i16).to_le_bytes());

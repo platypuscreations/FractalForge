@@ -660,16 +660,22 @@ impl App {
                     )
                     .changed();
             });
-            ui.horizontal(|ui| {
-                ui.label("Bailout");
-                changed |= ui
-                    .add(
-                        egui::DragValue::new(&mut self.params.bailout)
-                            .range(0.0001..=1e12)
-                            .speed(0.1),
-                    )
-                    .changed();
-            });
+            if self.params.fractal.uses_bailout {
+                ui.horizontal(|ui| {
+                    ui.label("Bailout");
+                    changed |= ui
+                        .add(
+                            egui::DragValue::new(&mut self.params.bailout)
+                                .range(0.0001..=1e12)
+                                .speed(0.1),
+                        )
+                        .changed();
+                });
+            }
+            changed |= ui
+                .checkbox(&mut self.params.use_symmetry, "Use symmetry")
+                .on_hover_text("Copy mirrored pixels instead of computing them, as Fractint does")
+                .changed();
             ui.horizontal(|ui| {
                 ui.label("Inside");
                 let mut max_iter = self.params.inside == Inside::MaxIter;

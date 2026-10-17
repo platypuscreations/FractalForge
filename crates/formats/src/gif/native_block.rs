@@ -15,8 +15,9 @@ pub const APP_IDENTIFIER: &[u8; 8] = b"FRCTFRGE";
 /// Application authentication code (3 bytes). Part of the file format.
 pub const AUTH_CODE: &[u8; 3] = b"1.0";
 
-/// Payload layout version written by this code.
-pub const PAYLOAD_VERSION: u16 = 1;
+/// Payload layout version written by this code. Version 1 (pre-release)
+/// stored escape counts rather than colour values and isn't read.
+pub const PAYLOAD_VERSION: u16 = 2;
 
 const COMPRESSION_DEFLATE: u8 = 1;
 /// Refuse to inflate bodies larger than this (a 16k × 16k buffer is 1 GiB).
@@ -53,6 +54,7 @@ pub fn encode(c: &Checkpoint) -> AppExtension {
     body.push(match p.outside {
         Outside::Iter => 0,
     });
+    body.push(p.use_symmetry as u8);
 
     body.extend_from_slice(&c.buffer.width().to_le_bytes());
     body.extend_from_slice(&c.buffer.height().to_le_bytes());
@@ -116,6 +118,7 @@ pub fn decode(ext: &AppExtension) -> Result<Checkpoint, Error> {
         0 => Outside::Iter,
         t => return Err(bad(format!("unknown outside mode {t}"))),
     };
+    let use_symmetry = r.u8()? != 0;
     let params = Params {
         fractal,
         window,
@@ -124,6 +127,7 @@ pub fn decode(ext: &AppExtension) -> Result<Checkpoint, Error> {
         bailout,
         inside,
         outside,
+        use_symmetry,
     };
 
     let width = r.u32()?;

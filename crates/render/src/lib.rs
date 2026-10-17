@@ -182,7 +182,7 @@ impl Render {
             return false;
         };
         for (y, values) in &results {
-            self.plan.apply(&mut self.buffer, *y, values);
+            self.plan.apply(&mut self.buffer, *y, values, &self.params);
         }
 
         self.state.row = end;
@@ -232,6 +232,47 @@ mod tests {
         let mut r = Render::new(params.clone(), w, h, mode).unwrap();
         assert_eq!(r.run(&Control::default()), Outcome::Complete);
         r.buffer().clone()
+    }
+
+    fn all_types() -> Vec<Params> {
+        fractalforge_core::types::all()
+            .iter()
+            .map(|t| Params::new(t))
+            .collect()
+    }
+
+    /// Off-centre views exercise every symmetry kind's partial copying.
+    fn off_centre(mut p: Params) -> Params {
+        let w = p.window;
+        let (dx, dy) = ((w.x_max - w.x_min) * 0.17, (w.y_max - w.y_min) * 0.23);
+        p.window = Window::new(w.x_min + dx, w.x_max + dx, w.y_min + dy, w.y_max + dy * 0.5);
+        p
+    }
+
+    #[test]
+    fn all_types_fill_every_pixel_and_resume_identically() {
+        for base in all_types() {
+            for params in [base.clone(), off_centre(base)] {
+                for mode in [PassMode::One, PassMode::Guess] {
+                    let expected = full(&params, 61, 47, mode);
+                    assert_eq!(
+                        expected.unknown_count(),
+                        0,
+                        "{} {mode:?}",
+                        params.fractal.name
+                    );
+                    let mut r = Render::new(params.clone(), 61, 47, mode).unwrap();
+                    r.run(&Control {
+                        stop_after: Some(0.4),
+                        ..Default::default()
+                    });
+                    let (p, s, b) = r.into_parts();
+                    let mut r = Render::resume(p, s, b).unwrap();
+                    r.run(&Control::default());
+                    assert_eq!(r.buffer(), &expected, "{} {mode:?}", params.fractal.name);
+                }
+            }
+        }
     }
 
     #[test]

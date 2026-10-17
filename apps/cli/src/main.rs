@@ -94,6 +94,9 @@ struct FractalArgs {
     /// Inside colour: a palette index, or `maxiter`.
     #[arg(long, value_parser = parse_inside)]
     inside: Option<Inside>,
+    /// Compute every pixel instead of copying mirrored ones.
+    #[arg(long)]
+    no_symmetry: bool,
 }
 
 impl FractalArgs {
@@ -105,6 +108,7 @@ impl FractalArgs {
             && self.maxiter.is_none()
             && self.bailout.is_none()
             && self.inside.is_none()
+            && !self.no_symmetry
     }
 
     /// Applies the overrides to `params` (or to the defaults of a new type).
@@ -132,6 +136,9 @@ impl FractalArgs {
         }
         if let Some(i) = self.inside {
             params.inside = i;
+        }
+        if self.no_symmetry {
+            params.use_symmetry = false;
         }
         params.validate()?;
         Ok(params)

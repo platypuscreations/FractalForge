@@ -15,9 +15,12 @@ Fractint source code and is not affiliated with the Stone Soup Group.
 
 ## Status
 
-Phase 1 (engine and command line). There is no GUI yet. The CLI renders
-Mandelbrot and Julia sets and can stop a render, save it as a GIF, and resume
-it later with identical results:
+Phase 2 (desktop app, toward v0.1). FractalForge has a desktop app and a
+command-line renderer. It renders 17 escape-time types (mandel, julia,
+lambda, mandellambda, mandel4, julia4, manowar, manowarj, barnsleym1,
+barnsleyj1, spider, magnet1m, magnet1j, newton, newtbasin, phoenix,
+mandphoenix) with the same pixels as Fractint-format renderers, and can stop
+a render, save it as a GIF and resume it later with identical results:
 
 ```sh
 cargo run --release -p fractalforge-cli -- render -o big.gif --size 3840x2160 --maxiter 5000 --stop-after 30
