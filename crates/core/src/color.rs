@@ -31,7 +31,7 @@ pub fn wrap(v: u32) -> u32 {
 /// The colour value of the point `pixel`, using orbit colouring when the
 /// parameters ask for it (mandel and julia only).
 pub fn pixel_value(pixel: crate::Complex, p: &Params) -> u32 {
-    if p.fractal.orbit_coloring && p.needs_orbit_coloring() {
+    if p.fractal.orbit_coloring && p.needs_orbit_coloring() && p.program.is_none() {
         let a = crate::Complex::new(p.params[0], p.params[1]);
         if p.fractal.name == "julia" {
             crate::orbit_color::quadratic(pixel, a, true, p)
@@ -40,6 +40,15 @@ pub fn pixel_value(pixel: crate::Complex, p: &Params) -> u32 {
         }
     } else {
         (p.fractal.iterate)(pixel, p)
+    }
+}
+
+/// The colour value of a point of a run-time program (formula), with the
+/// pixel's position and the carried state.
+pub fn program_value(at: &crate::PixelContext, p: &Params, carry: &mut crate::Carry) -> u32 {
+    match &p.program {
+        Some(prog) => prog.0.iterate(at, p, carry),
+        None => INSIDE,
     }
 }
 

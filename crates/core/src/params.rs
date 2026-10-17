@@ -193,6 +193,9 @@ pub struct Params {
     pub use_symmetry: bool,
     /// The run-time definition for types that need one (formulas).
     pub program: Option<crate::Program>,
+    /// Functions bound to fn1…fn4, as indices into Fractint's function
+    /// table (gif-fractint-blocks.md §6.2). Default sin, sqr, sinh, cosh.
+    pub functions: [u8; 4],
 }
 
 impl Params {
@@ -210,6 +213,7 @@ impl Params {
             biomorph: None,
             use_symmetry: true,
             program: None,
+            functions: [0, 6, 2, 3],
         }
     }
 

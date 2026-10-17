@@ -17,5 +17,5 @@ pub use color::{PRESETS, Palette, color_index, pixel_value};
 pub use complex::Complex;
 pub use iter::{INSIDE, IterBuffer, UNKNOWN};
 pub use params::{Inside, MAX_ITER_LIMIT, Outside, Params, Window};
-pub use program::{FractalProgram, Program};
+pub use program::{Carry, FractalProgram, PixelContext, Program};
 pub use types::{FractalType, Symmetry};

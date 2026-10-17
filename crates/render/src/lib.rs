@@ -13,7 +13,7 @@ use std::fmt;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::time::Instant;
 
-use fractalforge_core::{IterBuffer, Params};
+use fractalforge_core::{Carry, IterBuffer, Params};
 use rayon::prelude::*;
 
 pub use checkpoint::{PassMode, RenderState};
@@ -63,6 +63,8 @@ pub struct Render {
     state: RenderState,
     buffer: IterBuffer,
     plan: Plan,
+    /// State carried from pixel to pixel by order-dependent programs.
+    carry: Option<Carry>,
 }
 
 impl Render {
@@ -75,8 +77,23 @@ impl Render {
         if width == 0 || height == 0 {
             return Err(ResumeError::SizeMismatch);
         }
-        let state = RenderState::new(pass_mode, width, height);
+        let mode = if Self::sequential(&params) {
+            PassMode::One
+        } else {
+            pass_mode
+        };
+        let state = RenderState::new(mode, width, height);
         Self::resume(params, state, IterBuffer::new(width, height))
+    }
+
+    /// Whether the program carries state between pixels (see
+    /// [`fractalforge_core::FractalProgram::order_dependent`]). Such renders
+    /// run one pixel at a time in one pass, in Fractint's order.
+    fn sequential(params: &Params) -> bool {
+        params
+            .program
+            .as_ref()
+            .is_some_and(|p| p.0.order_dependent())
     }
 
     /// Starts a render whose buffer already holds some final pixels (from a
@@ -86,7 +103,12 @@ impl Render {
         buffer: IterBuffer,
         pass_mode: PassMode,
     ) -> Result<Self, ResumeError> {
-        let state = RenderState::new(pass_mode, buffer.width(), buffer.height());
+        let mode = if Self::sequential(&params) {
+            PassMode::One
+        } else {
+            pass_mode
+        };
+        let state = RenderState::new(mode, buffer.width(), buffer.height());
         Self::resume(params, state, buffer)
     }
 
@@ -127,11 +149,23 @@ impl Render {
         if !fresh && !params.fractal.resumable {
             return Err(ResumeError::NotResumable(params.fractal.name));
         }
+        let carry = Self::sequential(&params).then(|| {
+            // The carried state isn't part of a checkpoint.
+            if !fresh || state.pass_mode != PassMode::One {
+                return Err(ResumeError::NotResumable(
+                    "formula whose pixels depend on earlier pixels",
+                ));
+            }
+            let prog = params.program.as_ref().unwrap();
+            Ok(prog.0.new_carry(&params, width, height))
+        });
+        let carry = carry.transpose()?;
         Ok(Self {
             params,
             state,
             buffer,
             plan,
+            carry,
         })
     }
 
@@ -182,11 +216,39 @@ impl Render {
         let rows = self.plan.stage_rows(stage);
         let end = (self.state.row + BATCH_ROWS).min(rows);
 
+        if let Some(carry) = &mut self.carry {
+            // One row at a time, in order, applying each before the next so
+            // a cancel never leaves the carried state ahead of the buffer.
+            let start = self.state.row;
+            for i in start..end {
+                if cancel.load(Ordering::Relaxed) {
+                    break;
+                }
+                let (y, values) = self
+                    .plan
+                    .row_work(stage, i, &self.params, &self.buffer, carry);
+                self.plan.apply(&mut self.buffer, y, &values, &self.params);
+                self.state.row = i + 1;
+            }
+            if self.state.row == rows {
+                self.state.stage += 1;
+                self.state.row = 0;
+            }
+            self.state.elapsed_us += started.elapsed().as_micros() as u64;
+            return self.state.row != start || self.state.stage as usize != stage;
+        }
+
         let (plan, params, buffer) = (&self.plan, &self.params, &self.buffer);
+        let fresh_carry = || {
+            params.program.as_ref().map_or_else(Carry::default, |p| {
+                p.0.new_carry(params, buffer.width(), buffer.height())
+            })
+        };
         let results: Option<Vec<_>> = (self.state.row..end)
             .into_par_iter()
             .map(|i| {
-                (!cancel.load(Ordering::Relaxed)).then(|| plan.row_work(stage, i, params, buffer))
+                (!cancel.load(Ordering::Relaxed))
+                    .then(|| plan.row_work(stage, i, params, buffer, &mut fresh_carry()))
             })
             .collect();
         let Some(results) = results.filter(|_| !cancel.load(Ordering::Relaxed)) else {

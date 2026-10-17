@@ -21,6 +21,8 @@ pub enum Symmetry {
     None,
     /// Rows below the real axis are copies of rows above it.
     XAxis,
+    /// Columns right of the imaginary axis are copies of columns left of it.
+    YAxis,
     /// Rows and columns are copied independently about the real and
     /// imaginary axes.
     XY,
@@ -576,10 +578,10 @@ pub static MANDPHOENIX: FractalType = std_type(
     sym_none,
 );
 
-fn program_iterate(w: Complex, p: &Params) -> u32 {
-    p.program
-        .as_ref()
-        .map_or(INSIDE, |prog| prog.0.iterate(w, p))
+/// Programs are called through [`crate::color::program_value`], which
+/// supplies the pixel position and carried state.
+fn program_iterate(_: Complex, _: &Params) -> u32 {
+    INSIDE
 }
 
 fn program_symmetry(p: &Params) -> Symmetry {
@@ -591,6 +593,8 @@ fn program_symmetry(p: &Params) -> Symmetry {
 /// A Fractint-format formula; the program comes from a `.frm` file.
 pub static FORMULA: FractalType = FractalType {
     needs_program: true,
+    // The program applies the colouring options itself.
+    orbit_coloring: true,
     ..std_type(
         "formula",
         73,

@@ -970,6 +970,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "fractalforge-formula"
+version = "0.1.0"
+dependencies = [
+ "fractalforge-core",
+]
+
+[[package]]
 name = "fractalforge-render"
 version = "0.1.0"
 dependencies = [

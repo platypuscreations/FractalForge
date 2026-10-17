@@ -8,7 +8,7 @@
 //! (docs/specs/types.md §1.6), because off-centre views give different
 //! pixels when copied than when computed.
 
-use fractalforge_core::{Complex, IterBuffer, Params, Symmetry, UNKNOWN};
+use fractalforge_core::{Carry, Complex, IterBuffer, Params, PixelContext, Symmetry, UNKNOWN};
 
 use crate::checkpoint::{PassMode, RenderState};
 
@@ -67,6 +67,7 @@ impl Plan {
         let (row_from, col_from) = match symmetry {
             Symmetry::None => (copies(height, None), copies(width, None)),
             Symmetry::XAxis | Symmetry::Origin => (copies(height, s), copies(width, None)),
+            Symmetry::YAxis => (copies(height, None), copies(width, t)),
             Symmetry::XY => (copies(height, s), copies(width, t)),
         };
 
@@ -148,6 +149,7 @@ impl Plan {
         index: u32,
         params: &Params,
         buf: &IterBuffer,
+        carry: &mut Carry,
     ) -> (u32, Vec<(u32, u32)>) {
         let px = Pixels::new(params, self.width, self.height);
         match self.stages[stage] {
@@ -175,7 +177,7 @@ impl Plan {
                         } else {
                             None
                         };
-                        (x, guessed.unwrap_or_else(|| px.iterate(x, y)))
+                        (x, guessed.unwrap_or_else(|| px.iterate(x, y, carry)))
                     })
                     .collect();
                 (y, out)
@@ -187,7 +189,7 @@ impl Plan {
                     .iter()
                     .enumerate()
                     .filter(|&(_, &v)| v == UNKNOWN)
-                    .map(|(x, _)| (x as u32, px.iterate(x as u32, y)))
+                    .map(|(x, _)| (x as u32, px.iterate(x as u32, y, carry)))
                     .collect();
                 (y, out)
             }
@@ -233,6 +235,11 @@ impl Plan {
                         buf.set(x, ry, reflect(v));
                     }
                 }
+                Symmetry::YAxis => {
+                    if let Some(rx) = self.col_copy[x as usize] {
+                        buf.set(rx, y, v);
+                    }
+                }
                 Symmetry::XY => {
                     let col_copy = self.col_copy[x as usize];
                     if let Some(rx) = col_copy {
@@ -263,6 +270,8 @@ struct Pixels<'a> {
     params: &'a Params,
     dx: f64,
     dy: f64,
+    width: u32,
+    height: u32,
 }
 
 impl<'a> Pixels<'a> {
@@ -279,12 +288,24 @@ impl<'a> Pixels<'a> {
             params,
             dx: span(w.x_min, w.x_max, width),
             dy: span(w.y_min, w.y_max, height),
+            width,
+            height,
         }
     }
 
-    fn iterate(&self, x: u32, y: u32) -> u32 {
+    fn iterate(&self, x: u32, y: u32, carry: &mut Carry) -> u32 {
         let w = &self.params.window;
         let c = Complex::new(w.x_min + x as f64 * self.dx, w.y_max - y as f64 * self.dy);
+        if self.params.program.is_some() {
+            let at = PixelContext {
+                pixel: c,
+                col: x,
+                row: y,
+                width: self.width,
+                height: self.height,
+            };
+            return fractalforge_core::color::program_value(&at, self.params, carry);
+        }
         fractalforge_core::pixel_value(c, self.params)
     }
 }
