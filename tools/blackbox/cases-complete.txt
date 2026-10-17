@@ -21,3 +21,143 @@ mandel-decomp-2     type=mandel maxiter=150 decomp=2
 mandel-periodicity0 type=mandel maxiter=150 periodicity=0
 julia-base          type=julia maxiter=150
 julia-params        type=julia maxiter=150 params=-0.8/0.156
+
+# Phase 1 spec evidence (added by the spec writer). Cases that name ff.frm,
+# ff.l, ff.ifs or ff.map need tools/blackbox/inputs/ in the work directory.
+mandel-rseed-4660            type=mandel maxiter=150 rseed=4660
+mandel-rseed-0               type=mandel maxiter=150 rseed=0
+mandel-rseed-neg2            type=mandel maxiter=150 rseed=-2
+mandel-maxiter-32767         type=mandel maxiter=32767
+mandel-maxiter-32768         type=mandel maxiter=32768
+mandel-maxiter-65535         type=mandel maxiter=65535
+mandel-maxiter-65536         type=mandel maxiter=65536
+mandel-maxiter-100000        type=mandel maxiter=100000
+mandel-maxiter-2             type=mandel maxiter=2
+mandel-bailout-4             type=mandel maxiter=150 bailout=4
+mandel-bailout-1000          type=mandel maxiter=150 bailout=1000
+mandel-bailout-100000        type=mandel maxiter=150 bailout=100000
+mandel-bailoutest-real       type=mandel maxiter=150 bailoutest=real
+mandel-bailoutest-manh       type=mandel maxiter=150 bailoutest=manh
+mandel-inside-1              type=mandel maxiter=150 inside=1
+mandel-inside-5              type=mandel maxiter=150 inside=5
+mandel-inside-255            type=mandel maxiter=150 inside=255
+mandel-inside-maxiter        type=mandel maxiter=150 inside=maxiter
+mandel-inside-zmag           type=mandel maxiter=150 inside=zmag
+mandel-inside-bof61          type=mandel maxiter=150 inside=bof61
+mandel-inside-epscross       type=mandel maxiter=150 inside=epscross
+mandel-inside-startrail      type=mandel maxiter=150 inside=startrail
+mandel-inside-period         type=mandel maxiter=150 inside=period
+mandel-inside-atan           type=mandel maxiter=150 inside=atan
+mandel-inside-fmod           type=mandel maxiter=150 inside=fmod
+mandel-inside-neg5           type=mandel maxiter=150 inside=-5
+mandel-outside-iter          type=mandel maxiter=150 outside=iter
+mandel-outside-imag          type=mandel maxiter=150 outside=imag
+mandel-outside-mult          type=mandel maxiter=150 outside=mult
+mandel-outside-summ          type=mandel maxiter=150 outside=summ
+mandel-outside-atan          type=mandel maxiter=150 outside=atan
+mandel-outside-fmod          type=mandel maxiter=150 outside=fmod
+mandel-outside-tdis          type=mandel maxiter=150 outside=tdis
+mandel-outside-7             type=mandel maxiter=150 outside=7
+mandel-float-no              type=mandel maxiter=150 float=no
+mandel-corners-distinct      type=mandel maxiter=150 corners=-1.125/0.875/-0.4375/0.3125
+mandel-corners-6             type=mandel maxiter=150 corners=-2.25/1.25/-1.375/1.625/-2.0625/-1.1875
+mandel-params-2              type=mandel maxiter=150 params=0.125/0.25
+mandel-params-10             type=mandel maxiter=150 params=0.01/0.02/0.03/0.04/0.05/0.06/0.07/0.08/0.09/0.11
+mandel-params-zero3          type=mandel maxiter=150 params=0/0/0
+julia-params-2               type=julia maxiter=150 params=0.25/-0.5
+lambda-base                  type=lambda maxiter=150
+newton-base                  type=newton maxiter=150
+newtbasin-params5            type=newtbasin maxiter=150 params=5
+mandel4-base                 type=mandel4 maxiter=150
+julia4-base                  type=julia4 maxiter=150
+sierpinski-base              type=sierpinski maxiter=150
+mandelfn-base                type=mandelfn maxiter=150
+mandelfn-cosh                type=mandelfn function=cosh maxiter=150
+barnsleym1-base              type=barnsleym1 maxiter=150
+manowar-base                 type=manowar maxiter=150
+fnfn-base                    type=fn*fn maxiter=150
+fnfn-sin-exp                 type=fn*fn function=sin/exp maxiter=150
+fnfn-fnset-a                 type=fn*fn maxiter=150 function=cos/sinh/sqr/log
+fnfn-fnset-b                 type=fn*fn maxiter=150 function=recip/ident/cosxx/tan
+fnfn-fnset-c                 type=fn*fn maxiter=150 function=tanh/cotan/cotanh/flip
+fnfn-fnset-d                 type=fn*fn maxiter=150 function=conj/zero/asin/asinh
+fnfn-fnset-e                 type=fn*fn maxiter=150 function=acos/acosh/atan/atanh
+fnfn-fnset-f                 type=fn*fn maxiter=150 function=sqrt/abs/cabs/floor
+fnfn-fnset-g                 type=fn*fn maxiter=150 function=ceil/trunc/round/one
+popcorn-base                 type=popcorn maxiter=150
+lorenz-base                  type=lorenz maxiter=150
+formula-ffquad               type=formula formulafile=ff.frm formulaname=ffquad maxiter=150
+formula-ffcube               type=formula formulafile=ff.frm formulaname=ffcube maxiter=150
+lsystem-ffkoch               type=lsystem lfile=ff.l lname=ffkoch
+ifs-fftri                    type=ifs ifsfile=ff.ifs ifs=fftri
+julibrot-base                type=julibrot maxiter=150
+julibrot-fromto              type=julibrot maxiter=150 julibrotfromto=1.5/-1.5/0.75/-0.75
+julibrot-3d                  type=julibrot maxiter=150 julibrot3d=17/18/19/20/21/2.25
+julibrot-3d-8values          type=julibrot maxiter=150 julibrot3d=17/18/19/20/21/2.25/3.5/1
+julibrot-eyes                type=julibrot maxiter=150 julibroteyes=3.75
+mandel-periodicity2          type=mandel maxiter=150 periodicity=2
+mandel-periodicity-neg3      type=mandel maxiter=150 periodicity=-3
+mandel-decomp-256            type=mandel maxiter=150 decomp=256
+mandel-decomp-2-70000        type=mandel maxiter=150 decomp=2/70000
+mandel-biomorph-5            type=mandel maxiter=150 biomorph=5
+mandel-potential             type=mandel maxiter=150 potential=255/820/200
+mandel-potential-16bit       type=mandel maxiter=150 potential=255/820/200/16bit
+mandel-potential-2           type=mandel maxiter=150 potential=100/512/50
+mandel-potential-3           type=mandel maxiter=150 potential=255/100/0
+mandel-distest-1             type=mandel maxiter=150 distest=1
+mandel-distest-3-2           type=mandel maxiter=150 distest=3/2
+mandel-distest-70000         type=mandel maxiter=150 distest=70000
+mandel-invert                type=mandel maxiter=150 invert=1/0.5/0.25
+mandel-invert-2              type=mandel maxiter=150 invert=3/0.125/-0.5
+mandel-logmap-yes            type=mandel maxiter=150 logmap=yes
+mandel-logmap-7              type=mandel maxiter=150 logmap=7
+mandel-logmap-100000         type=mandel maxiter=150 logmap=100000
+mandel-logmap-neg3           type=mandel maxiter=150 logmap=-3
+mandel-finattract            type=mandel maxiter=150 finattract=yes
+mandel-symmetry-none         type=mandel maxiter=150 symmetry=none
+mandel-fillcolor-5           type=mandel maxiter=150 fillcolor=5
+mandel-cyclerange            type=mandel maxiter=150 cyclerange=10/200
+mandel-pass3                 type=mandel maxiter=150 passes=3
+mandel-passt                 type=mandel maxiter=150 passes=t
+mandel-passs                 type=mandel maxiter=150 passes=s
+mandel-passd                 type=mandel maxiter=150 passes=d
+mandel-passo                 type=mandel maxiter=150 passes=o
+mandel-passo-orbitcorners    passes=o type=mandel maxiter=150 orbitcorners=-1.125/0.875/-0.4375/0.3125
+mandel-passo-drawmode-l      passes=o type=mandel maxiter=150 orbitdrawmode=l
+mandel-3d-rotation           type=mandel maxiter=150 rotation=11/22/33
+mandel-3d-scalexyz           type=mandel maxiter=150 scalexyz=41/42/43
+mandel-3d-roughness          type=mandel maxiter=150 roughness=44
+mandel-3d-waterline          type=mandel maxiter=150 waterline=5
+mandel-3d-filltype           type=mandel maxiter=150 filltype=2
+mandel-3d-perspective        type=mandel maxiter=150 perspective=150
+mandel-3d-xyshift            type=mandel maxiter=150 xyshift=3/4
+mandel-3d-lightsource        type=mandel maxiter=150 lightsource=1/2/3
+mandel-3d-smoothing          type=mandel maxiter=150 smoothing=2
+mandel-3d-ambient            type=mandel maxiter=150 ambient=10
+mandel-3d-randomize          type=mandel maxiter=150 randomize=5
+mandel-3d-haze               type=mandel maxiter=150 haze=12
+mandel-3d-transparent        type=mandel maxiter=150 transparent=13/14
+mandel-3d-sphere             type=mandel maxiter=150 sphere=yes
+mandel-stereo                type=mandel maxiter=150 stereo=1 interocular=5 converge=6 crop=7/8/9/10 bright=11/12
+mandel-stereo-2              type=mandel maxiter=150 stereo=2
+mandel-mathtolerance         type=mandel maxiter=150 mathtolerance=0.02/0.03
+mandel-orbitdelay            type=mandel maxiter=150 orbitdelay=7
+mandel-orbitinterval         type=mandel maxiter=150 orbitinterval=3
+mandel-nobof                 type=mandel maxiter=150 nobof=yes
+mandel-olddemmcolors         type=mandel maxiter=150 olddemmcolors=yes
+mandel-viewwindows-2         type=mandel maxiter=150 viewwindows=2
+mandel-map                   type=mandel maxiter=150 map=ff.map
+mandel-deep-corners          type=mandel maxiter=150 corners=-0.743643887037158704752191506114774/-0.743643887037151/0.131825904205311970493132056385139/0.131825904205315
+mandel-deep-mag1e12          type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e12
+mandel-deep-mag1e13          type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e13
+mandel-deep-mag1e14          type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e14
+mandel-deep-realaxis         type=mandel maxiter=50 center-mag=-1.75487766624669276004950889635852/0/1e15
+mandel-deep-small            type=mandel maxiter=50 center-mag=0.0000123456789/0.0000234567891/1e15
+mandel-deep-300              type=mandel maxiter=50 center-mag=300.5/-2.25/1e15
+mandel-deep-mag1e30          type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e30
+mandel-deep-mag1e60          type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e60
+julia-deep                   type=julia maxiter=50 params=-0.8/0.156 center-mag=0.1/0.2/1e20
+verify-ref-r1                type=mandel corners=-0.75/-0.70/0.10/0.14 maxiter=1000 bailout=100 inside=bof60 outside=real passes=1
+verify-ref-r2                type=julia params=-0.8/0.156 maxiter=255 passes=1
+verify-ref-r3                type=fn*fn function=cos/sinh maxiter=150 passes=1
+verify-ref-r4                type=lambda params=1/0.4 maxiter=150 passes=1

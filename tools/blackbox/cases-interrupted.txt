@@ -12,3 +12,11 @@ int-passg       10 type=mandel maxiter=20000 corners=-0.75/-0.74/0.10/0.11 passe
 int-passb       10 type=mandel maxiter=20000 corners=-0.75/-0.74/0.10/0.11 passes=b inside=1
 int-float       10 type=mandel maxiter=20000 corners=-0.75/-0.74/0.10/0.11 passes=1 float=yes
 int-julia       10 type=julia maxiter=20000 params=-0.8/0.156 passes=1
+
+# Phase 1 spec evidence (added by the spec writer).
+int-pass2-late           40 type=mandel maxiter=20000 corners=-0.75/-0.74/0.10/0.11 passes=2
+int-passg-early          5 type=mandel maxiter=20000 corners=-0.75/-0.74/0.10/0.11 passes=g
+int-viewwindows-2        10 type=mandel maxiter=20000 corners=-0.75/-0.74/0.10/0.11 passes=1 viewwindows=2
+int-passt                10 type=mandel maxiter=20000 corners=-0.75/-0.74/0.10/0.11 passes=t
+int-passd                10 type=mandel maxiter=20000 corners=-0.75/-0.74/0.10/0.11 passes=d
+int-pass3                10 type=mandel maxiter=20000 corners=-0.75/-0.74/0.10/0.11 passes=3

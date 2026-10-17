@@ -16,8 +16,15 @@ docker run --rm -v "$PWD/out:/work" --entrypoint run-interrupt \
 
 - `run-batch` (the default entrypoint) adds `batch=yes` and passes the
   remaining arguments to XFractint.
+- `inputs/` holds formula, L-system, IFS and map files we wrote ourselves.
+  `gen-corpus.sh` copies them into each case's work directory.
 - `run-interrupt DELAY ...` starts an interactive render, presses **s** after
   DELAY seconds and keeps the partial save.
+- `run-load DELAY1 DELAY2 filename=in.gif ...` loads a GIF interactively,
+  presses **Enter** after DELAY1 seconds (calculating or resuming it) and **s**
+  after DELAY2 more.
+- `interop.sh` checks that XFractint reads GIFs FractalForge writes (about two
+  minutes under emulation).
 
 ## Quirks
 

@@ -21,8 +21,12 @@ render_case() {
   local work
   work="$(mktemp -d "$out/.work-$name.XXXX")"
   chmod 777 "$work"
+  # Our own formula/L-system/IFS/map files (tools/blackbox/inputs/) are made
+  # available to every case, then removed again after the render.
+  cp "$here"/inputs/* "$work"/
   docker run --rm -v "$work:/work" "$@" savename=ff.gif \
     >"$out/$name.log" 2>&1 </dev/null || true
+  for f in "$here"/inputs/*; do rm -f "$work/$(basename "$f")"; done
   if [ -s "$work/ff.gif" ]; then
     mv "$work/ff.gif" "$out/$name.gif"
   else

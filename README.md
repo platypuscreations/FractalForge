@@ -15,7 +15,28 @@ Fractint source code and is not affiliated with the Stone Soup Group.
 
 ## Status
 
-Phase 0 (foundation). Nothing renders yet. Roadmap:
+Phase 1 (engine and command line). There is no GUI yet. The CLI renders
+Mandelbrot and Julia sets and can stop a render, save it as a GIF, and resume
+it later with identical results:
+
+```sh
+cargo run --release -p fractalforge-cli -- render -o big.gif --size 3840x2160 --maxiter 5000 --stop-after 30
+cargo run --release -p fractalforge-cli -- render big.gif --resume -o big-done.gif
+cargo run --release -p fractalforge-cli -- info big-done.gif
+```
+
+Ctrl-C during a render also saves a resumable GIF.
+
+Saved GIFs also carry Fractint-format parameter blocks, so XFractint and DOS
+Fractint open them with the right parameters. FractalForge can likewise render
+the parameters of Mandelbrot and Julia GIFs saved by Fractint:
+
+```sh
+cargo run --release -p fractalforge-cli -- info saved-by-fractint.gif
+cargo run --release -p fractalforge-cli -- render saved-by-fractint.gif -o again.gif
+```
+
+Roadmap:
 
 | Phase | Scope |
 |-------|-------|

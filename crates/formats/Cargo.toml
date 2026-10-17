@@ -13,6 +13,8 @@ publish.workspace = true
 [dependencies]
 fractalforge-core.workspace = true
 fractalforge-render.workspace = true
+weezl.workspace = true
+miniz_oxide.workspace = true
 
 [lints]
 workspace = true
