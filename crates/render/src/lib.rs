@@ -157,8 +157,14 @@ impl Render {
 
     /// Processes up to [`BATCH_ROWS`] rows of the current stage.
     pub fn step(&mut self) {
+        self.step_cancellable(&AtomicBool::new(false));
+    }
+
+    /// Like [`Render::step`], but gives up mid-batch once `cancel` is set,
+    /// leaving the state as it was. Returns whether the batch was applied.
+    pub fn step_cancellable(&mut self, cancel: &AtomicBool) -> bool {
         if self.is_complete() {
-            return;
+            return true;
         }
         let started = Instant::now();
         let stage = self.state.stage as usize;
@@ -166,10 +172,15 @@ impl Render {
         let end = (self.state.row + BATCH_ROWS).min(rows);
 
         let (plan, params, buffer) = (&self.plan, &self.params, &self.buffer);
-        let results: Vec<_> = (self.state.row..end)
+        let results: Option<Vec<_>> = (self.state.row..end)
             .into_par_iter()
-            .map(|i| plan.row_work(stage, i, params, buffer))
+            .map(|i| {
+                (!cancel.load(Ordering::Relaxed)).then(|| plan.row_work(stage, i, params, buffer))
+            })
             .collect();
+        let Some(results) = results.filter(|_| !cancel.load(Ordering::Relaxed)) else {
+            return false;
+        };
         for (y, values) in &results {
             self.plan.apply(&mut self.buffer, *y, values);
         }
@@ -180,6 +191,7 @@ impl Render {
             self.state.row = 0;
         }
         self.state.elapsed_us += started.elapsed().as_micros() as u64;
+        true
     }
 
     /// Renders until complete, cancelled, or past `stop_after`.
@@ -191,7 +203,11 @@ impl Render {
             if control.stop_after.is_some_and(|f| self.progress() >= f) {
                 return Outcome::Stopped;
             }
-            self.step();
+            if let Some(cancel) = control.cancel {
+                self.step_cancellable(cancel);
+            } else {
+                self.step();
+            }
         }
         Outcome::Complete
     }
@@ -333,6 +349,15 @@ mod tests {
             r = Render::resume(p, s, b).unwrap();
         }
         assert_eq!(r.buffer(), &expected);
+    }
+
+    #[test]
+    fn cancelled_step_changes_nothing() {
+        let flag = AtomicBool::new(true);
+        let mut r = Render::new(mandel(), 50, 50, PassMode::Guess).unwrap();
+        assert!(!r.step_cancellable(&flag));
+        assert_eq!(r.checkpoint(), RenderState::new(PassMode::Guess, 50, 50));
+        assert_eq!(r.buffer().unknown_count(), 2500);
     }
 
     #[test]

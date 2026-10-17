@@ -8,7 +8,7 @@ use std::sync::Arc;
 use std::sync::atomic::{AtomicBool, Ordering};
 
 use clap::{Args, Parser, Subcommand, ValueEnum};
-use fractalforge_core::{Complex, Inside, Palette, Params, Window, types};
+use fractalforge_core::{Complex, Inside, PRESETS, Palette, Params, Window, types};
 use fractalforge_formats::gif::{self, Checkpoint, Content};
 use fractalforge_render::{Control, Outcome, PassMode, Render};
 
@@ -26,7 +26,7 @@ struct Cli {
 #[derive(Subcommand)]
 enum Command {
     /// Render an image, optionally starting from or resuming a saved GIF.
-    Render(RenderArgs),
+    Render(Box<RenderArgs>),
     /// Describe a saved GIF.
     Info { file: PathBuf },
     /// List the available fractal types.
@@ -51,7 +51,7 @@ struct RenderArgs {
     /// A GIF saved by FractalForge to take parameters (and with --resume,
     /// progress) from.
     input: Option<PathBuf>,
-    /// Output GIF.
+    /// Output file: .gif (resumable, Fractint-compatible) or .png.
     #[arg(short, long)]
     output: PathBuf,
     /// Continue the unfinished render saved in INPUT.
@@ -65,6 +65,9 @@ struct RenderArgs {
     size: Option<(u32, u32)>,
     #[arg(long, value_enum)]
     passes: Option<Passes>,
+    /// Built-in palette (see `types` for the list).
+    #[arg(long, value_parser = parse_palette)]
+    palette: Option<Palette>,
     #[command(flatten)]
     fractal: FractalArgs,
 }
@@ -158,7 +161,7 @@ impl From<Passes> for PassMode {
 fn main() -> ExitCode {
     let cli = Cli::parse();
     let result = match cli.command {
-        Command::Render(args) => render(args),
+        Command::Render(args) => render(*args),
         Command::Info { file } => info(&file),
         Command::Compare {
             a,
@@ -170,6 +173,8 @@ fn main() -> ExitCode {
             for t in types::all() {
                 println!("{:<10} {}", t.name, t.description);
             }
+            let names: Vec<_> = PRESETS.iter().map(|(n, _)| n.to_lowercase()).collect();
+            println!("\npalettes:  {}", names.join(", "));
             Ok(())
         }
     };
@@ -334,12 +339,31 @@ fn render(args: RenderArgs) -> Result<(), String> {
         params,
         state,
         buffer,
-        palette: Palette::forge(),
+        palette: args.palette.clone().unwrap_or_default(),
     };
-    let saved = gif::save(&checkpoint, outcome == Outcome::Complete).map_err(|e| e.to_string())?;
-    std::fs::write(&args.output, saved.bytes)
-        .map_err(|e| format!("{}: {e}", args.output.display()))?;
-    for n in &saved.notes {
+    let png = args
+        .output
+        .extension()
+        .is_some_and(|e| e.eq_ignore_ascii_case("png"));
+    let (bytes, notes) = if png {
+        let bytes = fractalforge_formats::png::encode(
+            &checkpoint.params,
+            &checkpoint.buffer,
+            &checkpoint.palette,
+        )
+        .map_err(|e| e.to_string())?;
+        let mut notes = Vec::new();
+        if outcome != Outcome::Complete {
+            notes.push("PNG files can't be resumed; save as .gif to continue later".to_owned());
+        }
+        (bytes, notes)
+    } else {
+        let saved =
+            gif::save(&checkpoint, outcome == Outcome::Complete).map_err(|e| e.to_string())?;
+        (saved.bytes, saved.notes)
+    };
+    std::fs::write(&args.output, bytes).map_err(|e| format!("{}: {e}", args.output.display()))?;
+    for n in &notes {
         eprintln!("note: {n}");
     }
 
@@ -418,6 +442,14 @@ fn info(path: &Path) -> Result<(), String> {
         Content::Image => println!("status:     plain image (no fractal data)"),
     }
     Ok(())
+}
+
+fn parse_palette(s: &str) -> Result<Palette, String> {
+    PRESETS
+        .iter()
+        .find(|(name, _)| name.eq_ignore_ascii_case(s))
+        .map(|(_, keys)| Palette::from_keys(keys))
+        .ok_or_else(|| format!("unknown palette {s:?}"))
 }
 
 fn parse_percent(s: &str) -> Result<f64, String> {

@@ -11,7 +11,7 @@ pub mod iter;
 pub mod params;
 pub mod types;
 
-pub use color::{Palette, color_index};
+pub use color::{PRESETS, Palette, color_index};
 pub use complex::Complex;
 pub use iter::{INSIDE, IterBuffer, UNKNOWN};
 pub use params::{Inside, MAX_ITER_LIMIT, Outside, Params, Window};

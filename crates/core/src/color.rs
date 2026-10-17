@@ -31,6 +31,57 @@ fn outside_index(n: u32, params: &Params) -> u8 {
     }
 }
 
+/// Key colours of [`Palette::forge`].
+pub const FORGE_KEYS: [[u8; 3]; 7] = [
+    [0, 7, 100],
+    [32, 107, 203],
+    [237, 255, 255],
+    [255, 170, 0],
+    [200, 40, 20],
+    [90, 10, 110],
+    [0, 7, 100],
+];
+
+/// FractalForge's built-in palettes as (name, key colours).
+pub const PRESETS: &[(&str, &[[u8; 3]])] = &[
+    ("Forge", &FORGE_KEYS),
+    (
+        "Ember",
+        &[
+            [20, 0, 0],
+            [180, 30, 0],
+            [255, 160, 20],
+            [255, 250, 200],
+            [120, 20, 0],
+            [20, 0, 0],
+        ],
+    ),
+    (
+        "Lagoon",
+        &[
+            [0, 20, 40],
+            [0, 120, 140],
+            [140, 240, 220],
+            [250, 250, 240],
+            [20, 80, 160],
+            [0, 20, 40],
+        ],
+    ),
+    ("Grey", &[[30, 30, 30], [235, 235, 235], [30, 30, 30]]),
+    (
+        "Spectrum",
+        &[
+            [255, 0, 0],
+            [255, 255, 0],
+            [0, 255, 0],
+            [0, 255, 255],
+            [0, 0, 255],
+            [255, 0, 255],
+            [255, 0, 0],
+        ],
+    ),
+];
+
 /// A 256-entry RGB palette.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Palette(pub [[u8; 3]; 256]);
@@ -39,24 +90,28 @@ impl Palette {
     /// FractalForge's default palette: black at index 0, then a smooth cycle
     /// through deep blue, cyan, white, gold, red and violet.
     pub fn forge() -> Self {
-        const KEYS: [[u8; 3]; 7] = [
-            [0, 7, 100],
-            [32, 107, 203],
-            [237, 255, 255],
-            [255, 170, 0],
-            [200, 40, 20],
-            [90, 10, 110],
-            [0, 7, 100],
-        ];
+        Self::from_keys(&FORGE_KEYS)
+    }
+
+    /// A palette with black at index 0 and indices 1..=255 interpolated
+    /// linearly through `keys` (at least two). Repeat the first key at the
+    /// end for a seamless colour cycle.
+    pub fn from_keys(keys: &[[u8; 3]]) -> Self {
         let mut colors = [[0u8; 3]; 256];
-        // Indices 1..=255 span the six segments between the keys.
+        let segments = keys.len().saturating_sub(1);
+        if segments == 0 {
+            let fill = keys.first().copied().unwrap_or([0; 3]);
+            colors[1..].fill(fill);
+            return Self(colors);
+        }
         for (i, color) in colors.iter_mut().enumerate().skip(1) {
-            let t = (i - 1) * 6 * 256 / 255; // position in 1/256ths of a segment
-            let seg = (t / 256).min(5);
+            // Position in 1/256ths of a segment.
+            let t = (i - 1) * segments * 256 / 254;
+            let seg = (t / 256).min(segments - 1);
             let f = (t - seg * 256) as u32;
             for ch in 0..3 {
-                let a = KEYS[seg][ch] as u32;
-                let b = KEYS[seg + 1][ch] as u32;
+                let a = keys[seg][ch] as u32;
+                let b = keys[seg + 1][ch] as u32;
                 color[ch] = ((a * (256 - f) + b * f) / 256) as u8;
             }
         }
@@ -108,5 +163,17 @@ mod tests {
         assert_eq!(p.rotated(255), p);
         assert_eq!(p.rotated(1).0[2], p.0[1]);
         assert_eq!(p.rotated(1).0[1], p.0[255]);
+    }
+
+    #[test]
+    fn from_keys_hits_the_ends() {
+        let p = Palette::from_keys(&[[0, 0, 0], [255, 255, 255]]);
+        assert_eq!(p.0[1], [0, 0, 0]);
+        assert_eq!(p.0[255], [255, 255, 255]);
+        assert!(p.0.windows(2).skip(1).all(|w| w[0][0] <= w[1][0]));
+        assert_eq!(Palette::from_keys(&[[9, 9, 9]]).0[200], [9, 9, 9]);
+        for (_, keys) in PRESETS {
+            assert_eq!(Palette::from_keys(keys).0[0], [0, 0, 0]);
+        }
     }
 }
