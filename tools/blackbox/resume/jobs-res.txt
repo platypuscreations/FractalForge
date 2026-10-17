@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+L r-MS-1-30 out/i-MS-1-30.gif 10 170
+L r-MS-2-12 out/i-MS-2-12.gif 10 170
+L r-MS-2-45 out/i-MS-2-45.gif 10 170
+L r-MN-1-30 out/i-MN-1-30.gif 10 170
+L r-MN-2-12 out/i-MN-2-12.gif 10 170
+L r-MN-2-45 out/i-MN-2-45.gif 10 170
+L r-J-1-30 out/i-J-1-30.gif 10 170
+L r-J-2-12 out/i-J-2-12.gif 10 170
+L r-J-2-45 out/i-J-2-45.gif 10 170
+L r-MSG-g-10 out/i-MSG-g-10.gif 10 240
+L r-MSG-g-30 out/i-MSG-g-30.gif 10 240
+L r-MSG-g-60 out/i-MSG-g-60.gif 10 240
+L r-MNG-g-10 out/i-MNG-g-10.gif 10 240
+L r-MNG-g-15 out/i-MNG-g-15.gif 10 240
+L r-MNG-g-20 out/i-MNG-g-20.gif 10 240
+L r-JG-g-10 out/i-JG-g-10.gif 10 240
+L r-JG-g-45 out/i-JG-g-45.gif 10 240
+L r-JG-g-90 out/i-JG-g-90.gif 10 240

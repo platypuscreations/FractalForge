@@ -1,0 +1,17 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+L y-Y1 craft3/Y1.gif 10 170
+L y-Y2 craft3/Y2.gif 10 170
+L y-Y3 craft3/Y3.gif 10 170
+L y-Y4 craft3/Y4.gif 10 170
+L y-Y5 craft3/Y5.gif 10 170
+L y-Y6 craft3/Y6.gif 10 170
+L y-Y7 craft3/Y7.gif 10 170
+L y-Y10 craft3/Y10.gif 10 170
+L y-Y12 craft3/Y12.gif 10 170
+L y-Y13 craft3/Y13.gif 10 170
+L y-Y14 craft3/Y14.gif 10 170
+L y-Y15 craft3/Y15.gif 10 170
+L y-Y16 craft3/Y16.gif 10 170
+L y-Y17 craft3/Y17.gif 10 170
+L y-Y18 craft3/Y18.gif 10 170
+L y-Y19 craft3/Y19.gif 10 170

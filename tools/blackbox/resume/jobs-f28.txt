@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+B ref-BX-1 BX passes=1
+I i-BX-1-12 12 BX passes=1
+I i-BX-1-20 20 BX passes=1
+I i-BOF-1-12 12 BOF passes=1
+I i-ORL-1-12 12 ORL passes=1
+I i-MSN-1-12 12 MSN passes=1
+B ref-MSN-1 MSN passes=1
+B ref-BOF-1 BOF passes=1
+B ref-ORL-1 ORL passes=1

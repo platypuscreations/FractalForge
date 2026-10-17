@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+L c-C1 craft/C1.gif 10 170
+L c-C2 craft/C2.gif 10 170
+L c-C3 craft/C3.gif 10 170
+L c-C4a craft/C4a.gif 10 170
+L c-C4b craft/C4b.gif 10 170
+L c-C4c craft/C4c.gif 10 170
+L c-C5 craft/C5.gif 10 170
+L c-C6 craft/C6.gif 10 170
+L c-C7 craft/C7.gif 10 170
+L c-C7b craft/C7b.gif 10 170
+L c-C8 craft/C8.gif 10 170
+L c-C9 craft/C9.gif 10 170
+L c-C10 craft/C10.gif 10 170
+L c-C11 craft/C11.gif 10 170
+L c-C12 craft/C12.gif 10 170
+L c-C13 craft/C13.gif 10 170
+L c-C14 craft/C14.gif 10 170
+L c-C15 craft/C15.gif 10 170
+L c-C16 craft/C16.gif 10 170
+L c-X1 craft/X1.gif 10 170
+L c-X2 craft/X2.gif 10 170
+L c-X3 craft/X3.gif 10 170
+L c-X4 craft/X4.gif 10 170
+L c-X5 craft/X5.gif 10 170
+L c-X6 craft/X6.gif 10 170
+L c-X7 craft/X7.gif 10 170
+L c-X8 craft/X8.gif 10 170
+L c-X9 craft/X9.gif 10 170
+L c-X10 craft/X10.gif 10 170
+L c-X11 craft/X11.gif 10 170
+L c-X12 craft/X12.gif 10 170
+B ref-s4-MSG-g MSG passes=g viewwindows=4
+I s4-MSG-g-9 9 MSG passes=g viewwindows=4
+I s4-MSG-g-12 12 MSG passes=g viewwindows=4
+I s4-MSG-g-16 16 MSG passes=g viewwindows=4
+I s4-MSG-g-22 22 MSG passes=g viewwindows=4
+B ref-s3-MSG-g MSG passes=g viewwindows=3
+I s3-MSG-g-9 9 MSG passes=g viewwindows=3
+I s3-MSG-g-12 12 MSG passes=g viewwindows=3
+I s3-MSG-g-16 16 MSG passes=g viewwindows=3
+I s3-MSG-g-22 22 MSG passes=g viewwindows=3

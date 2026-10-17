@@ -1,0 +1,93 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+# Output of tools/blackbox/resume/model.py <int file> <matching ref file>, one line per
+# save in int/ (plus two saves from ../interrupted/ checked against ref/ref-C800-g.gif).
+# "states" counts pixels per predicted state; "mismatch" counts pixels the rule got wrong
+# (in-progress guessing band pixels are not predicted). i-BX-* use FORCE_SYM=xy.
+i-BOF-1-12.gif mode 1 items [[0, 399, 22, 299, 22, 16, 0, 185]] states {'final': 8985, 'empty': 111015} mismatch {'empty': 1}
+i-BX-1-12.gif mode 1 items [[0, 399, 43, 256, 43, 51, 0, 175]] states {'final': 35100, 'empty': 84900} mismatch {}  [mirror kind xy, see spec 2.1]
+i-BX-1-20.gif mode 1 items [[0, 399, 52, 247, 52, 51, 0, 150]] states {'final': 42200, 'empty': 77800} mismatch {}  [mirror kind xy, see spec 2.1]
+i-J-1-12.gif mode 1 items [[0, 399, 85, 214, 85, 51, 0, 108]] states {'final': 68216, 'empty': 51784} mismatch {}
+i-J-1-20.gif mode 1 items [[0, 399, 91, 208, 91, 51, 0, 176]] states {'final': 73152, 'empty': 46848} mismatch {}
+i-J-1-30.gif mode 1 items [[0, 399, 116, 183, 116, 51, 0, 134]] states {'final': 93068, 'empty': 26932} mismatch {}
+i-J-1-45.gif mode 1 items [[0, 399, 129, 170, 129, 51, 0, 218]] states {'final': 103636, 'empty': 16364} mismatch {}
+i-J-1-60.gif complete; diff vs ref 0
+i-J-1-80.gif complete; diff vs ref 0
+i-J-2-12.gif mode 2 items [[0, 399, 0, 299, 140, 51, 0, 194]] states {'prov': 112776, 'empty': 7224} mismatch {}
+i-J-2-20.gif mode 2 items [[0, 399, 75, 224, 75, 51, 1, 127]] states {'final': 60254, 'prov': 59746} mismatch {}
+i-J-2-30.gif mode 2 items [[0, 399, 104, 195, 104, 51, 1, 153]] states {'final': 83506, 'prov': 36494} mismatch {}
+i-J-2-45.gif mode 2 items [[0, 399, 123, 176, 123, 51, 1, 191]] states {'final': 98782, 'prov': 21218} mismatch {}
+i-J-2-60.gif complete; diff vs ref 0
+i-J-2-80.gif complete; diff vs ref 0
+i-JB-1-12.gif mode 1 items [[0, 399, 121, 178, 121, 51, 0, 205]] states {'final': 97210, 'empty': 22790} mismatch {}
+i-JB-1-20.gif mode 1 items [[0, 399, 130, 169, 130, 51, 0, 166]] states {'final': 104332, 'empty': 15668} mismatch {}
+i-JB-1-30.gif mode 1 items [[0, 399, 137, 162, 137, 51, 0, 131]] states {'final': 109862, 'empty': 10138} mismatch {}
+i-JB-2-12.gif mode 2 items [[0, 399, 0, 299, 146, 51, 0, 176]] states {'prov': 117504, 'empty': 2496} mismatch {}
+i-JB-2-20.gif mode 2 items [[0, 399, 117, 182, 117, 51, 1, 170]] states {'final': 93940, 'prov': 26060} mismatch {}
+i-JB-2-30.gif mode 2 items [[0, 399, 131, 168, 131, 51, 1, 206]] states {'final': 105212, 'prov': 14788} mismatch {}
+i-JG-g-10.gif mode g items [[0, 399, 0, 299, 88, 51, 0, 0]] states {'prov': 70400, 'band': 6400, 'lookahead': 100, 'empty': 43100} mismatch {}
+i-JG-g-120.gif mode g items [[0, 399, 0, 299, 136, 51, 2, 0]] states {'final': 108800, 'band': 1600, 'prov': 9600} mismatch {}
+i-JG-g-15.gif mode g items [[0, 399, 0, 299, 112, 51, 0, 0]] states {'prov': 89600, 'band': 6400, 'lookahead': 100, 'empty': 23900} mismatch {}
+i-JG-g-20.gif mode g items [[0, 399, 0, 299, 136, 51, 0, 0]] states {'prov': 108800, 'band': 6400, 'lookahead': 100, 'empty': 4700} mismatch {}
+i-JG-g-30.gif mode g items [[0, 399, 0, 299, 76, 51, 1, 0]] states {'prov': 116800, 'band': 3200} mismatch {}
+i-JG-g-45.gif mode g items [[0, 399, 0, 299, 124, 51, 1, 0]] states {'prov': 116800, 'band': 3200} mismatch {}
+i-JG-g-60.gif mode g items [[0, 399, 0, 299, 66, 51, 2, 0]] states {'final': 52800, 'band': 1600, 'prov': 65600} mismatch {}
+i-JG-g-90.gif mode g items [[0, 399, 0, 299, 98, 51, 2, 0]] states {'final': 78400, 'band': 1600, 'prov': 40000} mismatch {}
+i-MN-1-12.gif mode 1 items [[0, 399, 58, 299, 58, 16, 0, 389]] states {'final': 23589, 'empty': 96411} mismatch {}
+i-MN-1-20.gif mode 1 items [[0, 399, 105, 299, 105, 16, 0, 167]] states {'final': 42167, 'empty': 77833} mismatch {}
+i-MN-1-30.gif mode 1 items [[0, 399, 155, 299, 155, 16, 0, 281]] states {'final': 62281, 'empty': 57719} mismatch {}
+i-MN-1-45.gif mode 1 items [[0, 399, 221, 299, 221, 16, 0, 0]] states {'final': 88400, 'empty': 31600} mismatch {}
+i-MN-1-60.gif mode 1 items [[0, 399, 256, 299, 256, 16, 0, 177]] states {'final': 102577, 'empty': 17423} mismatch {}
+i-MN-1-80.gif mode 1 items [[0, 399, 287, 299, 287, 16, 0, 293]] states {'final': 115093, 'empty': 4907} mismatch {}
+i-MN-2-12.gif mode 2 items [[0, 399, 0, 299, 220, 16, 0, 266]] states {'prov': 88532, 'empty': 31468} mismatch {}
+i-MN-2-20.gif mode 2 items [[0, 399, 3, 299, 3, 16, 1, 236]] states {'final': 1436, 'prov': 118564} mismatch {}
+i-MN-2-30.gif mode 2 items [[0, 399, 109, 299, 109, 16, 1, 184]] states {'final': 43784, 'prov': 76216} mismatch {}
+i-MN-2-45.gif mode 2 items [[0, 399, 155, 299, 155, 16, 1, 211]] states {'final': 62211, 'prov': 57789} mismatch {}
+i-MN-2-60.gif mode 2 items [[0, 399, 248, 299, 248, 16, 1, 249]] states {'final': 99449, 'prov': 20551} mismatch {}
+i-MN-2-80.gif mode 2 items [[0, 399, 279, 299, 279, 16, 1, 354]] states {'final': 111954, 'prov': 8046} mismatch {}
+i-MNG-g-10.gif mode g items [[0, 399, 0, 299, 184, 16, 0, 0]] states {'prov': 73600, 'band': 3200, 'lookahead': 50, 'empty': 43150} mismatch {}
+i-MNG-g-120.gif complete; diff vs ref 0
+i-MNG-g-15.gif mode g items [[0, 399, 0, 299, 224, 16, 1, 0]] states {'prov': 118400, 'band': 1600} mismatch {}
+i-MNG-g-20.gif mode g items [[0, 399, 0, 299, 84, 16, 2, 0]] states {'final': 33600, 'band': 800, 'prov': 85600} mismatch {}
+i-MNG-g-30.gif complete; diff vs ref 0
+i-MNG-g-45.gif complete; diff vs ref 0
+i-MNG-g-60.gif complete; diff vs ref 0
+i-MNG-g-90.gif complete; diff vs ref 0
+i-MO-1-12.gif mode 1 items [[0, 399, 153, 246, 153, 17, 0, 249]] states {'final': 82898, 'empty': 37102} mismatch {}
+i-MO-1-20.gif mode 1 items [[0, 399, 165, 234, 165, 17, 0, 211]] states {'final': 92422, 'empty': 27578} mismatch {}
+i-MO-1-30.gif mode 1 items [[0, 399, 177, 222, 177, 17, 0, 188]] states {'final': 101976, 'empty': 18024} mismatch {}
+i-MO-2-12.gif mode 2 items [[0, 399, 100, 299, 192, 17, 0, 174], [0, 399, 0, 99, 0, 16, 1, 0]] states {'prov': 114296, 'empty': 5704} mismatch {}
+i-MO-2-20.gif mode 2 items [[0, 399, 147, 252, 147, 17, 1, 223]] states {'final': 78046, 'prov': 41954} mismatch {}
+i-MO-2-30.gif mode 2 items [[0, 399, 167, 232, 167, 17, 1, 206]] states {'final': 94012, 'prov': 25988} mismatch {}
+i-MS-1-12.gif mode 1 items [[0, 399, 102, 197, 102, 17, 0, 255]] states {'final': 82110, 'empty': 37890} mismatch {}
+i-MS-1-20.gif mode 1 items [[0, 399, 114, 185, 114, 17, 0, 289]] states {'final': 91778, 'empty': 28222} mismatch {}
+i-MS-1-30.gif mode 1 items [[0, 399, 126, 173, 126, 17, 0, 208]] states {'final': 101216, 'empty': 18784} mismatch {}
+i-MS-1-45.gif mode 1 items [[0, 399, 138, 161, 138, 17, 0, 229]] states {'final': 110858, 'empty': 9142} mismatch {}
+i-MS-1-60.gif mode 1 items [[0, 399, 145, 154, 145, 17, 0, 157]] states {'final': 116314, 'empty': 3686} mismatch {}
+i-MS-1-80.gif complete; diff vs ref 0
+i-MS-2-12.gif mode 2 items [[0, 399, 0, 299, 140, 17, 0, 160]] states {'prov': 112640, 'empty': 7360} mismatch {}
+i-MS-2-20.gif mode 2 items [[0, 399, 97, 202, 97, 17, 1, 205]] states {'final': 78010, 'prov': 41990} mismatch {}
+i-MS-2-30.gif mode 2 items [[0, 399, 115, 184, 115, 17, 1, 278]] states {'final': 92556, 'prov': 27444} mismatch {}
+i-MS-2-45.gif mode 2 items [[0, 399, 134, 165, 134, 17, 1, 285]] states {'final': 107770, 'prov': 12230} mismatch {}
+i-MS-2-60.gif mode 2 items [[0, 399, 142, 157, 142, 17, 1, 215]] states {'final': 114030, 'prov': 5970} mismatch {}
+i-MS-2-80.gif complete; diff vs ref 0
+i-MSG-g-10.gif mode g items [[0, 399, 0, 299, 112, 17, 0, 0]] states {'prov': 89600, 'band': 6400, 'lookahead': 100, 'empty': 23900} mismatch {}
+i-MSG-g-120.gif complete; diff vs ref 0
+i-MSG-g-15.gif mode g items [[0, 399, 0, 299, 136, 17, 0, 0]] states {'prov': 108800, 'band': 6400, 'lookahead': 100, 'empty': 4700} mismatch {}
+i-MSG-g-20.gif mode g items [[0, 399, 0, 299, 68, 17, 1, 0]] states {'prov': 116800, 'band': 3200} mismatch {}
+i-MSG-g-30.gif mode g items [[0, 399, 0, 299, 120, 17, 1, 0]] states {'prov': 116800, 'band': 3200} mismatch {}
+i-MSG-g-45.gif mode g items [[0, 399, 0, 299, 90, 17, 2, 0]] states {'final': 72000, 'band': 1600, 'prov': 46400} mismatch {}
+i-MSG-g-60.gif mode g items [[0, 399, 0, 299, 130, 17, 2, 0]] states {'final': 104000, 'band': 1600, 'prov': 14400} mismatch {}
+i-MSG-g-90.gif complete; diff vs ref 0
+i-MSN-1-12.gif mode 1 items [[0, 399, 103, 299, 103, 0, 0, 270]] states {'final': 41470, 'empty': 78530} mismatch {}
+i-ORL-1-12.gif mode 1 items [[0, 399, 63, 299, 63, 0, 0, 327]] states {'final': 25527, 'empty': 94473} mismatch {}
+s3-MSG-g-12.gif mode g items [[0, 266, 0, 199, 76, 17, 0, 0]] states {'prov': 40584, 'band': 2136, 'lookahead': 134, 'empty': 10546} mismatch {}
+s3-MSG-g-16.gif mode g items [[0, 266, 0, 199, 84, 17, 0, 0]] states {'prov': 44856, 'band': 2136, 'lookahead': 134, 'empty': 6274} mismatch {}
+s3-MSG-g-22.gif mode g items [[0, 266, 0, 199, 92, 17, 0, 0]] states {'prov': 49128, 'band': 2136, 'lookahead': 134, 'empty': 2002} mismatch {}
+s3-MSG-g-9.gif mode g items [[0, 266, 0, 199, 68, 17, 0, 0]] states {'prov': 36312, 'band': 2136, 'lookahead': 134, 'empty': 14818} mismatch {}
+s4-MSG-g-12.gif mode g items [[0, 199, 0, 149, 68, 17, 0, 0]] states {'prov': 27200, 'band': 1600, 'lookahead': 100, 'empty': 1100} mismatch {}
+s4-MSG-g-16.gif mode g items [[0, 199, 0, 149, 72, 17, 0, 0]] states {'prov': 28800, 'band': 1200} mismatch {}
+s4-MSG-g-22.gif mode g items [[0, 199, 0, 149, 48, 17, 1, 0]] states {'final': 19200, 'band': 800, 'prov': 10000} mismatch {}
+s4-MSG-g-9.gif mode g items [[0, 199, 0, 149, 64, 17, 0, 0]] states {'prov': 25600, 'band': 1600, 'lookahead': 100, 'empty': 2700} mismatch {}
+../interrupted/int-passg.gif mode g items [[0, 799, 0, 599, 74, 16, 3, 0]] states {'final': 59200, 'band': 1600, 'prov': 419200} mismatch {}
+../interrupted/int-passg-early.gif mode g items [[0, 799, 0, 599, 132, 16, 2, 0]] states {'prov': 476800, 'band': 3200} mismatch {}

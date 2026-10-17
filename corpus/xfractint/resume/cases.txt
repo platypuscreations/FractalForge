@@ -1,0 +1,241 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+# How every file in this folder was made. One line per file:
+# <folder>/<file> <how> <details>
+# how = batch : run-batch (xfractint batch=yes) with the parameters shown
+# interrupt D : run-interrupt, "s" pressed D seconds after start
+# keys [A] IN : tools/blackbox/resume/run-keys.sh with actions A
+# (sN sleep, kKEY key press, tTEXT typed text); "IN" is the
+# file copied in as in.gif. The [s10 kr s3 tin.gif s1 kReturn sD ks]
+# sequence loads in.gif with XFractint's r command and saves after D s.
+# craft : made by tools/blackbox/resume/craft.py (arguments shown) from a
+# ref/ file; see tools/blackbox/resume/craft-r.sh
+# XFractint saves as ff.gif in a fresh directory; the file was then renamed.
+ref/ref-BOF-1.gif batch type=mandel corners=-0.75/-0.70/0.10/0.14 maxiter=8000 inside=bof60 viewwindows=2 periodicity=0 passes=1
+ref/ref-BX-1.gif batch type=barnsleym1 maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=1
+ref/ref-C800-g.gif batch type=mandel maxiter=20000 corners=-0.75/-0.74/0.10/0.11 passes=g
+ref/ref-J-1.gif batch type=julia params=-0.123/0.745 maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=1
+ref/ref-J-2.gif batch type=julia params=-0.123/0.745 maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=2
+ref/ref-J-g.gif batch type=julia params=-0.123/0.745 maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=g
+ref/ref-JB-1.gif batch type=julia params=-1/0 maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=1
+ref/ref-JB-2.gif batch type=julia params=-1/0 maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=2
+ref/ref-JG-g.gif batch type=julia params=-0.123/0.745 maxiter=1000000 viewwindows=2 periodicity=0 inside=100 passes=g
+ref/ref-MN-1.gif batch type=mandel corners=-0.75/-0.70/0.10/0.14 maxiter=8000 viewwindows=2 periodicity=0 inside=100 passes=1
+ref/ref-MN-2.gif batch type=mandel corners=-0.75/-0.70/0.10/0.14 maxiter=8000 viewwindows=2 periodicity=0 inside=100 passes=2
+ref/ref-MN-g.gif batch type=mandel corners=-0.75/-0.70/0.10/0.14 maxiter=8000 viewwindows=2 periodicity=0 inside=100 passes=g
+ref/ref-MNG-g.gif batch type=mandel corners=-0.75/-0.70/0.10/0.14 maxiter=80000 viewwindows=2 periodicity=0 inside=100 passes=g
+ref/ref-MO-1.gif batch type=mandel corners=-2.5/1.5/-1.0/2.0 maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=1
+ref/ref-MO-2.gif batch type=mandel corners=-2.5/1.5/-1.0/2.0 maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=2
+ref/ref-MS-1.gif batch type=mandel maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=1
+ref/ref-MS-2.gif batch type=mandel maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=2
+ref/ref-MS-g.gif batch type=mandel maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=g
+ref/ref-MSG-g.gif batch type=mandel maxiter=1000000 viewwindows=2 periodicity=0 inside=100 passes=g
+ref/ref-MSN-1.gif batch type=mandel maxiter=100000 symmetry=none viewwindows=2 periodicity=0 inside=100 passes=1
+ref/ref-ORL-1.gif batch type=mandel corners=-0.75/-0.70/0.10/0.14 maxiter=8000 outside=real viewwindows=2 periodicity=0 passes=1
+ref/ref-s3-MSG-g.gif batch type=mandel maxiter=1000000 viewwindows=2 periodicity=0 inside=100 passes=g viewwindows=3
+ref/ref-s4-MSG-g.gif batch type=mandel maxiter=1000000 viewwindows=2 periodicity=0 inside=100 passes=g viewwindows=4
+int/i-BOF-1-12.gif interrupt 12 type=mandel corners=-0.75/-0.70/0.10/0.14 maxiter=8000 inside=bof60 viewwindows=2 periodicity=0 passes=1
+int/i-BX-1-12.gif interrupt 12 type=barnsleym1 maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=1
+int/i-BX-1-20.gif interrupt 20 type=barnsleym1 maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=1
+int/i-J-1-12.gif interrupt 12 type=julia params=-0.123/0.745 maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=1
+int/i-J-1-20.gif interrupt 20 type=julia params=-0.123/0.745 maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=1
+int/i-J-1-30.gif interrupt 30 type=julia params=-0.123/0.745 maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=1
+int/i-J-1-45.gif interrupt 45 type=julia params=-0.123/0.745 maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=1
+int/i-J-1-60.gif interrupt 60 type=julia params=-0.123/0.745 maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=1
+int/i-J-1-80.gif interrupt 80 type=julia params=-0.123/0.745 maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=1
+int/i-J-2-12.gif interrupt 12 type=julia params=-0.123/0.745 maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=2
+int/i-J-2-20.gif interrupt 20 type=julia params=-0.123/0.745 maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=2
+int/i-J-2-30.gif interrupt 30 type=julia params=-0.123/0.745 maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=2
+int/i-J-2-45.gif interrupt 45 type=julia params=-0.123/0.745 maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=2
+int/i-J-2-60.gif interrupt 60 type=julia params=-0.123/0.745 maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=2
+int/i-J-2-80.gif interrupt 80 type=julia params=-0.123/0.745 maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=2
+int/i-JB-1-12.gif interrupt 12 type=julia params=-1/0 maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=1
+int/i-JB-1-20.gif interrupt 20 type=julia params=-1/0 maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=1
+int/i-JB-1-30.gif interrupt 30 type=julia params=-1/0 maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=1
+int/i-JB-2-12.gif interrupt 12 type=julia params=-1/0 maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=2
+int/i-JB-2-20.gif interrupt 20 type=julia params=-1/0 maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=2
+int/i-JB-2-30.gif interrupt 30 type=julia params=-1/0 maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=2
+int/i-JG-g-10.gif interrupt 10 type=julia params=-0.123/0.745 maxiter=1000000 viewwindows=2 periodicity=0 inside=100 passes=g
+int/i-JG-g-120.gif interrupt 120 type=julia params=-0.123/0.745 maxiter=1000000 viewwindows=2 periodicity=0 inside=100 passes=g
+int/i-JG-g-15.gif interrupt 15 type=julia params=-0.123/0.745 maxiter=1000000 viewwindows=2 periodicity=0 inside=100 passes=g
+int/i-JG-g-20.gif interrupt 20 type=julia params=-0.123/0.745 maxiter=1000000 viewwindows=2 periodicity=0 inside=100 passes=g
+int/i-JG-g-30.gif interrupt 30 type=julia params=-0.123/0.745 maxiter=1000000 viewwindows=2 periodicity=0 inside=100 passes=g
+int/i-JG-g-45.gif interrupt 45 type=julia params=-0.123/0.745 maxiter=1000000 viewwindows=2 periodicity=0 inside=100 passes=g
+int/i-JG-g-60.gif interrupt 60 type=julia params=-0.123/0.745 maxiter=1000000 viewwindows=2 periodicity=0 inside=100 passes=g
+int/i-JG-g-90.gif interrupt 90 type=julia params=-0.123/0.745 maxiter=1000000 viewwindows=2 periodicity=0 inside=100 passes=g
+int/i-MN-1-12.gif interrupt 12 type=mandel corners=-0.75/-0.70/0.10/0.14 maxiter=8000 viewwindows=2 periodicity=0 inside=100 passes=1
+int/i-MN-1-20.gif interrupt 20 type=mandel corners=-0.75/-0.70/0.10/0.14 maxiter=8000 viewwindows=2 periodicity=0 inside=100 passes=1
+int/i-MN-1-30.gif interrupt 30 type=mandel corners=-0.75/-0.70/0.10/0.14 maxiter=8000 viewwindows=2 periodicity=0 inside=100 passes=1
+int/i-MN-1-45.gif interrupt 45 type=mandel corners=-0.75/-0.70/0.10/0.14 maxiter=8000 viewwindows=2 periodicity=0 inside=100 passes=1
+int/i-MN-1-60.gif interrupt 60 type=mandel corners=-0.75/-0.70/0.10/0.14 maxiter=8000 viewwindows=2 periodicity=0 inside=100 passes=1
+int/i-MN-1-80.gif interrupt 80 type=mandel corners=-0.75/-0.70/0.10/0.14 maxiter=8000 viewwindows=2 periodicity=0 inside=100 passes=1
+int/i-MN-2-12.gif interrupt 12 type=mandel corners=-0.75/-0.70/0.10/0.14 maxiter=8000 viewwindows=2 periodicity=0 inside=100 passes=2
+int/i-MN-2-20.gif interrupt 20 type=mandel corners=-0.75/-0.70/0.10/0.14 maxiter=8000 viewwindows=2 periodicity=0 inside=100 passes=2
+int/i-MN-2-30.gif interrupt 30 type=mandel corners=-0.75/-0.70/0.10/0.14 maxiter=8000 viewwindows=2 periodicity=0 inside=100 passes=2
+int/i-MN-2-45.gif interrupt 45 type=mandel corners=-0.75/-0.70/0.10/0.14 maxiter=8000 viewwindows=2 periodicity=0 inside=100 passes=2
+int/i-MN-2-60.gif interrupt 60 type=mandel corners=-0.75/-0.70/0.10/0.14 maxiter=8000 viewwindows=2 periodicity=0 inside=100 passes=2
+int/i-MN-2-80.gif interrupt 80 type=mandel corners=-0.75/-0.70/0.10/0.14 maxiter=8000 viewwindows=2 periodicity=0 inside=100 passes=2
+int/i-MNG-g-10.gif interrupt 10 type=mandel corners=-0.75/-0.70/0.10/0.14 maxiter=80000 viewwindows=2 periodicity=0 inside=100 passes=g
+int/i-MNG-g-120.gif interrupt 120 type=mandel corners=-0.75/-0.70/0.10/0.14 maxiter=80000 viewwindows=2 periodicity=0 inside=100 passes=g
+int/i-MNG-g-15.gif interrupt 15 type=mandel corners=-0.75/-0.70/0.10/0.14 maxiter=80000 viewwindows=2 periodicity=0 inside=100 passes=g
+int/i-MNG-g-20.gif interrupt 20 type=mandel corners=-0.75/-0.70/0.10/0.14 maxiter=80000 viewwindows=2 periodicity=0 inside=100 passes=g
+int/i-MNG-g-30.gif interrupt 30 type=mandel corners=-0.75/-0.70/0.10/0.14 maxiter=80000 viewwindows=2 periodicity=0 inside=100 passes=g
+int/i-MNG-g-45.gif interrupt 45 type=mandel corners=-0.75/-0.70/0.10/0.14 maxiter=80000 viewwindows=2 periodicity=0 inside=100 passes=g
+int/i-MNG-g-60.gif interrupt 60 type=mandel corners=-0.75/-0.70/0.10/0.14 maxiter=80000 viewwindows=2 periodicity=0 inside=100 passes=g
+int/i-MNG-g-90.gif interrupt 90 type=mandel corners=-0.75/-0.70/0.10/0.14 maxiter=80000 viewwindows=2 periodicity=0 inside=100 passes=g
+int/i-MO-1-12.gif interrupt 12 type=mandel corners=-2.5/1.5/-1.0/2.0 maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=1
+int/i-MO-1-20.gif interrupt 20 type=mandel corners=-2.5/1.5/-1.0/2.0 maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=1
+int/i-MO-1-30.gif interrupt 30 type=mandel corners=-2.5/1.5/-1.0/2.0 maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=1
+int/i-MO-2-12.gif interrupt 12 type=mandel corners=-2.5/1.5/-1.0/2.0 maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=2
+int/i-MO-2-20.gif interrupt 20 type=mandel corners=-2.5/1.5/-1.0/2.0 maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=2
+int/i-MO-2-30.gif interrupt 30 type=mandel corners=-2.5/1.5/-1.0/2.0 maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=2
+int/i-MS-1-12.gif interrupt 12 type=mandel maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=1
+int/i-MS-1-20.gif interrupt 20 type=mandel maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=1
+int/i-MS-1-30.gif interrupt 30 type=mandel maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=1
+int/i-MS-1-45.gif interrupt 45 type=mandel maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=1
+int/i-MS-1-60.gif interrupt 60 type=mandel maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=1
+int/i-MS-1-80.gif interrupt 80 type=mandel maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=1
+int/i-MS-2-12.gif interrupt 12 type=mandel maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=2
+int/i-MS-2-20.gif interrupt 20 type=mandel maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=2
+int/i-MS-2-30.gif interrupt 30 type=mandel maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=2
+int/i-MS-2-45.gif interrupt 45 type=mandel maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=2
+int/i-MS-2-60.gif interrupt 60 type=mandel maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=2
+int/i-MS-2-80.gif interrupt 80 type=mandel maxiter=100000 viewwindows=2 periodicity=0 inside=100 passes=2
+int/i-MSG-g-10.gif interrupt 10 type=mandel maxiter=1000000 viewwindows=2 periodicity=0 inside=100 passes=g
+int/i-MSG-g-120.gif interrupt 120 type=mandel maxiter=1000000 viewwindows=2 periodicity=0 inside=100 passes=g
+int/i-MSG-g-15.gif interrupt 15 type=mandel maxiter=1000000 viewwindows=2 periodicity=0 inside=100 passes=g
+int/i-MSG-g-20.gif interrupt 20 type=mandel maxiter=1000000 viewwindows=2 periodicity=0 inside=100 passes=g
+int/i-MSG-g-30.gif interrupt 30 type=mandel maxiter=1000000 viewwindows=2 periodicity=0 inside=100 passes=g
+int/i-MSG-g-45.gif interrupt 45 type=mandel maxiter=1000000 viewwindows=2 periodicity=0 inside=100 passes=g
+int/i-MSG-g-60.gif interrupt 60 type=mandel maxiter=1000000 viewwindows=2 periodicity=0 inside=100 passes=g
+int/i-MSG-g-90.gif interrupt 90 type=mandel maxiter=1000000 viewwindows=2 periodicity=0 inside=100 passes=g
+int/i-MSN-1-12.gif interrupt 12 type=mandel maxiter=100000 symmetry=none viewwindows=2 periodicity=0 inside=100 passes=1
+int/i-ORL-1-12.gif interrupt 12 type=mandel corners=-0.75/-0.70/0.10/0.14 maxiter=8000 outside=real viewwindows=2 periodicity=0 passes=1
+int/s3-MSG-g-12.gif interrupt 12 type=mandel maxiter=1000000 viewwindows=2 periodicity=0 inside=100 passes=g viewwindows=3
+int/s3-MSG-g-16.gif interrupt 16 type=mandel maxiter=1000000 viewwindows=2 periodicity=0 inside=100 passes=g viewwindows=3
+int/s3-MSG-g-22.gif interrupt 22 type=mandel maxiter=1000000 viewwindows=2 periodicity=0 inside=100 passes=g viewwindows=3
+int/s3-MSG-g-9.gif interrupt 9 type=mandel maxiter=1000000 viewwindows=2 periodicity=0 inside=100 passes=g viewwindows=3
+int/s4-MSG-g-12.gif interrupt 12 type=mandel maxiter=1000000 viewwindows=2 periodicity=0 inside=100 passes=g viewwindows=4
+int/s4-MSG-g-16.gif interrupt 16 type=mandel maxiter=1000000 viewwindows=2 periodicity=0 inside=100 passes=g viewwindows=4
+int/s4-MSG-g-22.gif interrupt 22 type=mandel maxiter=1000000 viewwindows=2 periodicity=0 inside=100 passes=g viewwindows=4
+int/s4-MSG-g-9.gif interrupt 9 type=mandel maxiter=1000000 viewwindows=2 periodicity=0 inside=100 passes=g viewwindows=4
+resumed/o-J-1-30.gif keys int/i-J-1-30.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+resumed/o-J-2-12.gif keys int/i-J-2-12.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+resumed/o-J-2-45.gif keys int/i-J-2-45.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+resumed/o-JB-2-12.gif keys int/i-JB-2-12.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+resumed/o-JG-g-10.gif keys int/i-JG-g-10.gif [s10 kr s3 tin.gif s1 kReturn s200 ks] type=mandel maxiter=10 viewwindows=2
+resumed/o-JG-g-45.gif keys int/i-JG-g-45.gif [s10 kr s3 tin.gif s1 kReturn s200 ks] type=mandel maxiter=10 viewwindows=2
+resumed/o-JG-g-90.gif keys int/i-JG-g-90.gif [s10 kr s3 tin.gif s1 kReturn s200 ks] type=mandel maxiter=10 viewwindows=2
+resumed/o-MN-1-30.gif keys int/i-MN-1-30.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+resumed/o-MN-2-12.gif keys int/i-MN-2-12.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+resumed/o-MN-2-45.gif keys int/i-MN-2-45.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+resumed/o-MNG-g-10.gif keys int/i-MNG-g-10.gif [s10 kr s3 tin.gif s1 kReturn s200 ks] type=mandel maxiter=10 viewwindows=2
+resumed/o-MNG-g-15.gif keys int/i-MNG-g-15.gif [s10 kr s3 tin.gif s1 kReturn s200 ks] type=mandel maxiter=10 viewwindows=2
+resumed/o-MNG-g-20.gif keys int/i-MNG-g-20.gif [s10 kr s3 tin.gif s1 kReturn s200 ks] type=mandel maxiter=10 viewwindows=2
+resumed/o-MO-1-20.gif keys int/i-MO-1-20.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+resumed/o-MO-2-12.gif keys int/i-MO-2-12.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+resumed/o-MS-1-30.gif keys int/i-MS-1-30.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+resumed/o-MS-2-12.gif keys int/i-MS-2-12.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+resumed/o-MS-2-45.gif keys int/i-MS-2-45.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+resumed/o-MSG-g-10.gif keys int/i-MSG-g-10.gif [s10 kr s3 tin.gif s1 kReturn s200 ks] type=mandel maxiter=10 viewwindows=2
+resumed/o-MSG-g-30.gif keys int/i-MSG-g-30.gif [s10 kr s3 tin.gif s1 kReturn s200 ks] type=mandel maxiter=10 viewwindows=2
+resumed/o-MSG-g-60.gif keys int/i-MSG-g-60.gif [s10 kr s3 tin.gif s1 kReturn s200 ks] type=mandel maxiter=10 viewwindows=2
+loaded/k1-none.gif keys crafted/K1.gif [s50 ks] 
+loaded/k1-ret.gif keys crafted/K1.gif [s10 kReturn s40 ks] 
+loaded/k1-rload-ret.gif keys crafted/K1.gif [s10 kr s3 tin.gif s1 kReturn s8 kReturn s25 ks] viewwindows=2 type=mandel maxiter=10
+loaded/k1-rload.gif keys crafted/K1.gif [s10 kr s3 tin.gif s1 kReturn s30 ks] viewwindows=2 type=mandel maxiter=10
+loaded/k2-ret.gif keys crafted/K2.gif [s10 kReturn s20 ks] 
+loaded/q-C10m.gif keys crafted/C10m.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-C11m.gif keys crafted/C11m.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-C12m.gif keys crafted/C12m.gif [s10 kr s3 tin.gif s1 kReturn s200 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-C13m.gif keys crafted/C13m.gif [s10 kr s3 tin.gif s1 kReturn s200 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-C13z.gif keys crafted/C13z.gif [s10 kr s3 tin.gif s1 kReturn s200 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-C14m.gif keys crafted/C14m.gif [s10 kr s3 tin.gif s1 kReturn s200 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-C15m.gif keys crafted/C15m.gif [s10 kr s3 tin.gif s1 kReturn s200 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-C17m.gif keys crafted/C17m.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-C18m.gif keys crafted/C18m.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-C1m.gif keys crafted/C1m.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-C2m.gif keys crafted/C2m.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-C3m.gif keys crafted/C3m.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-C4m.gif keys crafted/C4m.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-C5m.gif keys crafted/C5m.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-C5n.gif keys crafted/C5n.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-C6m.gif keys crafted/C6m.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-C7m.gif keys crafted/C7m.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-C7n.gif keys crafted/C7n.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-C8m.gif keys crafted/C8m.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-C9m.gif keys crafted/C9m.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-K-J-2-45.gif keys crafted/K-J-2-45.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-K-MN-2-12.gif keys crafted/K-MN-2-12.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-K-MN-2-45.gif keys crafted/K-MN-2-45.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-K-MNG-g-10.gif keys crafted/K-MNG-g-10.gif [s10 kr s3 tin.gif s1 kReturn s200 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-K-MS-1-30.gif keys crafted/K-MS-1-30.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-K-MSG-g-30.gif keys crafted/K-MSG-g-30.gif [s10 kr s3 tin.gif s1 kReturn s200 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-K-MSG-g-60.gif keys crafted/K-MSG-g-60.gif [s10 kr s3 tin.gif s1 kReturn s200 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-Y1.gif keys crafted/Y1.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-Y10.gif keys crafted/Y10.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-Y12.gif keys crafted/Y12.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-Y13.gif keys crafted/Y13.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-Y14.gif keys crafted/Y14.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-Y15.gif keys crafted/Y15.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-Y16.gif keys crafted/Y16.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-Y18.gif keys crafted/Y18.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-Y19.gif keys crafted/Y19.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-Y2.gif keys crafted/Y2.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-Y20.gif keys crafted/Y20.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-Y21.gif keys crafted/Y21.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-Y22.gif keys crafted/Y22.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-Y23.gif keys crafted/Y23.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-Y3.gif keys crafted/Y3.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-Y4.gif keys crafted/Y4.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-Y5.gif keys crafted/Y5.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-Y6.gif keys crafted/Y6.gif [s10 kr s3 tin.gif s1 kReturn s150 ks] type=mandel maxiter=10 viewwindows=2
+loaded/q-Y7.gif keys crafted/Y7.gif [s10 kr s3 tin.gif s1 kReturn s200 ks] type=mandel maxiter=10 viewwindows=2
+crafted/K-MS-1-30.gif craft-own from int/i-MS-1-30.gif mark=10:7 (XFractint's own save; only marked pixels changed, blocks copied byte for byte)
+crafted/K-MN-2-45.gif craft-own from int/i-MN-2-45.gif mark=10:7 markorig=200:7:2 (XFractint's own save; only marked pixels changed, blocks copied byte for byte)
+crafted/K-J-2-45.gif craft-own from int/i-J-2-45.gif mark=10:7 markorig=140:7:2 (XFractint's own save; only marked pixels changed, blocks copied byte for byte)
+crafted/K-MSG-g-60.gif craft-own from int/i-MSG-g-60.gif mark=10:7 markorig=140:7:2 (XFractint's own save; only marked pixels changed, blocks copied byte for byte)
+crafted/K-MSG-g-30.gif craft-own from int/i-MSG-g-30.gif markorig=140:7:4 (XFractint's own save; only marked pixels changed, blocks copied byte for byte)
+crafted/K-MN-2-12.gif craft-own from int/i-MN-2-12.gif markorig=100:7:2 (XFractint's own save; only marked pixels changed, blocks copied byte for byte)
+crafted/K-MNG-g-10.gif craft-own from int/i-MNG-g-10.gif markorig=100:7:4 (XFractint's own save; only marked pixels changed, blocks copied byte for byte)
+crafted/C1m.gif craft from ref/ref-MN-1.gif R=120 C=200 mark=10:7
+crafted/C2m.gif craft from ref/ref-MN-1.gif R=120 C=0 mark=10:7
+crafted/C3m.gif craft from ref/ref-MN-1.gif R=0 C=137
+crafted/C4m.gif craft from ref/ref-MS-1.gif R=100 C=50 f28=17 mark=50:7
+crafted/C5m.gif craft from ref/ref-MS-1.gif R=100 C=50 bot=199 f28=17 mirror=x mark=50:7,240-299:7
+crafted/C5n.gif craft from ref/ref-MS-1.gif R=100 C=50 bot=199 f28=16 mirror=x mark=50:7,240-299:7
+crafted/C6m.gif craft from ref/ref-MS-1.gif R=200 C=10 f28=17 mark=50:7
+crafted/C7m.gif craft from ref/ref-J-1.gif R=60 C=300 f28=51 mark=50:7
+crafted/C7n.gif craft from ref/ref-J-1.gif R=60 C=300 f28=16 mark=50:7
+crafted/C8m.gif craft from ref/ref-MN-2.gif R=0 C=0 top=0 f32=1 before=2 after=2 markorig=100:7:2
+crafted/C9m.gif craft from ref/ref-MN-2.gif R=150 C=100 f32=1 after=2 mark=10:7 markorig=200:7:2
+crafted/C10m.gif craft from ref/ref-MN-2.gif R=150 C=100 f32=1 after=0 mark=10:7
+crafted/C11m.gif craft from ref/ref-MN-2.gif R=100 C=0 top=0 f32=0 before=2 after=0 markorig=50:7:2
+crafted/C12m.gif craft from ref/ref-MNG-g.gif R=0 C=0 top=0 f32=1 before=4 after=4 markorig=100:7:4
+crafted/C13m.gif craft from ref/ref-MNG-g.gif R=100 C=0 top=0 f32=2 after=2 mark=10:7
+crafted/C13z.gif craft from ref/ref-MNG-g.gif R=100 C=0 top=0 f32=2 after=0 mark=10:7
+crafted/C14m.gif craft from ref/ref-MNG-g.gif R=96 C=0 top=0 f32=0 before=4 after=0 markorig=10:7:4
+crafted/C15m.gif craft from ref/ref-MSG-g.gif R=0 C=0 top=0 f32=2 before=2 after=2 f28=17 markorig=50:7:2
+crafted/C17m.gif craft from ref/ref-MN-1.gif R=120 C=0 mode=2 f32=1 after=0 mark=10:7
+crafted/C18m.gif craft from ref/ref-MN-1.gif R=120 C=200 bot=199 item2=0,399,200,299,200,16,0,0 f4=2 mark=10:7
+crafted/Y1.gif craft from ref/ref-MN-1.gif R=120 C=200 f0=1 mark=10:7
+crafted/Y2.gif craft from ref/ref-MN-1.gif R=120 C=200 f4=0 mark=10:7
+crafted/Y3.gif craft from ref/ref-MN-1.gif R=400 C=0 mark=10:7
+crafted/Y4.gif craft from ref/ref-MN-1.gif R=120 C=999 mark=10:7
+crafted/Y5.gif craft from ref/ref-MN-1.gif R=120 C=200 no002=1 mark=10:7
+crafted/Y6.gif craft from ref/ref-MN-1.gif R=120 C=200 status=4 mark=10:7
+crafted/Y7.gif craft from ref/ref-MNG-g.gif R=100 C=0 top=0 f32=7 after=2 mark=10:7
+crafted/Y10.gif craft from ref/ref-MN-1.gif R=120 C=200 blank=garbage mark=10:7
+crafted/Y12.gif craft from ref/ref-MN-1.gif R=-5 C=0 top=0 mark=10:7
+crafted/Y13.gif craft from ref/ref-MN-1.gif R=120 C=200 f28=0 mark=10:7
+crafted/Y14.gif craft from ref/ref-MN-1.gif R=120 C=200 f28=17 mark=10:7
+crafted/Y15.gif craft from ref/ref-MN-1.gif R=120 C=200 mode=2 mark=10:7
+crafted/Y16.gif craft from ref/ref-MN-1.gif R=120 C=200 mode=t mark=10:7
+crafted/Y18.gif craft from ref/ref-MN-2.gif R=150 C=100 f32=2 after=2 mark=10:7
+crafted/Y19.gif craft from ref/ref-MN-1.gif R=120 C=200 status=1 mark=10:7
+crafted/Y20.gif craft from ref/ref-MN-1.gif R=120 C=200 right=199 mark=10:7
+crafted/Y21.gif craft from ref/ref-MN-1.gif R=120 C=200 top=50 mark=10:7,80:7
+crafted/Y22.gif craft from ref/ref-MN-1.gif R=120 C=200 f4=13 mark=10:7
+crafted/Y23.gif craft from ref/ref-MN-1.gif R=120 C=200 f0=0 mark=10:7
+crafted/K1.gif craft-own from int/i-MN-1-30.gif mark=10:7
+crafted/K2.gif craft-own from corpus/xfractint/interrupted/int-pass1-late.gif mark=10:7
