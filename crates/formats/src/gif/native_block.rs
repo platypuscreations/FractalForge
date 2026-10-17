@@ -47,13 +47,30 @@ pub fn encode(c: &Checkpoint) -> AppExtension {
     }
     body.extend_from_slice(&p.max_iter.to_le_bytes());
     body.extend_from_slice(&p.bailout.to_le_bytes());
-    match p.inside {
-        Inside::Color(i) => body.extend_from_slice(&[0, i]),
-        Inside::MaxIter => body.extend_from_slice(&[1, 0]),
-    }
-    body.push(match p.outside {
-        Outside::Iter => 0,
-    });
+    // Modes are stored as their position in Inside::ALL / Outside::ALL,
+    // followed by the palette index for the fixed-colour modes.
+    let inside_tag = Inside::ALL
+        .iter()
+        .position(|m| same_mode_inside(*m, p.inside))
+        .unwrap();
+    let inside_color = if let Inside::Color(c) = p.inside {
+        c
+    } else {
+        0
+    };
+    body.extend_from_slice(&[inside_tag as u8, inside_color]);
+    let outside_tag = Outside::ALL
+        .iter()
+        .position(|m| same_mode_outside(*m, p.outside))
+        .unwrap();
+    let outside_color = if let Outside::Color(c) = p.outside {
+        c
+    } else {
+        0
+    };
+    body.extend_from_slice(&[outside_tag as u8, outside_color]);
+    body.extend_from_slice(&p.decomp.to_le_bytes());
+    body.extend_from_slice(&p.biomorph.map_or(-1i64, i64::from).to_le_bytes());
     body.push(p.use_symmetry as u8);
 
     body.extend_from_slice(&c.buffer.width().to_le_bytes());
@@ -110,14 +127,19 @@ pub fn decode(ext: &AppExtension) -> Result<Checkpoint, Error> {
     let max_iter = r.u32()?;
     let bailout = r.f64()?;
     let inside = match (r.u8()?, r.u8()?) {
-        (0, i) => Inside::Color(i),
-        (1, _) => Inside::MaxIter,
-        (t, _) => return Err(bad(format!("unknown inside mode {t}"))),
+        (0, c) => Inside::Color(c),
+        (t, _) => *Inside::ALL
+            .get(t as usize)
+            .ok_or_else(|| bad(format!("unknown inside mode {t}")))?,
     };
-    let outside = match r.u8()? {
-        0 => Outside::Iter,
-        t => return Err(bad(format!("unknown outside mode {t}"))),
+    let outside = match (r.u8()?, r.u8()?) {
+        (1, c) => Outside::Color(c),
+        (t, _) => *Outside::ALL
+            .get(t as usize)
+            .ok_or_else(|| bad(format!("unknown outside mode {t}")))?,
     };
+    let decomp = r.u32()?;
+    let biomorph = u32::try_from(r.u64()? as i64).ok();
     let use_symmetry = r.u8()? != 0;
     let params = Params {
         fractal,
@@ -127,6 +149,8 @@ pub fn decode(ext: &AppExtension) -> Result<Checkpoint, Error> {
         bailout,
         inside,
         outside,
+        decomp,
+        biomorph,
         use_symmetry,
     };
 
@@ -165,6 +189,14 @@ pub fn decode(ext: &AppExtension) -> Result<Checkpoint, Error> {
         buffer,
         palette,
     })
+}
+
+fn same_mode_inside(a: Inside, b: Inside) -> bool {
+    std::mem::discriminant(&a) == std::mem::discriminant(&b)
+}
+
+fn same_mode_outside(a: Outside, b: Outside) -> bool {
+    std::mem::discriminant(&a) == std::mem::discriminant(&b)
 }
 
 fn bad(msg: String) -> Error {
@@ -219,7 +251,10 @@ mod tests {
     fn sample() -> Checkpoint {
         let mut params = Params::for_type("julia").unwrap();
         params.params = [-0.8, 0.156, 1e-300, -0.0];
-        params.inside = Inside::MaxIter;
+        params.inside = Inside::Bof61;
+        params.outside = Outside::Color(9);
+        params.decomp = 300;
+        params.biomorph = Some(77);
         params.max_iter = 123_456;
         let data = (0..15u32 * 7)
             .map(|i| [i, INSIDE, UNKNOWN][i as usize % 3])

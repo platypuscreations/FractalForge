@@ -68,15 +68,15 @@ fn reads_basic_parameters() {
 
 #[test]
 fn reports_what_it_cannot_use() {
-    let i = info("complete/mandel-inside-bof60.gif");
+    let i = info("coloring/m-in-startrail.gif");
     assert!(
         i.warnings.iter().any(|w| w.contains("inside")),
         "{:?}",
         i.warnings
     );
-    let i = info("complete/mandel-biomorph.gif");
+    let i = info("complete/mandel-logmap-7.gif");
     assert!(
-        i.warnings.iter().any(|w| w.contains("biomorph")),
+        i.warnings.iter().any(|w| w.contains("logarithmic")),
         "{:?}",
         i.warnings
     );
@@ -255,6 +255,44 @@ fn all_types_match_xfractint_pixels() {
         }
     }
     assert!(names.len() > 50);
+    assert!(
+        worst.0 >= 0.999,
+        "worst: {} at {:.3}%",
+        worst.1,
+        worst.0 * 100.0
+    );
+}
+
+/// Every reference render of the colouring spec, except the modes it
+/// couldn't specify (inside=period, startrail).
+#[test]
+fn colouring_options_match_xfractint_pixels() {
+    let dir = corpus("coloring");
+    let mut names: Vec<String> = std::fs::read_dir(&dir)
+        .unwrap()
+        .map(|e| e.unwrap().file_name().to_string_lossy().into_owned())
+        .filter(|n| n.ends_with(".gif") && !n.contains("period") && !n.contains("star"))
+        .collect();
+    names.sort();
+    let mut worst = (1.0f64, String::new());
+    let mut total = 0.0;
+    for name in &names {
+        let path = format!("coloring/{name}");
+        let i = info(&path);
+        assert!(i.warnings.is_empty(), "{name}: {:?}", i.warnings);
+        let share = match_rate(&path);
+        total += share;
+        eprintln!("{name:<28} {:.3}%", share * 100.0);
+        if share < worst.0 {
+            worst = (share, name.clone());
+        }
+    }
+    eprintln!(
+        "average {:.4}% over {} files",
+        total / names.len() as f64 * 100.0,
+        names.len()
+    );
+    assert!(names.len() > 100);
     assert!(
         worst.0 >= 0.999,
         "worst: {} at {:.3}%",

@@ -9,7 +9,7 @@ use eframe::egui::{
     self, Color32, ColorImage, Key, KeyboardShortcut, Modifiers, PointerButton, Pos2, Rect, Sense,
     Stroke, TextureHandle, TextureOptions, Vec2,
 };
-use fractalforge_core::{Inside, PRESETS, Palette, Params, Window, types};
+use fractalforge_core::{Inside, Outside, PRESETS, Palette, Params, Window, types};
 use fractalforge_formats::gif::{self, Checkpoint, Content};
 use fractalforge_render::{PassMode, Render};
 use rayon::prelude::*;
@@ -676,21 +676,7 @@ impl App {
                 .checkbox(&mut self.params.use_symmetry, "Use symmetry")
                 .on_hover_text("Copy mirrored pixels instead of computing them, as Fractint does")
                 .changed();
-            ui.horizontal(|ui| {
-                ui.label("Inside");
-                let mut max_iter = self.params.inside == Inside::MaxIter;
-                changed |= ui.checkbox(&mut max_iter, "max-iteration colour").changed();
-                if max_iter {
-                    self.params.inside = Inside::MaxIter;
-                } else {
-                    let mut c = match self.params.inside {
-                        Inside::Color(c) => c,
-                        Inside::MaxIter => 0,
-                    };
-                    changed |= ui.add(egui::DragValue::new(&mut c)).changed();
-                    self.params.inside = Inside::Color(c);
-                }
-            });
+            changed |= self.coloring_controls(ui);
             egui::ComboBox::from_label("Passes")
                 .selected_text(pass_name(self.pass_mode))
                 .show_ui(ui, |ui| {
@@ -791,6 +777,77 @@ impl App {
         if changed {
             self.changed();
         }
+    }
+
+    /// Inside/outside/decomposition/biomorph. Only the default colouring
+    /// is offered for types without orbit colouring.
+    fn coloring_controls(&mut self, ui: &mut egui::Ui) -> bool {
+        let full = self.params.fractal.orbit_coloring;
+        let p = &mut self.params;
+        let mut changed = false;
+        let insides: &[Inside] = if full {
+            &Inside::ALL
+        } else {
+            &Inside::ALL[..2]
+        };
+        ui.horizontal(|ui| {
+            egui::ComboBox::from_label("Inside")
+                .selected_text(p.inside.name())
+                .show_ui(ui, |ui| {
+                    for &m in insides {
+                        let same = std::mem::discriminant(&m) == std::mem::discriminant(&p.inside);
+                        if ui.selectable_label(same, m.name()).clicked() && !same {
+                            p.inside = m;
+                            changed = true;
+                        }
+                    }
+                });
+            if let Inside::Color(c) = &mut p.inside {
+                changed |= ui.add(egui::DragValue::new(c)).changed();
+            }
+        });
+        ui.add_enabled_ui(full, |ui| {
+            ui.horizontal(|ui| {
+                egui::ComboBox::from_label("Outside")
+                    .selected_text(p.outside.name())
+                    .show_ui(ui, |ui| {
+                        for m in Outside::ALL {
+                            let same =
+                                std::mem::discriminant(&m) == std::mem::discriminant(&p.outside);
+                            if ui.selectable_label(same, m.name()).clicked() && !same {
+                                p.outside = m;
+                                changed = true;
+                            }
+                        }
+                    });
+                if let Outside::Color(c) = &mut p.outside {
+                    changed |= ui.add(egui::DragValue::new(c)).changed();
+                }
+            });
+            ui.horizontal(|ui| {
+                ui.label("Decomposition");
+                changed |= ui
+                    .add(egui::DragValue::new(&mut p.decomp).range(0..=65535))
+                    .on_hover_text("Colour by angle in this many sectors; 0 = off")
+                    .changed();
+            });
+            ui.horizontal(|ui| {
+                let mut on = p.biomorph.is_some();
+                if ui.checkbox(&mut on, "Biomorph").changed() {
+                    // Biomorph's customary bailout is 100 (coloring.md §8).
+                    let was_default = p.bailout == p.default_bailout();
+                    p.biomorph = on.then_some(0);
+                    if was_default {
+                        p.bailout = p.default_bailout();
+                    }
+                    changed = true;
+                }
+                if let Some(b) = &mut p.biomorph {
+                    changed |= ui.add(egui::DragValue::new(b).range(0..=32767)).changed();
+                }
+            });
+        });
+        changed
     }
 
     fn status_bar(&mut self, ui: &mut egui::Ui) {

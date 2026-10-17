@@ -54,6 +54,9 @@ pub struct FractalType {
     pub resumable: bool,
     /// Type number in Fractint-format GIF blocks, if the type has one.
     pub fractint_number: Option<i16>,
+    /// Supports the inside/outside/decomp/biomorph options (otherwise only
+    /// the default colouring).
+    pub orbit_coloring: bool,
 }
 
 impl fmt::Debug for FractalType {
@@ -364,29 +367,36 @@ const fn std_type(
         uses_bailout: true,
         resumable: true,
         fractint_number: Some(number),
+        orbit_coloring: false,
     }
 }
 
-pub static MANDEL: FractalType = std_type(
-    "mandel",
-    4,
-    "Mandelbrot set: z → z² + c, c = pixel",
-    MANDEL_WINDOW,
-    [0.0; 4],
-    START_OFFSET,
-    mandel,
-    sym_x_if_a_zero,
-);
-pub static JULIA: FractalType = std_type(
-    "julia",
-    6,
-    "Julia set: z → z² + c, z(0) = pixel",
-    STD_WINDOW,
-    [0.3, 0.6, 0.0, 0.0],
-    CONSTANT,
-    julia,
-    sym_origin,
-);
+pub static MANDEL: FractalType = FractalType {
+    orbit_coloring: true,
+    ..std_type(
+        "mandel",
+        4,
+        "Mandelbrot set: z → z² + c, c = pixel",
+        MANDEL_WINDOW,
+        [0.0; 4],
+        START_OFFSET,
+        mandel,
+        sym_x_if_a_zero,
+    )
+};
+pub static JULIA: FractalType = FractalType {
+    orbit_coloring: true,
+    ..std_type(
+        "julia",
+        6,
+        "Julia set: z → z² + c, z(0) = pixel",
+        STD_WINDOW,
+        [0.3, 0.6, 0.0, 0.0],
+        CONSTANT,
+        julia,
+        sym_origin,
+    )
+};
 pub static LAMBDA: FractalType = std_type(
     "lambda",
     75,

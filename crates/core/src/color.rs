@@ -4,7 +4,7 @@
 //! palettes.
 
 use crate::iter::{INSIDE, UNKNOWN};
-use crate::{Inside, Outside, Params};
+use crate::{Inside, Params};
 
 /// Palette index for one iteration-buffer value. Unknown pixels get index 0.
 ///
@@ -16,15 +16,30 @@ pub fn color_index(value: u32, params: &Params) -> u8 {
         UNKNOWN => 0,
         INSIDE => match params.inside {
             Inside::Color(c) => c,
-            Inside::MaxIter => outside_index(params.max_iter, params),
+            _ => wrap(params.max_iter) as u8,
         },
-        n => outside_index(n, params),
+        v => wrap(v) as u8,
     }
 }
 
-fn outside_index(n: u32, params: &Params) -> u8 {
-    match params.outside {
-        Outside::Iter => ((n.max(1) - 1) % 255 + 1) as u8,
+/// Fractint's wrap of colour values into 0..=255: values up to 255 are
+/// kept, larger ones cycle through 1..=255 (coloring.md §3).
+pub fn wrap(v: u32) -> u32 {
+    if v <= 255 { v } else { (v - 1) % 255 + 1 }
+}
+
+/// The colour value of the point `pixel`, using orbit colouring when the
+/// parameters ask for it (mandel and julia only).
+pub fn pixel_value(pixel: crate::Complex, p: &Params) -> u32 {
+    if p.fractal.orbit_coloring && p.needs_orbit_coloring() {
+        let a = crate::Complex::new(p.params[0], p.params[1]);
+        if p.fractal.name == "julia" {
+            crate::orbit_color::quadratic(pixel, a, true, p)
+        } else {
+            crate::orbit_color::quadratic(a, pixel, false, p)
+        }
+    } else {
+        (p.fractal.iterate)(pixel, p)
     }
 }
 

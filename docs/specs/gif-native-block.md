@@ -46,8 +46,10 @@ little-endian; floats are IEEE 754 binary64.
 | 4×8 | type parameters 1–4 |
 | 4 | maximum iterations |
 | 8 | bailout: escape when \|z\|² exceeds this |
-| 1+1 | inside colouring: `0, index` = fixed palette index; `1, 0` = colour of the maximum iteration count |
-| 1 | outside colouring: `0` = by iteration count |
+| 1+1 | inside colouring: mode, then palette index for mode 0. Modes: `0` fixed index, `1` maxiter, `2` zmag, `3` bof60, `4` bof61, `5` atan, `6` fmod, `7` epscross ([coloring.md](coloring.md) §6) |
+| 1+1 | outside colouring: mode, then palette index for mode 1. Modes: `0` iter, `1` fixed index, `2` real, `3` imag, `4` mult, `5` summ, `6` atan, `7` fmod, `8` tdis (coloring.md §5) |
+| 4 | decomposition sectors, `0` = off (coloring.md §7) |
+| 8 | biomorph colour value as a signed integer, `-1` = off (coloring.md §8) |
 | 1 | symmetry: `1` = copy mirrored pixels as Fractint does, `0` = compute every pixel |
 | 4 | image width W |
 | 4 | image height H |

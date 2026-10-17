@@ -8,7 +8,7 @@ use std::sync::Arc;
 use std::sync::atomic::{AtomicBool, Ordering};
 
 use clap::{Args, Parser, Subcommand, ValueEnum};
-use fractalforge_core::{Complex, Inside, PRESETS, Palette, Params, Window, types};
+use fractalforge_core::{Complex, Inside, Outside, PRESETS, Palette, Params, Window, types};
 use fractalforge_formats::gif::{self, Checkpoint, Content};
 use fractalforge_render::{Control, Outcome, PassMode, Render};
 
@@ -91,9 +91,20 @@ struct FractalArgs {
     /// Escape when |z|² exceeds this.
     #[arg(long)]
     bailout: Option<f64>,
-    /// Inside colour: a palette index, or `maxiter`.
+    /// Inside colouring: a palette index, or maxiter, zmag, bof60, bof61,
+    /// atan, fmod or epscross (mandel and julia only for the modes).
     #[arg(long, value_parser = parse_inside)]
     inside: Option<Inside>,
+    /// Outside colouring: a palette index, or iter, real, imag, mult, summ,
+    /// atan, fmod or tdis.
+    #[arg(long, value_parser = parse_outside)]
+    outside: Option<Outside>,
+    /// Decomposition: colour by angle in this many sectors (0 = off).
+    #[arg(long)]
+    decomp: Option<u32>,
+    /// Biomorph colour value (sets the default bailout to 100).
+    #[arg(long)]
+    biomorph: Option<u32>,
     /// Compute every pixel instead of copying mirrored ones.
     #[arg(long)]
     no_symmetry: bool,
@@ -108,6 +119,9 @@ impl FractalArgs {
             && self.maxiter.is_none()
             && self.bailout.is_none()
             && self.inside.is_none()
+            && self.outside.is_none()
+            && self.decomp.is_none()
+            && self.biomorph.is_none()
             && !self.no_symmetry
     }
 
@@ -136,6 +150,18 @@ impl FractalArgs {
         }
         if let Some(i) = self.inside {
             params.inside = i;
+        }
+        if let Some(o) = self.outside {
+            params.outside = o;
+        }
+        if let Some(d) = self.decomp {
+            params.decomp = d;
+        }
+        if let Some(b) = self.biomorph {
+            params.biomorph = Some(b);
+            if self.bailout.is_none() {
+                params.bailout = params.default_bailout();
+            }
         }
         if self.no_symmetry {
             params.use_symmetry = false;
@@ -514,13 +540,15 @@ fn split_floats(s: &str) -> Result<Vec<f64>, String> {
 }
 
 fn parse_inside(s: &str) -> Result<Inside, String> {
-    if s.eq_ignore_ascii_case("maxiter") {
-        Ok(Inside::MaxIter)
-    } else {
-        s.parse()
-            .map(Inside::Color)
-            .map_err(|_| "inside must be 0..=255 or maxiter".into())
-    }
+    Inside::parse(s).ok_or_else(|| {
+        "inside must be a palette index or maxiter, zmag, bof60, bof61, atan, fmod, epscross".into()
+    })
+}
+
+fn parse_outside(s: &str) -> Result<Outside, String> {
+    Outside::parse(s).ok_or_else(|| {
+        "outside must be 0..=255 or iter, real, imag, mult, summ, atan, fmod, tdis".into()
+    })
 }
 
 #[cfg(test)]

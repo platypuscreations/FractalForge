@@ -500,3 +500,21 @@ explanation is a **hypothesis**.
   (`gif-fractint-blocks.md` §2.1), iterate every pixel as in §2 in IEEE double
   precision, and apply §§3–8. A one-off Python checker did exactly this. Like
   all analysis scripts it isn't kept in the repo.
+
+---
+
+## 13. Implementation notes (added by the implementer)
+
+Not part of the black-box analysis above. Found while checking
+FractalForge's implementation (`crates/core/src/orbit_color.rs`) against
+this corpus, by comparing renders with and without symmetry copying
+(types.md §1.6):
+
+- With `decomp` on, or `outside=` `imag`, `summ`, `mult` or `tdis`, XFractint
+  computes **every** pixel; it doesn't copy mirrored rows. With copying,
+  `m-decomp-4`, `m-out-imag`, `m-out-summ`, `m-out-mult` and `j3-out-tdis`
+  differ in 18,000–52,000 pixels; without it they match exactly (6 pixels
+  differ in `m-out-imag`).
+- With `iter`, `real`, `atan`, `fmod`, fixed colours, the inside modes and
+  biomorph, copying and computing give the same images here, so either rule
+  fits. FractalForge keeps copying for them.

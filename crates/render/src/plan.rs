@@ -54,7 +54,7 @@ fn copies(n: u32, s: Option<i64>) -> Vec<Option<u32>> {
 impl Plan {
     pub fn new(params: &Params, width: u32, height: u32, state: &RenderState) -> Self {
         let w = &params.window;
-        let symmetry = if params.use_symmetry {
+        let symmetry = if params.use_symmetry && !params.coloring_breaks_symmetry() {
             (params.fractal.symmetry)(params)
         } else {
             Symmetry::None
@@ -278,7 +278,7 @@ impl<'a> Pixels<'a> {
     fn iterate(&self, x: u32, y: u32) -> u32 {
         let w = &self.params.window;
         let c = Complex::new(w.x_min + x as f64 * self.dx, w.y_max - y as f64 * self.dy);
-        (self.params.fractal.iterate)(c, self.params)
+        fractalforge_core::pixel_value(c, self.params)
     }
 }
 

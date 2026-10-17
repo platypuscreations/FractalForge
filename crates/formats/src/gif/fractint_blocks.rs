@@ -6,6 +6,7 @@
 //! which was derived by black-box analysis of saved files. Never from Fractint
 //! source.
 
+use fractalforge_core::color::wrap;
 use fractalforge_core::{Inside, Outside, Params, Window, types};
 use fractalforge_render::PassMode;
 
@@ -161,14 +162,19 @@ fn read_params(b: &Bytes, modern: bool, p: &mut Params, warnings: &mut Vec<Strin
     if !modern {
         return;
     }
-    // 0 means the type's default (§5.2).
+    // Biomorph and decomposition come first: biomorph changes the default
+    // bailout (coloring.md §8).
+    if let Some(b) = b.i16(102).filter(|&v| v >= 0) {
+        p.biomorph = Some(b as u32);
+    }
+    p.decomp = b.u16(120).unwrap_or(0) as u32;
+
+    // 0 means the default bailout (§5.2).
     let bailout = b
         .i32(402)
         .filter(|&v| v > 0)
         .or(b.i16(212).filter(|&v| v > 0).map(i32::from));
-    if let Some(v) = bailout {
-        p.bailout = v as f64;
-    }
+    p.bailout = bailout.map_or_else(|| p.default_bailout(), |v| v as f64);
     // 999 = automatic, 0 = none; other forced values aren't supported.
     match b.i16(124).unwrap_or(999) {
         999 => {}
@@ -182,29 +188,49 @@ fn read_params(b: &Bytes, modern: bool, p: &mut Params, warnings: &mut Vec<Strin
     }
 
     p.inside = match b.i16(104).unwrap_or(0) {
-        n @ 0..=255 => Inside::Color(n as u8),
-        n if n > 255 => Inside::Color((n % 256) as u8),
-        -1 => Inside::MaxIter,
-        n => {
-            warnings.push(format!(
-                "inside colouring {n} isn't supported; using colour 0"
-            ));
-            Inside::Color(0)
+        n if n >= 0 => Inside::Color(wrap(n as u32) as u8),
+        -102 => {
+            warnings.push("inside=period isn't supported; using the maxiter colour".into());
+            Inside::MaxIter
         }
+        n => INSIDE_CODES.iter().find(|(c, _)| *c == n).map_or_else(
+            || {
+                warnings.push(format!(
+                    "inside colouring {n} isn't supported; using colour 0"
+                ));
+                Inside::Color(0)
+            },
+            |(_, m)| *m,
+        ),
     };
     p.outside = match b.i16(182).unwrap_or(-1) {
-        -1 => Outside::Iter,
-        n => {
-            warnings.push(format!(
-                "outside colouring {n} isn't supported; colouring by iteration"
-            ));
-            Outside::Iter
-        }
+        n @ 0..=255 => Outside::Color(n as u8),
+        n => OUTSIDE_CODES.iter().find(|(c, _)| *c == n).map_or_else(
+            || {
+                warnings.push(format!(
+                    "outside colouring {n} isn't supported; colouring by iteration"
+                ));
+                Outside::Iter
+            },
+            |(_, m)| *m,
+        ),
     };
+    if p.needs_orbit_coloring() && !p.fractal.orbit_coloring {
+        warnings.push(format!(
+            "inside/outside/decomposition/biomorph options aren't supported for {} yet and were ignored",
+            p.fractal.name
+        ));
+        p.inside = match p.inside {
+            Inside::Color(c) => Inside::Color(c),
+            _ => Inside::MaxIter,
+        };
+        p.outside = Outside::Iter;
+        p.decomp = 0;
+        p.biomorph = None;
+        p.bailout = bailout.map_or(p.fractal.default_bailout, |v| v as f64);
+    }
 
     let unsupported = [
-        (b.i16(102).unwrap_or(-1) != -1, "biomorph"),
-        (b.u16(120).unwrap_or(0) != 0, "decomposition"),
         (b.i32(420).unwrap_or(0) != 0, "logarithmic palette"),
         (b.i32(424).unwrap_or(0) != 0, "distance estimator"),
         (b.f64(428).unwrap_or(0.0) != 0.0, "inversion"),
@@ -214,6 +240,43 @@ fn read_params(b: &Bytes, modern: bool, p: &mut Params, warnings: &mut Vec<Strin
     ];
     for (_, what) in unsupported.iter().filter(|(on, _)| *on) {
         warnings.push(format!("{what} isn't supported yet and was ignored"));
+    }
+}
+
+/// Inside colouring codes at offset 104 (coloring.md §6; n ≥ 0 = colour n).
+const INSIDE_CODES: [(i16, Inside); 7] = [
+    (-1, Inside::MaxIter),
+    (-59, Inside::ZMag),
+    (-60, Inside::Bof60),
+    (-61, Inside::Bof61),
+    (-104, Inside::Atan),
+    (-103, Inside::Fmod),
+    (-100, Inside::EpsCross),
+];
+
+/// Outside colouring codes at offset 182 (coloring.md §5; n ≥ 0 = colour n).
+const OUTSIDE_CODES: [(i16, Outside); 8] = [
+    (-1, Outside::Iter),
+    (-2, Outside::Real),
+    (-3, Outside::Imag),
+    (-4, Outside::Mult),
+    (-5, Outside::Summ),
+    (-6, Outside::Atan),
+    (-7, Outside::Fmod),
+    (-8, Outside::Tdis),
+];
+
+fn inside_code(m: Inside) -> i16 {
+    match m {
+        Inside::Color(c) => c.into(),
+        m => INSIDE_CODES.iter().find(|(_, x)| *x == m).unwrap().0,
+    }
+}
+
+fn outside_code(m: Outside) -> i16 {
+    match m {
+        Outside::Color(c) => c.into(),
+        m => OUTSIDE_CODES.iter().find(|(_, x)| *x == m).unwrap().0,
     }
 }
 
@@ -254,7 +317,7 @@ pub fn write(
     put(&mut m, 8, &(max_iter.min(32767) as i16).to_le_bytes());
 
     // Fractint stores an integer bailout; 0 means the type's default.
-    let bailout = if params.bailout == params.fractal.default_bailout {
+    let bailout = if params.bailout == params.default_bailout() {
         0
     } else {
         params.bailout.round().clamp(1.0, i32::MAX as f64) as i32
@@ -269,16 +332,22 @@ pub fn write(
     let bailout16 = if bailout <= 32767 { bailout as i16 } else { 0 };
     put(&mut m, 212, &bailout16.to_le_bytes());
 
-    let inside: i16 = match params.inside {
-        Inside::Color(c) => c.into(),
-        Inside::MaxIter => -1,
-    };
-    put(&mut m, 104, &inside.to_le_bytes());
-    let outside: i16 = match params.outside {
-        Outside::Iter => -1,
-    };
+    put(&mut m, 104, &inside_code(params.inside).to_le_bytes());
+    let outside = outside_code(params.outside);
     put(&mut m, 182, &outside.to_le_bytes());
     let symmetry: i16 = if params.use_symmetry { 999 } else { 0 };
+    let biomorph = params
+        .biomorph
+        .map_or(-1, |b| b.min(i16::MAX as u32) as i16);
+    put(&mut m, 102, &biomorph.to_le_bytes());
+    let decomp = params.decomp.min(u16::MAX as u32) as u16;
+    if decomp as u32 != params.decomp {
+        notes.push(format!(
+            "Fractint stores decomposition up to {}; wrote that",
+            u16::MAX
+        ));
+    }
+    put(&mut m, 120, &decomp.to_le_bytes());
     put(&mut m, 124, &symmetry.to_le_bytes());
 
     // Screen size (hypothesis, §2.1 offsets 70/72).
