@@ -25,6 +25,11 @@ lipo -create -output "$out/fractalforge" \
   target/x86_64-apple-darwin/release/fractalforge
 lipo -info "$out/fractalforge"
 
+# cargo-packager copies the binary from target/release; give it the
+# universal one (a fresh checkout has nothing there).
+mkdir -p target/release
+cp "$out/fractalforge" target/release/fractalforge
+
 cd apps/gui
 cargo packager --release --formats app
 
