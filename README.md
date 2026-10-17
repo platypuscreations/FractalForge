@@ -15,29 +15,32 @@ Fractint source code and is not affiliated with the Stone Soup Group.
 
 ## Status
 
-Phase 2 (desktop app, toward v0.1). FractalForge has a desktop app and a
-command-line renderer. It renders 17 escape-time types (mandel, julia,
-lambda, mandellambda, mandel4, julia4, manowar, manowarj, barnsleym1,
-barnsleyj1, spider, magnet1m, magnet1j, newton, newtbasin, phoenix,
-mandphoenix) with the same pixels as Fractint-format renderers, and can stop
-a render, save it as a GIF and resume it later with identical results:
+**v0.1** (macOS). FractalForge has a desktop app and a command-line renderer.
+
+- 17 escape-time types (mandel, julia, lambda, mandellambda, mandel4, julia4,
+  manowar, manowarj, barnsleym1, barnsleyj1, spider, magnet1m, magnet1j,
+  newton, newtbasin, phoenix, mandphoenix), rendered with the same pixels as
+  Fractint-format renderers.
+- Inside/outside colouring modes, decomposition and biomorph (mandel and
+  julia), colour cycling and a palette editor.
+- Stop a render, save it as a GIF and resume it later with identical
+  results. Partial renders also move both ways between FractalForge and
+  XFractint.
+- Reads and writes Fractint-format PAR, MAP and GIF files.
+
+From the command line:
 
 ```sh
 cargo run --release -p fractalforge-cli -- render -o big.gif --size 3840x2160 --maxiter 5000 --stop-after 30
 cargo run --release -p fractalforge-cli -- render big.gif --resume -o big-done.gif
-cargo run --release -p fractalforge-cli -- info big-done.gif
+cargo run --release -p fractalforge-cli -- render saved-by-fractint.gif -o again.gif
+cargo run --release -p fractalforge-cli -- render my.par --entry myentry -o out.png
 ```
 
 Ctrl-C during a render also saves a resumable GIF.
 
-Saved GIFs also carry Fractint-format parameter blocks, so XFractint and DOS
-Fractint open them with the right parameters. FractalForge can likewise render
-the parameters of Mandelbrot and Julia GIFs saved by Fractint:
-
-```sh
-cargo run --release -p fractalforge-cli -- info saved-by-fractint.gif
-cargo run --release -p fractalforge-cli -- render saved-by-fractint.gif -o again.gif
-```
+Not in v0.1 yet: formula (`.frm`), L-system, IFS and other Fractint types;
+rotated views; screen-reader support; notarized macOS builds.
 
 Roadmap:
 
