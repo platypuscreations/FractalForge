@@ -1,0 +1,5 @@
+wfnfn              { ; our comment one
+  reset=2004 type=fn*fn function=cos/sinh center-mag=0/0/0.3333333
+  float=y inside=0 viewwindows=2/0.75/yes/0/0
+  }
+

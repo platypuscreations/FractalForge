@@ -1,0 +1,23 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# colors= decoding probes (inputs/colors.par, colors2.par), batch mode.
+c-cdigits @colors.par/cdigits viewwindows=2
+c-cinterp1 @colors.par/cinterp1 viewwindows=2
+c-cinterp2 @colors.par/cinterp2 viewwindows=2
+c-cinterp3 @colors.par/cinterp3 viewwindows=2
+c-cinterp4 @colors.par/cinterp4 viewwindows=2
+c-cshort16 @colors.par/cshort16 viewwindows=2
+c-cshort1 @colors.par/cshort1 viewwindows=2
+c-cstartrun @colors.par/cstartrun viewwindows=2
+c-coverrun @colors.par/coverrun viewwindows=2
+c-cbadchar @colors.par/cbadchar viewwindows=2
+c-cpartial @colors.par/cpartial viewwindows=2
+c-cmapref @colors.par/cmapref viewwindows=2
+c-cmapref2 @colors.par/cmapref2 viewwindows=2
+c-crun0 @colors.par/crun0 viewwindows=2
+c-mapthencolors @colors2.par/mapthencolors viewwindows=2
+c-colorsthenmap @colors2.par/colorsthenmap viewwindows=2
+c-nocolors @colors2.par/nocolors viewwindows=2
+c-map-cmdline-after @colors2.par/mapthencolors map=ff.map viewwindows=2
+c-map-cmdline-before map=ff.map @colors2.par/nocolors viewwindows=2
+c-short16-after-map map=ff.map @colors.par/cshort16 viewwindows=2
+c-nofile @nosuch.par/plain viewwindows=2

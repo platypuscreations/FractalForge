@@ -1,0 +1,14 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+# Interactive runs in the native image driven by steps/<steps>.txt (drive.sh
+# syntax; steps files hold no comments). <name> <steps> <XDEPTH> <args...>
+#  multi: save entries "first" (with 4 comment lines) and "second" to out.par,
+#         then save "first" again with a new comment and confirm the replace.
+#  into:  save "addedentry" into a copy of inputs/r1.par, then replace its
+#         one-line entry "samelinebrace".
+#  mapedit: open the palette editor (e, Enter), press s, type /work/mine.map.
+#  unknown: start interactively with a .par entry holding an unknown key.
+sp-multi    multi           24 type=mandel viewwindows=2
+sp-into     into            24 type=julia params=0.25/0.5 viewwindows=2
+sp-mapedit  mapedit         8  type=mandel map=mfull.map viewwindows=2
+sp-unknown  startup-unknown 24 @r1.par/unknownkey viewwindows=2 savename=ff.gif

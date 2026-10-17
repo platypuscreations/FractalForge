@@ -1,0 +1,6 @@
+wg2                { ; our comment one
+  reset=2004 type=mandel center-mag=-0.5/0/0.6666667 params=0/0
+  float=y fillcolor=5 inside=0 logmap=yes biomorph=5 symmetry=none
+  periodicity=0 viewwindows=2/0.75/yes/0/0
+  }
+

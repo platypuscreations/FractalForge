@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Entry-name length, braces in comments, multiple entries, long lines.
+s3-after-longname  @len2.par/short viewwindows=2
+s3-bracecomment    @len2.par/bracecomment viewwindows=2
+s3-bracevalue      @len2.par/bracevalue viewwindows=2
+s3-two-entries     @len2.par/short @len2.par/two viewwindows=2
+s3-two-entries-rev @len2.par/two @len2.par/short viewwindows=2
+s3-split510        @split.par/split510 viewwindows=2
+s3-split511        @split.par/split511 viewwindows=2
+s3-split512        @split.par/split512 viewwindows=2
+s3-split513        @split.par/split513 viewwindows=2

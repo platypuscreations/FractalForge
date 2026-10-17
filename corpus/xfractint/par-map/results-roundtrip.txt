@@ -1,0 +1,44 @@
+# rt-<name> (amd64 batch load of written/<name>.out.par) vs written/<name> (the GIF saved in the writing session).
+# "palette: N entries differ, max M" counts 6-bit channel differences.
+wcmrot    001 offs [12, 20, 28, 36, 122, 123, 184] | palette: 0 entries differ, max 0
+wcmxmag   001 offs [122, 123] | palette: 0 entries differ, max 0
+wcmzoom   001 offs [122, 123] | palette: 0 entries differ, max 0
+wcorn6    001 offs [122, 123] | palette: 0 entries differ, max 0
+wcorndef  001 offs [122, 123] | palette: 0 entries differ, max 0
+wdeep     001 offs [122, 123] | palette: 0 entries differ, max 0
+wdefs     001 offs [12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24] ; pixels differ (68) | palette: 0 entries differ, max 0
+wfnfn     001 offs [12, 13, 14, 15, 20, 21, 22, 23, 28, 29, 30, 31] | palette: 0 entries differ, max 0
+wfrm      001 offs [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23] ; pixels differ (47312) | palette: 0 entries differ, max 0 | message: 'ffcube' file entry item not found / Could not open file where formula located
+wfrmpar   001 offs [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23] ; pixels differ (47312) | palette: 0 entries differ, max 0 | message: 'ffcube' file entry item not found / Could not open file where formula located
+wg1       001 offs [12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24] ; pixels differ (512) | palette: 0 entries differ, max 0
+wg10      001 offs [12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24] ; pixels differ (16) | palette: 0 entries differ, max 0
+wg2       001 offs [12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24] ; pixels differ (114) | palette: 0 entries differ, max 0
+wg3       001 offs [12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24] ; pixels differ (50) | palette: 0 entries differ, max 0
+wg4       001 offs [12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24] ; pixels differ (2) | palette: 0 entries differ, max 0
+wg5       001 offs [12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24] ; pixels differ (76) | palette: 0 entries differ, max 0
+wg6       001 offs [12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24] | palette: 0 entries differ, max 0
+wg7       001 offs [12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24] ; pixels differ (94) | palette: 0 entries differ, max 0
+wg8       001 offs [12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24] ; pixels differ (46) | palette: 0 entries differ, max 0
+wg9       001 offs [12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24] ; pixels differ (650) | palette: 0 entries differ, max 0
+wins1     001 offs [12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24] ; pixels differ (68) | palette: 0 entries differ, max 0
+wjcmag    001 offs [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23] ; pixels differ (60) | palette: 0 entries differ, max 0
+wjulfn    001 offs [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23] | palette: 0 entries differ, max 0
+wjulia    001 offs [122, 123] ; palette differs | palette: 29 entries differ, max 1
+wlambda   001 offs [12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24] ; pixels differ (284) | palette: 0 entries differ, max 0
+wll200    001 offs [12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24] ; palette differs; pixels differ (68) | palette: 77 entries differ, max 1
+wll40     001 offs [122, 123] ; palette differs | palette: 29 entries differ, max 1
+wmand4    001 offs [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23] ; pixels differ (100) | palette: 0 entries differ, max 0
+wmandel   001 offs [12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24] ; palette differs; pixels differ (68) | palette: 29 entries differ, max 1
+wmap16    001 offs [12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24] ; palette differs; pixels differ (2390) | palette: 246 entries differ, max 40
+wmapkeep  NO IMAGE | Could not load color map /usr/share/xfractint/maps/ff.map
+wmapno    001 offs [12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24] ; palette differs; pixels differ (312) | palette: 256 entries differ, max 63
+wmaponly  001 offs [122, 123] ; palette differs; size differs | palette: 77 entries differ, max 1
+wmapyes   001 offs [12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24] ; palette differs; pixels differ (68) | palette: 77 entries differ, max 1
+wmkeep    001 offs [12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24] ; pixels differ (68) | palette: 0 entries differ, max 0
+wnc40     001 offs [12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24] ; palette differs; pixels differ (702) | palette: 218 entries differ, max 40
+wnewton   001 offs [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23] ; pixels differ (20) | palette: 0 entries differ, max 0
+wnoview   001 offs [12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24] ; palette differs; pixels differ (366) | palette: 29 entries differ, max 1
+wpar10    001 offs [12, 13, 14, 15, 16, 17, 18, 20, 21, 22, 23, 24] ; pixels differ (62) | palette: 0 entries differ, max 0
+wpopcorn  001 offs [12, 13, 14, 15, 20, 21, 22, 23, 28, 29, 30, 31] ; pixels differ (1) | palette: 0 entries differ, max 0
+wpsmall   001 offs [12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23] | palette: 0 entries differ, max 0
+wzoom     001 offs [122, 123] | palette: 0 entries differ, max 0

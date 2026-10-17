@@ -1,0 +1,47 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+# Round trip: batch-load each parameter file XFractint wrote (cases-writer.txt).
+# gen-all.sh copies <name>.out.par to <name>.par and passes that directory
+# as EXTRA_INPUTS. Compare rt-<name>.ff.gif with the writer's <name>.ff.gif.
+rt-wmandel   @wmandel.par/wmandel
+rt-wnoview   @wnoview.par/wnoview
+rt-wmkeep    @wmkeep.par/wmkeep
+rt-wjulia    @wjulia.par/wjulia
+rt-wjcmag    @wjcmag.par/wjcmag
+rt-wpsmall   @wpsmall.par/wpsmall
+rt-wlambda   @wlambda.par/wlambda
+rt-wnewton   @wnewton.par/wnewton
+rt-wmand4    @wmand4.par/wmand4
+rt-wpopcorn  @wpopcorn.par/wpopcorn
+rt-wfnfn     @wfnfn.par/wfnfn
+rt-wjulfn    @wjulfn.par/wjulfn
+rt-wfrm      @wfrm.par/wfrm
+rt-wfrmpar   @wfrmpar.par/wfrmpar
+rt-wpar10    @wpar10.par/wpar10
+rt-wzoom     @wzoom.par/wzoom
+rt-wcorndef  @wcorndef.par/wcorndef
+rt-wcorn6    @wcorn6.par/wcorn6
+rt-wcmrot    @wcmrot.par/wcmrot
+rt-wcmxmag   @wcmxmag.par/wcmxmag
+rt-wcmzoom   @wcmzoom.par/wcmzoom
+rt-wdeep     @wdeep.par/wdeep
+rt-wg1       @wg1.par/wg1
+rt-wg2       @wg2.par/wg2
+rt-wg3       @wg3.par/wg3
+rt-wg4       @wg4.par/wg4
+rt-wg5       @wg5.par/wg5
+rt-wg6       @wg6.par/wg6
+rt-wg7       @wg7.par/wg7
+rt-wg8       @wg8.par/wg8
+rt-wg9       @wg9.par/wg9
+rt-wg10      @wg10.par/wg10
+rt-wdefs     @wdefs.par/wdefs
+rt-wins1     @wins1.par/wins1
+rt-wmapyes   @wmapyes.par/wmapyes
+rt-wmapkeep  @wmapkeep.par/wmapkeep
+rt-wmaponly  @wmaponly.par/wmaponly
+rt-wmapno    @wmapno.par/wmapno
+rt-wmap16    @wmap16.par/wmap16
+rt-wnc40     @wnc40.par/wnc40
+rt-wll40     @wll40.par/wll40
+rt-wll200    @wll200.par/wll200

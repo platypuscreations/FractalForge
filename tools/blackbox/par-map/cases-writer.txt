@@ -1,0 +1,49 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+# Parameter files written by XFractint itself: interactive render in the
+# native image, "s" saves the GIF, then the "b" screen saves the parameters
+# (docker/makepar-steps.sh). Names are at most 8 characters so the written
+# file can be loaded back as <name>.par (DOS 8.3 limit) by cases-roundtrip.txt.
+# <name> <record-colors answer> <ncolors|-> <line length|-> <xfractint args...>
+wmandel  yes  - - type=mandel viewwindows=2
+wnoview  yes  - - type=mandel
+wmkeep   keep - - type=mandel viewwindows=2
+wjulia   yes  - - type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 viewwindows=2
+wjcmag   no   - - type=julia params=0.3/0.6 viewwindows=2
+wpsmall  no   - - type=julia params=1e-20/-0.123456789012345678 viewwindows=2
+wlambda  no   - - type=lambda viewwindows=2
+wnewton  no   - - type=newton viewwindows=2
+wmand4   no   - - type=mandel4 viewwindows=2
+wpopcorn no   - - type=popcorn viewwindows=2
+wfnfn    no   - - type=fn*fn function=cos/sinh viewwindows=2
+wjulfn   no   - - type=julfn+zsqrd function=cos viewwindows=2
+wfrm     no   - - type=formula formulafile=ff.frm formulaname=ffcube viewwindows=2
+wfrmpar  no   - - type=formula formulafile=ff.frm formulaname=ffcube params=0.5/0.25 viewwindows=2
+wpar10   no   - - type=mandel params=0.01/0.02/0.03/0.04/0.05/0.06/0.07/0.08/0.09/0.11 viewwindows=2
+wzoom    no   - - type=mandel corners=-0.75/-0.70/0.10/0.14 viewwindows=2
+wcorndef no   - - type=mandel corners=-2.5/1.5/-1.5/1.5 viewwindows=2
+wcorn6   no   - - type=mandel corners=-2.25/1.25/-1.375/1.625/-2.0625/-1.1875 viewwindows=2
+wcmrot   no   - - type=mandel center-mag=-0.5/0/1/1.5/30/10 viewwindows=2
+wcmxmag  no   - - type=mandel center-mag=-0.5/0/1/2 viewwindows=2
+wcmzoom  no   - - type=mandel center-mag=-0.725/0.12/40/1.25 viewwindows=2
+wdeep    no   - - type=mandel center-mag=-0.743643887037151/0.131825904205330/1e13 maxiter=500 viewwindows=2
+wg1      no   - - type=mandel maxiter=1000 bailout=100 bailoutest=real inside=bof60 outside=real passes=1 viewwindows=2
+wg2      no   - - type=mandel periodicity=0 biomorph=5 logmap=yes symmetry=none fillcolor=5 viewwindows=2
+wg3      no   - - type=mandel decomp=2 float=no viewwindows=2
+wg4      no   - - type=mandel potential=255/820/200 viewwindows=2
+wg5      no   - - type=mandel invert=1/0.5/0.25 viewwindows=2
+wg6      no   - - type=mandel distest=1 finattract=yes cyclerange=10/200 rseed=4660 viewwindows=2
+wg7      no   - - type=mandel float=yes passes=b inside=maxiter outside=summ bailoutest=manh logmap=-3 symmetry=xaxis viewwindows=2
+wg8      no   - - type=mandel passes=2 inside=zmag outside=7 bailoutest=or periodicity=-3 logmap=7 decomp=256 viewwindows=2
+wg9      no   - - type=mandel passes=t inside=-5 outside=tdis bailoutest=and bailout=1000 maxiter=32768 viewwindows=2
+wg10     no   - - type=mandel inside=period outside=atan bailoutest=manr biomorph=0 potential=100/512/50/16bit viewwindows=2
+wdefs    no   - - type=mandel maxiter=150 bailout=4 inside=1 outside=iter passes=g periodicity=1 symmetry=xaxis biomorph=-1 decomp=0 logmap=0 viewwindows=2
+wins1    no   - - type=mandel inside=1 viewwindows=2
+wmapyes  yes  - - type=mandel map=ff.map viewwindows=2
+wmapkeep keep - - type=mandel map=ff.map viewwindows=2
+wmaponly only - - type=mandel map=ff.map viewwindows=2
+wmapno   no   - - type=mandel map=ff.map viewwindows=2
+wmap16   yes  16 - type=mandel map=ff.map viewwindows=2
+wnc40    yes  40 - type=mandel viewwindows=2
+wll40    yes  256 40 type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 viewwindows=2
+wll200   yes  256 200 type=mandel map=ff.map viewwindows=2

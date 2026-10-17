@@ -1,0 +1,94 @@
+; SPDX-License-Identifier: GPL-3.0-or-later
+; more colors= probes (our own palettes)
+crun1 {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=000<1>zzz
+}
+crun2 {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=000<2>zzz
+}
+crun3 {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=000<3>zzz
+}
+crun9 {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=000<9>zzz
+}
+crun200 {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=000<200>zzz
+}
+cinterp1b {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=000<4>00z<9>z00<2>0z0<6>zzz<1>000<3>111<5>777<2>333
+}
+cbad0 {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=000[[[zzz
+}
+cbad1 {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=000\\\zzz
+}
+cbad2 {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=000]]]zzz
+}
+cbad3 {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=000^^^zzz
+}
+cbad4 {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=000|||zzz
+}
+cbad5 {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=000~~~zzz
+}
+cbad6 {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=000!!!zzz
+}
+cbad7 {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=000###zzz
+}
+c257 {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00
+}
+c256 {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z0000z
+}
+cmapdot {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=@./ff.map
+}
+cmapabs {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=@/work/ff.map
+}
+cupper {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=ABCABCABCABC
+}
+clower {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=abcabcabcabc
+}
+mapdot {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=./ff.map
+}
+mapabs {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=/work/ff.map
+}
+mapbare {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=ff
+}
+cspace {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 colors=z00z00 z00
+}

@@ -1,0 +1,89 @@
+; SPDX-License-Identifier: GPL-3.0-or-later
+; per-key equivalence and center-mag geometry probes
+c256 {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00\
+  z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00\
+  z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00\
+  z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00\
+  z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00\
+  z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00\
+  z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00\
+  z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00\
+  z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00\
+  z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00\
+  z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00\
+  z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00\
+  z00z00z00z00z00z00z00z00z00z00z00z00z00z00z0000z
+}
+c257 {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00\
+  z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00\
+  z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00\
+  z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00\
+  z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00\
+  z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00\
+  z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00\
+  z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00\
+  z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00\
+  z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00\
+  z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00\
+  z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00\
+  z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z0000z
+}
+c256run {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  colors=000<254>zzzz00
+}
+cmagrs {
+  type=julia params=-0.8/0.156 maxiter=200 center-mag=0/0/0.888888888888888889/1/30/20
+}
+cmagxr {
+  type=julia params=-0.8/0.156 maxiter=200 center-mag=0.25/-0.125/0.888888888888888889/1.5/30
+}
+cmagneg {
+  type=julia params=-0.8/0.156 maxiter=200 center-mag=0/0/0.888888888888888889/1/-45/-10
+}
+k-periodicity {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 periodicity=0
+}
+k-biomorph {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 biomorph=5
+}
+k-decomp {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 decomp=4
+}
+k-potential {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 potential=255/820/200
+}
+k-invert {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 invert=1/0.5/0.25
+}
+k-fillcolor {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 fillcolor=5 passes=b
+}
+k-bailout {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 bailout=100 bailoutest=real
+}
+k-passes {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 passes=1
+}
+k-inout {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 inside=bof60 outside=summ
+}
+k-function {
+  type=fn*fn function=cos/sinh maxiter=200
+}
+k-formula {
+  type=formula formulafile=ff.frm formulaname=ffcube maxiter=200
+}
+k-logmap {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 logmap=7
+}
+k-symmetry {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 symmetry=none
+}
+k-float {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 float=yes
+}

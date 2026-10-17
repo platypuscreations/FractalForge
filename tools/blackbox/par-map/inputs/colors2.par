@@ -1,0 +1,10 @@
+; SPDX-License-Identifier: GPL-3.0-or-later
+mapthencolors {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=ff.map colors=z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00
+}
+colorsthenmap {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 colors=z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00z00 map=ff.map
+}
+nocolors {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+}

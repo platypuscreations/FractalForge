@@ -1,0 +1,100 @@
+; SPDX-License-Identifier: GPL-3.0-or-later
+; FractalForge black-box structure tests (our own file).
+text outside any entry is ignored?
+plain {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+}
+CaseName {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+}
+samelinebrace      {
+  reset=2004 type=julia center-mag=0/0/0.6666667 params=0.25/0.5
+  float=y inside=0 viewwindows=2/0.75/yes/0/0
+  }
+
+nextlinebrace
+{
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+}
+tabs	{
+	type=julia	params=-0.8/0.156	maxiter=200
+	corners=-1.5/1.5/-1.125/1.125
+	}
+contin {
+  type=julia params=-0.8/\
+    0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+}
+continspace {
+  type=julia params=-0.8/0.156 \
+  maxiter=200 corners=-1.5/1.5/-1.125/1.125
+}
+continkey {
+  type=julia params=-0.8/0.156 max\
+iter=200 corners=-1.5/1.5/-1.125/1.125
+}
+comments { ; comment } with a brace
+  ; full-line comment maxiter=999
+  type=julia params=-0.8/0.156 ; maxiter=999
+  maxiter=200;maxiter=998
+  corners=-1.5/1.5/-1.125/1.125
+}
+blanklines {
+
+  type=julia params=-0.8/0.156
+
+  maxiter=200 corners=-1.5/1.5/-1.125/1.125
+
+}
+dupkey {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 maxiter=100
+}
+upper {
+  TYPE=JULIA PARAMS=-0.8/0.156 MAXITER=200 CORNERS=-1.5/1.5/-1.125/1.125
+}
+spaceeq {
+  type=julia params=-0.8/0.156 maxiter = 100 corners=-1.5/1.5/-1.125/1.125
+}
+afterclose {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 } maxiter=100
+partial {
+  maxiter=200
+}
+withreset {
+  reset type=julia params=-0.8/0.156 corners=-1.5/1.5/-1.125/1.125
+}
+withreset2004 {
+  reset=2004 type=julia params=-0.8/0.156 corners=-1.5/1.5/-1.125/1.125
+}
+noreset {
+  type=julia params=-0.8/0.156 corners=-1.5/1.5/-1.125/1.125
+}
+unknownkey {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 frobnicate=7
+}
+unknownbare {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 frobnicate
+}
+badvalue {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 maxiter=abc
+}
+a_very_long_entry_name_with_more_than_thirty_chars {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+}
+dup {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+}
+dup {
+  type=julia params=-0.8/0.156 maxiter=100 corners=-1.5/1.5/-1.125/1.125
+}
+name with space {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+}
+nested {
+  type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125
+  inner { maxiter=100 }
+}
+addedentry         {
+  reset=2004 type=julia center-mag=0/0/0.6666667 params=0.25/0.5
+  float=y inside=0 viewwindows=2/0.75/yes/0/0
+  }
+

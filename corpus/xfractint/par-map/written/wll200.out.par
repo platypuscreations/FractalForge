@@ -1,0 +1,8 @@
+wll200             { ; our comment one
+  reset=2004 type=mandel center-mag=-0.5/0/0.6666667 params=0/0
+  float=y inside=0 viewwindows=2/0.75/yes/0/0
+  colors=00z<29>7os7qs8sr<3>9zq90q<29>GpjHriHsi<3>IzhI1h<28>PoaQq`Qr`<3>Ry\
+  _R0_<29>ZpSZqSZsS<3>_zR_1R<28>goJgpJgrJ<3>hyIh0I<29>poApqApsA<3>qz9r18<3\
+  4>zy0
+  }
+

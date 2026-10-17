@@ -1,0 +1,40 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# .par structure tests: <name> <xfractint parameters...> (batch mode, amd64).
+# Reference: the same settings given on the command line.
+s-ref           type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 viewwindows=2
+s-ref-100       type=julia params=-0.8/0.156 maxiter=100 corners=-1.5/1.5/-1.125/1.125 viewwindows=2
+s-plain         @r1.par/plain viewwindows=2
+s-case-exact    @r1.par/CaseName viewwindows=2
+s-case-lower    @r1.par/casename viewwindows=2
+s-plain-upper   @r1.par/PLAIN viewwindows=2
+s-prefix        @r1.par/plai viewwindows=2
+s-samelinebrace @r1.par/samelinebrace viewwindows=2
+s-nextlinebrace @r1.par/nextlinebrace viewwindows=2
+s-tabs          @r1.par/tabs viewwindows=2
+s-contin        @r1.par/contin viewwindows=2
+s-continspace   @r1.par/continspace viewwindows=2
+s-continkey     @r1.par/continkey viewwindows=2
+s-comments      @r1.par/comments viewwindows=2
+s-blanklines    @r1.par/blanklines viewwindows=2
+s-dupkey        @r1.par/dupkey viewwindows=2
+s-upper         @r1.par/upper viewwindows=2
+s-spaceeq       @r1.par/spaceeq viewwindows=2
+s-afterclose    @r1.par/afterclose viewwindows=2
+s-unknownkey    @r1.par/unknownkey viewwindows=2
+s-unknownbare   @r1.par/unknownbare viewwindows=2
+s-badvalue      @r1.par/badvalue viewwindows=2
+s-longname      @r1.par/a_very_long_entry_name_with_more_than_thirty_chars viewwindows=2
+s-dup           @r1.par/dup viewwindows=2
+s-namespace     @r1.par/name viewwindows=2
+s-nested        @r1.par/nested viewwindows=2
+s-nested-inner  @r1.par/inner viewwindows=2
+s-missing       @r1.par/doesnotexist viewwindows=2
+s-crlf          @r2.par/crlf viewwindows=2
+s-indirect      @r3.txt viewwindows=2
+s-noentry       @r1.par viewwindows=2
+s-before-par    maxiter=100 @r1.par/plain viewwindows=2
+s-after-par     @r1.par/plain maxiter=100 viewwindows=2
+s-inherit-noreset  maxiter=77 inside=5 @r1.par/noreset viewwindows=2
+s-inherit-reset    maxiter=77 inside=5 @r1.par/withreset viewwindows=2
+s-inherit-reset2004 maxiter=77 inside=5 @r1.par/withreset2004 viewwindows=2
+s-partial       type=julia params=-0.8/0.156 corners=-1.5/1.5/-1.125/1.125 @r1.par/partial viewwindows=2

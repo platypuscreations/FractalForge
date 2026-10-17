@@ -1,0 +1,39 @@
+sleep 4
+key b
+sleep 1
+type /work/out.par
+key Down
+type first
+key Down
+type comment A1
+key Down
+type comment A2
+key Down
+type comment A3
+key Down
+type comment A4
+key Down
+type no
+key Return
+waitfile /work/out.par
+sleep 1
+key b
+sleep 1
+key Down
+type second
+key Down Down Down Down Down
+type no
+key Return
+sleep 2
+key b
+sleep 1
+key Down
+type first
+key Down
+type replaced
+key Down Down Down Down
+type no
+key Return
+sleep 2
+key Return
+sleep 2

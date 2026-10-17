@@ -1,0 +1,385 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+# Command lines for every file in this folder, copied from
+# tools/blackbox/par-map/cases-*.txt. Every amd64 case ran as
+#   run-batch <args> savename=ff.gif   (batch=yes is added by run-batch)
+# in a fresh directory holding tools/blackbox/par-map/inputs/*.
+
+######## cases-structure.txt
+# .par structure tests: <name> <xfractint parameters...> (batch mode, amd64).
+# Reference: the same settings given on the command line.
+s-ref           type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 viewwindows=2
+s-ref-100       type=julia params=-0.8/0.156 maxiter=100 corners=-1.5/1.5/-1.125/1.125 viewwindows=2
+s-plain         @r1.par/plain viewwindows=2
+s-case-exact    @r1.par/CaseName viewwindows=2
+s-case-lower    @r1.par/casename viewwindows=2
+s-plain-upper   @r1.par/PLAIN viewwindows=2
+s-prefix        @r1.par/plai viewwindows=2
+s-samelinebrace @r1.par/samelinebrace viewwindows=2
+s-nextlinebrace @r1.par/nextlinebrace viewwindows=2
+s-tabs          @r1.par/tabs viewwindows=2
+s-contin        @r1.par/contin viewwindows=2
+s-continspace   @r1.par/continspace viewwindows=2
+s-continkey     @r1.par/continkey viewwindows=2
+s-comments      @r1.par/comments viewwindows=2
+s-blanklines    @r1.par/blanklines viewwindows=2
+s-dupkey        @r1.par/dupkey viewwindows=2
+s-upper         @r1.par/upper viewwindows=2
+s-spaceeq       @r1.par/spaceeq viewwindows=2
+s-afterclose    @r1.par/afterclose viewwindows=2
+s-unknownkey    @r1.par/unknownkey viewwindows=2
+s-unknownbare   @r1.par/unknownbare viewwindows=2
+s-badvalue      @r1.par/badvalue viewwindows=2
+s-longname      @r1.par/a_very_long_entry_name_with_more_than_thirty_chars viewwindows=2
+s-dup           @r1.par/dup viewwindows=2
+s-namespace     @r1.par/name viewwindows=2
+s-nested        @r1.par/nested viewwindows=2
+s-nested-inner  @r1.par/inner viewwindows=2
+s-missing       @r1.par/doesnotexist viewwindows=2
+s-crlf          @r2.par/crlf viewwindows=2
+s-indirect      @r3.txt viewwindows=2
+s-noentry       @r1.par viewwindows=2
+s-before-par    maxiter=100 @r1.par/plain viewwindows=2
+s-after-par     @r1.par/plain maxiter=100 viewwindows=2
+s-inherit-noreset  maxiter=77 inside=5 @r1.par/noreset viewwindows=2
+s-inherit-reset    maxiter=77 inside=5 @r1.par/withreset viewwindows=2
+s-inherit-reset2004 maxiter=77 inside=5 @r1.par/withreset2004 viewwindows=2
+s-partial       type=julia params=-0.8/0.156 corners=-1.5/1.5/-1.125/1.125 @r1.par/partial viewwindows=2
+
+######## cases-structure2.txt
+# More .par structure tests (batch mode, amd64).
+s2-len8 @len.par/n0000000 viewwindows=2
+s2-len12 @len.par/n00000000000 viewwindows=2
+s2-len15 @len.par/n00000000000000 viewwindows=2
+s2-len16 @len.par/n000000000000000 viewwindows=2
+s2-len17 @len.par/n0000000000000000 viewwindows=2
+s2-len18 @len.par/n00000000000000000 viewwindows=2
+s2-len19 @len.par/n000000000000000000 viewwindows=2
+s2-len20 @len.par/n0000000000000000000 viewwindows=2
+s2-len24 @len.par/n00000000000000000000000 viewwindows=2
+s2-len30 @len.par/n00000000000000000000000000000 viewwindows=2
+s2-len31 @len.par/n000000000000000000000000000000 viewwindows=2
+s2-len32 @len.par/n0000000000000000000000000000000 viewwindows=2
+s2-len33 @len.par/n00000000000000000000000000000000 viewwindows=2
+s2-len40 @len.par/n000000000000000000000000000000000000000 viewwindows=2
+s2-nest-nested   @nest.par/nested viewwindows=2
+s2-nest-after    @nest.par/after viewwindows=2
+s2-nextl-nextline @nextl.par/nextline viewwindows=2
+s2-nextl-after   @nextl.par/after viewwindows=2
+s2-spname-name   @spname.par/name viewwindows=2
+s2-spname-after  @spname.par/after viewwindows=2
+s2-nospace       @misc.par/nospace viewwindows=2
+s2-indented      @misc.par/indented viewwindows=2
+s2-cbefore       @misc.par/cbefore viewwindows=2
+s2-keycase       @misc.par/keycase viewwindows=2
+s2-valcase       @misc.par/valcase viewwindows=2
+s2-punct         @misc.par/punct-name.x_1 viewwindows=2
+s2-closesame     @misc.par/closesame viewwindows=2
+s2-afterclosesame type=julia params=-0.8/0.156 corners=-1.5/1.5/-1.125/1.125 @misc.par/afterclosesame viewwindows=2
+s2-two-entries   @misc.par/keycase @misc.par/two viewwindows=2
+s2-longline      @longl.par/longline viewwindows=2
+s2-long2         @longl.par/long2 viewwindows=2
+s2-reset-cmdline maxiter=77 inside=5 reset type=julia params=-0.8/0.156 corners=-1.5/1.5/-1.125/1.125 viewwindows=2
+
+######## cases-structure3.txt
+# Entry-name length, braces in comments, multiple entries, long lines.
+s3-after-longname  @len2.par/short viewwindows=2
+s3-bracecomment    @len2.par/bracecomment viewwindows=2
+s3-bracevalue      @len2.par/bracevalue viewwindows=2
+s3-two-entries     @len2.par/short @len2.par/two viewwindows=2
+s3-two-entries-rev @len2.par/two @len2.par/short viewwindows=2
+s3-split510        @split.par/split510 viewwindows=2
+s3-split511        @split.par/split511 viewwindows=2
+s3-split512        @split.par/split512 viewwindows=2
+s3-split513        @split.par/split513 viewwindows=2
+
+######## cases-structure4.txt
+# Which side of the entry-name length limit crashes.
+s4-req-long-absent  @len2.par/abcdefghijklmnopqrstuvwxyz viewwindows=2
+s4-req-long-present @len2.par/n123456789012345678901234 viewwindows=2
+s4-req-18-prefix    @len2.par/n12345678901234567 viewwindows=2
+
+######## cases-values.txt
+# More colors= probes and value-syntax probes (batch mode).
+c3-crun1 @colors3.par/crun1 viewwindows=2
+c3-crun2 @colors3.par/crun2 viewwindows=2
+c3-crun3 @colors3.par/crun3 viewwindows=2
+c3-crun9 @colors3.par/crun9 viewwindows=2
+c3-crun200 @colors3.par/crun200 viewwindows=2
+c3-cinterp1b @colors3.par/cinterp1b viewwindows=2
+c3-cbad0 @colors3.par/cbad0 viewwindows=2
+c3-cbad1 @colors3.par/cbad1 viewwindows=2
+c3-cbad2 @colors3.par/cbad2 viewwindows=2
+c3-cbad3 @colors3.par/cbad3 viewwindows=2
+c3-cbad4 @colors3.par/cbad4 viewwindows=2
+c3-cbad5 @colors3.par/cbad5 viewwindows=2
+c3-cbad6 @colors3.par/cbad6 viewwindows=2
+c3-cbad7 @colors3.par/cbad7 viewwindows=2
+c3-c257 @colors3.par/c257 viewwindows=2
+c3-c256 @colors3.par/c256 viewwindows=2
+c3-cmapdot @colors3.par/cmapdot viewwindows=2
+c3-cmapabs @colors3.par/cmapabs viewwindows=2
+c3-cupper @colors3.par/cupper viewwindows=2
+c3-clower @colors3.par/clower viewwindows=2
+c3-mapdot @colors3.par/mapdot viewwindows=2
+c3-mapabs @colors3.par/mapabs viewwindows=2
+c3-mapbare @colors3.par/mapbare viewwindows=2
+c3-cspace @colors3.par/cspace viewwindows=2
+c3-reset-palette map=ff.map @r1.par/withreset viewwindows=2
+c3-reset-cmdline map=ff.map reset type=julia viewwindows=2
+v-paramsfirst @values.par/paramsfirst viewwindows=2
+v-cornersfirst @values.par/cornersfirst viewwindows=2
+v-bothcorncm @values.par/bothcorncm viewwindows=2
+v-bothcmcorn @values.par/bothcmcorn viewwindows=2
+v-numexp @values.par/numexp viewwindows=2
+v-numdot @values.par/numdot viewwindows=2
+v-maxfrac @values.par/maxfrac viewwindows=2
+v-maxplus @values.par/maxplus viewwindows=2
+v-paramsshort @values.par/paramsshort viewwindows=2
+v-paramsempty @values.par/paramsempty viewwindows=2
+v-corners3 @values.par/corners3 viewwindows=2
+v-cmag2 @values.par/cmag2 viewwindows=2
+v-cmag3 @values.par/cmag3 viewwindows=2
+v-cmag4 @values.par/cmag4 viewwindows=2
+v-cmag5 @values.par/cmag5 viewwindows=2
+v-cmag6 @values.par/cmag6 viewwindows=2
+v-cmagmandel @values.par/cmagmandel viewwindows=2
+v-floaty @values.par/floaty viewwindows=2
+v-floatyes @values.par/floatyes viewwindows=2
+v-floatn @values.par/floatn viewwindows=2
+v-logmapy @values.par/logmapy viewwindows=2
+v-logmapyes @values.par/logmapyes viewwindows=2
+v-logmapold @values.par/logmapold viewwindows=2
+v-logmapno @values.par/logmapno viewwindows=2
+v-insideabbr @values.par/insideabbr viewwindows=2
+v-insidemax @values.par/insidemax viewwindows=2
+v-passesG @values.par/passesG viewwindows=2
+v-symxaxis @values.par/symxaxis viewwindows=2
+v-symorigin @values.par/symorigin viewwindows=2
+
+######## cases-keys.txt
+# Same settings from a .par entry (k-*) and from the command line (kc-*).
+k-c256 @keys.par/c256 viewwindows=2
+k-c257 @keys.par/c257 viewwindows=2
+k-c256run @keys.par/c256run viewwindows=2
+k-cmagrs @keys.par/cmagrs viewwindows=2
+k-cmagxr @keys.par/cmagxr viewwindows=2
+k-cmagneg @keys.par/cmagneg viewwindows=2
+k-periodicity @keys.par/k-periodicity viewwindows=2
+kc-periodicity type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 periodicity=0 viewwindows=2
+k-biomorph @keys.par/k-biomorph viewwindows=2
+kc-biomorph type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 biomorph=5 viewwindows=2
+k-decomp @keys.par/k-decomp viewwindows=2
+kc-decomp type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 decomp=4 viewwindows=2
+k-potential @keys.par/k-potential viewwindows=2
+kc-potential type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 potential=255/820/200 viewwindows=2
+k-invert @keys.par/k-invert viewwindows=2
+kc-invert type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 invert=1/0.5/0.25 viewwindows=2
+k-fillcolor @keys.par/k-fillcolor viewwindows=2
+kc-fillcolor type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 fillcolor=5 passes=b viewwindows=2
+k-bailout @keys.par/k-bailout viewwindows=2
+kc-bailout type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 bailout=100 bailoutest=real viewwindows=2
+k-passes @keys.par/k-passes viewwindows=2
+kc-passes type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 passes=1 viewwindows=2
+k-inout @keys.par/k-inout viewwindows=2
+kc-inout type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 inside=bof60 outside=summ viewwindows=2
+k-function @keys.par/k-function viewwindows=2
+kc-function type=fn*fn function=cos/sinh maxiter=200 viewwindows=2
+k-formula @keys.par/k-formula viewwindows=2
+kc-formula type=formula formulafile=ff.frm formulaname=ffcube maxiter=200 viewwindows=2
+k-logmap @keys.par/k-logmap viewwindows=2
+kc-logmap type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 logmap=7 viewwindows=2
+k-symmetry @keys.par/k-symmetry viewwindows=2
+kc-symmetry type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 symmetry=none viewwindows=2
+k-float @keys.par/k-float viewwindows=2
+kc-float type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 float=yes viewwindows=2
+
+######## cases-colors.txt
+# colors= decoding probes (inputs/colors.par, colors2.par), batch mode.
+c-cdigits @colors.par/cdigits viewwindows=2
+c-cinterp1 @colors.par/cinterp1 viewwindows=2
+c-cinterp2 @colors.par/cinterp2 viewwindows=2
+c-cinterp3 @colors.par/cinterp3 viewwindows=2
+c-cinterp4 @colors.par/cinterp4 viewwindows=2
+c-cshort16 @colors.par/cshort16 viewwindows=2
+c-cshort1 @colors.par/cshort1 viewwindows=2
+c-cstartrun @colors.par/cstartrun viewwindows=2
+c-coverrun @colors.par/coverrun viewwindows=2
+c-cbadchar @colors.par/cbadchar viewwindows=2
+c-cpartial @colors.par/cpartial viewwindows=2
+c-cmapref @colors.par/cmapref viewwindows=2
+c-cmapref2 @colors.par/cmapref2 viewwindows=2
+c-crun0 @colors.par/crun0 viewwindows=2
+c-mapthencolors @colors2.par/mapthencolors viewwindows=2
+c-colorsthenmap @colors2.par/colorsthenmap viewwindows=2
+c-nocolors @colors2.par/nocolors viewwindows=2
+c-map-cmdline-after @colors2.par/mapthencolors map=ff.map viewwindows=2
+c-map-cmdline-before map=ff.map @colors2.par/nocolors viewwindows=2
+c-short16-after-map map=ff.map @colors.par/cshort16 viewwindows=2
+c-nofile @nosuch.par/plain viewwindows=2
+
+######## cases-paths.txt
+# How file names given to map=, colors=@ and formulafile= are resolved.
+pa-cmd-mapabs      type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=/work/ff.map viewwindows=2
+pa-cmd-colorsat    type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 colors=@ff.map viewwindows=2
+pa-cmd-colorsatabs type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 colors=@/work/ff.map viewwindows=2
+pa-par-frmabs      @paths.par/frmabs viewwindows=2
+pa-par-frmnameonly formulafile=ff.frm @paths.par/frmnameonly viewwindows=2
+pa-cmd-formula     type=formula formulafile=ff.frm formulaname=ffcube maxiter=200 viewwindows=2
+pa-nofile          @nosuch.par/plain viewwindows=2
+
+######## cases-map.txt
+# .map reading probes: map=<file> on the command line, batch mode.
+m-m6bit type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=m6bit.map viewwindows=2
+m-mblank type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mblank.map viewwindows=2
+m-mcomm type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mcomm.map viewwindows=2
+m-mcommas type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mcommas.map viewwindows=2
+m-mcrlf type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mcrlf.map viewwindows=2
+m-mfloat type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mfloat.map viewwindows=2
+m-mfull type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mfull.map viewwindows=2
+m-mhex type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mhex.map viewwindows=2
+m-mlead type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mlead.map viewwindows=2
+m-mlong type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mlong.map viewwindows=2
+m-mnoeol type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mnoeol.map viewwindows=2
+m-mone type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mone.map viewwindows=2
+m-mover type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mover.map viewwindows=2
+m-mpad type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mpad.map viewwindows=2
+m-mshort type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mshort.map viewwindows=2
+m-mtabs type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mtabs.map viewwindows=2
+m-mtrail type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mtrail.map viewwindows=2
+m-mtwo type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mtwo.map viewwindows=2
+m-mword type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mword.map viewwindows=2
+m-noext type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mfull viewwindows=2
+m-missing type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=nosuch.map viewwindows=2
+m-twice type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=mfull.map map=mshort.map viewwindows=2
+
+######## cases-misc.txt
+# center-mag with a non-4:3 window; missing parameter files.
+x-asp1-cmag    type=julia params=-0.8/0.156 maxiter=200 center-mag=0/0/0.888888888888888889 viewwindows=2/1
+x-asp1-corners type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 viewwindows=2/1
+x-nofile-crlf  @nosuch.par/crlf viewwindows=2
+x-nofile-none  @nosuch.par/zzzz viewwindows=2
+
+######## cases-reset.txt
+# reset= probes (inputs/reset.par).
+r-resetmid  @reset.par/resetmid viewwindows=2
+r-reset1700 map=ff.map @reset.par/reset1700 viewwindows=2
+r-reset2004 @reset.par/reset2004 viewwindows=2
+r-resetbad  @reset.par/resetbad viewwindows=2
+
+######## cases-roundtrip.txt
+#
+# Round trip: batch-load each parameter file XFractint wrote (cases-writer.txt).
+# gen-all.sh copies <name>.out.par to <name>.par and passes that directory
+# as EXTRA_INPUTS. Compare rt-<name>.ff.gif with the writer's <name>.ff.gif.
+rt-wmandel   @wmandel.par/wmandel
+rt-wnoview   @wnoview.par/wnoview
+rt-wmkeep    @wmkeep.par/wmkeep
+rt-wjulia    @wjulia.par/wjulia
+rt-wjcmag    @wjcmag.par/wjcmag
+rt-wpsmall   @wpsmall.par/wpsmall
+rt-wlambda   @wlambda.par/wlambda
+rt-wnewton   @wnewton.par/wnewton
+rt-wmand4    @wmand4.par/wmand4
+rt-wpopcorn  @wpopcorn.par/wpopcorn
+rt-wfnfn     @wfnfn.par/wfnfn
+rt-wjulfn    @wjulfn.par/wjulfn
+rt-wfrm      @wfrm.par/wfrm
+rt-wfrmpar   @wfrmpar.par/wfrmpar
+rt-wpar10    @wpar10.par/wpar10
+rt-wzoom     @wzoom.par/wzoom
+rt-wcorndef  @wcorndef.par/wcorndef
+rt-wcorn6    @wcorn6.par/wcorn6
+rt-wcmrot    @wcmrot.par/wcmrot
+rt-wcmxmag   @wcmxmag.par/wcmxmag
+rt-wcmzoom   @wcmzoom.par/wcmzoom
+rt-wdeep     @wdeep.par/wdeep
+rt-wg1       @wg1.par/wg1
+rt-wg2       @wg2.par/wg2
+rt-wg3       @wg3.par/wg3
+rt-wg4       @wg4.par/wg4
+rt-wg5       @wg5.par/wg5
+rt-wg6       @wg6.par/wg6
+rt-wg7       @wg7.par/wg7
+rt-wg8       @wg8.par/wg8
+rt-wg9       @wg9.par/wg9
+rt-wg10      @wg10.par/wg10
+rt-wdefs     @wdefs.par/wdefs
+rt-wins1     @wins1.par/wins1
+rt-wmapyes   @wmapyes.par/wmapyes
+rt-wmapkeep  @wmapkeep.par/wmapkeep
+rt-wmaponly  @wmaponly.par/wmaponly
+rt-wmapno    @wmapno.par/wmapno
+rt-wmap16    @wmap16.par/wmap16
+rt-wnc40     @wnc40.par/wnc40
+rt-wll40     @wll40.par/wll40
+rt-wll200    @wll200.par/wll200
+
+######## cases-writer.txt
+#
+# Parameter files written by XFractint itself: interactive render in the
+# native image, "s" saves the GIF, then the "b" screen saves the parameters
+# (docker/makepar-steps.sh). Names are at most 8 characters so the written
+# file can be loaded back as <name>.par (DOS 8.3 limit) by cases-roundtrip.txt.
+# <name> <record-colors answer> <ncolors|-> <line length|-> <xfractint args...>
+wmandel  yes  - - type=mandel viewwindows=2
+wnoview  yes  - - type=mandel
+wmkeep   keep - - type=mandel viewwindows=2
+wjulia   yes  - - type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 viewwindows=2
+wjcmag   no   - - type=julia params=0.3/0.6 viewwindows=2
+wpsmall  no   - - type=julia params=1e-20/-0.123456789012345678 viewwindows=2
+wlambda  no   - - type=lambda viewwindows=2
+wnewton  no   - - type=newton viewwindows=2
+wmand4   no   - - type=mandel4 viewwindows=2
+wpopcorn no   - - type=popcorn viewwindows=2
+wfnfn    no   - - type=fn*fn function=cos/sinh viewwindows=2
+wjulfn   no   - - type=julfn+zsqrd function=cos viewwindows=2
+wfrm     no   - - type=formula formulafile=ff.frm formulaname=ffcube viewwindows=2
+wfrmpar  no   - - type=formula formulafile=ff.frm formulaname=ffcube params=0.5/0.25 viewwindows=2
+wpar10   no   - - type=mandel params=0.01/0.02/0.03/0.04/0.05/0.06/0.07/0.08/0.09/0.11 viewwindows=2
+wzoom    no   - - type=mandel corners=-0.75/-0.70/0.10/0.14 viewwindows=2
+wcorndef no   - - type=mandel corners=-2.5/1.5/-1.5/1.5 viewwindows=2
+wcorn6   no   - - type=mandel corners=-2.25/1.25/-1.375/1.625/-2.0625/-1.1875 viewwindows=2
+wcmrot   no   - - type=mandel center-mag=-0.5/0/1/1.5/30/10 viewwindows=2
+wcmxmag  no   - - type=mandel center-mag=-0.5/0/1/2 viewwindows=2
+wcmzoom  no   - - type=mandel center-mag=-0.725/0.12/40/1.25 viewwindows=2
+wdeep    no   - - type=mandel center-mag=-0.743643887037151/0.131825904205330/1e13 maxiter=500 viewwindows=2
+wg1      no   - - type=mandel maxiter=1000 bailout=100 bailoutest=real inside=bof60 outside=real passes=1 viewwindows=2
+wg2      no   - - type=mandel periodicity=0 biomorph=5 logmap=yes symmetry=none fillcolor=5 viewwindows=2
+wg3      no   - - type=mandel decomp=2 float=no viewwindows=2
+wg4      no   - - type=mandel potential=255/820/200 viewwindows=2
+wg5      no   - - type=mandel invert=1/0.5/0.25 viewwindows=2
+wg6      no   - - type=mandel distest=1 finattract=yes cyclerange=10/200 rseed=4660 viewwindows=2
+wg7      no   - - type=mandel float=yes passes=b inside=maxiter outside=summ bailoutest=manh logmap=-3 symmetry=xaxis viewwindows=2
+wg8      no   - - type=mandel passes=2 inside=zmag outside=7 bailoutest=or periodicity=-3 logmap=7 decomp=256 viewwindows=2
+wg9      no   - - type=mandel passes=t inside=-5 outside=tdis bailoutest=and bailout=1000 maxiter=32768 viewwindows=2
+wg10     no   - - type=mandel inside=period outside=atan bailoutest=manr biomorph=0 potential=100/512/50/16bit viewwindows=2
+wdefs    no   - - type=mandel maxiter=150 bailout=4 inside=1 outside=iter passes=g periodicity=1 symmetry=xaxis biomorph=-1 decomp=0 logmap=0 viewwindows=2
+wins1    no   - - type=mandel inside=1 viewwindows=2
+wmapyes  yes  - - type=mandel map=ff.map viewwindows=2
+wmapkeep keep - - type=mandel map=ff.map viewwindows=2
+wmaponly only - - type=mandel map=ff.map viewwindows=2
+wmapno   no   - - type=mandel map=ff.map viewwindows=2
+wmap16   yes  16 - type=mandel map=ff.map viewwindows=2
+wnc40    yes  40 - type=mandel viewwindows=2
+wll40    yes  256 40 type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 viewwindows=2
+wll200   yes  256 200 type=mandel map=ff.map viewwindows=2
+
+######## cases-special.txt
+#
+# Interactive runs in the native image driven by steps/<steps>.txt (drive.sh
+# syntax; steps files hold no comments). <name> <steps> <XDEPTH> <args...>
+#  multi: save entries "first" (with 4 comment lines) and "second" to out.par,
+#         then save "first" again with a new comment and confirm the replace.
+#  into:  save "addedentry" into a copy of inputs/r1.par, then replace its
+#         one-line entry "samelinebrace".
+#  mapedit: open the palette editor (e, Enter), press s, type /work/mine.map.
+#  unknown: start interactively with a .par entry holding an unknown key.
+sp-multi    multi           24 type=mandel viewwindows=2
+sp-into     into            24 type=julia params=0.25/0.5 viewwindows=2
+sp-mapedit  mapedit         8  type=mandel map=mfull.map viewwindows=2
+sp-unknown  startup-unknown 24 @r1.par/unknownkey viewwindows=2 savename=ff.gif
+
+######## maps-dir-check.sh (special/maps-dir-check)
+# maprel { type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 map=ffmapcp.map }
+# with inputs/mfull.map copied to /usr/share/xfractint/maps/ffmapcp.map; run-batch @md.par/maprel viewwindows=2

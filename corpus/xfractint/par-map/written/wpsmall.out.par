@@ -1,0 +1,6 @@
+wpsmall            { ; our comment one
+  reset=2004 type=julia center-mag=0/0/0.6666667
+  params=9.9999999999999995e-21/-0.12345678901234568 float=y inside=0
+  viewwindows=2/0.75/yes/0/0
+  }
+

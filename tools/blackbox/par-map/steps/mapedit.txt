@@ -1,0 +1,10 @@
+sleep 4
+key e
+sleep 2
+key Return
+sleep 2
+key s
+sleep 2
+type /work/mine.map
+key Return
+sleep 2

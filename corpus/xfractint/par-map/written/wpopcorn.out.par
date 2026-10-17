@@ -1,0 +1,6 @@
+wpopcorn           { ; our comment one
+  reset=2004 type=popcorn function=sin/sqr/sinh/cosh
+  center-mag=0/0/0.4444444 params=0.050000000000000003/0/3/0 float=y
+  inside=0 viewwindows=2/0.75/yes/0/0
+  }
+

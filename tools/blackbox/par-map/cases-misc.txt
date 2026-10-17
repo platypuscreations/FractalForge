@@ -1,0 +1,6 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# center-mag with a non-4:3 window; missing parameter files.
+x-asp1-cmag    type=julia params=-0.8/0.156 maxiter=200 center-mag=0/0/0.888888888888888889 viewwindows=2/1
+x-asp1-corners type=julia params=-0.8/0.156 maxiter=200 corners=-1.5/1.5/-1.125/1.125 viewwindows=2/1
+x-nofile-crlf  @nosuch.par/crlf viewwindows=2
+x-nofile-none  @nosuch.par/zzzz viewwindows=2
