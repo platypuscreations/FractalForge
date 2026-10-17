@@ -16,6 +16,13 @@ publish = false
 fractalforge-core = { path = "crates/core" }
 fractalforge-render = { path = "crates/render" }
 fractalforge-formats = { path = "crates/formats" }
+rayon = "1.10"
+weezl = "0.1.8"
+miniz_oxide = "0.8"
+clap = { version = "4.5", features = ["derive"] }
+ctrlc = "3.4"
+criterion = { version = "0.5", default-features = false, features = ["cargo_bench_support"] }
+proptest = { version = "1.5", default-features = false, features = ["std"] }
 
 [workspace.lints.rust]
 unsafe_code = "forbid"

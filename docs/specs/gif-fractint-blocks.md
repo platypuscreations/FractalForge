@@ -728,3 +728,42 @@ Slot 0 = mantissa `d6 cb … 41 ff` (16 bytes), exponent `ff ff` (−1) →
   32 020  00 00 00 00 00 00 04 c0 00 00 00 00 00 00 f8 bf
   48 030  00 00 72 00 00 00 00 00 00 00 00 00 00 00 00 00
 ```
+
+---
+
+## 10. FractalForge implementation status
+
+Added by the implementer, not part of the black-box analysis. Code:
+`crates/formats/src/gif/fractint_blocks.rs`.
+
+- **Read:** `fractint001` for types mandel (4) and julia (6): corners,
+  params 1–4, maxiter (408, else 8), bailout (402, else 212, else 4),
+  inside (n ≥ 0 or -1), outside -1 and pass modes `1`, `2`, `g`. Anything else
+  that is set (third corner, params 5–10, other inside/outside modes,
+  biomorph, decomposition, logmap, distance estimator, inversion, finite
+  attractor, potential, stereo, deep zoom) is reported as a warning. Other
+  type numbers are recognised but not rendered.
+- **Write:** §5.2 on top of the Appendix A baseline, with the seed and time
+  zeroed and 70/72 set to the image size. Finished renders get status 4 and
+  their pass mode. Unfinished renders get the §5.4 "calculate from the start"
+  `fractint002` block and pass mode `1`; resuming Fractint-style partial
+  progress isn't implemented yet. Our `FRCTFRGE` block goes after the image,
+  before the Fractint blocks.
+- **Iteration and colour conventions** adopted to match §9:
+  the start point isn't tested, escape counts n run 1..=maxiter, and colour
+  = (n − 1) mod 256, drawn as 1 where that is 0. Inside is colour 0.
+
+Interop results (`tools/blackbox/interop.sh`, `crates/formats/tests/fractint_interop.rs`):
+
+- Our main block equals XFractint's for the same settings, except the seed,
+  the time, and bailout (we write 4 where XFractint writes 0 for "default").
+- XFractint batch-reloads a GIF we wrote with the right parameters and every
+  colour unchanged. It tolerates our `FRCTFRGE` block (and drops it on
+  re-save). When re-saving, XFractint merges palette entries that are equal
+  at 6 bits, so palette *indices* can change while colours don't.
+- XFractint calculating an unfinished GIF of ours from our blocks matches our
+  own render in 99.47% of pixels.
+- Rendering corpus parameters with FractalForge matches XFractint's pixels in
+  99.4–99.8% of pixels. The rest are near the set boundary, mostly pixels
+  where XFractint's count is 16 lower (or occasionally 1 higher) than ours.
+  The cause is unknown and is a good next black-box question.

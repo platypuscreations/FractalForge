@@ -1,5 +1,18 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-//! Complex math, the `FractalType` registry and fractal parameters.
+//! Complex math, the fractal type registry, fractal parameters, the
+//! iteration buffer and colouring.
 //!
-//! Populated in Phase 1. See `docs/CLEANROOM.md` before contributing.
+//! See `docs/CLEANROOM.md` before contributing.
+
+pub mod color;
+pub mod complex;
+pub mod iter;
+pub mod params;
+pub mod types;
+
+pub use color::{Palette, color_index};
+pub use complex::Complex;
+pub use iter::{INSIDE, IterBuffer, UNKNOWN};
+pub use params::{Inside, MAX_ITER_LIMIT, Outside, Params, Window};
+pub use types::{FractalType, Symmetry};

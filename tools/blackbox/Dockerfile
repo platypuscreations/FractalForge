@@ -17,4 +17,5 @@ USER bb
 WORKDIR /work
 COPY --chown=bb:bb run-batch.sh /usr/local/bin/run-batch
 COPY --chown=bb:bb run-interrupt.sh /usr/local/bin/run-interrupt
+COPY --chown=bb:bb run-load.sh /usr/local/bin/run-load
 ENTRYPOINT ["run-batch"]
