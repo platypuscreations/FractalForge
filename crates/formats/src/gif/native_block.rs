@@ -152,6 +152,7 @@ pub fn decode(ext: &AppExtension) -> Result<Checkpoint, Error> {
         decomp,
         biomorph,
         use_symmetry,
+        program: None,
     };
 
     let width = r.u32()?;

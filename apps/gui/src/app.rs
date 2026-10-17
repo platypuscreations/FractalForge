@@ -841,7 +841,8 @@ impl App {
             egui::ComboBox::from_label("Type")
                 .selected_text(self.params.fractal.name)
                 .show_ui(ui, |ui| {
-                    for t in types::all() {
+                    // Formula types need a loaded .frm entry, not a menu pick.
+                    for t in types::all().iter().filter(|t| !t.needs_program) {
                         if ui
                             .selectable_label(self.params.fractal == *t, t.name)
                             .on_hover_text(t.description)

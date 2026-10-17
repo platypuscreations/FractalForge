@@ -361,6 +361,12 @@ pub fn load(entry: &RawEntry, dir: Option<&Path>) -> Result<Loaded, Error> {
         );
     }
     let fractal = st.fractal.unwrap_or(&types::MANDEL);
+    if fractal.needs_program {
+        return Err(Error::Invalid(format!(
+            "entry {}: type {} isn't supported yet",
+            entry.name, fractal.name
+        )));
+    }
     let mut p = Params::new(fractal);
     if let Some(w) = st.window {
         p.window = w;

@@ -10,10 +10,12 @@ pub mod complex;
 pub mod iter;
 pub mod orbit_color;
 pub mod params;
+pub mod program;
 pub mod types;
 
 pub use color::{PRESETS, Palette, color_index, pixel_value};
 pub use complex::Complex;
 pub use iter::{INSIDE, IterBuffer, UNKNOWN};
 pub use params::{Inside, MAX_ITER_LIMIT, Outside, Params, Window};
+pub use program::{FractalProgram, Program};
 pub use types::{FractalType, Symmetry};

@@ -57,6 +57,8 @@ pub struct FractalType {
     /// Supports the inside/outside/decomp/biomorph options (otherwise only
     /// the default colouring).
     pub orbit_coloring: bool,
+    /// Defined by [`Params::program`] (formulas).
+    pub needs_program: bool,
 }
 
 impl fmt::Debug for FractalType {
@@ -376,6 +378,7 @@ const fn std_type(
         resumable: true,
         fractint_number: Some(number),
         orbit_coloring: false,
+        needs_program: false,
     }
 }
 
@@ -573,7 +576,34 @@ pub static MANDPHOENIX: FractalType = std_type(
     sym_none,
 );
 
-static ALL: [&FractalType; 17] = [
+fn program_iterate(w: Complex, p: &Params) -> u32 {
+    p.program
+        .as_ref()
+        .map_or(INSIDE, |prog| prog.0.iterate(w, p))
+}
+
+fn program_symmetry(p: &Params) -> Symmetry {
+    p.program
+        .as_ref()
+        .map_or(Symmetry::None, |prog| prog.0.symmetry(p))
+}
+
+/// A Fractint-format formula; the program comes from a `.frm` file.
+pub static FORMULA: FractalType = FractalType {
+    needs_program: true,
+    ..std_type(
+        "formula",
+        73,
+        "A formula from a .frm file",
+        STD_WINDOW,
+        [0.0; 4],
+        &["p1 (real)", "p1 (imaginary)", "p2 (real)", "p2 (imaginary)"],
+        program_iterate,
+        program_symmetry,
+    )
+};
+
+static ALL: [&FractalType; 18] = [
     &MANDEL,
     &JULIA,
     &LAMBDA,
@@ -591,6 +621,7 @@ static ALL: [&FractalType; 17] = [
     &NEWTBASIN,
     &PHOENIX,
     &MANDPHOENIX,
+    &FORMULA,
 ];
 
 pub fn all() -> &'static [&'static FractalType] {
@@ -695,11 +726,11 @@ mod tests {
 
     #[test]
     fn registry() {
-        assert_eq!(all().len(), 17);
+        assert_eq!(all().len(), 18);
         for t in all() {
             assert_eq!(lookup(t.name), Some(*t));
             assert_eq!(by_fractint_number(t.fractint_number.unwrap()), Some(*t));
-            Params::new(t).validate().unwrap();
+            assert_eq!(Params::new(t).validate().is_ok(), !t.needs_program);
         }
         assert_eq!(lookup("Mandel"), Some(&MANDEL));
         assert_eq!(lookup("nope"), None);

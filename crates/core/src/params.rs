@@ -191,6 +191,8 @@ pub struct Params {
     /// Copy mirrored pixels where the type is symmetric (the usual
     /// setting). Off computes every pixel; off-centre views then differ.
     pub use_symmetry: bool,
+    /// The run-time definition for types that need one (formulas).
+    pub program: Option<crate::Program>,
 }
 
 impl Params {
@@ -207,6 +209,7 @@ impl Params {
             decomp: 0,
             biomorph: None,
             use_symmetry: true,
+            program: None,
         }
     }
 
@@ -244,6 +247,9 @@ impl Params {
     }
 
     pub fn validate(&self) -> Result<(), String> {
+        if self.fractal.needs_program && self.program.is_none() {
+            return Err(format!("type {} needs a formula", self.fractal.name));
+        }
         if self.needs_orbit_coloring() && !self.fractal.orbit_coloring {
             return Err(format!(
                 "type {} supports only the default inside and outside colouring",
@@ -275,7 +281,7 @@ mod tests {
 
     #[test]
     fn defaults_validate() {
-        for t in types::all() {
+        for t in types::all().iter().filter(|t| !t.needs_program) {
             Params::new(t).validate().unwrap();
         }
     }

@@ -248,6 +248,7 @@ mod tests {
     fn all_types() -> Vec<Params> {
         fractalforge_core::types::all()
             .iter()
+            .filter(|t| !t.needs_program)
             .map(|t| Params::new(t))
             .collect()
     }
