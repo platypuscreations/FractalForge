@@ -291,6 +291,8 @@ enum Source {
         size: Option<(u32, u32)>,
         finished: bool,
         palette: Option<Palette>,
+        /// Pixels an unfinished Fractint image already has final.
+        partial: Option<fractalforge_core::IterBuffer>,
     },
 }
 
@@ -319,6 +321,7 @@ fn load_par(path: &Path, entry: Option<&str>) -> Result<Source, String> {
         size: None,
         finished: true,
         palette: loaded.palette,
+        partial: None,
     })
 }
 
@@ -361,12 +364,14 @@ fn load_source(path: &Path, entry: Option<&str>) -> Result<Source, String> {
             for (c, p) in colors.iter_mut().zip(&loaded.image.palette) {
                 *c = *p;
             }
+            let partial = gif::fractint_blocks::partial_buffer(&loaded.image, params.fractal);
             Ok(Source::Fractint {
                 params,
                 pass_mode: Some(info.pass_mode),
                 size: Some(size),
                 finished: info.finished,
                 palette: Some(Palette(colors)),
+                partial,
             })
         }
         Content::Image => Err(format!(
@@ -410,6 +415,21 @@ fn render(args: RenderArgs) -> Result<(), String> {
             }
             Render::resume(c.params, c.state, c.buffer).map_err(|e| e.to_string())?
         }
+        Some(Source::Fractint {
+            params,
+            partial: Some(buf),
+            ..
+        }) if args.resume => {
+            if !args.fractal.is_empty() || args.size.is_some() || args.passes.is_some() {
+                return Err(
+                    "--resume continues a render exactly; it can't change parameters, size or passes"
+                        .into(),
+                );
+            }
+            // Fractint's finished pixels are kept; the rest are computed in
+            // one pass.
+            Render::from_partial(params, buf, PassMode::One).map_err(|e| e.to_string())?
+        }
         source => {
             let (base, size, file_mode) = match source {
                 Some(Source::Checkpoint(c)) => {
@@ -425,7 +445,7 @@ fn render(args: RenderArgs) -> Result<(), String> {
                 }) => {
                     if args.resume && !finished {
                         eprintln!(
-                            "note: resuming from Fractint resume data isn't supported yet; calculating from the start"
+                            "note: this file's resume data can't be used; calculating from the start"
                         );
                     }
                     (params, size.unwrap_or((800, 600)), pass_mode)

@@ -79,6 +79,17 @@ impl Render {
         Self::resume(params, state, IterBuffer::new(width, height))
     }
 
+    /// Starts a render whose buffer already holds some final pixels (from a
+    /// partial image made elsewhere). Only the unknown pixels are computed.
+    pub fn from_partial(
+        params: Params,
+        buffer: IterBuffer,
+        pass_mode: PassMode,
+    ) -> Result<Self, ResumeError> {
+        let state = RenderState::new(pass_mode, buffer.width(), buffer.height());
+        Self::resume(params, state, buffer)
+    }
+
     /// Continues from a checkpoint.
     pub fn resume(
         params: Params,
@@ -390,6 +401,31 @@ mod tests {
             r = Render::resume(p, s, b).unwrap();
         }
         assert_eq!(r.buffer(), &expected);
+    }
+
+    #[test]
+    fn partial_buffers_keep_known_pixels() {
+        let p = julia();
+        let expected = full(&p, 64, 48, PassMode::One);
+        let mut partial = IterBuffer::new(64, 48);
+        for y in 0..20 {
+            for x in 0..64 {
+                partial.set(x, y, expected.get(x, y));
+            }
+        }
+        partial.set(5, 5, 12345); // a known pixel is never recomputed
+        let mut r = Render::from_partial(p, partial, PassMode::One).unwrap();
+        r.run(&Control::default());
+        assert_eq!(r.buffer().get(5, 5), 12345);
+        let diff = r
+            .buffer()
+            .data()
+            .iter()
+            .zip(expected.data())
+            .filter(|(a, b)| a != b)
+            .count();
+        // The planted pixel and its copy through the origin (julia symmetry).
+        assert_eq!(diff, 2);
     }
 
     #[test]

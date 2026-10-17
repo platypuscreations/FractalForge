@@ -68,10 +68,19 @@ pub fn save(c: &Checkpoint, finished: bool) -> Result<Saved, Error> {
     };
     let mut image = image;
     let mut notes = Vec::new();
+    // Fractint continues from the first pixel (in row order) we haven't
+    // computed; a row below the image means "nothing left".
+    let resume_at = (!finished).then(|| {
+        c.buffer
+            .data()
+            .iter()
+            .position(|&v| v == fractalforge_core::UNKNOWN)
+            .map_or((h, 0), |i| ((i as u32) / w, (i as u32) % w))
+    });
     match fractint_blocks::write(
         &c.params,
         c.state.pass_mode,
-        finished,
+        resume_at,
         w,
         h,
         c.state.elapsed_us,

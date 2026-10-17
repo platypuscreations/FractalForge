@@ -107,7 +107,7 @@ fn writes_the_same_main_block_as_xfractint() {
             .unwrap()
             .data();
         let p = params(file);
-        let (blocks, _) = fractint_blocks::write(&p, mode, true, 800, 600, 0).unwrap();
+        let (blocks, _) = fractint_blocks::write(&p, mode, None, 800, 600, 0).unwrap();
         assert_eq!(blocks.len(), 1);
         let ours = blocks[0].data();
         assert_eq!(ours.len(), theirs.len());

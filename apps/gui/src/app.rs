@@ -371,9 +371,14 @@ impl App {
                     ));
                     return;
                 };
-                if !info.finished {
+                let partial = if info.finished {
+                    None
+                } else {
+                    gif::fractint_blocks::partial_buffer(&loaded.image, params.fractal)
+                };
+                if !info.finished && partial.is_none() {
                     self.messages.push(format!(
-                        "{}: resuming Fractint's partial renders isn't supported yet; calculating from the start",
+                        "{}: this file's resume data can't be used; calculating from the start",
                         path.display()
                     ));
                 }
@@ -385,7 +390,24 @@ impl App {
                 self.recolor = true;
                 self.size_mode = SizeMode::Fixed(size.0, size.1);
                 self.render_size = size;
-                self.restart(ctx);
+                match partial {
+                    // Continue from Fractint's progress: its final pixels are
+                    // kept and the rest computed in one pass.
+                    Some(buf) => {
+                        match Render::from_partial(self.params.clone(), buf, PassMode::One) {
+                            Ok(render) => {
+                                self.stop_worker();
+                                self.restart_at = None;
+                                self.image = None;
+                                self.backdrop = None;
+                                self.pass_mode = PassMode::One;
+                                self.start(render, ctx);
+                            }
+                            Err(e) => self.messages.push(format!("{}: {e}", path.display())),
+                        }
+                    }
+                    None => self.restart(ctx),
+                }
             }
             Content::Image => {
                 self.messages.push(format!(

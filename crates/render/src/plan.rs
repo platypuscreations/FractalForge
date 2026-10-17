@@ -163,6 +163,13 @@ impl Plan {
                     .step_by(stride as usize)
                     .map(|vx| {
                         let x = self.cols[vx as usize];
+                        // Pixels already known (taken from another program's
+                        // partial image) are kept. In our own renders a
+                        // pixel is never known before its stage visits it.
+                        let known = buf.get(x, y);
+                        if known != UNKNOWN {
+                            return (x, known);
+                        }
                         let guessed = if guess && !first {
                             self.guess(buf, vx, vy, step)
                         } else {

@@ -65,6 +65,14 @@ impl fmt::Debug for FractalType {
     }
 }
 
+impl FractalType {
+    /// Whether the type's symmetry (when on) copies rows and columns
+    /// independently, as opposed to through the origin.
+    pub fn symmetry_kind_is_xy(&self) -> bool {
+        self.name == BARNSLEYM1.name
+    }
+}
+
 impl PartialEq for FractalType {
     fn eq(&self, other: &Self) -> bool {
         self.name == other.name
