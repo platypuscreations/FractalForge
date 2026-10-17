@@ -7,6 +7,7 @@
 # Signing and notarization happen when these are set (see cargo-packager):
 #   APPLE_SIGNING_IDENTITY   e.g. "Developer ID Application: Name (TEAMID)"
 #   APPLE_ID, APPLE_PASSWORD (app-specific password), APPLE_TEAM_ID
+# (Releases are currently unsigned: the project has no Developer ID yet.)
 # Without them the app gets an ad-hoc signature: it runs on this Mac, but
 # other Macs' Gatekeeper will refuse it until it's notarized.
 set -euo pipefail

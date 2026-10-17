@@ -33,7 +33,9 @@ fractalforge-core.workspace = true
 fractalforge-render.workspace = true
 fractalforge-formats.workspace = true
 eframe.workspace = true
-winit = "0.30"
+# Defaults off: the title-text decoration feature pulls in an unmaintained
+# font parser. Wayland windows get frames without title text instead.
+winit = { version = "0.30", default-features = false, features = ["rwh_06", "x11", "wayland", "wayland-dlopen", "wayland-csd-adwaita-notitle"] }
 rfd.workspace = true
 rayon.workspace = true
 

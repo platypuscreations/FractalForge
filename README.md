@@ -64,6 +64,24 @@ corpus/          reference files saved by XFractint, used for interop tests
 docs/            clean-room rules and our own file-format specs
 ```
 
+## Installing on macOS
+
+Download `FractalForge-<version>-macos-universal.dmg` and drag FractalForge
+to Applications. It runs on Apple silicon and Intel Macs with macOS 11 or
+later.
+
+The app isn't notarized by Apple yet, so the first time you open it macOS
+says it can't check it for malicious software. To open it anyway:
+
+1. Try to open FractalForge once, and close the warning.
+2. Open **System Settings → Privacy & Security**, scroll down, and click
+   **Open Anyway** next to the FractalForge message.
+3. Confirm with your password. After that it opens normally.
+
+Or, in Terminal: `xattr -dr com.apple.quarantine /Applications/FractalForge.app`
+
+Building from source (below) avoids the warning entirely.
+
 ## Building
 
 ```sh

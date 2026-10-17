@@ -8,20 +8,6 @@ all-features = true
 [advisories]
 version = 2
 yanked = "deny"
-# Transitive dependencies of eframe that we can't upgrade ourselves. Review
-# whenever eframe is updated, and remove entries as soon as they clear.
-ignore = [
-    # quick-xml 0.38 (DoS on hostile XML), pinned by zbus_xml in the Linux
-    # accessibility bridge (accesskit -> AT-SPI over D-Bus). It only parses
-    # introspection XML from local system services.
-    { id = "RUSTSEC-2026-0194", reason = "transitive via accesskit/zbus; local D-Bus XML only" },
-    { id = "RUSTSEC-2026-0195", reason = "transitive via accesskit/zbus; local D-Bus XML only" },
-    # Unmaintained, no maintained replacement available upstream yet.
-    { id = "RUSTSEC-2026-0192", reason = "ttf-parser via egui font rendering; parses local system fonts" },
-    { id = "RUSTSEC-2026-0370", reason = "zvariant via accesskit/zbus (Linux accessibility)" },
-    { id = "RUSTSEC-2026-0371", reason = "zbus_names via accesskit/zbus (Linux accessibility)" },
-    { id = "RUSTSEC-2026-0372", reason = "zvariant_derive via accesskit/zbus (Linux accessibility)" },
-]
 
 [licenses]
 version = 2

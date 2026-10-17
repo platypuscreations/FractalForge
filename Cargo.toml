@@ -22,7 +22,7 @@ miniz_oxide = "0.8"
 clap = { version = "4.5", features = ["derive"] }
 ctrlc = "3.4"
 criterion = { version = "0.5", default-features = false, features = ["cargo_bench_support"] }
-eframe = { version = "0.37", default-features = false, features = ["wgpu", "accesskit", "wayland", "x11"] }
+eframe = { version = "0.37", default-features = false, features = ["wgpu", "wayland", "x11"] }
 rfd = "0.17"
 png = "0.18"
 proptest = { version = "1.5", default-features = false, features = ["std"] }
