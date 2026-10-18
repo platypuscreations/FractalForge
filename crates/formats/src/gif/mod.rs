@@ -7,6 +7,7 @@
 //! and otherwise the file is treated as a plain image.
 
 pub mod container;
+pub mod deep_block;
 pub mod fractint_blocks;
 pub mod native_block;
 

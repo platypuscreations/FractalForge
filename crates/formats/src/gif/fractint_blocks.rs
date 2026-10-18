@@ -13,6 +13,7 @@ use fractalforge_core::{
 use fractalforge_render::PassMode;
 
 use super::container::{AppExtension, GifImage, Placement};
+use fractalforge_core::bignum::BigFixed;
 
 pub const IDENTIFIER: &[u8; 8] = b"fractint";
 /// Main parameter block (§2.1).
@@ -122,8 +123,10 @@ pub fn read(image: &GifImage) -> Option<FractintInfo> {
         Some(fractal) => {
             let mut p = Params::new(fractal);
             read_params(&b, modern, &mut p, &mut warnings);
-            if image.extension(IDENTIFIER, DEEP_AUTH).is_some() {
-                warnings.push("deep-zoom coordinates were rounded to double precision".into());
+            if let Some(ext) = image.extension(IDENTIFIER, DEEP_AUTH) {
+                if !read_deep(&ext.data(), &b, &mut p) {
+                    warnings.push("deep-zoom coordinates were rounded to double precision".into());
+                }
             }
             if fractal.needs_program {
                 Some(p)
@@ -153,6 +156,69 @@ pub fn read(image: &GifImage) -> Option<FractintInfo> {
         warnings,
         formula_name,
     })
+}
+
+/// Reads a `fractint005` block (deep-zoom.md §5.3): the corners and, for
+/// julia, its constant at full precision. Returns false if it can't be used.
+fn read_deep(data: &[u8], b: &Bytes, p: &mut Params) -> bool {
+    use super::deep_block::{block_len, decode_slot};
+    let n = b.i16(414).unwrap_or(0);
+    if n <= 0 || data.len() != block_len(n as usize) {
+        return false;
+    }
+    let n = n as usize;
+    // Enough limbs for the slot's N + 3 fraction bytes.
+    let frac = (8 * (n + 3)).div_ceil(64) + 1;
+    let slot = |i: usize| decode_slot(&data[i * (n + 6)..(i + 1) * (n + 6)], n, frac);
+    let (Some(x0), Some(x1), Some(y0), Some(y1)) = (slot(0), slot(1), slot(2), slot(3)) else {
+        return false;
+    };
+    let half = BigFixed::from_f64(0.5, frac);
+    let (hw, hh) = (x1.sub(&x0).to_f64() / 2.0, y1.sub(&y0).to_f64() / 2.0);
+    if !(hw > 0.0 && hh > 0.0) {
+        return false;
+    }
+    if p.fractal.name == "julia"
+        && let (Some(re), Some(im)) = (slot(6), slot(7))
+    {
+        p.params[0] = re.to_f64();
+        p.params[1] = im.to_f64();
+    }
+    let re = x0.add(&x1).mul(&half);
+    let im = y0.add(&y1).mul(&half);
+    p.set_view(fractalforge_core::deep::DeepView::new(&re, &im, hw, hh));
+    true
+}
+
+/// The `fractint005` block of a deep mandel or julia view, and its size N
+/// (deep-zoom.md §5.3).
+fn deep_block(p: &Params, width: u32, height: u32) -> Option<(AppExtension, i16)> {
+    use super::deep_block::{encode_slot, size_for};
+    let d = p.deep.as_ref()?;
+    if !matches!(p.fractal.name, "mandel" | "julia") {
+        return None;
+    }
+    let spacing = (2.0 * d.half_w / (width.max(2) - 1) as f64)
+        .min(2.0 * d.half_h / (height.max(2) - 1) as f64);
+    let n = size_for(spacing);
+    let frac = d.re.frac_limbs();
+    let off = |v: f64| BigFixed::from_f64(v, frac);
+    let corners = [
+        d.re.sub(&off(d.half_w)),
+        d.re.add(&off(d.half_w)),
+        d.im.sub(&off(d.half_h)),
+        d.im.add(&off(d.half_h)),
+    ];
+    let mut slots: Vec<BigFixed> = corners.to_vec();
+    slots.push(corners[0].clone());
+    slots.push(corners[2].clone());
+    slots.extend(p.params.iter().map(|&v| off(v)));
+    slots.extend_from_within(0..6);
+    let data: Vec<u8> = slots.iter().flat_map(|v| encode_slot(v, n)).collect();
+    Some((
+        AppExtension::new(*IDENTIFIER, *DEEP_AUTH, &data, Placement::AfterImage),
+        n as i16,
+    ))
 }
 
 fn read_params(b: &Bytes, modern: bool, p: &mut Params, warnings: &mut Vec<String>) {
@@ -615,6 +681,18 @@ pub fn write(
     };
     m[200] = pass;
 
+    // Deep mandel/julia views: fractint005 and its flags (deep-zoom.md §5.3).
+    if let Some((block, n)) = deep_block(params, width, height) {
+        put(&mut m, 412, &1i16.to_le_bytes());
+        put(&mut m, 414, &n.to_le_bytes());
+        put(&mut m, 416, &0i16.to_le_bytes());
+        blocks.push(block);
+    } else if params.deep.is_some() {
+        notes.push(format!(
+            "Fractint shows {} only in double precision; the view was rounded",
+            params.fractal.name
+        ));
+    }
     if let Some(prog) = &params.program {
         blocks.push(if *params.fractal == types::FORMULA {
             name_block(prog)
