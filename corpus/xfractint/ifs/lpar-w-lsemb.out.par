@@ -1,0 +1,6 @@
+wlsemb             { ; our comment one
+  reset=2004 type=lsystem lfile=ip.par lname=lq
+  center-mag=0/0/1/1.3333 params=2 float=y inside=0
+  viewwindows=2/0.75/yes/0/0
+  }
+

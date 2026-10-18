@@ -237,3 +237,64 @@ second-run             | keys:s12 kr s3 tin20.gif s1 kReturn s5 kReturn s10 ks |
 3d-spiral              | batch | type=ifs ifsfile=ffleaf.ifs ifs=ffspiral viewwindows=2
 3d-spiral-rot          | batch | type=ifs ifsfile=ffleaf.ifs ifs=ffspiral viewwindows=2 rotation=20/-40/75 corners=-3/3/-2.25/2.25 maxiter=300
 3d-spiral-shift        | batch | type=ifs ifsfile=ffleaf.ifs ifs=ffspiral viewwindows=2 corners=-3/3/-2.25/2.25 xyshift=10/-20
+
+# 10. IFS and L-system images in .par files (ifs.md section 10, lsystem-par.md).
+# NOINPUTS=1: the work directory holds only the EXTRA files, all from
+# tools/blackbox/ifs/par/ (ip.par, pf.ifs, ref.ifs, lf.l, lref.l). par-ref-* and
+# lpar-ref-* render the embedded bodies from ordinary files for comparison.
+# The writer cases ran in the native image (ff-parmap-native, built from
+# tools/blackbox/par-map/docker); NAME.out.par is the file XFractint wrote.
+par-arel               | batch | @ip.par/arel | NOINPUTS=1 EXTRA=ip.par pf.ifs lf.l
+par-aabs               | batch | @ip.par/aabs | NOINPUTS=1 EXTRA=ip.par pf.ifs lf.l
+par-anone              | batch | @ip.par/anone | NOINPUTS=1 EXTRA=ip.par pf.ifs lf.l
+par-enoname            | batch | @ip.par/enoname | NOINPUTS=1 EXTRA=ip.par pf.ifs lf.l
+par-eself              | batch | @ip.par/eself | NOINPUTS=1 EXTRA=ip.par pf.ifs lf.l
+par-eselfplain         | batch | @ip.par/eselfplain | NOINPUTS=1 EXTRA=ip.par pf.ifs lf.l
+par-eprefix            | batch | @ip.par/eprefix | NOINPUTS=1 EXTRA=ip.par pf.ifs lf.l
+par-pplain             | batch | @ip.par/pplain | NOINPUTS=1 EXTRA=ip.par pf.ifs lf.l
+par-eupper             | batch | @ip.par/eupper | NOINPUTS=1 EXTRA=ip.par pf.ifs lf.l
+par-e3d                | batch | @ip.par/e3d | NOINPUTS=1 EXTRA=ip.par pf.ifs lf.l
+par-enoname-only       | batch | @ip.par/enoname | NOINPUTS=1 EXTRA=ip.par
+par-anone-cmd          | batch | ifsfile=pf.ifs @ip.par/anone | NOINPUTS=1 EXTRA=ip.par pf.ifs lf.l
+par-enoname-cmd        | batch | ifsfile=pf.ifs @ip.par/enoname | NOINPUTS=1 EXTRA=ip.par pf.ifs lf.l
+par-cf-pfx             | batch | type=ifs ifsfile=ip.par ifs=ifs:pq corners=0/1/0/1 viewwindows=2 | NOINPUTS=1 EXTRA=ip.par
+par-cf-nopfx           | batch | type=ifs ifsfile=ip.par ifs=pq corners=0/1/0/1 viewwindows=2 | NOINPUTS=1 EXTRA=ip.par
+par-cf-plain           | batch | type=ifs ifsfile=ip.par ifs=pr corners=0/1/0/1 viewwindows=2 | NOINPUTS=1 EXTRA=ip.par
+lpar-rel               | batch | @ip.par/lrel | NOINPUTS=1 EXTRA=ip.par pf.ifs lf.l
+lpar-abs               | batch | @ip.par/labs | NOINPUTS=1 EXTRA=ip.par pf.ifs lf.l
+lpar-none              | batch | @ip.par/lnone | NOINPUTS=1 EXTRA=ip.par pf.ifs lf.l
+lpar-enoname           | batch | @ip.par/lenoname | NOINPUTS=1 EXTRA=ip.par pf.ifs lf.l
+lpar-eself             | batch | @ip.par/leself | NOINPUTS=1 EXTRA=ip.par pf.ifs lf.l
+lpar-eselfplain        | batch | @ip.par/leselfplain | NOINPUTS=1 EXTRA=ip.par pf.ifs lf.l
+lpar-eprefix           | batch | @ip.par/leprefix | NOINPUTS=1 EXTRA=ip.par pf.ifs lf.l
+lpar-plain             | batch | @ip.par/lplain | NOINPUTS=1 EXTRA=ip.par pf.ifs lf.l
+lpar-alt1              | batch | @ip.par/lalt1 | NOINPUTS=1 EXTRA=ip.par pf.ifs lf.l
+lpar-alt2              | batch | @ip.par/lalt2 | NOINPUTS=1 EXTRA=ip.par pf.ifs lf.l
+lpar-alt3              | batch | @ip.par/lalt3 | NOINPUTS=1 EXTRA=ip.par pf.ifs lf.l
+lpar-upper             | batch | @ip.par/lupper | NOINPUTS=1 EXTRA=ip.par pf.ifs lf.l
+lpar-enoname-only      | batch | @ip.par/lenoname | NOINPUTS=1 EXTRA=ip.par
+lpar-none-cmd          | batch | lfile=lf.l @ip.par/lnone | NOINPUTS=1 EXTRA=ip.par pf.ifs lf.l
+lpar-enoname-cmd       | batch | lfile=lf.l @ip.par/lenoname | NOINPUTS=1 EXTRA=ip.par pf.ifs lf.l
+lpar-cf-pfx            | batch | type=lsystem lfile=ip.par lname=lsys:lq viewwindows=2 | NOINPUTS=1 EXTRA=ip.par
+lpar-cf-nopfx          | batch | type=lsystem lfile=ip.par lname=lq viewwindows=2 | NOINPUTS=1 EXTRA=ip.par
+lpar-cf-plain          | batch | type=lsystem lfile=ip.par lname=lr viewwindows=2 | NOINPUTS=1 EXTRA=ip.par
+par-ref-pf             | batch | type=ifs ifsfile=pf.ifs ifs=pf corners=0/1/0/1 viewwindows=2 | NOINPUTS=1 EXTRA=pf.ifs
+par-ref-pfq            | batch | type=ifs ifsfile=pf.ifs ifs=pq corners=0/1/0/1 viewwindows=2 | NOINPUTS=1 EXTRA=pf.ifs
+par-ref-eq             | batch | type=ifs ifsfile=ref.ifs ifs=eq corners=0/1/0/1 viewwindows=2 | NOINPUTS=1 EXTRA=ref.ifs
+par-ref-er             | batch | type=ifs ifsfile=ref.ifs ifs=er corners=0/1/0/1 viewwindows=2 | NOINPUTS=1 EXTRA=ref.ifs
+par-ref-eq3            | batch | type=ifs ifsfile=ref.ifs ifs=eq3 viewwindows=2 | NOINPUTS=1 EXTRA=ref.ifs
+lpar-ref-lk            | batch | type=lsystem lfile=lf.l lname=lk viewwindows=2 | NOINPUTS=1 EXTRA=lf.l
+lpar-ref-lq            | batch | type=lsystem lfile=lf.l lname=lq viewwindows=2 | NOINPUTS=1 EXTRA=lf.l
+lpar-ref-eq            | batch | type=lsystem lfile=lref.l lname=eq viewwindows=2 | NOINPUTS=1 EXTRA=lref.l
+lpar-ref-er            | batch | type=lsystem lfile=lref.l lname=er viewwindows=2 | NOINPUTS=1 EXTRA=lref.l
+par-rt-wifs            | batch | @wifs.par/wifs | NOINPUTS=1 EXTRA=par-w-ifs.out.par(as wifs.par) pf.ifs
+par-rt-wifs-cmd        | batch | ifsfile=pf.ifs @wifs.par/wifs | NOINPUTS=1 EXTRA=par-w-ifs.out.par(as wifs.par) pf.ifs
+lpar-rt-wls            | batch | @wls.par/wls | NOINPUTS=1 EXTRA=lpar-w-ls.out.par(as wls.par) lf.l
+lpar-rt-wls-cmd        | batch | lfile=lf.l @wls.par/wls | NOINPUTS=1 EXTRA=lpar-w-ls.out.par(as wls.par) lf.l
+# Written by XFractint: tools/blackbox/ifs/par/run-writer.sh NAME ARGS (native image, s then b screen, colours no)
+par-w-ifs              | writer | type=ifs ifsfile=pf.ifs ifs=pf corners=0/1/0/1 viewwindows=2
+par-w-ifsemb           | writer | @ip.par/enoname
+par-w-ifs3d            | writer | type=ifs ifsfile=ref.ifs ifs=eq3 viewwindows=2 rotation=10/20/30 xyshift=3/4
+par-w-ifsp1            | writer | type=ifs ifsfile=pf.ifs ifs=pf corners=0/1/0/1 viewwindows=2 params=1
+lpar-w-ls              | writer | type=lsystem lfile=lf.l lname=lk viewwindows=2
+lpar-w-lsemb           | writer | @ip.par/lenoname

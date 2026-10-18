@@ -575,3 +575,87 @@ A FractalForge test can:
 | `int-*`, `load-*`, `second-run` | §4.2, §5 |
 | `3d-*` | §6 |
 | `fftri*`, `leaf*`, `3d-spiral*` | §7 |
+| `par-*` (IFS), `lpar-*` (L-system, [lsystem-par.md](lsystem-par.md)) | §10 |
+
+---
+
+## 10. IFS images in `.par` files
+
+Tested in batch mode with `@ip.par/ENTRY` (loading as in [par.md](par.md)
+§2.7), in a directory that held only the named files. Inputs:
+`tools/blackbox/ifs/par/` (`ip.par` holds the image entries and the
+embedded bodies). Results are compared pixel for pixel with renders of the
+same bodies from ordinary files (`par-ref-*`). The L-system results are in
+[lsystem-par.md](lsystem-par.md).
+
+### 10.1 Selecting the entry (confirmed)
+
+- The keys are the command-line ones, `ifsfile=` and `ifs=`, inside the
+  entry. `ifsname=` is not a key (§2.1).
+- **`ifsfile=` inside an entry is not looked up in the working directory**,
+  whether relative or absolute: `ifsfile=pf.ifs ifs=pf` (`par-arel`) and
+  `ifsfile=/work/pf.ifs` (`par-aabs`) both give `'pf' file entry item not
+  found`, although `pf.ifs` is right there. An entry with no `ifsfile=` fails
+  the same way (`par-anone`). This is the behaviour par.md §5.3 found for
+  `formulafile=`. **Hypothesis:** in entries, names are looked up only in
+  XFractint's own directories (not tested; we didn't touch them).
+- `ifsfile=` given on the command line **before** `@file/entry` works
+  (`par-anone-cmd`, `par-rt-wifs-cmd`).
+
+### 10.2 Embedded IFS entries (confirmed)
+
+- An entry named `ifs:NAME` in the same `.par` file is used when an entry
+  of that file says `ifs=NAME`, without `ifsfile=` (`par-enoname`,
+  `par-enoname-only`) or with a (then irrelevant) `ifsfile=` (`par-eself`).
+  It is pixel-identical to the same body read from an `.ifs` file
+  (`par-ref-eq`). The body syntax is that of an `.ifs` entry (§1), with
+  the numbers starting on the line after `{`. `(3D)` works there too:
+  `ifs:pq3 (3D) {` (`par-e3d` = `par-ref-eq3`).
+- The prefix is case-insensitive: `IFS:pu` (`par-eupper`). The embedded
+  entry may come after the image entry (every case here).
+- `ifs=ifs:pq` in the entry does **not** find it (`par-eprefix`), and a plain
+  entry `pr` of the `.par` with an IFS body is not used (`par-pplain`),
+  even with `ifsfile=ip.par` in the entry (`par-eselfplain`).
+- An `ifsfile=` on the command line wins over the embedded entry:
+  `ifsfile=pf.ifs @ip.par/enoname` draws `pf.ifs`'s `pq`
+  (`par-enoname-cmd` = `par-ref-pfq`).
+- `fractint003` stores the name without the prefix (`pq`).
+- A `.par` given as `ifsfile=` on the command line is read as an `.ifs`
+  file, where the entry names include the prefix: `ifs=ifs:pq` works
+  (`par-cf-pfx`, stored as `ifs:pq`), `ifs=pq` doesn't (`par-cf-nopfx`),
+  and the plain entry `pr` works (`par-cf-plain`).
+
+### 10.3 What XFractint writes (confirmed)
+
+From the `b` ("save parameters") screen in the native-architecture build of
+the same package (`par-w-*.out.par`). Its pixels equal the amd64 build's:
+`par-w-ifs.gif` = `par-ref-pf.gif`.
+
+```
+wifs               { ; our comment one
+  reset=2004 type=ifs ifsfile=pf.ifs ifs=pf corners=0/1/0/1 params=0
+  float=y inside=0 viewwindows=2/0.75/yes/0/0
+  }
+```
+
+- Order: `reset`, `type=ifs`, `ifsfile=`, `ifs=`, the view, `params=`
+  (always written, `params=0` by default, `params=1` with colour by
+  transform, `par-w-ifsp1`), `float=y`, `inside=0`, 3D values, `viewwindows`.
+- **The IFS body is never embedded.** For an image made from an embedded
+  entry, XFractint writes `ifsfile=ip.par ifs=pq`, the `.par` file it came
+  from and the name without prefix (`par-w-ifsemb`).
+- 3D entries add `rotation=10/20/30 perspective=0 xyshift=3/4` after
+  `inside=0`. The view came out as `center-mag=0/5/0.1666667` for the default
+  corners (`par-w-ifs3d`).
+- Such a file does not load back by itself: `@wifs.par/wifs` with `pf.ifs`
+  next to it reports `'pf' file entry item not found` (`par-rt-wifs`,
+  §10.1). With `ifsfile=pf.ifs` on the command line it reproduces the image
+  (`par-rt-wifs-cmd` = `par-ref-pf`).
+
+### 10.4 Recommendation for FractalForge
+
+Write `ifsfile=` and `ifs=` as XFractint does, and also copy the entry
+into the same `.par` as `ifs:NAME {` + newline + the numbers + `}`. That
+makes the file self-contained for XFractint (§10.2) and for us. When
+reading, look for `ifs:NAME` in the same `.par` first, then the `ifsfile=`
+next to the `.par`, then FractalForge's own directories.

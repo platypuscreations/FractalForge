@@ -1,0 +1,5 @@
+wifsemb            { ; our comment one
+  reset=2004 type=ifs ifsfile=ip.par ifs=pq corners=0/1/0/1 params=0
+  float=y inside=0 viewwindows=2/0.75/yes/0/0
+  }
+

@@ -24,4 +24,9 @@ opened or used.
   calculation time in `fractint001` change between runs.
 - `tools/blackbox/ifs/ifsmodel.py IMAGE.gif FILE.ifs ENTRY` predicts the
   pixels of a 2D or 3D case from the spec's model and counts differences.
+- `par-*` / `lpar-*`: IFS and L-system images in `.par` files
+  ([ifs.md](../../../docs/specs/ifs.md) §10,
+  [lsystem-par.md](../../../docs/specs/lsystem-par.md)). Their inputs are in
+  `tools/blackbox/ifs/par/`. `*.out.par` are parameter files XFractint
+  wrote from its `b` screen (native build).
 - `SHA256SUMS`: run `shasum -a 256 -c SHA256SUMS` in this folder.
