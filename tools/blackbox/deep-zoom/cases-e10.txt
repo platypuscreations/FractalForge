@@ -1,0 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# E10: references for the interrupt/resume tests (batch)
+ref-i1 type=mandel maxiter=300 passes=1 periodicity=0 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e15
+ref-i2 type=mandel maxiter=300 periodicity=0 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e15
+ref-i3 type=julia params=0/1 maxiter=300 passes=1 periodicity=0 center-mag=0.000000000000000000000000000123/1.000000000000000000000000000456/1e30

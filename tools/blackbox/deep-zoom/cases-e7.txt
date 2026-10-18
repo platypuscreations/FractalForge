@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# E7: base files for the crafted loads, and type support with a structured view
+base-v1   type=mandel maxiter=60 passes=1 periodicity=0 center-mag=0.000000000000000123/1.000000000000000456/1e15
+base-v2   type=mandel maxiter=60 passes=1 periodicity=0 center-mag=0.000000000000000123/-1.000000000000000456/1e15
+base-d    type=mandel maxiter=60 passes=1 periodicity=0
+base-j    type=julia params=0/1 maxiter=60 passes=1 periodicity=0 center-mag=0.000000000000000123/1.000000000000000456/1e15
+base-j2   type=julia params=0/-1 maxiter=60 passes=1 periodicity=0 center-mag=0.000000000000000123/1.000000000000000456/1e15
+tyv-formula type=formula formulafile=ff.frm formulaname=ffquad maxiter=60 passes=1 periodicity=0 center-mag=0.000000000000000123/1.000000000000000456/1e15
+tyv-mandel-float type=mandel float=yes maxiter=60 passes=1 periodicity=0 center-mag=0.000000000000000123/1.000000000000000456/1e15
+tyv-formula-1e12 type=formula formulafile=ff.frm formulaname=ffquad maxiter=60 passes=1 periodicity=0 center-mag=0.000000000000123/1.000000000000456/1e12
+tyv-mandel-1e12 type=mandel maxiter=60 passes=1 periodicity=0 center-mag=0.000000000000123/1.000000000000456/1e12

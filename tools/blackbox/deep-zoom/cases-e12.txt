@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# E12: XFractint-written PARs loaded back (FFINPUTS = the .par files)
+rt-wd13 @wd13.par/wd13
+rt-wd15 @wd15.par/wd15
+rt-wd40 @wd40.par/wd40
+rt-wdcorn @wdcorn.par/wdcorn
+rt-wdj20 @wdj20.par/wdj20
+rt-wdrot @wdrot.par/wdrot
+rt-wdsm @wdsm.par/wdsm
+rt-wd5e25 @wd5e25.par/wd5e25

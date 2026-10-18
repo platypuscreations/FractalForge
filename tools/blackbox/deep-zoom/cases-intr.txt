@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# E10 interactive runs (keys.sh OUTDIR NAME IN|- "ACTIONS" ARGS...)
+# Interrupted saves: s after 40 s
+int-i1 - "s40 ks" type=mandel maxiter=300 passes=1 periodicity=0 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e15 viewwindows=2 map=uniq.map
+int-i2 - "s40 ks" type=mandel maxiter=300 periodicity=0 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e15 viewwindows=2 map=uniq.map
+int-i3 - "s40 ks" type=julia params=0/1 maxiter=300 passes=1 periodicity=0 center-mag=0.000000000000000000000000000123/1.000000000000000000000000000456/1e30 viewwindows=2 map=uniq.map
+# In-program load (r) of the saves; *-mark = row 10 repainted colour 7 (craft.py markrow=10:7)
+r-int-i1      int-i1.gif      "s10 kr s3 tin.gif s1 kReturn s400 ks" type=mandel maxiter=10 viewwindows=2
+r-int-i3      int-i3.gif      "s10 kr s3 tin.gif s1 kReturn s400 ks" type=mandel maxiter=10 viewwindows=2
+r-int-i1-mark int-i1-mark.gif "s10 kr s3 tin.gif s1 kReturn s400 ks" type=mandel maxiter=10 viewwindows=2
+r-int-i3-mark int-i3-mark.gif "s10 kr s3 tin.gif s1 kReturn s400 ks" type=mandel maxiter=10 viewwindows=2

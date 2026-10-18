@@ -1,0 +1,28 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+# tools/blackbox/deep-zoom/sim.py over all 300 rows of each image.
+# exact:  python3 -I sim.py FILE rows=0..299 bits=600
+# model:  SIMVAR=tz python3 -I sim.py FILE rows=0..299 bits=8*(N-1) step_coords=1
+#         (N=12 -> 88 bits, N=20 -> 152 bits)
+
+## exact
+px-j20.gif type 6 maxiter 200 N 12 checked 120000 mismatch 0 examples (row,col,n,pred,stored): []
+px-m15.gif type 4 maxiter 200 N 12 checked 120000 mismatch 0 examples (row,col,n,pred,stored): []
+px-m15g.gif type 4 maxiter 200 N 12 checked 120000 mismatch 0 examples (row,col,n,pred,stored): []
+px-m20.gif type 4 maxiter 200 N 12 checked 120000 mismatch 1 examples (row,col,n,pred,stored): [(299, 12, 54, 53, 52)]
+px-m40.gif type 4 maxiter 200 N 20 checked 120000 mismatch 1477 examples (row,col,n,pred,stored): [(66, 161, 113, 112, 111), (71, 203, 113, 112, 111), (86, 345,
+
+## model
+px-j20.gif type 6 maxiter 200 N 12 checked 120000 mismatch 0 examples (row,col,n,pred,stored): []
+px-m15.gif type 4 maxiter 200 N 12 checked 120000 mismatch 0 examples (row,col,n,pred,stored): []
+px-m15g.gif type 4 maxiter 200 N 12 checked 120000 mismatch 0 examples (row,col,n,pred,stored): []
+px-m20.gif type 4 maxiter 200 N 12 checked 120000 mismatch 0 examples (row,col,n,pred,stored): []
+px-m40.gif type 4 maxiter 200 N 20 checked 120000 mismatch 4 examples (row,col,n,pred,stored): [(106, 322, 130, 129, 128), (184, 106, 147, 146, 145), (214, 284,
+
+## spot checks (exact, rows 0,75,150,225,299, bits=400)
+ref-i1.gif type 4 maxiter 300 N 12 checked 2000 mismatch 0 examples (row,col,n,pred,stored): []
+ref-i3.gif type 6 maxiter 300 N 16 checked 2000 mismatch 0 examples (row,col,n,pred,stored): []
+base-v1.gif type 4 maxiter 60 N 12 checked 2000 mismatch 0 examples (row,col,n,pred,stored): []
+base-v2.gif type 4 maxiter 60 N 12 checked 2000 mismatch 0 examples (row,col,n,pred,stored): []
+base-j.gif type 6 maxiter 60 N 12 checked 2000 mismatch 0 examples (row,col,n,pred,stored): []
+base-j2.gif type 6 maxiter 60 N 12 checked 2000 mismatch 0 examples (row,col,n,pred,stored): []
