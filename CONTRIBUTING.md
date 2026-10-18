@@ -36,7 +36,7 @@ XFractint or Iterated Dynamics source code to write your change.
 ```sh
 cargo fmt --all
 cargo clippy --workspace --all-targets -- -D warnings
-cargo test --workspace
+cargo test --workspace --release   # optimised: the corpus tests are slow in debug
 scripts/check-spdx.sh
 cargo deny check        # brew install cargo-deny, or cargo install --locked cargo-deny
 ```
