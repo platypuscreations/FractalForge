@@ -52,6 +52,55 @@ jobs:
           name: FractalForge-macos-universal
           path: target/packager/*.dmg
 
+  package-linux:
+    # The oldest supported Ubuntu, so the .deb runs on 22.04 and later.
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - run: sudo apt-get update && sudo apt-get install -y libxkbcommon-dev libwayland-dev
+      - run: cargo install --locked cargo-packager
+      - run: scripts/package-linux.sh
+      - name: Install the .deb and check it
+        run: |
+          sudo apt-get install -y ./target/packager/*.deb
+          dpkg -L fractalforge | grep -E 'bin/fractalforge$|\.desktop$|icons/'
+          grep -E '^(Exec|Icon|MimeType)=' /usr/share/applications/fractalforge.desktop
+      - uses: actions/upload-artifact@v4
+        with:
+          name: FractalForge-linux
+          path: |
+            target/packager/*.deb
+            target/packager/*.tar.gz
+
+  package-windows:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo install --locked cargo-packager
+      - run: scripts/package-windows.sh
+      - name: Install the .msi and check it
+        shell: pwsh
+        run: |
+          $msi = Get-ChildItem target/packager/*.msi | Select-Object -First 1
+          $p = Start-Process msiexec -ArgumentList "/i `"$($msi.FullName)`" /qn /l*v install.log" -Wait -PassThru
+          if ($p.ExitCode -ne 0) { Get-Content install.log -Tail 50; exit $p.ExitCode }
+          $exe = Get-ChildItem -Recurse -Filter fractalforge.exe "$env:ProgramFiles\FractalForge"
+          if (-not $exe) { Write-Error "fractalforge.exe not installed"; exit 1 }
+          $exe.FullName
+      - uses: actions/upload-artifact@v4
+        with:
+          name: FractalForge-windows
+          path: |
+            target/packager/*.msi
+            target/packager/*.zip
+
   lint:
     runs-on: ubuntu-latest
     steps:

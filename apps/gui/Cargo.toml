@@ -15,18 +15,34 @@ product-name = "FractalForge"
 identifier = "io.github.platypuscreations.fractalforge"
 category = "GraphicsAndDesign"
 copyright = "GPL-3.0-or-later"
-icons = ["assets/icon.icns"]
-formats = ["app", "dmg"]
+# The .deb's Maintainer field.
+authors = ["Luke Hindman <luke@platypuscreations.net>"]
+# Each platform picks its format: .icns (macOS), .ico (Windows), .png (Linux).
+icons = ["assets/icon.icns", "assets/icon.ico", "assets/icon-256.png"]
 out-dir = "../../target/packager"
 binaries = [{ path = "fractalforge", main = true }]
 file-associations = [
-    { extensions = ["gif"], name = "GIF image", role = "viewer", description = "GIF image (FractalForge or Fractint)" },
+    { extensions = ["gif"], mime-type = "image/gif", name = "GIF image", role = "viewer", description = "GIF image (FractalForge or Fractint)" },
     { extensions = ["par"], name = "Fractint parameter file", role = "editor", description = "Fractint-format parameter file" },
     { extensions = ["map"], name = "Fractint palette", role = "editor", description = "Fractint-format palette" },
 ]
 
 [package.metadata.packager.macos]
 minimum-system-version = "11.0"
+
+# Ubuntu 22.04 and later. The window system, graphics and file-dialog
+# libraries are loaded at run time, so they're listed here rather than
+# linked; the fonts are the ones fonts.rs looks for.
+[package.metadata.packager.deb]
+package-name = "fractalforge"
+depends = [
+    "libxkbcommon0",
+    "libvulkan1 | libegl1",
+    "xdg-desktop-portal",
+    "fonts-dejavu-core | fonts-liberation",
+]
+section = "graphics"
+priority = "optional"
 
 [dependencies]
 fractalforge-core.workspace = true
