@@ -75,11 +75,14 @@ everything is bit-exact, though:
   the same attractors as XFractint, but the pixels differ. In a chaotic
   system a difference in the last bit of one number grows until the orbit
   goes somewhere else entirely, usually within a few hundred to a few
-  thousand points. XFractint's orbits depend on the exact results of the C
-  library's `sin`, `cos`, `log` and `atan` (glibc on Linux), which aren't
-  always correctly rounded. FractalForge uses its own portable math, so its
-  images are the same on every platform, but they can't follow glibc's
-  last-bit choices without copying glibc itself.
+  thousand points. XFractint's results for `sin`, `cos`, `log` and `atan`
+  come from the C library (glibc on Linux) or, for latoocarfian's function
+  slots, from the x87 processor's own `fsin`, and neither is always
+  correctly rounded. FractalForge uses its own portable math, so its images
+  are the same on every platform, but it can't follow those last-bit
+  choices without copying them.
+- **popcorn and popcornjul with `tan`** differ in a few pixels near the
+  poles of the tangent, where tiny rounding differences become large.
 - **IFS** images can differ in a few pixels where a point falls almost
   exactly on the boundary between two pixels.
 - **mandelcloud, julia_inverse, kamtorus3d** and the three- and four-lobe
