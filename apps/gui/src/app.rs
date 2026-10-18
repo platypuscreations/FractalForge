@@ -173,6 +173,8 @@ pub struct App {
     title: String,
 
     drag: Option<Drag>,
+    /// 3D transform and stereogram windows.
+    effects: crate::effects::Effects,
     /// Draw the orbit of the point under the pointer over the image.
     show_orbit: bool,
     /// The pointer's normalised image position, while over the image.
@@ -232,6 +234,7 @@ impl App {
             messages: Vec::new(),
             title: String::new(),
             drag: None,
+            effects: Default::default(),
             show_orbit: false,
             hover: None,
             mandel_views: Vec::new(),
@@ -1073,6 +1076,14 @@ impl App {
                 ui.checkbox(&mut self.show_orbit, "Show Orbits (O)")
                     .on_hover_text("Draws the orbit of the point under the pointer");
             });
+            ui.menu_button("Image", |ui| {
+                if ui.button("3D Transform…").clicked() {
+                    self.effects.open_three_d();
+                }
+                if ui.button("Stereogram…").clicked() {
+                    self.effects.open_stereogram();
+                }
+            });
             ui.menu_button("Render", |ui| {
                 if ui
                     .add_enabled(self.worker.is_some(), egui::Button::new("Stop"))
@@ -1569,6 +1580,12 @@ impl eframe::App for App {
             .show(ui, |ui| self.controls(ui));
         egui::CentralPanel::no_frame().show(ui, |ui| self.canvas(ui));
         self.dialogs(&ctx);
+        let palette = self.palette.rotated(self.cycle_offset as i32);
+        let mut effects = std::mem::take(&mut self.effects);
+        let mut messages = Vec::new();
+        effects.show(&ctx, || self.picture(), &palette, &mut messages);
+        self.effects = effects;
+        self.messages.extend(messages);
 
         if let Some(at) = self.restart_at {
             let now = Instant::now();
@@ -1593,6 +1610,19 @@ impl App {
             ctx.request_repaint_after(Duration::from_millis(100));
             return;
         }
+        // FRACTALFORGE_EFFECT=3d or stereogram: show that effect's result.
+        if let Ok(effect) = std::env::var("FRACTALFORGE_EFFECT")
+            && !self.effects.has_result()
+        {
+            if effect == "3d" {
+                self.effects.open_three_d();
+            } else {
+                self.effects.open_stereogram();
+            }
+            self.effects.request_make();
+            ctx.request_repaint();
+            return;
+        }
         *requested = true;
         let (path, ctx2) = (path.clone(), ctx.clone());
         ctx.request_screenshot(move |img| {
@@ -1609,14 +1639,35 @@ impl App {
     }
 }
 
-/// A rectangle from `a` towards `b` with the image's aspect ratio.
-/// The kind of entry file (.frm, .ifs) at `path`, or `None` for others
-/// (.par).
+/// The kind of entry file (.frm, .ifs, .l) at `path`, or `None` for
+/// others (.par).
 fn entry_file_kind(path: &Path) -> Option<Kind> {
     let ext = path.extension()?.to_str()?;
     Kind::ALL
         .into_iter()
         .find(|k| ext.eq_ignore_ascii_case(k.extension()))
+}
+
+impl App {
+    /// The picture on screen as palette indices (pixels not computed yet
+    /// as 0), with its Fractint parameter block.
+    fn picture(&self) -> Option<crate::effects::Picture> {
+        let f = self.frame.as_ref()?;
+        let pixels = f
+            .indices
+            .iter()
+            .map(|&i| if i == TRANSPARENT { 0 } else { i as u8 })
+            .collect();
+        let (w, h) = (f.width as u32, f.height as u32);
+        let main = gif::fractint_blocks::write(&self.params, self.pass_mode, None, w, h, 0)
+            .and_then(|(blocks, _)| blocks.last().map(|b| b.data()));
+        Some(crate::effects::Picture {
+            pixels,
+            width: w,
+            height: h,
+            main_block: main,
+        })
+    }
 }
 
 /// Most iterates the orbit window draws.
@@ -1690,6 +1741,7 @@ impl App {
     }
 }
 
+/// A rectangle from `a` towards `b` with the image's aspect ratio.
 fn aspect_box(a: Pos2, b: Pos2, aspect: f32) -> Rect {
     let d = b - a;
     let w = d.x.abs().max(d.y.abs() * aspect);
