@@ -270,6 +270,7 @@ impl Params {
         let mut p = self.clone();
         p.fractal = julia;
         p.window = julia.default_window;
+        p.deep = None;
         p.params[0] = c.re;
         p.params[1] = c.im;
         p.forced_symmetry = None;
@@ -283,6 +284,7 @@ impl Params {
         let mut p = self.clone();
         p.fractal = mandel;
         p.window = window.unwrap_or(mandel.default_window);
+        p.deep = None;
         p.params[0] = 0.0;
         p.params[1] = 0.0;
         p.forced_symmetry = None;
@@ -535,6 +537,47 @@ mod tests {
             ..at
         };
         assert_eq!(p.orbit(&inside, 20).unwrap().len(), 20);
+    }
+
+    /// Zooming far in keeps the exact centre; zooming back out returns to
+    /// an ordinary window.
+    #[test]
+    fn reframe_goes_deep_and_back() {
+        let mut p = Params::for_type("mandel").unwrap();
+        let zoom = |w: &Window, f: f64, u: f64| {
+            let (cx, cy) = (w.x_min + u * (w.x_max - w.x_min), (w.y_min + w.y_max) / 2.0);
+            let (hw, hh) = (
+                (w.x_max - w.x_min) / (2.0 * f),
+                (w.y_max - w.y_min) / (2.0 * f),
+            );
+            let (nx, ny) = (cx - (u - 0.5) * 2.0 * hw, cy);
+            Window::new(nx - hw, nx + hw, ny - hh, ny + hh)
+        };
+        for _ in 0..30 {
+            p.reframe(|w| zoom(w, 10.0, 0.75));
+        }
+        let d = p.deep.clone().expect("deep after 30 zooms");
+        assert!((d.half_h - 1.5e-30).abs() < 1e-40);
+        // Zooming about the point at u = 0.75 keeps it fixed: the centre
+        // tends to 0.5 (within the doubles of the early, shallow zooms),
+        // while the deep view keeps digits far below a double's.
+        assert!((d.re.to_f64() - 0.5).abs() < 1e-15);
+        let before = d.re.clone();
+        // A pan by a tenth of the width moves the precise centre by that.
+        p.reframe(|w| {
+            let d = (w.x_max - w.x_min) / 10.0;
+            Window::new(w.x_min + d, w.x_max + d, w.y_min, w.y_max)
+        });
+        let moved = p.deep.as_ref().unwrap().re.sub(&before).to_f64();
+        assert!(
+            (moved / (2.0 * d.half_w / 10.0) - 1.0).abs() < 1e-14,
+            "{moved}"
+        );
+        for _ in 0..30 {
+            p.reframe(|w| zoom(w, 0.1, 0.5));
+        }
+        assert!(p.deep.is_none());
+        assert!((p.window.y_max - 1.5).abs() < 1e-6, "{:?}", p.window);
     }
 
     #[test]
