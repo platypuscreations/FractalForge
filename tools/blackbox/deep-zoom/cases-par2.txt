@@ -1,0 +1,9 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# More PAR output cases (digits rule), same tooling as cases-par.txt
+wd3e15   no   - - type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/3e15 viewwindows=2
+wd9e14   no   - - type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/9e14 viewwindows=2
+wd5e25   no   - - type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/5e25 viewwindows=2
+wdc0     no   - - type=mandel maxiter=50 center-mag=0/0/1e20 viewwindows=2
+wdsm     no   - - type=mandel maxiter=50 center-mag=0.0000123456789012345678901234567890123/-0.0000234567891234567891234567891234567/1e30 viewwindows=2
+wdmag    no   - - type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1.23456789123e20 viewwindows=2
+wdfull   no   - - type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e20

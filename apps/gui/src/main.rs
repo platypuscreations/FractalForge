@@ -3,6 +3,7 @@
 //! FractalForge desktop app.
 
 mod app;
+mod effects;
 mod fonts;
 #[cfg(target_os = "macos")]
 mod macos;

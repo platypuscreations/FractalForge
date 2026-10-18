@@ -1,0 +1,6 @@
+wdfull             { ; our comment one
+  reset=2004 type=mandel
+  center-mag=-0.7436438870371587047521915/0.1318259042053119704931321/1e+2\
+  0 params=0/0 float=y maxiter=50 inside=0
+  }
+

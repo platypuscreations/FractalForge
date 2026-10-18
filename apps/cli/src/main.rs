@@ -34,6 +34,46 @@ enum Command {
     Info { file: PathBuf },
     /// List the available fractal types.
     Types,
+    /// Fractint-style 3D transform of an image: its colours become heights
+    /// (docs/specs/3d-transform.md). Settings use Fractint's keys, e.g.
+    /// `rotation=60/30/0 filltype=5 lightsource=1/-1/1 stereo=2`.
+    /// Random-dot stereogram of an image, its colours giving the depth
+    /// (docs/specs/stereogram.md).
+    Stereogram {
+        input: PathBuf,
+        #[arg(short, long)]
+        output: PathBuf,
+        /// Depth effect; negative swaps near and far.
+        #[arg(long, default_value_t = 100, allow_hyphen_values = true)]
+        depth: i32,
+        /// Width of the picture on screen, in inches.
+        #[arg(long, default_value_t = 10.0)]
+        width: f64,
+        /// Depth from the colours' brightness instead of their index.
+        #[arg(long)]
+        grayscale: bool,
+        /// Calibration bars: middle, top or none.
+        #[arg(long, default_value = "middle", value_parser = ["middle", "top", "none"])]
+        bars: String,
+        /// Seed of the random dots (default: the current time, as Fractint).
+        #[arg(long)]
+        seed: Option<u32>,
+        /// A GIF to tile instead of random dots.
+        #[arg(long, value_name = "FILE.gif")]
+        pattern: Option<PathBuf>,
+    },
+    #[command(name = "3d")]
+    ThreeD {
+        input: PathBuf,
+        #[arg(short, long)]
+        output: PathBuf,
+        /// KEY=VALUE settings: rotation, scalexyz, roughness, waterline,
+        /// filltype, perspective, xyshift, transparent, sphere, longitude,
+        /// latitude, radius, lightsource, smoothing, ambient, stereo,
+        /// interocular, converge, crop.
+        #[arg(value_name = "KEY=VALUE", allow_hyphen_values = true)]
+        settings: Vec<String>,
+    },
     /// List the entries in a .par or .frm file.
     Entries { file: PathBuf },
     /// Compare the pixels (and iteration data, when both have it) of two
@@ -108,9 +148,10 @@ struct FractalArgs {
     /// Window corners.
     #[arg(long, value_name = "XMIN/XMAX/YMIN/YMAX", value_parser = parse_floats::<4>, allow_hyphen_values = true)]
     corners: Option<[f64; 4]>,
-    /// Window centre and magnification (1 shows a height of 2).
-    #[arg(long, value_name = "X/Y/MAG", conflicts_with = "corners", value_parser = parse_floats::<3>, allow_hyphen_values = true)]
-    center_mag: Option<[f64; 3]>,
+    /// Window centre and magnification (1 shows a height of 2). The centre
+    /// may have any number of digits: deep zooms keep them all.
+    #[arg(long, value_name = "X/Y/MAG", conflicts_with = "corners", value_parser = parse_center_mag, allow_hyphen_values = true)]
+    center_mag: Option<CenterMag>,
     /// Type parameters, e.g. the Julia constant.
     #[arg(long, value_name = "P1[/P2[/…/P10]]", value_parser = parse_params, allow_hyphen_values = true)]
     params: Option<[f64; PARAM_COUNT]>,
@@ -139,6 +180,38 @@ struct FractalArgs {
     /// Force mirror copying: none, xaxis, yaxis, xyaxis or origin.
     #[arg(long, value_parser = parse_symmetry)]
     symmetry: Option<Symmetry>,
+}
+
+/// A centre kept as text (for deep zooms) and a magnification.
+#[derive(Clone, Debug)]
+struct CenterMag {
+    x: String,
+    y: String,
+    mag: f64,
+}
+
+fn parse_center_mag(s: &str) -> Result<CenterMag, String> {
+    let parts: Vec<&str> = s.split('/').collect();
+    let [x, y, mag] = parts[..] else {
+        return Err("expected X/Y/MAG".into());
+    };
+    for v in [x, y] {
+        v.parse::<f64>()
+            .ok()
+            .filter(|f| f.is_finite())
+            .ok_or_else(|| format!("bad number {v:?}"))?;
+    }
+    let mag: f64 = mag
+        .parse()
+        .map_err(|_| format!("bad magnification {mag:?}"))?;
+    if !(mag.is_finite() && mag > 0.0) {
+        return Err("the magnification must be positive".into());
+    }
+    Ok(CenterMag {
+        x: x.to_owned(),
+        y: y.to_owned(),
+        mag,
+    })
 }
 
 impl FractalArgs {
@@ -171,7 +244,17 @@ impl FractalArgs {
             params.window = Window::new(c[0], c[1], c[2], c[3]);
         }
         if let Some(c) = &self.center_mag {
-            params.window = Window::from_center_mag(Complex::new(c[0], c[1]), c[2], aspect);
+            let (cx, cy) = (c.x.parse::<f64>().unwrap(), c.y.parse::<f64>().unwrap());
+            let half_h = 1.0 / c.mag;
+            params.deep = None;
+            if fractalforge_core::deep::needs_deep(cx, cy, half_h) {
+                let view =
+                    fractalforge_core::deep::DeepView::parse(&c.x, &c.y, half_h * aspect, half_h)
+                        .ok_or("--center-mag: the centre doesn't fit")?;
+                params.set_view(view);
+            } else {
+                params.window = Window::from_center_mag(Complex::new(cx, cy), c.mag, aspect);
+            }
         }
         if let Some(p) = self.params {
             params.params = p;
@@ -238,6 +321,39 @@ fn main() -> ExitCode {
             colors,
         } => compare(&a, &b, tolerance, colors),
         Command::Entries { file } => list_entries(&file),
+        Command::Stereogram {
+            input,
+            output,
+            depth,
+            width,
+            grayscale,
+            bars,
+            seed,
+            pattern,
+        } => {
+            use fractalforge_core::stereogram::{Bars, Settings};
+            let s = Settings {
+                depth,
+                width_inches: width,
+                grayscale,
+                bars: match bars.as_str() {
+                    "top" => Bars::Top,
+                    "none" => Bars::None,
+                    _ => Bars::Middle,
+                },
+                seed: seed.unwrap_or_else(|| {
+                    std::time::SystemTime::now()
+                        .duration_since(std::time::UNIX_EPOCH)
+                        .map_or(1, |d| d.as_secs() as u32)
+                }),
+            };
+            stereogram(&input, &output, &s, pattern.as_deref())
+        }
+        Command::ThreeD {
+            input,
+            output,
+            settings,
+        } => three_d(&input, &output, &settings),
         Command::Types => {
             for t in types::all() {
                 println!("{:<10} {}", t.name, t.description);
@@ -480,6 +596,110 @@ fn load_source(path: &Path, entry: Option<&str>, formula: Option<&Path>) -> Resu
             path.display()
         )),
     }
+}
+
+fn read_gif(path: &Path) -> Result<gif::GifImage, String> {
+    let bytes = std::fs::read(path).map_err(|e| format!("{}: {e}", path.display()))?;
+    gif::GifImage::read(&bytes).map_err(|e| format!("{}: {e}", path.display()))
+}
+
+fn stereogram(
+    input: &Path,
+    output: &Path,
+    s: &fractalforge_core::stereogram::Settings,
+    pattern: Option<&Path>,
+) -> Result<(), String> {
+    use fractalforge_core::stereogram::{Pattern, render};
+    let mut img = read_gif(input)?;
+    let pat = pattern.map(read_gif).transpose()?;
+    let pat = pat.as_ref().map(|p| Pattern {
+        pixels: &p.pixels,
+        width: p.width.into(),
+        height: p.height.into(),
+    });
+    img.pixels = render(
+        &img.pixels,
+        img.width.into(),
+        img.height.into(),
+        &img.palette,
+        s,
+        pat.as_ref(),
+    );
+    // Fractint keeps the image's blocks (stereogram.md §8). Our own block
+    // would reopen the original fractal, so it goes.
+    img.extensions
+        .retain(|e| &e.identifier != gif::native_block::APP_IDENTIFIER);
+    let bytes = if is_ext(output, "png") {
+        let rgb: Vec<u8> = img
+            .pixels
+            .iter()
+            .flat_map(|&i| img.palette.get(i as usize).copied().unwrap_or([0; 3]))
+            .collect();
+        fractalforge_formats::png::encode_rgb(img.width.into(), img.height.into(), &rgb)
+            .map_err(|e| e.to_string())?
+    } else {
+        img.write().map_err(|e| e.to_string())?
+    };
+    std::fs::write(output, bytes).map_err(|e| format!("{}: {e}", output.display()))?;
+    println!("stereogram (seed {}): {}", s.seed, output.display());
+    Ok(())
+}
+
+fn three_d(input: &Path, output: &Path, settings: &[String]) -> Result<(), String> {
+    use fractalforge_core::three_d::{Settings, Source, render};
+    let mut s = Settings::default();
+    for kv in settings {
+        let (k, v) = kv
+            .split_once('=')
+            .ok_or_else(|| format!("expected KEY=VALUE, got {kv:?}"))?;
+        s.apply(&k.to_ascii_lowercase(), v)?;
+    }
+    let bytes = std::fs::read(input).map_err(|e| format!("{}: {e}", input.display()))?;
+    let img = gif::GifImage::read(&bytes).map_err(|e| format!("{}: {e}", input.display()))?;
+    let out = render(
+        &Source {
+            pixels: &img.pixels,
+            width: img.width.into(),
+            height: img.height.into(),
+            colours: img.palette.len() as u32,
+        },
+        &s,
+    );
+    let mut palette = Palette([[0; 3]; 256]);
+    for (c, p) in palette.0.iter_mut().zip(&img.palette) {
+        *c = *p;
+    }
+    let main = img
+        .extension(
+            gif::fractint_blocks::IDENTIFIER,
+            gif::fractint_blocks::MAIN_AUTH,
+        )
+        .map(|e| e.data());
+    let bytes = if is_ext(output, "png") {
+        let black = palette.0.iter().position(|c| *c == [0, 0, 0]).unwrap_or(0) as u8;
+        let pal = if matches!(s.stereo, 1 | 2) {
+            gif::stereo_palette(s.stereo)
+        } else {
+            palette
+        };
+        let rgb: Vec<u8> = out
+            .pixels
+            .iter()
+            .flat_map(|p| pal.0[p.unwrap_or(black) as usize])
+            .collect();
+        fractalforge_formats::png::encode_rgb(out.width, out.height, &rgb)
+            .map_err(|e| e.to_string())?
+    } else {
+        gif::save_3d(&out, &palette, &s, main.as_deref()).map_err(|e| e.to_string())?
+    };
+    std::fs::write(output, bytes).map_err(|e| format!("{}: {e}", output.display()))?;
+    println!(
+        "3D image {}x{}: {}",
+        out.width,
+        out.height,
+        output.display()
+    );
+    Ok(())
 }
 
 fn render(args: RenderArgs) -> Result<(), String> {
@@ -895,7 +1115,8 @@ mod tests {
         let Command::Render(r) = cli.command else {
             panic!()
         };
-        assert_eq!(r.fractal.center_mag, Some([-0.5, 0.0, 2.0]));
+        let c = r.fractal.center_mag.unwrap();
+        assert_eq!((c.x.as_str(), c.y.as_str(), c.mag), ("-0.5", "0", 2.0));
         assert_eq!(r.fractal.params.unwrap()[..3], [-0.8, 0.156, 0.0]);
         assert_eq!(r.size, Some((64, 48)));
         assert_eq!(r.stop_after, Some(0.5));

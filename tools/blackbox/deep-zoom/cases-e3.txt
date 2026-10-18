@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# E3: which types switch to arbitrary precision (center-mag=-0.1/0.65/1e15, and 1e30)
+ty-mandel type=mandel maxiter=20 center-mag=-0.1/0.65/1e15
+ty-julia type=julia maxiter=20 center-mag=-0.1/0.65/1e15
+ty-mandel4 type=mandel4 maxiter=20 center-mag=-0.1/0.65/1e15
+ty-julia4 type=julia4 maxiter=20 center-mag=-0.1/0.65/1e15
+ty-lambda type=lambda maxiter=20 center-mag=-0.1/0.65/1e15
+ty-mandellambda type=mandellambda maxiter=20 center-mag=-0.1/0.65/1e15
+ty-manowar type=manowar maxiter=20 center-mag=-0.1/0.65/1e15
+ty-manowarj type=manowarj maxiter=20 center-mag=-0.1/0.65/1e15
+ty-barnsleym1 type=barnsleym1 maxiter=20 center-mag=-0.1/0.65/1e15
+ty-barnsleyj1 type=barnsleyj1 maxiter=20 center-mag=-0.1/0.65/1e15
+ty-spider type=spider maxiter=20 center-mag=-0.1/0.65/1e15
+ty-magnet1m type=magnet1m maxiter=20 center-mag=-0.1/0.65/1e15
+ty-magnet1j type=magnet1j maxiter=20 center-mag=-0.1/0.65/1e15
+ty-newton type=newton maxiter=20 center-mag=-0.1/0.65/1e15
+ty-newtbasin type=newtbasin maxiter=20 center-mag=-0.1/0.65/1e15
+ty-phoenix type=phoenix maxiter=20 center-mag=-0.1/0.65/1e15
+ty-mandphoenix type=mandphoenix maxiter=20 center-mag=-0.1/0.65/1e15
+ty-fnxfn type=fn*fn maxiter=20 center-mag=-0.1/0.65/1e15
+ty-mandelfn type=mandelfn maxiter=20 center-mag=-0.1/0.65/1e15
+ty-popcorn type=popcorn maxiter=20 center-mag=-0.1/0.65/1e15
+ty-complexnewton type=complexnewton maxiter=20 center-mag=-0.1/0.65/1e15
+ty-sierpinski type=sierpinski maxiter=20 center-mag=-0.1/0.65/1e15
+ty-marksmandel type=marksmandel maxiter=20 center-mag=-0.1/0.65/1e15
+ty-tetrate type=tetrate maxiter=20 center-mag=-0.1/0.65/1e15
+ty-julfnpzsqrd type=julfn+zsqrd maxiter=20 center-mag=-0.1/0.65/1e15
+ty-mandfnpzsqrd type=mandfn+zsqrd maxiter=20 center-mag=-0.1/0.65/1e15
+ty-formula type=formula formulafile=ff.frm formulaname=ffquad maxiter=20 center-mag=-0.1/0.65/1e15
+ty30-formula type=formula formulafile=ff.frm formulaname=ffquad maxiter=20 center-mag=-0.1/0.65/1e30
+ty30-julia type=julia maxiter=20 center-mag=-0.1/0.65/1e30
+ty30-mandel4 type=mandel4 maxiter=20 center-mag=-0.1/0.65/1e30
+ty30-lambda type=lambda maxiter=20 center-mag=-0.1/0.65/1e30
+ty30-manowar type=manowar maxiter=20 center-mag=-0.1/0.65/1e30
+ty30-phoenix type=phoenix maxiter=20 center-mag=-0.1/0.65/1e30
+ty30-newton type=newton maxiter=20 center-mag=-0.1/0.65/1e30
+ty-mandel-float type=mandel float=yes maxiter=20 center-mag=-0.1/0.65/1e15

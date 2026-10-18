@@ -1,0 +1,6 @@
+wdj20              { ; our comment one
+  reset=2004 type=julia center-mag=0.1/0.2/1e+20
+  params=-0.80000000000000004/0.156 float=y maxiter=50 inside=0
+  viewwindows=2/0.75/yes/0/0
+  }
+

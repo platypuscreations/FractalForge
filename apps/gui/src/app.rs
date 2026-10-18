@@ -9,6 +9,8 @@ use eframe::egui::{
     self, Color32, ColorImage, Key, KeyboardShortcut, Modifiers, PointerButton, Pos2, Rect, Sense,
     Stroke, TextureHandle, TextureOptions, Vec2,
 };
+use fractalforge_core::bignum::BigFixed;
+use fractalforge_core::deep::DeepView;
 use fractalforge_core::{Inside, Outside, PRESETS, Palette, Params, Window, types};
 use fractalforge_formats::gif::{self, Checkpoint, Content};
 use fractalforge_formats::programs::Kind;
@@ -46,10 +48,81 @@ enum SizeMode {
     Fixed(u32, u32),
 }
 
-/// An image on screen and the window it was rendered for.
+/// An image on screen and the view it was rendered for.
 struct Shown {
     texture: TextureHandle,
+    view: ViewPos,
+}
+
+/// A view: its window, and its precise centre for deep zooms.
+#[derive(Clone, PartialEq)]
+struct ViewPos {
     window: Window,
+    deep: Option<DeepView>,
+}
+
+impl ViewPos {
+    fn of(p: &Params) -> Self {
+        Self {
+            window: p.window,
+            deep: p.deep.clone(),
+        }
+    }
+
+    fn restore(&self, p: &mut Params) {
+        p.window = self.window;
+        p.deep = self.deep.clone();
+    }
+
+    fn centre(&self, frac: usize) -> (BigFixed, BigFixed) {
+        match &self.deep {
+            Some(d) => (d.re.with_frac(frac), d.im.with_frac(frac)),
+            None => {
+                let w = &self.window;
+                (
+                    BigFixed::from_f64((w.x_min + w.x_max) / 2.0, frac),
+                    BigFixed::from_f64((w.y_min + w.y_max) / 2.0, frac),
+                )
+            }
+        }
+    }
+
+    fn half_spans(&self) -> (f64, f64) {
+        match &self.deep {
+            Some(d) => (d.half_w, d.half_h),
+            None => {
+                let w = &self.window;
+                ((w.x_max - w.x_min) / 2.0, (w.y_max - w.y_min) / 2.0)
+            }
+        }
+    }
+
+    /// This view's window in coordinates centred on `other`'s centre, so
+    /// deep views can be compared in doubles.
+    fn relative_to(&self, other: &ViewPos) -> Window {
+        if self.deep.is_none() && other.deep.is_none() {
+            return self.window;
+        }
+        let frac = [&self.deep, &other.deep]
+            .iter()
+            .filter_map(|d| d.as_ref().map(|d| d.re.frac_limbs()))
+            .max()
+            .unwrap_or(1);
+        let (ax, ay) = self.centre(frac);
+        let (bx, by) = other.centre(frac);
+        let (dx, dy) = (ax.sub(&bx).to_f64(), ay.sub(&by).to_f64());
+        let (hw, hh) = self.half_spans();
+        Window::new(dx - hw, dx + hw, dy - hh, dy + hh)
+    }
+
+    /// `other`'s view in the coordinates of [`ViewPos::relative_to`].
+    fn own_frame(&self) -> Window {
+        if self.deep.is_none() {
+            return self.window;
+        }
+        let (hw, hh) = self.half_spans();
+        Window::new(-hw, hw, -hh, hh)
+    }
 }
 
 #[derive(Clone, Copy, PartialEq)]
@@ -80,7 +153,7 @@ pub struct App {
     /// The previous image, shown under the new render until it finishes.
     backdrop: Option<Shown>,
     /// The window the current render was started for.
-    render_window: Window,
+    render_window: ViewPos,
 
     palette_keys: Vec<[u8; 3]>,
     palette: Palette,
@@ -100,13 +173,15 @@ pub struct App {
     title: String,
 
     drag: Option<Drag>,
+    /// 3D transform and stereogram windows.
+    effects: crate::effects::Effects,
     /// Draw the orbit of the point under the pointer over the image.
     show_orbit: bool,
     /// The pointer's normalised image position, while over the image.
     hover: Option<(f64, f64)>,
     /// Parameter-plane views left with the Julia toggle, most recent last,
     /// so toggling back returns to them.
-    mandel_views: Vec<(&'static str, Window)>,
+    mandel_views: Vec<(&'static str, ViewPos)>,
     /// A .par file with several entries, waiting for the user to pick one.
     par_choice: Option<(PathBuf, Vec<String>)>,
     /// A Fractint formula GIF waiting for its .frm file: the entry name and
@@ -119,9 +194,9 @@ pub struct App {
     screenshot: Option<(PathBuf, bool)>,
 }
 
-#[derive(Clone, Copy)]
+#[derive(Clone)]
 enum Drag {
-    Pan { start: Pos2, window: Window },
+    Pan { start: Pos2, view: ViewPos },
     ZoomBox { start: Pos2 },
 }
 
@@ -130,7 +205,7 @@ impl App {
         let params = Params::for_type("mandel").unwrap();
         let keys = PRESETS[0].1.to_vec();
         let mut app = Self {
-            render_window: params.window,
+            render_window: ViewPos::of(&params),
             params,
             pass_mode: PassMode::Guess,
             size_mode: SizeMode::FitWindow,
@@ -159,6 +234,7 @@ impl App {
             messages: Vec::new(),
             title: String::new(),
             drag: None,
+            effects: Default::default(),
             show_orbit: false,
             hover: None,
             mandel_views: Vec::new(),
@@ -208,7 +284,7 @@ impl App {
             self.backdrop = Some(img);
         }
         self.params = render.params().clone();
-        self.render_window = self.params.window;
+        self.render_window = ViewPos::of(&self.params);
         self.render_size = (render.buffer().width(), render.buffer().height());
         self.status = Status::Rendering;
         let ctx = ctx.clone();
@@ -281,12 +357,12 @@ impl App {
         match &mut self.image {
             Some(shown) if shown.texture.size() == [frame.width, frame.height] => {
                 shown.texture.set(image, TextureOptions::LINEAR);
-                shown.window = self.render_window;
+                shown.view = self.render_window.clone();
             }
             _ => {
                 self.image = Some(Shown {
                     texture: ctx.load_texture("fractal", image, TextureOptions::LINEAR),
-                    window: self.render_window,
+                    view: self.render_window.clone(),
                 })
             }
         }
@@ -551,7 +627,8 @@ impl App {
                     self.palette = p;
                     self.recolor = true;
                 }
-                self.params.window = view::fit_aspect(&self.params.window, self.aspect());
+                let aspect = self.aspect();
+                self.params.reframe(|w| view::fit_aspect(w, aspect));
                 self.record_history();
                 self.restart(ctx);
             }
@@ -853,6 +930,7 @@ impl App {
             self.resume(ctx);
         }
         if ctx.input(|i| i.key_pressed(Key::Home)) {
+            self.params.deep = None;
             self.params.window =
                 view::fit_aspect(&self.params.fractal.default_window, self.aspect());
             self.changed();
@@ -897,7 +975,8 @@ impl App {
             let Some(mut p) = self.params.to_julia(fractalforge_core::Complex::new(x, y)) else {
                 return;
             };
-            self.mandel_views.push((self.params.fractal.name, w));
+            self.mandel_views
+                .push((self.params.fractal.name, ViewPos::of(&self.params)));
             p.window = view::fit_aspect(&p.window, self.aspect());
             self.params = p;
         } else {
@@ -907,11 +986,14 @@ impl App {
                 .filter(|(name, _)| {
                     types::mandel_of(self.params.fractal).is_some_and(|m| m.name == *name)
                 })
-                .map(|(_, w)| w);
-            let Some(mut p) = self.params.to_mandel(saved) else {
+                .map(|(_, v)| v);
+            let Some(mut p) = self.params.to_mandel(saved.as_ref().map(|v| v.window)) else {
                 return;
             };
-            p.window = view::fit_aspect(&p.window, self.aspect());
+            match saved {
+                Some(v) => v.restore(&mut p),
+                None => p.window = view::fit_aspect(&p.window, self.aspect()),
+            }
             self.params = p;
         }
         self.changed();
@@ -993,6 +1075,14 @@ impl App {
                 }
                 ui.checkbox(&mut self.show_orbit, "Show Orbits (O)")
                     .on_hover_text("Draws the orbit of the point under the pointer");
+            });
+            ui.menu_button("Image", |ui| {
+                if ui.button("3D Transform…").clicked() {
+                    self.effects.open_three_d();
+                }
+                if ui.button("Stereogram…").clicked() {
+                    self.effects.open_stereogram();
+                }
             });
             ui.menu_button("Render", |ui| {
                 if ui
@@ -1120,11 +1210,45 @@ impl App {
 
             ui.separator();
             ui.heading("View");
-            let w = &self.params.window;
-            let (cx, cy) = ((w.x_min + w.x_max) / 2.0, (w.y_min + w.y_max) / 2.0);
-            ui.monospace(format!("centre {cx:.15}\n       {cy:+.15}i"));
-            ui.monospace(format!("magnification {:.4e}", view::magnification(w)));
+            match &self.params.deep {
+                Some(d) => {
+                    let digits = d.digits();
+                    let (re, im) = (d.re.to_decimal(digits), d.im.to_decimal(digits));
+                    let im = if im.starts_with('-') {
+                        im
+                    } else {
+                        format!("+{im}")
+                    };
+                    let short = |v: &str| {
+                        if v.chars().count() > 20 {
+                            format!("{}…", v.chars().take(19).collect::<String>())
+                        } else {
+                            v.to_owned()
+                        }
+                    };
+                    ui.monospace(format!("centre {}\n       {}i", short(&re), short(&im)))
+                        .on_hover_text(format!("{re}\n{im}i"));
+                    ui.horizontal(|ui| {
+                        ui.monospace(format!("magnification {:.4e}", 1.0 / d.half_h));
+                        if ui
+                            .small_button("Copy centre")
+                            .on_hover_text(format!("{} digits, as X/Y", digits))
+                            .clicked()
+                        {
+                            ui.ctx()
+                                .copy_text(format!("{re}/{}", im.trim_start_matches('+')));
+                        }
+                    });
+                }
+                None => {
+                    let w = &self.params.window;
+                    let (cx, cy) = ((w.x_min + w.x_max) / 2.0, (w.y_min + w.y_max) / 2.0);
+                    ui.monospace(format!("centre {cx:.15}\n       {cy:+.15}i"));
+                    ui.monospace(format!("magnification {:.4e}", view::magnification(w)));
+                }
+            }
             if ui.button("Reset view (Home)").clicked() {
+                self.params.deep = None;
                 self.params.window =
                     view::fit_aspect(&self.params.fractal.default_window, self.aspect());
                 changed = true;
@@ -1319,7 +1443,8 @@ impl App {
         // keeps the view's height and centre and re-renders.
         if size != self.render_size {
             self.render_size = size;
-            self.params.window = view::fit_aspect(&self.params.window, self.aspect());
+            let aspect = self.aspect();
+            self.params.reframe(|w| view::fit_aspect(w, aspect));
             self.schedule_restart();
         }
 
@@ -1349,7 +1474,8 @@ impl App {
         };
         let uv = Rect::from_min_max(Pos2::ZERO, Pos2::new(1.0, 1.0));
         for shown in [&self.backdrop, &self.image].into_iter().flatten() {
-            let (u0, v0, u1, v1) = view::placement(&shown.window, &self.params.window);
+            let now = ViewPos::of(&self.params);
+            let (u0, v0, u1, v1) = view::placement(&shown.view.relative_to(&now), &now.own_frame());
             let r = Rect::from_min_max(
                 rect.lerp_inside(Vec2::new(u0 as f32, v0 as f32)),
                 rect.lerp_inside(Vec2::new(u1 as f32, v1 as f32)),
@@ -1371,7 +1497,7 @@ impl App {
             let factor = zoom as f64 * (scroll as f64 * 0.003).exp();
             if (factor - 1.0).abs() > 1e-6 {
                 let (u, v) = norm(pos);
-                self.params.window = view::zoom_about(&self.params.window, u, v, factor);
+                self.params.reframe(|w| view::zoom_about(w, u, v, factor));
                 self.changed();
             }
         }
@@ -1384,19 +1510,17 @@ impl App {
             } else {
                 Drag::Pan {
                     start,
-                    window: self.params.window,
+                    view: ViewPos::of(&self.params),
                 }
             });
         }
-        if let (Some(drag), Some(pos)) = (self.drag, response.interact_pointer_pos()) {
+        if let (Some(drag), Some(pos)) = (self.drag.clone(), response.interact_pointer_pos()) {
             match drag {
-                Drag::Pan { start, window } => {
+                Drag::Pan { start, view: from } => {
                     let d = pos - start;
-                    self.params.window = view::pan(
-                        &window,
-                        (d.x / rect.width()) as f64,
-                        (d.y / rect.height()) as f64,
-                    );
+                    from.restore(&mut self.params);
+                    let (du, dv) = ((d.x / rect.width()) as f64, (d.y / rect.height()) as f64);
+                    self.params.reframe(|w| view::pan(w, du, dv));
                 }
                 Drag::ZoomBox { start } => {
                     let r = aspect_box(start, pos, aspect);
@@ -1409,7 +1533,7 @@ impl App {
                     if response.drag_stopped() && r.width() > 4.0 {
                         let (u0, v0) = norm(r.min);
                         let (u1, v1) = norm(r.max);
-                        self.params.window = view::sub_window(&self.params.window, u0, v0, u1, v1);
+                        self.params.reframe(|w| view::sub_window(w, u0, v0, u1, v1));
                     }
                 }
             }
@@ -1422,13 +1546,13 @@ impl App {
             && let Some(pos) = response.interact_pointer_pos()
         {
             let (u, v) = norm(pos);
-            self.params.window = view::zoom_about(&self.params.window, u, v, 2.0);
+            self.params.reframe(|w| view::zoom_about(w, u, v, 2.0));
             self.changed();
         } else if response.secondary_clicked()
             && let Some(pos) = response.interact_pointer_pos()
         {
             let (u, v) = norm(pos);
-            self.params.window = view::zoom_about(&self.params.window, u, v, 0.5);
+            self.params.reframe(|w| view::zoom_about(w, u, v, 0.5));
             self.changed();
         }
     }
@@ -1456,6 +1580,12 @@ impl eframe::App for App {
             .show(ui, |ui| self.controls(ui));
         egui::CentralPanel::no_frame().show(ui, |ui| self.canvas(ui));
         self.dialogs(&ctx);
+        let palette = self.palette.rotated(self.cycle_offset as i32);
+        let mut effects = std::mem::take(&mut self.effects);
+        let mut messages = Vec::new();
+        effects.show(&ctx, || self.picture(), &palette, &mut messages);
+        self.effects = effects;
+        self.messages.extend(messages);
 
         if let Some(at) = self.restart_at {
             let now = Instant::now();
@@ -1480,6 +1610,19 @@ impl App {
             ctx.request_repaint_after(Duration::from_millis(100));
             return;
         }
+        // FRACTALFORGE_EFFECT=3d or stereogram: show that effect's result.
+        if let Ok(effect) = std::env::var("FRACTALFORGE_EFFECT")
+            && !self.effects.has_result()
+        {
+            if effect == "3d" {
+                self.effects.open_three_d();
+            } else {
+                self.effects.open_stereogram();
+            }
+            self.effects.request_make();
+            ctx.request_repaint();
+            return;
+        }
         *requested = true;
         let (path, ctx2) = (path.clone(), ctx.clone());
         ctx.request_screenshot(move |img| {
@@ -1496,14 +1639,35 @@ impl App {
     }
 }
 
-/// A rectangle from `a` towards `b` with the image's aspect ratio.
-/// The kind of entry file (.frm, .ifs) at `path`, or `None` for others
-/// (.par).
+/// The kind of entry file (.frm, .ifs, .l) at `path`, or `None` for
+/// others (.par).
 fn entry_file_kind(path: &Path) -> Option<Kind> {
     let ext = path.extension()?.to_str()?;
     Kind::ALL
         .into_iter()
         .find(|k| ext.eq_ignore_ascii_case(k.extension()))
+}
+
+impl App {
+    /// The picture on screen as palette indices (pixels not computed yet
+    /// as 0), with its Fractint parameter block.
+    fn picture(&self) -> Option<crate::effects::Picture> {
+        let f = self.frame.as_ref()?;
+        let pixels = f
+            .indices
+            .iter()
+            .map(|&i| if i == TRANSPARENT { 0 } else { i as u8 })
+            .collect();
+        let (w, h) = (f.width as u32, f.height as u32);
+        let main = gif::fractint_blocks::write(&self.params, self.pass_mode, None, w, h, 0)
+            .and_then(|(blocks, _)| blocks.last().map(|b| b.data()));
+        Some(crate::effects::Picture {
+            pixels,
+            width: w,
+            height: h,
+            main_block: main,
+        })
+    }
 }
 
 /// Most iterates the orbit window draws.
@@ -1577,6 +1741,7 @@ impl App {
     }
 }
 
+/// A rectangle from `a` towards `b` with the image's aspect ratio.
 fn aspect_box(a: Pos2, b: Pos2, aspect: f32) -> Rect {
     let d = b - a;
     let w = d.x.abs().max(d.y.abs() * aspect);

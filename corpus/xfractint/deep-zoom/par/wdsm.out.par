@@ -1,0 +1,7 @@
+wdsm               { ; our comment one
+  reset=2004 type=mandel
+  center-mag=1.234567890123456789012345678901e-5/-2.3456789123456789123456\
+  78912345e-5/1e+30 params=0/0 float=y maxiter=50 inside=0
+  viewwindows=2/0.75/yes/0/0
+  }
+

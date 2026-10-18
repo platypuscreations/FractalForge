@@ -14,6 +14,15 @@ pub fn encode(params: &Params, buffer: &IterBuffer, palette: &Palette) -> Result
     for &v in buffer.data() {
         rgb.extend_from_slice(&palette.0[color_index(v, params) as usize]);
     }
+    write(w, h, &rgb, &describe(params))
+}
+
+/// Encodes RGB pixels (3 bytes each, row by row) as a PNG.
+pub fn encode_rgb(width: u32, height: u32, rgb: &[u8]) -> Result<Vec<u8>, Error> {
+    write(width, height, rgb, "3D transform")
+}
+
+fn write(w: u32, h: u32, rgb: &[u8], comment: &str) -> Result<Vec<u8>, Error> {
     let mut out = Vec::new();
     let err = |e: png::EncodingError| Error::Invalid(format!("PNG encoding failed: {e}"));
     {
@@ -22,10 +31,10 @@ pub fn encode(params: &Params, buffer: &IterBuffer, palette: &Palette) -> Result
         enc.set_depth(png::BitDepth::Eight);
         enc.add_text_chunk("Software".into(), "FractalForge".into())
             .map_err(err)?;
-        enc.add_text_chunk("Comment".into(), describe(params))
+        enc.add_text_chunk("Comment".into(), comment.into())
             .map_err(err)?;
         let mut writer = enc.write_header().map_err(err)?;
-        writer.write_image_data(&rgb).map_err(err)?;
+        writer.write_image_data(rgb).map_err(err)?;
     }
     Ok(out)
 }

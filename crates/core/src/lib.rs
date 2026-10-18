@@ -6,9 +6,11 @@
 //! See `docs/CLEANROOM.md` before contributing.
 
 mod attractors;
+pub mod bignum;
 pub mod color;
 pub mod complex;
 pub mod crand;
+pub mod deep;
 pub mod ext;
 pub mod funcs;
 pub mod ifs;
@@ -19,6 +21,8 @@ mod orbit_maps;
 pub mod params;
 pub mod plot;
 pub mod program;
+pub mod stereogram;
+pub mod three_d;
 pub mod types;
 
 pub use color::{PRESETS, Palette, color_index, pixel_value};

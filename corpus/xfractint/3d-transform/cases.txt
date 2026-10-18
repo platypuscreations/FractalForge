@@ -1,0 +1,313 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+# XFractint 3D-transform cases (docs/specs/3d-transform.md).
+# Format: NAME INPUT ARGS...   Output: out/NAME.gif, input: in/INPUT.
+# Run with tools/blackbox/3d-transform/runcases.sh cases.txt in OUTDIR
+# (each case runs `xfractint batch=yes ARGS savename=ff.gif` in a fresh
+# mktemp directory with INPUT copied to in.gif). Inputs: gen-inputs.sh.
+# XFractint: Debian xfractint 20.4.10-5 (amd64) in fractalforge-blackbox.
+# in/mandel.gif itself was made with: type=mandel maxiter=150 viewwindows=2
+# fill7 (filltype=7) is rejected ("couldn't understand the argument"), no output.
+m3d-def mandel.gif 3d=yes filename=in.gif
+flat5 flat5.gif 3d=yes filename=in.gif
+flat5b flat5b.gif 3d=yes filename=in.gif
+flat5s flat5s.gif 3d=yes filename=in.gif
+id-xs xs.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0
+id-ys ys.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0
+id-xl xl.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0
+id-yl yl.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0
+sx50-x xm.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=50/100/0
+sx50-y ym.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=50/100/0
+sy50-x xm.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/50/0
+sy50-y ym.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/50/0
+rz30-x xm.gif 3d=yes filename=in.gif rotation=0/0/30 scalexyz=100/100/0
+rz30-y ym.gif 3d=yes filename=in.gif rotation=0/0/30 scalexyz=100/100/0
+rx30-x xm.gif 3d=yes filename=in.gif rotation=30/0/0 scalexyz=100/100/0
+rx30-y ym.gif 3d=yes filename=in.gif rotation=30/0/0 scalexyz=100/100/0
+ry30-x xm.gif 3d=yes filename=in.gif rotation=0/30/0 scalexyz=100/100/0
+ry30-y ym.gif 3d=yes filename=in.gif rotation=0/30/0 scalexyz=100/100/0
+sh-x xm.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0 xyshift=10/20
+sh-y ym.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0 xyshift=10/20
+id-x xm.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0
+id-y ym.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0
+zy100 xm.gif 3d=yes filename=in.gif rotation=0/30/0 scalexyz=100/100/100
+zy50 xm.gif 3d=yes filename=in.gif rotation=0/30/0 scalexyz=100/100/50
+zx100 ym.gif 3d=yes filename=in.gif rotation=30/0/0 scalexyz=100/100/100
+zxm100 ym.gif 3d=yes filename=in.gif rotation=-30/0/0 scalexyz=100/100/100
+zym100 xm.gif 3d=yes filename=in.gif rotation=0/-30/0 scalexyz=100/100/100
+zyb100 xb.gif 3d=yes filename=in.gif rotation=0/30/0 scalexyz=100/100/100
+o-def wav.gif 3d=yes filename=in.gif scalexyz=100/100/100
+o-345 wav.gif 3d=yes filename=in.gif rotation=30/40/50 scalexyz=100/100/100
+o-xz wav.gif 3d=yes filename=in.gif rotation=30/0/50 scalexyz=100/100/100
+o-yz wav.gif 3d=yes filename=in.gif rotation=0/40/50 scalexyz=100/100/100
+o-scl wav.gif 3d=yes filename=in.gif rotation=30/40/50 scalexyz=70/130/40
+o-sh wav.gif 3d=yes filename=in.gif rotation=30/40/50 scalexyz=70/130/40 xyshift=-7/9
+p150-x xm.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0 perspective=150
+p150-y ym.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0 perspective=150
+p60-x xm.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0 perspective=60
+p60-y ym.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0 perspective=60
+pz-x xm.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/100 perspective=100
+pr-wav wav.gif 3d=yes filename=in.gif rotation=30/40/50 scalexyz=100/100/100 perspective=120
+pd-wav wav.gif 3d=yes filename=in.gif perspective=80
+sh2 wav.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0 xyshift=-3/-3
+pf-1-100-100 f1.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/100 perspective=100
+pf-1-100-50 f1.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/50 perspective=100
+pf-1-200-100 f1.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/100 perspective=200
+pf-1-200-50 f1.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/50 perspective=200
+pg-1-100-100 g1.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/100 perspective=100
+pf-64-100-100 f64.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/100 perspective=100
+pf-64-100-50 f64.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/50 perspective=100
+pf-64-200-100 f64.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/100 perspective=200
+pf-64-200-50 f64.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/50 perspective=200
+pg-64-100-100 g64.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/100 perspective=100
+pf-128-100-100 f128.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/100 perspective=100
+pf-128-100-50 f128.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/50 perspective=100
+pf-128-200-100 f128.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/100 perspective=200
+pf-128-200-50 f128.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/50 perspective=200
+pg-128-100-100 g128.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/100 perspective=100
+pf-192-100-100 f192.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/100 perspective=100
+pf-192-100-50 f192.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/50 perspective=100
+pf-192-200-100 f192.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/100 perspective=200
+pf-192-200-50 f192.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/50 perspective=200
+pg-192-100-100 g192.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/100 perspective=100
+pf-255-100-100 f255.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/100 perspective=100
+pf-255-100-50 f255.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/50 perspective=100
+pf-255-200-100 f255.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/100 perspective=200
+pf-255-200-50 f255.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/50 perspective=200
+pg-255-100-100 g255.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/100 perspective=100
+q-x30-r100 f128.gif 3d=yes filename=in.gif rotation=30/0/0 scalexyz=100/100/100 perspective=100
+q-x30-r50 f128.gif 3d=yes filename=in.gif rotation=30/0/0 scalexyz=100/100/50 perspective=100
+q-x30-r10 f128.gif 3d=yes filename=in.gif rotation=30/0/0 scalexyz=100/100/10 perspective=100
+q-x30-c1 f1.gif 3d=yes filename=in.gif rotation=30/0/0 scalexyz=100/100/100 perspective=100
+q-y30-c1 f1.gif 3d=yes filename=in.gif rotation=0/30/0 scalexyz=100/100/100 perspective=100
+q-s50-c128 f128.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=50/50/100 perspective=100
+q-p300-c128 f128.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/100 perspective=300
+q-p30-c64 f64.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/100 perspective=30
+t-x30-r1 ym.gif 3d=yes filename=in.gif rotation=30/0/0 scalexyz=100/100/1 perspective=100
+t-x30-r100 ym.gif 3d=yes filename=in.gif rotation=30/0/0 scalexyz=100/100/100 perspective=100
+t-x0-r1 ym.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/1 perspective=100
+t-y30-r1 xm.gif 3d=yes filename=in.gif rotation=0/30/0 scalexyz=100/100/1 perspective=100
+u-r2 ym.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/2 perspective=100
+u-r5 ym.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/5 perspective=100
+u-r10 ym.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/10 perspective=100
+u-r20 ym.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/20 perspective=100
+u-r30 ym.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/30 perspective=100
+u-r40 ym.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/40 perspective=100
+u-r60 ym.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/60 perspective=100
+u-r80 ym.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/80 perspective=100
+u-n-r1 ys2.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/1 perspective=100
+u-w-r1 yw.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/1 perspective=100
+u-r1-p200 ym.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/1 perspective=200
+fill0 wavs.gif 3d=yes filename=in.gif filltype=0
+fill1 wavs.gif 3d=yes filename=in.gif filltype=1
+fill2 wavs.gif 3d=yes filename=in.gif filltype=2
+fill3 wavs.gif 3d=yes filename=in.gif filltype=3
+fill4 wavs.gif 3d=yes filename=in.gif filltype=4
+fill5 wavs.gif 3d=yes filename=in.gif filltype=5
+fill6 wavs.gif 3d=yes filename=in.gif filltype=6
+fill7 wavs.gif 3d=yes filename=in.gif filltype=7
+fill-1 wavs.gif 3d=yes filename=in.gif filltype=-1
+g-1 grid.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=400/400/0 filltype=-1
+gr-1 grid.gif 3d=yes filename=in.gif rotation=0/0/20 scalexyz=400/400/0 filltype=-1
+g0 grid.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=400/400/0 filltype=0
+gr0 grid.gif 3d=yes filename=in.gif rotation=0/0/20 scalexyz=400/400/0 filltype=0
+g1 grid.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=400/400/0 filltype=1
+gr1 grid.gif 3d=yes filename=in.gif rotation=0/0/20 scalexyz=400/400/0 filltype=1
+g2 grid.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=400/400/0 filltype=2
+gr2 grid.gif 3d=yes filename=in.gif rotation=0/0/20 scalexyz=400/400/0 filltype=2
+g3 grid.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=400/400/0 filltype=3
+gr3 grid.gif 3d=yes filename=in.gif rotation=0/0/20 scalexyz=400/400/0 filltype=3
+g4 grid.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=400/400/0 filltype=4
+gr4 grid.gif 3d=yes filename=in.gif rotation=0/0/20 scalexyz=400/400/0 filltype=4
+v-x60 ym.gif 3d=yes filename=in.gif rotation=60/0/0 scalexyz=100/100/100 perspective=100
+v-x30h ym.gif 3d=yes filename=in.gif rotation=30/0/0 scalexyz=100/100/50 perspective=100
+v-y30 xm.gif 3d=yes filename=in.gif rotation=0/30/0 scalexyz=100/100/100 perspective=100
+v-x30f f128.gif 3d=yes filename=in.gif rotation=30/0/0 scalexyz=100/100/100 perspective=100
+v-z30 ym.gif 3d=yes filename=in.gif rotation=0/0/30 scalexyz=100/100/100 perspective=100
+w-x30-r100 xm.gif 3d=yes filename=in.gif rotation=30/0/0 scalexyz=100/100/100 perspective=100
+w-x30-r50 xm.gif 3d=yes filename=in.gif rotation=30/0/0 scalexyz=100/100/50 perspective=100
+w-x0-r100 xm.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/100 perspective=100
+l-id lat.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/100
+l-x30p lat.gif 3d=yes filename=in.gif rotation=30/0/0 scalexyz=100/100/100 perspective=100
+l-x30 lat.gif 3d=yes filename=in.gif rotation=30/0/0 scalexyz=100/100/100
+l-p lat.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/100 perspective=100
+l-x30p50 lat.gif 3d=yes filename=in.gif rotation=30/0/0 scalexyz=100/100/50 perspective=100
+l-y30p lat.gif 3d=yes filename=in.gif rotation=0/30/0 scalexyz=100/100/100 perspective=100
+l-defp lat.gif 3d=yes filename=in.gif perspective=100
+m-id latp.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/100
+m-x30p latp.gif 3d=yes filename=in.gif rotation=30/0/0 scalexyz=100/100/100 perspective=100
+m-x30 latp.gif 3d=yes filename=in.gif rotation=30/0/0 scalexyz=100/100/100
+m-p latp.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/100 perspective=100
+m-x30p50 latp.gif 3d=yes filename=in.gif rotation=30/0/0 scalexyz=100/100/50 perspective=100
+m-y30p latp.gif 3d=yes filename=in.gif rotation=0/30/0 scalexyz=100/100/100 perspective=100
+m-defp latp.gif 3d=yes filename=in.gif perspective=100
+h-wl100 xm.gif 3d=yes filename=in.gif rotation=0/30/0 scalexyz=100/100/100 waterline=100
+h-wl100f2 xm.gif 3d=yes filename=in.gif rotation=0/30/0 scalexyz=100/100/100 waterline=100 filltype=2
+h-tr xm.gif 3d=yes filename=in.gif rotation=0/30/0 scalexyz=100/100/100 transparent=50/80
+h-tr0 x0.gif 3d=yes filename=in.gif rotation=0/30/0 scalexyz=100/100/100
+h-chk chk.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/100 xyshift=5/0
+h-chkf2 chk.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/100 xyshift=5/0 filltype=2
+h-chkf1 chk.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/100 xyshift=5/0 filltype=1
+h-chk60 chk.gif 3d=yes filename=in.gif rotation=60/0/0 scalexyz=100/100/100
+h-chk60f2 chk.gif 3d=yes filename=in.gif rotation=60/0/0 scalexyz=100/100/100 filltype=2
+h-st0 stripe.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/50/0
+h-st7 stripe7.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/50/0
+h-16 x16.gif 3d=yes filename=in.gif rotation=0/30/0 scalexyz=100/100/100
+h-16b x16b.gif 3d=yes filename=in.gif rotation=0/30/0 scalexyz=100/100/100
+h-k250 xk5.gif 3d=yes filename=in.gif rotation=0/30/0 scalexyz=100/100/100
+h-16k3 x16k3.gif 3d=yes filename=in.gif rotation=0/30/0 scalexyz=100/100/100
+k-1-rx rx.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=400/400/0 filltype=-1
+k-1-ry ry.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=400/400/0 filltype=-1
+k-1-one one.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=400/400/0 filltype=-1
+k1-rx rx.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=400/400/0 filltype=1
+k1-ry ry.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=400/400/0 filltype=1
+k1-one one.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=400/400/0 filltype=1
+k2-rx rx.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=400/400/0 filltype=2
+k2-ry ry.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=400/400/0 filltype=2
+k2-one one.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=400/400/0 filltype=2
+k3-rx rx.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=400/400/0 filltype=3
+k3-ry ry.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=400/400/0 filltype=3
+k3-one one.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=400/400/0 filltype=3
+k4-rx rx.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=400/400/0 filltype=4
+k4-ry ry.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=400/400/0 filltype=4
+k4-one one.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=400/400/0 filltype=4
+sg-200 gr200.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0 filltype=-1
+sg-400 gr400.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0 filltype=-1
+sg-101 gr101.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0 filltype=-1
+sg-60 gr60.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0 filltype=-1
+sg-640 gr640.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0 filltype=-1
+sg-120-75 gs120-75.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0 filltype=-1
+sg-160-75 gs160-75.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0 filltype=-1
+sg-100-80 gs100-80.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0 filltype=-1
+sg-99-75 gs99-75.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0 filltype=-1
+sg-98-75 gs98-75.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0 filltype=-1
+f4-sp sp.gif 3d=yes filename=in.gif rotation=60/0/0 scalexyz=100/100/30 filltype=4
+f4-sp0 sp.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/30 filltype=4
+f4-wav wavs.gif 3d=yes filename=in.gif filltype=4 rotation=60/0/0
+sg-80-75 gs80-75.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0 filltype=-1
+sg-90-75 gs90-75.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0 filltype=-1
+sg-105-75 gs105-75.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0 filltype=-1
+sg-110-75 gs110-75.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0 filltype=-1
+sg-115-75 gs115-75.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0 filltype=-1
+sg-140-75 gs140-75.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0 filltype=-1
+sg-100-60 gs100-60.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0 filltype=-1
+sg-100-70 gs100-70.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0 filltype=-1
+sg-100-90 gs100-90.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0 filltype=-1
+sg-100-100 gs100-100.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0 filltype=-1
+sg-130-80 gs130-80.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0 filltype=-1
+sg-200-100 gs200-100.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0 filltype=-1
+asp-96 t96.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0
+asp-97 t97.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0
+asp-102 t102.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0
+asp-103 t103.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0
+asp-104 t104.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0
+aspv-72 v72.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0
+aspv-73 v73.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0
+aspv-77 v77.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0
+aspv-78 v78.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0
+nl-80 ax.gif filename=in.gif
+a-x ax.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0
+a-y ay.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0
+b-x bx.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0
+b-y by.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0
+pad-s50 pad.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=50/50/0
+padh-s50 padh.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=50/50/0
+pad-s0 pad.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=1/100/0
+f4b-x30 wavs.gif 3d=yes filename=in.gif filltype=4 rotation=30/0/0 scalexyz=60/60/10
+f4b-y30 wavs.gif 3d=yes filename=in.gif filltype=4 rotation=20/30/0 scalexyz=60/60/10
+f4b-xm wavs.gif 3d=yes filename=in.gif filltype=4 rotation=-40/0/0 scalexyz=60/60/10
+f4b-def wavs.gif 3d=yes filename=in.gif filltype=4
+f4b-p wavs.gif 3d=yes filename=in.gif filltype=4 rotation=20/30/0 scalexyz=60/60/30 perspective=150
+f0-x30s60 wavs.gif 3d=yes filename=in.gif filltype=0 rotation=30/0/0 scalexyz=60/60/10
+f0-id60 xs.gif 3d=yes filename=in.gif filltype=0 rotation=0/0/0 scalexyz=60/60/0
+f0-id60y ys.gif 3d=yes filename=in.gif filltype=0 rotation=0/0/0 scalexyz=60/60/0
+pf1 wavs.gif 3d=yes filename=in.gif filltype=1 rotation=20/30/0 scalexyz=60/60/30 perspective=150
+pf3 wavs.gif 3d=yes filename=in.gif filltype=3 rotation=20/30/0 scalexyz=60/60/30 perspective=150
+pfm1 wavs.gif 3d=yes filename=in.gif filltype=-1 rotation=20/30/0 scalexyz=60/60/30 perspective=150
+dm1 wavs.gif 3d=yes filename=in.gif filltype=-1
+sp-def wav.gif 3d=yes filename=in.gif sphere=yes
+sp-lon wav.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90
+sp-lat wav.gif 3d=yes filename=in.gif sphere=yes latitude=-45/45
+sp-rad wav.gif 3d=yes filename=in.gif sphere=yes radius=50
+pf0 wavs.gif 3d=yes filename=in.gif filltype=0 rotation=20/30/0 scalexyz=60/60/30 perspective=150
+pf0b wavs.gif 3d=yes filename=in.gif filltype=0 rotation=20/30/0 scalexyz=100/100/30 perspective=150
+pf1b wavs.gif 3d=yes filename=in.gif filltype=1 rotation=20/30/0 scalexyz=100/100/30 perspective=150
+lp-a lat100.gif 3d=yes filename=in.gif rotation=20/30/0 scalexyz=100/100/30 perspective=150
+lp-b lat100.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/30 perspective=150
+lp-c lat100.gif 3d=yes filename=in.gif rotation=20/30/0 scalexyz=100/100/30
+s1-x xm.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=100 roughness=0
+s1-y ym.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=100 roughness=0
+s2-x xm.gif 3d=yes filename=in.gif sphere=yes longitude=-180/180 latitude=-90/90 radius=100 roughness=0
+s2-y ym.gif 3d=yes filename=in.gif sphere=yes longitude=-180/180 latitude=-90/90 radius=100 roughness=0
+s3-x xm.gif 3d=yes filename=in.gif sphere=yes longitude=0/60 latitude=10/40 radius=100 roughness=0
+s3-y ym.gif 3d=yes filename=in.gif sphere=yes longitude=0/60 latitude=10/40 radius=100 roughness=0
+sl1 latp.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=100 roughness=0 transparent=0/0
+sl2 latp.gif 3d=yes filename=in.gif sphere=yes longitude=-180/180 latitude=-90/90 radius=100 roughness=0 transparent=0/0
+sl3 latp.gif 3d=yes filename=in.gif sphere=yes longitude=0/60 latitude=10/40 radius=100 roughness=0 transparent=0/0
+sl4 latp.gif 3d=yes filename=in.gif sphere=yes longitude=-60/60 latitude=-50/50 radius=80 roughness=0 transparent=0/0
+sr-0-100 f0.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=50 roughness=100
+sr-0-30 f0.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=50 roughness=30
+sr-1-100 f1.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=50 roughness=100
+sr-1-30 f1.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=50 roughness=30
+sr-64-100 f64.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=50 roughness=100
+sr-64-30 f64.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=50 roughness=30
+sr-128-100 f128.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=50 roughness=100
+sr-128-30 f128.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=50 roughness=30
+sr-192-100 f192.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=50 roughness=100
+sr-192-30 f192.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=50 roughness=30
+sr-255-100 f255.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=50 roughness=100
+sr-255-30 f255.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=50 roughness=30
+slr100 latp.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=50 roughness=100 transparent=0/0
+slr30 latp.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=50 roughness=30 transparent=0/0
+slr0 latp.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=50 roughness=0 transparent=0/0
+slr100b latp.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=100 roughness=100 transparent=0/0
+slr100c latp.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=25 roughness=100 transparent=0/0
+srb-1-100 f1.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=100 roughness=100
+srb-1-50 f1.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=100 roughness=50
+srb-32-100 f32.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=100 roughness=100
+srb-32-50 f32.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=100 roughness=50
+srb-64-100 f64.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=100 roughness=100
+srb-64-50 f64.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=100 roughness=50
+srb-96-100 f96.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=100 roughness=100
+srb-96-50 f96.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=100 roughness=50
+srb-128-100 f128.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=100 roughness=100
+srb-128-50 f128.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=100 roughness=50
+srb-160-100 f160.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=100 roughness=100
+srb-160-50 f160.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=100 roughness=50
+srb-192-100 f192.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=100 roughness=100
+srb-192-50 f192.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=100 roughness=50
+srb-224-100 f224.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=100 roughness=100
+srb-224-50 f224.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=100 roughness=50
+srb-255-100 f255.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=100 roughness=100
+srb-255-50 f255.gif 3d=yes filename=in.gif sphere=yes longitude=-90/90 latitude=-90/90 radius=100 roughness=50
+h-st0t stripe.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/50/0 transparent=0/0
+h-st0t1 stripe.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/50/0 transparent=0/1
+h-st100t stripe.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/50/0 transparent=100/100
+h-st5t stripe7.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/50/0 transparent=7/0
+blk3d wavsblk.gif 3d=yes filename=in.gif
+cz-240-120 z240-120.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0
+cz-250-125 z250-125.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0
+cz-256-128 z256-128.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0
+cz-257-128 z257-128.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0
+cz-260-130 z260-130.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0
+cz-280-140 z280-140.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0
+cz-300-200 z300-200.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0
+cz-320-200 z320-200.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0
+cz-400-200 z400-200.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0
+cz-640-400 z640-400.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0
+cz-300-300 z300-300.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0
+cz-150-300 z150-300.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0
+cz-200-75 z200-75.gif 3d=yes filename=in.gif rotation=0/0/0 scalexyz=100/100/0
+neg-r wav.gif 3d=yes filename=in.gif roughness=-30
+neg-sx wav.gif 3d=yes filename=in.gif scalexyz=-50/100/30
+big-rot wav.gif 3d=yes filename=in.gif rotation=400/-30/370
+combo wav.gif 3d=yes filename=in.gif rotation=25/-35/15 scalexyz=80/110/45 perspective=130 xyshift=-7/9 waterline=60 transparent=200/230 filltype=3
+combo1 wav.gif 3d=yes filename=in.gif rotation=25/-35/15 scalexyz=80/110/45 perspective=130 xyshift=-7/9 waterline=60 transparent=200/230 filltype=1
+combo4 wav.gif 3d=yes filename=in.gif rotation=25/-35/15 scalexyz=80/110/45 perspective=130 xyshift=-7/9 waterline=60 filltype=4
+combom1 wav.gif 3d=yes filename=in.gif rotation=25/-35/15 scalexyz=80/110/45 perspective=130 xyshift=-7/9 waterline=60 filltype=-1
+cb-all wav.gif 3d=yes filename=in.gif rotation=25/-35/15 scalexyz=80/110/45 perspective=130 xyshift=-7/9 waterline=60
+cb-nowl wav.gif 3d=yes filename=in.gif rotation=25/-35/15 scalexyz=80/110/45 perspective=130 xyshift=-7/9
+cb-nosh wav.gif 3d=yes filename=in.gif rotation=25/-35/15 scalexyz=80/110/45 perspective=130 waterline=60
+cb-nop wav.gif 3d=yes filename=in.gif rotation=25/-35/15 scalexyz=80/110/45 xyshift=-7/9 waterline=60
+cb-rot wav.gif 3d=yes filename=in.gif rotation=25/-35/15 scalexyz=80/110/45 perspective=130
+cb-r2 wav.gif 3d=yes filename=in.gif rotation=25/35/15 scalexyz=80/110/45 perspective=130

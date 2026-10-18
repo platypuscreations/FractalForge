@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# E5: deep pixels for comparison (passes=1 periodicity=0; render.sh adds viewwindows=2 map=uniq.map)
+px-m15   type=mandel maxiter=200 passes=1 periodicity=0 center-mag=0.000000000000000123/1.000000000000000456/1e15
+px-m20   type=mandel maxiter=200 passes=1 periodicity=0 center-mag=0.0000000000000000000123/1.0000000000000000000456/1e20
+px-m40   type=mandel maxiter=200 passes=1 periodicity=0 center-mag=0.000000000000000000000000000000000000000123/1.000000000000000000000000000000000000000456/1e40
+px-j20   type=julia params=0/1 maxiter=200 passes=1 periodicity=0 center-mag=0.0000000000000000000123/1.0000000000000000000456/1e20
+px-m15g  type=mandel maxiter=200 center-mag=0.000000000000000123/1.000000000000000456/1e15

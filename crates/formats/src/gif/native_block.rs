@@ -3,6 +3,7 @@
 //! FractalForge's own GIF application-extension block, holding a complete
 //! render checkpoint. See `docs/specs/gif-native-block.md`.
 
+use fractalforge_core::bignum::BigFixed;
 use fractalforge_core::{
     Inside, IterBuffer, Outside, PARAM_COUNT, Palette, Params, Program, Symmetry, View3d, Window,
     types,
@@ -19,10 +20,10 @@ pub const APP_IDENTIFIER: &[u8; 8] = b"FRCTFRGE";
 /// Application authentication code (3 bytes). Part of the file format.
 pub const AUTH_CODE: &[u8; 3] = b"1.0";
 
-/// Payload layout version written by this code. Versions 2 (v0.1.0) and
-/// 3 are still read; version 1 (pre-release) stored escape counts rather
-/// than colour values and isn't.
-pub const PAYLOAD_VERSION: u16 = 4;
+/// Payload layout version written by this code. Versions 2 (v0.1.0) to 4
+/// (v0.2.0) are still read; version 1 (pre-release) stored escape counts
+/// rather than colour values and isn't.
+pub const PAYLOAD_VERSION: u16 = 5;
 
 const COMPRESSION_DEFLATE: u8 = 1;
 /// Refuse to inflate bodies larger than this (a 16k × 16k buffer is 1 GiB).
@@ -90,6 +91,23 @@ pub fn encode(c: &Checkpoint) -> AppExtension {
     let v = &p.view3d;
     for x in v.rotation.iter().chain([&v.perspective]).chain(&v.xyshift) {
         body.extend_from_slice(&x.to_le_bytes());
+    }
+    // Deep view: flag, then the exact centre and the half spans.
+    match &p.deep {
+        None => body.push(0),
+        Some(d) => {
+            body.push(1);
+            for v in [&d.re, &d.im] {
+                let (neg, limbs) = v.to_parts();
+                body.push(neg as u8);
+                body.extend_from_slice(&(limbs.len() as u32).to_le_bytes());
+                for l in limbs {
+                    body.extend_from_slice(&l.to_le_bytes());
+                }
+            }
+            body.extend_from_slice(&d.half_w.to_le_bytes());
+            body.extend_from_slice(&d.half_h.to_le_bytes());
+        }
     }
 
     body.extend_from_slice(&c.buffer.width().to_le_bytes());
@@ -192,6 +210,26 @@ pub fn decode(ext: &AppExtension) -> Result<Checkpoint, Error> {
             xyshift: [i16s[4], i16s[5]],
         };
     }
+    let mut deep = None;
+    if version >= 5 && r.u8()? == 1 {
+        let mut number = || -> Result<BigFixed, Error> {
+            let neg = r.u8()? != 0;
+            let n = r.u32()? as usize;
+            if n == 0 || n > 4096 {
+                return Err(bad(format!("deep centre with {n} limbs")));
+            }
+            let limbs = (0..n).map(|_| r.u64()).collect::<Result<Vec<_>, _>>()?;
+            Ok(BigFixed::from_parts(neg, limbs).unwrap())
+        };
+        let (re, im) = (number()?, number()?);
+        let (half_w, half_h) = (r.f64()?, r.f64()?);
+        deep = Some(fractalforge_core::deep::DeepView {
+            re,
+            im,
+            half_w,
+            half_h,
+        });
+    }
     let params = Params {
         fractal,
         window,
@@ -207,6 +245,7 @@ pub fn decode(ext: &AppExtension) -> Result<Checkpoint, Error> {
         program,
         functions,
         view3d,
+        deep,
     };
 
     let width = r.u32()?;
@@ -403,6 +442,24 @@ mod tests {
         let back = decode(&encode(&c)).unwrap();
         assert_eq!(back, c);
         assert_eq!(back.params.program.unwrap().0.name(), "tri");
+    }
+
+    #[test]
+    fn deep_round_trip() {
+        let mut c = sample();
+        c.params = Params::for_type("mandel").unwrap();
+        c.params.set_view(
+            fractalforge_core::deep::DeepView::parse(
+                "-0.743643887037158704752191506114774",
+                "0.131825904205311970493132056385139",
+                4e-25,
+                3e-25,
+            )
+            .unwrap(),
+        );
+        assert!(c.params.deep.is_some());
+        let back = decode(&encode(&c)).unwrap();
+        assert_eq!(back, c);
     }
 
     #[test]

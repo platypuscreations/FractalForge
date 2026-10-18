@@ -178,6 +178,8 @@ pub struct Loaded {
 struct State {
     fractal: Option<&'static FractalType>,
     window: Option<Window>,
+    /// A centre-mag view that needs more precision than doubles.
+    deep: Option<fractalforge_core::deep::DeepView>,
     params: Option<[f64; PARAM_COUNT]>,
     max_iter: Option<u32>,
     bailout: Option<f64>,
@@ -258,6 +260,7 @@ pub fn load(
                     });
                 }
                 "corners" => {
+                    st.deep = None;
                     let c = numbers(v)?;
                     if c.len() != 4 && c.len() != 6 {
                         return Err("corners needs 4 or 6 values".into());
@@ -281,7 +284,17 @@ pub fn load(
                                 .into(),
                         );
                     }
-                    st.window = Some(center_mag(c[0], c[1], c[2], *c.get(3).unwrap_or(&1.0)));
+                    let xmag = *c.get(3).unwrap_or(&1.0);
+                    let w = center_mag(c[0], c[1], c[2], xmag);
+                    st.deep = None;
+                    if fractalforge_core::deep::needs_deep(c[0], c[1], 1.0 / c[2]) {
+                        // Keep every digit of the centre.
+                        let text: Vec<&str> = v.split('/').collect();
+                        let (hw, hh) = ((4.0 / 3.0) / (c[2] * xmag), 1.0 / c[2]);
+                        st.deep =
+                            fractalforge_core::deep::DeepView::parse(text[0], text[1], hw, hh);
+                    }
+                    st.window = Some(w);
                 }
                 "params" => {
                     let p = numbers(v)?;
@@ -454,6 +467,9 @@ pub fn load(
     }
     if let Some(w) = st.window {
         p.window = w;
+    }
+    if let Some(view) = st.deep {
+        p.set_view(view);
     }
     if let Some(x) = st.params {
         p.params = x;
@@ -739,13 +755,31 @@ pub fn write_entry(
         PassMode::Two => tokens.push("passes=2".into()),
     }
     let w = &p.window;
-    tokens.push(format!(
-        "corners={}/{}/{}/{}",
-        num(w.x_min),
-        num(w.x_max),
-        num(w.y_min),
-        num(w.y_max)
-    ));
+    match &p.deep {
+        // Deep views as centre and magnification, with all needed digits.
+        Some(d) => {
+            let digits = d.digits();
+            let mag = 1.0 / d.half_h;
+            let xmag = (4.0 / 3.0) / (mag * d.half_w);
+            let mut t = format!(
+                "center-mag={}/{}/{}",
+                d.re.to_decimal(digits),
+                d.im.to_decimal(digits),
+                num(mag)
+            );
+            if (xmag - 1.0).abs() > 1e-12 {
+                t.push_str(&format!("/{}", num(xmag)));
+            }
+            tokens.push(t);
+        }
+        None => tokens.push(format!(
+            "corners={}/{}/{}/{}",
+            num(w.x_min),
+            num(w.x_max),
+            num(w.y_min),
+            num(w.y_max)
+        )),
+    }
     // Every parameter the type uses, and any non-zero ones after them.
     // Formulas list p1–p5 as parameters but write only what's set.
     let last_set = p
@@ -893,6 +927,30 @@ pub fn upsert(file_text: &str, name: &str, entry_text: &str) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn deep_views_keep_their_digits() {
+        let mut p = Params::for_type("mandel").unwrap();
+        p.set_view(
+            fractalforge_core::deep::DeepView::parse(
+                "-0.743643887037158704752191506114774",
+                "0.131825904205311970493132056385139",
+                4e-25,
+                3e-25,
+            )
+            .unwrap(),
+        );
+        let text = write_entry("deep", None, &p, PassMode::Guess, None).unwrap();
+        assert!(
+            text.contains("center-mag=-0.74364388703715870475219150611477"),
+            "{text}"
+        );
+        let all = entries(&text);
+        let back = load(&all[0], None, None).unwrap().params;
+        let (a, b) = (back.deep.unwrap(), p.deep.unwrap());
+        assert!((a.re.sub(&b.re).to_f64()).abs() < 1e-30);
+        assert!((a.half_h / b.half_h - 1.0).abs() < 1e-12);
+    }
 
     const FILE: &str = "stray text\r\n\
 first   { ; a description\n\

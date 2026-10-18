@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# PAR output of deep views: native image, "s" then the "b" screen (par-map/run-writer-cases.sh)
+# <name> <record-colors> <ncolors|-> <linelen|-> <xfractint args...>
+wd13     no   - - type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e13 viewwindows=2
+wd15     no   - - type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e15 viewwindows=2
+wd40     no   - - type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e40 viewwindows=2
+wd100    no   - - type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e100 viewwindows=2
+wdcorn   no   - - type=mandel maxiter=50 corners=-0.743643887037158704752191506114774/-0.743643887037151/0.131825904205311970493132056385139/0.131825904205315 viewwindows=2
+wdj20    no   - - type=julia params=-0.8/0.156 maxiter=50 center-mag=0.1/0.2/1e20 viewwindows=2
+wdrot    no   - - type=mandel maxiter=50 center-mag=-1.2345678901234567890123456789012345678901234567890/0.9876543210987654321098765432109876543210987654321/1e20/1.5/30/10 viewwindows=2
+wd300    no   - - type=mandel maxiter=50 center-mag=300.5/-2.25/1e30 viewwindows=2
+wd12     no   - - type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e12 viewwindows=2

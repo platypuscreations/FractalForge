@@ -1,0 +1,391 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+# Command line of every file in this folder: <subdir>/<file>  <how it was made>.
+# Batch renders: tools/blackbox/deep-zoom/render.sh adds viewwindows=2 map=uniq.map savename=ff.gif
+# (amd64 image fractalforge-blackbox) unless noted. Variables in the case files: see tools/blackbox/deep-zoom/cases-*.txt.
+# crafted/: python3 -I tools/blackbox/deep-zoom/craft.py IN OUT ops (V2 = the base-v2 view, see craft-all.sh).
+# loaded/<k>.gif: keys.sh with crafted/<k>.gif as in.gif, actions "s8 kReturn s150 ks", args viewwindows=2 filename=in.gif.
+
+base/base-d.gif            [FFINPUTS=ff.frm] type=mandel maxiter=60 passes=1 periodicity=0
+base/base-j.gif            [FFINPUTS=ff.frm] type=julia params=0/1 maxiter=60 passes=1 periodicity=0 center-mag=0.000000000000000123/1.000000000000000456/1e15
+base/base-j2.gif           [FFINPUTS=ff.frm] type=julia params=0/-1 maxiter=60 passes=1 periodicity=0 center-mag=0.000000000000000123/1.000000000000000456/1e15
+base/base-v1.gif           [FFINPUTS=ff.frm] type=mandel maxiter=60 passes=1 periodicity=0 center-mag=0.000000000000000123/1.000000000000000456/1e15
+base/base-v2.gif           [FFINPUTS=ff.frm] type=mandel maxiter=60 passes=1 periodicity=0 center-mag=0.000000000000000123/-1.000000000000000456/1e15
+crafted/k00-copy.gif       craft.py base/base-v1.gif 
+crafted/k01-both.gif       craft.py base/base-v1.gif slots=0-5:$V2 slots=16-21:$V2
+crafted/k02-first.gif      craft.py base/base-v1.gif slots=0-5:$V2
+crafted/k03-second.gif     craft.py base/base-v1.gif slots=16-21:$V2
+crafted/k04-f64.gif        craft.py base/base-v1.gif f64corners=$V2F
+crafted/k05-drop.gif       craft.py base/base-v1.gif drop005
+crafted/k06-flag0.gif      craft.py base/base-v1.gif slots=0-5:$V2 slots=16-21:$V2 set412=0
+crafted/k07-N20.gif        craft.py base/base-v1.gif slots=0-5:$V2 slots=16-21:$V2 N=20
+crafted/k08-N8.gif         craft.py base/base-v1.gif slots=0-5:$V2 slots=16-21:$V2 N=8
+crafted/k09-f64zero.gif    craft.py base/base-v1.gif slots=0-5:$V2 slots=16-21:$V2 f64corners=0,0,0,0
+crafted/k10-fromD.gif      craft.py base/base-d.gif add005=12:$V2C
+crafted/k11-fromDf.gif     craft.py base/base-d.gif add005=12:$V2C f64corners=$V2F
+crafted/k12-jslot.gif      craft.py base/base-j.gif slot=6:0 slot=7:-1
+crafted/k13-jf64.gif       craft.py base/base-j.gif f64=44:0 f64=52:-1
+crafted/k15-len.gif        craft.py base/base-v1.gif slots=0-5:$V2 slots=16-21:$V2 set414=16
+crafted/k16-shallow.gif    craft.py base/base-v1.gif slots=0-5:-2.5,1.5,-1.5,1.5,-2.5,-1.5 slots=16-21:-2.5,1.5,-1.5,1.5,-2.5,-1.5
+crafted/k17-tol474.gif     craft.py base/base-d.gif f64=474:0
+crafted/k18-tol482.gif     craft.py base/base-d.gif f64=482:0
+crafted/k19-fromDN16.gif   craft.py base/base-d.gif add005=16:$V2C f64corners=$V2F
+crafted/k20-flagonly.gif   craft.py base/base-d.gif set412=1 set414=12 f64corners=$V2F
+crafted/k21-fromDN8.gif    craft.py base/base-d.gif add005=8:$V2C f64corners=$V2F
+crafted/k22-n0.gif         craft.py base/base-d.gif add005=12:$V2C set412=0 set414=0
+crafted/k23-flag0D.gif     craft.py base/base-d.gif add005=12:$V2C set412=0
+encoding/dig60.gif         type=mandel maxiter=5 center-mag=0.123456789012345678901234567890123456789012345678901234567891/0/1e15
+encoding/dig60b.gif        type=mandel maxiter=5 center-mag=0.123456789012345678901234567890123456789012345678901234567891/0/1e40
+encoding/dig60c.gif        type=mandel maxiter=5 center-mag=0.123456789012345678901234567890123456789/0/1e15
+encoding/enc-255.gif       type=mandel maxiter=5 corners=127.5/127.50000000000002/255.99609375/255.99609375000002
+encoding/enc-256.gif       type=mandel maxiter=5 corners=256/256.00000000000002/-256/-255.99999999999998
+encoding/enc-65536.gif     type=mandel maxiter=5 corners=65535.75/65535.75000000001/-65536.125/-65536.12499999999
+encoding/enc-6c.gif        type=mandel maxiter=5 corners=0.1/0.100000000000002/0.2/0.200000000000002/0.1000000000000005/0.2000000000000003
+encoding/enc-cmag.gif      type=mandel maxiter=5 center-mag=-1.2345678901234567890123456789012345678901234567890/0.9876543210987654321098765432109876543210987654321/1e40
+encoding/enc-cmag3.gif     type=mandel maxiter=5 center-mag=-1.2345678901234567890123456789012345678901234567890/0.9876543210987654321098765432109876543210987654321/3e40
+encoding/enc-cmagrot.gif   type=mandel maxiter=5 center-mag=-1.2345678901234567890123456789012345678901234567890/0.9876543210987654321098765432109876543210987654321/1e20/1.5/30/10
+encoding/enc-exp.gif       type=mandel maxiter=5 corners=1.234567890123456789012345678901234567890e-1/1.234567890123458e-1/-2.5e-1/-2.499999999999998e-1
+encoding/enc-half.gif      type=mandel maxiter=5 corners=0.5/0.500000000000002/-0.5/-0.499999999999998
+encoding/enc-jparams.gif   type=julia maxiter=5 params=-0.12345678901234567890123456789/0.98765432109876543210987654321 center-mag=0.1/0.2/1e15
+encoding/enc-negone.gif    type=mandel maxiter=5 corners=-1/-0.999999999999998/-0.00390625/-0.003906249999999998
+encoding/enc-one.gif       type=mandel maxiter=5 corners=1/1.000000000000002/0.00390625/0.003906250000000002
+encoding/enc-tiny.gif      type=mandel maxiter=5 corners=0.000001/0.000001000000000000001/-0.0000001/-0.0000000999999999999992
+encoding/len-100.gif       type=mandel maxiter=5 center-mag=0.77777777777777777777777777777777777777777777777777777777777777777777777777777777/0/1e15
+encoding/len-110.gif       type=mandel maxiter=5 center-mag=0.777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777/0/1e15
+encoding/len-115.gif       type=mandel maxiter=5 center-mag=0.77777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777/0/1e15
+encoding/len-120.gif       type=mandel maxiter=5 center-mag=0.7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777/0/1e15
+encoding/len-125.gif       type=mandel maxiter=5 center-mag=0.777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777/0/1e15
+encoding/len-127.gif       type=mandel maxiter=5 center-mag=0.77777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777/0/1e15
+encoding/len-128.gif       type=mandel maxiter=5 center-mag=0.777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777/0/1e15
+encoding/len-129.gif       type=mandel maxiter=5 center-mag=0.7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777/0/1e15
+encoding/len-130.gif       type=mandel maxiter=5 center-mag=0.77777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777/0/1e15
+encoding/len-140.gif       type=mandel maxiter=5 center-mag=0.777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777/0/1e15
+encoding/pl-long120.gif    [FFINPUTS=dz.par] @dz.par/long120
+encoding/pl-long140.gif    [FFINPUTS=dz.par] @dz.par/long140
+encoding/pl-long160.gif    [FFINPUTS=dz.par] @dz.par/long160
+encoding/pl-long250.gif    [FFINPUTS=dz.par] @dz.par/long250
+encoding/pl-split160.gif   [FFINPUTS=dz.par] @dz.par/split160
+interrupt/int-i1-mark.gif  craft.py interrupt/int-i1.gif int-i1-mark.gif markrow=10:7
+interrupt/int-i1.gif       keys.sh - "s40 ks" type=mandel maxiter=300 passes=1 periodicity=0 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e15 viewwindows=2 map=uniq.map
+interrupt/int-i2.gif       keys.sh - "s40 ks" type=mandel maxiter=300 periodicity=0 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e15 viewwindows=2 map=uniq.map
+interrupt/int-i3-mark.gif  craft.py interrupt/int-i3.gif int-i3-mark.gif markrow=10:7
+interrupt/int-i3.gif       keys.sh - "s40 ks" type=julia params=0/1 maxiter=300 passes=1 periodicity=0 center-mag=0.000000000000000000000000000123/1.000000000000000000000000000456/1e30 viewwindows=2 map=uniq.map
+interrupt/r-int-i1-mark.gif keys.sh int-i1-mark.gif "s10 kr s3 tin.gif s1 kReturn s400 ks" type=mandel maxiter=10 viewwindows=2
+interrupt/r-int-i1.gif     keys.sh int-i1.gif      "s10 kr s3 tin.gif s1 kReturn s400 ks" type=mandel maxiter=10 viewwindows=2
+interrupt/r-int-i3-mark.gif keys.sh int-i3-mark.gif "s10 kr s3 tin.gif s1 kReturn s400 ks" type=mandel maxiter=10 viewwindows=2
+interrupt/r-int-i3.gif     keys.sh int-i3.gif      "s10 kr s3 tin.gif s1 kReturn s400 ks" type=mandel maxiter=10 viewwindows=2
+interrupt/ref-i1.gif       type=mandel maxiter=300 passes=1 periodicity=0 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e15
+interrupt/ref-i2.gif       type=mandel maxiter=300 periodicity=0 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e15
+interrupt/ref-i3.gif       type=julia params=0/1 maxiter=300 passes=1 periodicity=0 center-mag=0.000000000000000000000000000123/1.000000000000000000000000000456/1e30
+loaded/k00-copy.gif        load of crafted/k00-copy.gif
+loaded/k01-both.gif        load of crafted/k01-both.gif
+loaded/k02-first.gif       load of crafted/k02-first.gif
+loaded/k03-second.gif      load of crafted/k03-second.gif
+loaded/k04-f64.gif         load of crafted/k04-f64.gif
+loaded/k05-drop.gif        load of crafted/k05-drop.gif
+loaded/k06-flag0.gif       load of crafted/k06-flag0.gif
+loaded/k07-N20.gif         load of crafted/k07-N20.gif
+loaded/k08-N8.gif          load of crafted/k08-N8.gif
+loaded/k09-f64zero.gif     load of crafted/k09-f64zero.gif
+loaded/k10-fromD.gif       load of crafted/k10-fromD.gif
+loaded/k11-fromDf.gif      load of crafted/k11-fromDf.gif
+loaded/k12-jslot.gif       load of crafted/k12-jslot.gif
+loaded/k13-jf64.gif        load of crafted/k13-jf64.gif
+loaded/k15-len.gif         load of crafted/k15-len.gif
+loaded/k16-shallow.gif     load of crafted/k16-shallow.gif
+loaded/k17-tol474.gif      load of crafted/k17-tol474.gif
+loaded/k18-tol482.gif      load of crafted/k18-tol482.gif
+loaded/k19-fromDN16.gif    load of crafted/k19-fromDN16.gif
+loaded/k20-flagonly.gif    load of crafted/k20-flagonly.gif
+loaded/k21-fromDN8.gif     load of crafted/k21-fromDN8.gif
+loaded/k22-n0.gif          load of crafted/k22-n0.gif
+loaded/k23-flag0D.gif      load of crafted/k23-flag0D.gif
+nsize/big-1e13.gif         type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e13 viewwindows=no
+nsize/big-1e22.gif         type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e22 viewwindows=no
+nsize/big-1e23.gif         type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e23 viewwindows=no
+nsize/big-1e32.gif         type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e32 viewwindows=no
+nsize/big-1e34.gif         type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e34 viewwindows=no
+nsize/big-8e12.gif         type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/8e12 viewwindows=no
+nsize/big-9e12.gif         type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/9e12 viewwindows=no
+nsize/n-1e100.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e100
+nsize/n-1e15.gif           type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e15
+nsize/n-1e150.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e150
+nsize/n-1e18.gif           type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e18
+nsize/n-1e20.gif           type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e20
+nsize/n-1e200.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e200
+nsize/n-1e21.gif           type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e21
+nsize/n-1e22.gif           type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e22
+nsize/n-1e23.gif           type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e23
+nsize/n-1e24.gif           type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e24
+nsize/n-1e25.gif           type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e25
+nsize/n-1e250.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e250
+nsize/n-1e26.gif           type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e26
+nsize/n-1e27.gif           type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e27
+nsize/n-1e28.gif           type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e28
+nsize/n-1e29.gif           type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e29
+nsize/n-1e30.gif           type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e30
+nsize/n-1e300.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e300
+nsize/n-1e32.gif           type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e32
+nsize/n-1e34.gif           type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e34
+nsize/n-1e36.gif           type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e36
+nsize/n-1e38.gif           type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e38
+nsize/n-1e40.gif           type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e40
+nsize/n-1e45.gif           type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e45
+nsize/n-1e50.gif           type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e50
+nsize/n-1e55.gif           type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e55
+nsize/n-1e60.gif           type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e60
+nsize/n-1e70.gif           type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e70
+nsize/n-1e80.gif           type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e80
+nsize/n-1e90.gif           type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e90
+nsize/nb-1.5e22.gif        type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1.5e22
+nsize/nb-1.5e32.gif        type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1.5e32
+nsize/nb-1e33.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e33
+nsize/nb-2e22.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/2e22
+nsize/nb-2e32.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/2e32
+nsize/nb-2e33.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/2e33
+nsize/nb-3e22.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/3e22
+nsize/nb-3e32.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/3e32
+nsize/nb-5e22.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/5e22
+nsize/nb-5e32.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/5e32
+nsize/nb-5e33.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/5e33
+nsize/nb-7e22.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/7e22
+nsize/nb-7e32.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/7e32
+nsize/nc0-5e22.gif         type=mandel maxiter=20 center-mag=0/0/5e22
+nsize/nc0-5e32.gif         type=mandel maxiter=20 center-mag=0/0/5e32
+nsize/nc0-7e22.gif         type=mandel maxiter=20 center-mag=0/0/7e22
+nsize/nc0-7e32.gif         type=mandel maxiter=20 center-mag=0/0/7e32
+nsize/nc300-5e22.gif       type=mandel maxiter=20 center-mag=300.5/-2.25/5e22
+nsize/nc300-5e32.gif       type=mandel maxiter=20 center-mag=300.5/-2.25/5e32
+nsize/nc300-7e22.gif       type=mandel maxiter=20 center-mag=300.5/-2.25/7e22
+nsize/nc300-7e32.gif       type=mandel maxiter=20 center-mag=300.5/-2.25/7e32
+nsize/ncs-5e22.gif         type=mandel maxiter=20 center-mag=0.0000123456789/0.0000234567891/5e22
+nsize/ncs-5e32.gif         type=mandel maxiter=20 center-mag=0.0000123456789/0.0000234567891/5e32
+nsize/ncs-7e22.gif         type=mandel maxiter=20 center-mag=0.0000123456789/0.0000234567891/7e22
+nsize/ncs-7e32.gif         type=mandel maxiter=20 center-mag=0.0000123456789/0.0000234567891/7e32
+nsize/nd-1e41.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e41
+nsize/nd-1e42.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e42
+nsize/nd-1e43.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e43
+nsize/nd-1e44.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e44
+nsize/nd-1e45.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e45
+nsize/nd-1e46.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e46
+nsize/nd-1e47.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e47
+nsize/nd-1e48.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e48
+nsize/nd-1e49.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e49
+nsize/nd-1e50.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e50
+nsize/nd-1e51.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e51
+nsize/nd-1e52.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e52
+nsize/nd-1e53.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e53
+nsize/nd-1e54.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e54
+nsize/nd-1e55.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e55
+nsize/nd-1e56.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e56
+nsize/nd-1e57.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e57
+nsize/nd-1e58.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e58
+nsize/nd-1e59.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e59
+nsize/nd-1e60.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e60
+nsize/nd-1e61.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e61
+nsize/nd-1e62.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e62
+nsize/nd-1e63.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e63
+nsize/nd-1e64.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e64
+nsize/nd-1e65.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e65
+nsize/nd-1e66.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e66
+nsize/nd-1e67.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e67
+nsize/nd-1e68.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e68
+nsize/nd-1e69.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e69
+nsize/nd-1e70.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e70
+nsize/nd-1e71.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e71
+nsize/nd-1e72.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e72
+nsize/nd-1e73.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e73
+nsize/nd-1e74.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e74
+nsize/nd-1e75.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e75
+nsize/nd-1e76.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e76
+nsize/nd-1e77.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e77
+nsize/nd-1e78.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e78
+nsize/nd-1e79.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e79
+nsize/nd-1e80.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e80
+nsize/nd-1e81.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e81
+nsize/nd-1e82.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e82
+nsize/nd-1e83.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e83
+nsize/nd-1e84.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e84
+nsize/nd-1e85.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e85
+nsize/nd-1e86.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e86
+nsize/nd-1e87.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e87
+nsize/nd-1e88.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e88
+nsize/nd-1e89.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e89
+nsize/nd-1e90.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e90
+nsize/nd-1e91.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e91
+nsize/nd-1e92.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e92
+nsize/nd-1e93.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e93
+nsize/nd-1e94.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e94
+nsize/nd-1e95.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e95
+nsize/nd-1e96.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e96
+nsize/nd-1e97.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e97
+nsize/nd-1e98.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e98
+nsize/nd-1e99.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e99
+nsize/nf-5.2e22.gif        type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/5.2e22
+nsize/nf-5.2e32.gif        type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/5.2e32
+nsize/nf-6.6e22.gif        type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/6.6e22
+nsize/nf-6.6e32.gif        type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/6.6e32
+nsize/nf-6.75e22.gif       type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/6.75e22
+nsize/nf-6.75e32.gif       type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/6.75e32
+nsize/nf-6e22.gif          type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/6e22
+nsize/nx05-6e22.gif        type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/6e22/0.5
+nsize/nx2-4e22.gif         type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/4e22/2
+nsize/nx2-6e22.gif         type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/6e22/2
+par/rt-wd13.gif            [FFINPUTS=par/<name>.out.par saved as <name>.par] @wd13.par/wd13
+par/rt-wd15.gif            [FFINPUTS=par/<name>.out.par saved as <name>.par] @wd15.par/wd15
+par/rt-wd40.gif            [FFINPUTS=par/<name>.out.par saved as <name>.par] @wd40.par/wd40
+par/rt-wd5e25.gif          [FFINPUTS=par/<name>.out.par saved as <name>.par] @wd5e25.par/wd5e25
+par/rt-wdcorn.gif          [FFINPUTS=par/<name>.out.par saved as <name>.par] @wdcorn.par/wdcorn
+par/rt-wdj20.gif           [FFINPUTS=par/<name>.out.par saved as <name>.par] @wdj20.par/wdj20
+par/rt-wdrot.gif           [FFINPUTS=par/<name>.out.par saved as <name>.par] @wdrot.par/wdrot
+par/rt-wdsm.gif            [FFINPUTS=par/<name>.out.par saved as <name>.par] @wdsm.par/wdsm
+par/wd100.gif              native arm64 image (ff-parmap-native), par-map/run-writer-cases.sh, record-colors=no: type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e100 viewwindows=2 -> GIF saved with s
+par/wd100.out.par          native arm64 image (ff-parmap-native), par-map/run-writer-cases.sh, record-colors=no: type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e100 viewwindows=2 -> parameters saved with b
+par/wd12.gif               native arm64 image (ff-parmap-native), par-map/run-writer-cases.sh, record-colors=no: type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e12 viewwindows=2 -> GIF saved with s
+par/wd12.out.par           native arm64 image (ff-parmap-native), par-map/run-writer-cases.sh, record-colors=no: type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e12 viewwindows=2 -> parameters saved with b
+par/wd13.gif               native arm64 image (ff-parmap-native), par-map/run-writer-cases.sh, record-colors=no: type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e13 viewwindows=2 -> GIF saved with s
+par/wd13.out.par           native arm64 image (ff-parmap-native), par-map/run-writer-cases.sh, record-colors=no: type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e13 viewwindows=2 -> parameters saved with b
+par/wd15.gif               native arm64 image (ff-parmap-native), par-map/run-writer-cases.sh, record-colors=no: type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e15 viewwindows=2 -> GIF saved with s
+par/wd15.out.par           native arm64 image (ff-parmap-native), par-map/run-writer-cases.sh, record-colors=no: type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e15 viewwindows=2 -> parameters saved with b
+par/wd300.gif              native arm64 image (ff-parmap-native), par-map/run-writer-cases.sh, record-colors=no: type=mandel maxiter=50 center-mag=300.5/-2.25/1e30 viewwindows=2 -> GIF saved with s
+par/wd300.out.par          native arm64 image (ff-parmap-native), par-map/run-writer-cases.sh, record-colors=no: type=mandel maxiter=50 center-mag=300.5/-2.25/1e30 viewwindows=2 -> parameters saved with b
+par/wd3e15.gif             native arm64 image (ff-parmap-native), par-map/run-writer-cases.sh, record-colors=no: type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/3e15 viewwindows=2 -> GIF saved with s
+par/wd3e15.out.par         native arm64 image (ff-parmap-native), par-map/run-writer-cases.sh, record-colors=no: type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/3e15 viewwindows=2 -> parameters saved with b
+par/wd40.gif               native arm64 image (ff-parmap-native), par-map/run-writer-cases.sh, record-colors=no: type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e40 viewwindows=2 -> GIF saved with s
+par/wd40.out.par           native arm64 image (ff-parmap-native), par-map/run-writer-cases.sh, record-colors=no: type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e40 viewwindows=2 -> parameters saved with b
+par/wd5e25.gif             native arm64 image (ff-parmap-native), par-map/run-writer-cases.sh, record-colors=no: type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/5e25 viewwindows=2 -> GIF saved with s
+par/wd5e25.out.par         native arm64 image (ff-parmap-native), par-map/run-writer-cases.sh, record-colors=no: type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/5e25 viewwindows=2 -> parameters saved with b
+par/wd9e14.gif             native arm64 image (ff-parmap-native), par-map/run-writer-cases.sh, record-colors=no: type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/9e14 viewwindows=2 -> GIF saved with s
+par/wd9e14.out.par         native arm64 image (ff-parmap-native), par-map/run-writer-cases.sh, record-colors=no: type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/9e14 viewwindows=2 -> parameters saved with b
+par/wdc0.gif               native arm64 image (ff-parmap-native), par-map/run-writer-cases.sh, record-colors=no: type=mandel maxiter=50 center-mag=0/0/1e20 viewwindows=2 -> GIF saved with s
+par/wdc0.out.par           native arm64 image (ff-parmap-native), par-map/run-writer-cases.sh, record-colors=no: type=mandel maxiter=50 center-mag=0/0/1e20 viewwindows=2 -> parameters saved with b
+par/wdcorn.gif             native arm64 image (ff-parmap-native), par-map/run-writer-cases.sh, record-colors=no: type=mandel maxiter=50 corners=-0.743643887037158704752191506114774/-0.743643887037151/0.131825904205311970493132056385139/0.131825904205315 viewwindows=2 -> GIF saved with s
+par/wdcorn.out.par         native arm64 image (ff-parmap-native), par-map/run-writer-cases.sh, record-colors=no: type=mandel maxiter=50 corners=-0.743643887037158704752191506114774/-0.743643887037151/0.131825904205311970493132056385139/0.131825904205315 viewwindows=2 -> parameters saved with b
+par/wdfull.gif             native arm64 image (ff-parmap-native), par-map/run-writer-cases.sh, record-colors=no: type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e20 -> GIF saved with s
+par/wdfull.out.par         native arm64 image (ff-parmap-native), par-map/run-writer-cases.sh, record-colors=no: type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e20 -> parameters saved with b
+par/wdj20.gif              native arm64 image (ff-parmap-native), par-map/run-writer-cases.sh, record-colors=no: type=julia params=-0.8/0.156 maxiter=50 center-mag=0.1/0.2/1e20 viewwindows=2 -> GIF saved with s
+par/wdj20.out.par          native arm64 image (ff-parmap-native), par-map/run-writer-cases.sh, record-colors=no: type=julia params=-0.8/0.156 maxiter=50 center-mag=0.1/0.2/1e20 viewwindows=2 -> parameters saved with b
+par/wdmag.gif              native arm64 image (ff-parmap-native), par-map/run-writer-cases.sh, record-colors=no: type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1.23456789123e20 viewwindows=2 -> GIF saved with s
+par/wdmag.out.par          native arm64 image (ff-parmap-native), par-map/run-writer-cases.sh, record-colors=no: type=mandel maxiter=50 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1.23456789123e20 viewwindows=2 -> parameters saved with b
+par/wdrot.gif              native arm64 image (ff-parmap-native), par-map/run-writer-cases.sh, record-colors=no: type=mandel maxiter=50 center-mag=-1.2345678901234567890123456789012345678901234567890/0.9876543210987654321098765432109876543210987654321/1e20/1.5/30/10 viewwindows=2 -> GIF saved with s
+par/wdrot.out.par          native arm64 image (ff-parmap-native), par-map/run-writer-cases.sh, record-colors=no: type=mandel maxiter=50 center-mag=-1.2345678901234567890123456789012345678901234567890/0.9876543210987654321098765432109876543210987654321/1e20/1.5/30/10 viewwindows=2 -> parameters saved with b
+par/wdsm.gif               native arm64 image (ff-parmap-native), par-map/run-writer-cases.sh, record-colors=no: type=mandel maxiter=50 center-mag=0.0000123456789012345678901234567890123/-0.0000234567891234567891234567891234567/1e30 viewwindows=2 -> GIF saved with s
+par/wdsm.out.par           native arm64 image (ff-parmap-native), par-map/run-writer-cases.sh, record-colors=no: type=mandel maxiter=50 center-mag=0.0000123456789012345678901234567890123/-0.0000234567891234567891234567891234567/1e30 viewwindows=2 -> parameters saved with b
+pixels/px-j20.gif          type=julia params=0/1 maxiter=200 passes=1 periodicity=0 center-mag=0.0000000000000000000123/1.0000000000000000000456/1e20
+pixels/px-m15.gif          type=mandel maxiter=200 passes=1 periodicity=0 center-mag=0.000000000000000123/1.000000000000000456/1e15
+pixels/px-m15g.gif         type=mandel maxiter=200 center-mag=0.000000000000000123/1.000000000000000456/1e15
+pixels/px-m20.gif          type=mandel maxiter=200 passes=1 periodicity=0 center-mag=0.0000000000000000000123/1.0000000000000000000456/1e20
+pixels/px-m40.gif          type=mandel maxiter=200 passes=1 periodicity=0 center-mag=0.000000000000000000000000000000000000000123/1.000000000000000000000000000000000000000456/1e40
+switch/c0-1e12.gif         type=mandel maxiter=20 center-mag=0/0/1e12
+switch/c0-1e13.gif         type=mandel maxiter=20 center-mag=0/0/1e13
+switch/c0-1e14.gif         type=mandel maxiter=20 center-mag=0/0/1e14
+switch/c0-1e15.gif         type=mandel maxiter=20 center-mag=0/0/1e15
+switch/c0-1e16.gif         type=mandel maxiter=20 center-mag=0/0/1e16
+switch/c0-1e17.gif         type=mandel maxiter=20 center-mag=0/0/1e17
+switch/c0-1e30.gif         type=mandel maxiter=20 center-mag=0/0/1e30
+switch/c0-1e60.gif         type=mandel maxiter=20 center-mag=0/0/1e60
+switch/c0-5e12.gif         type=mandel maxiter=20 center-mag=0/0/5e12
+switch/c0-9.5e12.gif       type=mandel maxiter=20 center-mag=0/0/9.5e12
+switch/c0-9.99e12.gif      type=mandel maxiter=20 center-mag=0/0/9.99e12
+switch/c0-9.9e12.gif       type=mandel maxiter=20 center-mag=0/0/9.9e12
+switch/c0-9e12.gif         type=mandel maxiter=20 center-mag=0/0/9e12
+switch/c0f-9.95e12.gif     type=mandel maxiter=20 center-mag=0/0/9.95e12
+switch/c0f-9.98e12.gif     type=mandel maxiter=20 center-mag=0/0/9.98e12
+switch/c0x05-1.5e13.gif    type=mandel maxiter=20 center-mag=0/0/1.5e13/0.5
+switch/c0x2-6e12.gif       type=mandel maxiter=20 center-mag=0/0/6e12/2
+switch/c300-1e10.gif       type=mandel maxiter=20 center-mag=300.5/-2.25/1e10
+switch/c300-1e11.gif       type=mandel maxiter=20 center-mag=300.5/-2.25/1e11
+switch/c300-1e12.gif       type=mandel maxiter=20 center-mag=300.5/-2.25/1e12
+switch/c300-1e13.gif       type=mandel maxiter=20 center-mag=300.5/-2.25/1e13
+switch/c300-1e14.gif       type=mandel maxiter=20 center-mag=300.5/-2.25/1e14
+switch/c300-1e15.gif       type=mandel maxiter=20 center-mag=300.5/-2.25/1e15
+switch/c300-1e30.gif       type=mandel maxiter=20 center-mag=300.5/-2.25/1e30
+switch/c300-1e60.gif       type=mandel maxiter=20 center-mag=300.5/-2.25/1e60
+switch/c300-2e10.gif       type=mandel maxiter=20 center-mag=300.5/-2.25/2e10
+switch/c300-2e12.gif       type=mandel maxiter=20 center-mag=300.5/-2.25/2e12
+switch/c300-3e10.gif       type=mandel maxiter=20 center-mag=300.5/-2.25/3e10
+switch/c300-5e10.gif       type=mandel maxiter=20 center-mag=300.5/-2.25/5e10
+switch/c300-5e12.gif       type=mandel maxiter=20 center-mag=300.5/-2.25/5e12
+switch/c300-7e10.gif       type=mandel maxiter=20 center-mag=300.5/-2.25/7e10
+switch/csm-1e12.gif        type=mandel maxiter=20 center-mag=0.0000123456789/0.0000234567891/1e12
+switch/csm-1e13.gif        type=mandel maxiter=20 center-mag=0.0000123456789/0.0000234567891/1e13
+switch/csm-1e14.gif        type=mandel maxiter=20 center-mag=0.0000123456789/0.0000234567891/1e14
+switch/full-1e13.gif       [FFNOVW=1: no viewwindows=2] type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e13
+switch/full-5e22.gif       [FFNOVW=1: no viewwindows=2] type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/5e22
+switch/full-5e32.gif       [FFNOVW=1: no viewwindows=2] type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/5e32
+switch/full-7e22.gif       [FFNOVW=1: no viewwindows=2] type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/7e22
+switch/full-7e32.gif       [FFNOVW=1: no viewwindows=2] type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/7e32
+switch/full-8e12.gif       [FFNOVW=1: no viewwindows=2] type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/8e12
+switch/full-9.5e12.gif     [FFNOVW=1: no viewwindows=2] type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/9.5e12
+switch/full-9e12.gif       [FFNOVW=1: no viewwindows=2] type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/9e12
+switch/full-c300-3e10.gif  [FFNOVW=1: no viewwindows=2] type=mandel maxiter=20 center-mag=300.5/-2.25/3e10
+switch/full-c300-5e10.gif  [FFNOVW=1: no viewwindows=2] type=mandel maxiter=20 center-mag=300.5/-2.25/5e10
+switch/th-1e12.gif         type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e12
+switch/th-1e13.gif         type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e13
+switch/th-2e12.gif         type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/2e12
+switch/th-3e12.gif         type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/3e12
+switch/th-4e12.gif         type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/4e12
+switch/th-5e12.gif         type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/5e12
+switch/th-6.5e12.gif       type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/6.5e12
+switch/th-6e12.gif         type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/6e12
+switch/th-7.5e12.gif       type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/7.5e12
+switch/th-7e12.gif         type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/7e12
+switch/th-8.5e12.gif       type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/8.5e12
+switch/th-8e12.gif         type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/8e12
+switch/th-9.5e12.gif       type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/9.5e12
+switch/th-9.9e12.gif       type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/9.9e12
+switch/th-9e12.gif         type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/9e12
+switch/tol0.001-C8e12.gif  type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/8e12 mathtolerance=0.001/0.001
+switch/tol0.001-C9e12.gif  type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/9e12 mathtolerance=0.001/0.001
+switch/tol0.001-c0-1e12.gif type=mandel maxiter=20 center-mag=0/0/1e12 mathtolerance=0.001/0.001
+switch/tol0.001-c0-1e13.gif type=mandel maxiter=20 center-mag=0/0/1e13 mathtolerance=0.001/0.001
+switch/tol0.001-c300-1e10.gif type=mandel maxiter=20 center-mag=300.5/-2.25/1e10 mathtolerance=0.001/0.001
+switch/tol0.001-c300-1e11.gif type=mandel maxiter=20 center-mag=300.5/-2.25/1e11 mathtolerance=0.001/0.001
+switch/tol0.001x-C9e12.gif type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/9e12 mathtolerance=0.001/0.05
+switch/tol0.001y-C9e12.gif type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/9e12 mathtolerance=0.05/0.001
+switch/tol0.5-C8e12.gif    type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/8e12 mathtolerance=0.5/0.5
+switch/tol0.5-C9e12.gif    type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/9e12 mathtolerance=0.5/0.5
+switch/tol0.5-c0-1e12.gif  type=mandel maxiter=20 center-mag=0/0/1e12 mathtolerance=0.5/0.5
+switch/tol0.5-c0-1e13.gif  type=mandel maxiter=20 center-mag=0/0/1e13 mathtolerance=0.5/0.5
+switch/tol0.5-c300-1e10.gif type=mandel maxiter=20 center-mag=300.5/-2.25/1e10 mathtolerance=0.5/0.5
+switch/tol0.5-c300-1e11.gif type=mandel maxiter=20 center-mag=300.5/-2.25/1e11 mathtolerance=0.5/0.5
+switch/tol0.5x-C8e12.gif   type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/8e12 mathtolerance=0.5/0.05
+switch/tol0.5y-C8e12.gif   type=mandel maxiter=20 center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/8e12 mathtolerance=0.05/0.5
+types/ty-barnsleyj1.gif    [FFINPUTS=ff.frm] type=barnsleyj1 maxiter=20 center-mag=-0.1/0.65/1e15
+types/ty-barnsleym1.gif    [FFINPUTS=ff.frm] type=barnsleym1 maxiter=20 center-mag=-0.1/0.65/1e15
+types/ty-complexnewton.gif [FFINPUTS=ff.frm] type=complexnewton maxiter=20 center-mag=-0.1/0.65/1e15
+types/ty-fnxfn.gif         [FFINPUTS=ff.frm] type=fn*fn maxiter=20 center-mag=-0.1/0.65/1e15
+types/ty-formula.gif       [FFINPUTS=ff.frm] type=formula formulafile=ff.frm formulaname=ffquad maxiter=20 center-mag=-0.1/0.65/1e15
+types/ty-julfnpzsqrd.gif   [FFINPUTS=ff.frm] type=julfn+zsqrd maxiter=20 center-mag=-0.1/0.65/1e15
+types/ty-julia.gif         [FFINPUTS=ff.frm] type=julia maxiter=20 center-mag=-0.1/0.65/1e15
+types/ty-julia4.gif        [FFINPUTS=ff.frm] type=julia4 maxiter=20 center-mag=-0.1/0.65/1e15
+types/ty-lambda.gif        [FFINPUTS=ff.frm] type=lambda maxiter=20 center-mag=-0.1/0.65/1e15
+types/ty-magnet1j.gif      [FFINPUTS=ff.frm] type=magnet1j maxiter=20 center-mag=-0.1/0.65/1e15
+types/ty-magnet1m.gif      [FFINPUTS=ff.frm] type=magnet1m maxiter=20 center-mag=-0.1/0.65/1e15
+types/ty-mandel-float.gif  [FFINPUTS=ff.frm] type=mandel float=yes maxiter=20 center-mag=-0.1/0.65/1e15
+types/ty-mandel.gif        [FFINPUTS=ff.frm] type=mandel maxiter=20 center-mag=-0.1/0.65/1e15
+types/ty-mandel4.gif       [FFINPUTS=ff.frm] type=mandel4 maxiter=20 center-mag=-0.1/0.65/1e15
+types/ty-mandelfn.gif      [FFINPUTS=ff.frm] type=mandelfn maxiter=20 center-mag=-0.1/0.65/1e15
+types/ty-mandellambda.gif  [FFINPUTS=ff.frm] type=mandellambda maxiter=20 center-mag=-0.1/0.65/1e15
+types/ty-mandphoenix.gif   [FFINPUTS=ff.frm] type=mandphoenix maxiter=20 center-mag=-0.1/0.65/1e15
+types/ty-manowar.gif       [FFINPUTS=ff.frm] type=manowar maxiter=20 center-mag=-0.1/0.65/1e15
+types/ty-manowarj.gif      [FFINPUTS=ff.frm] type=manowarj maxiter=20 center-mag=-0.1/0.65/1e15
+types/ty-marksmandel.gif   [FFINPUTS=ff.frm] type=marksmandel maxiter=20 center-mag=-0.1/0.65/1e15
+types/ty-newtbasin.gif     [FFINPUTS=ff.frm] type=newtbasin maxiter=20 center-mag=-0.1/0.65/1e15
+types/ty-newton.gif        [FFINPUTS=ff.frm] type=newton maxiter=20 center-mag=-0.1/0.65/1e15
+types/ty-phoenix.gif       [FFINPUTS=ff.frm] type=phoenix maxiter=20 center-mag=-0.1/0.65/1e15
+types/ty-popcorn.gif       [FFINPUTS=ff.frm] type=popcorn maxiter=20 center-mag=-0.1/0.65/1e15
+types/ty-sierpinski.gif    [FFINPUTS=ff.frm] type=sierpinski maxiter=20 center-mag=-0.1/0.65/1e15
+types/ty-spider.gif        [FFINPUTS=ff.frm] type=spider maxiter=20 center-mag=-0.1/0.65/1e15
+types/ty-tetrate.gif       [FFINPUTS=ff.frm] type=tetrate maxiter=20 center-mag=-0.1/0.65/1e15
+types/ty30-formula.gif     [FFINPUTS=ff.frm] type=formula formulafile=ff.frm formulaname=ffquad maxiter=20 center-mag=-0.1/0.65/1e30
+types/ty30-julia.gif       [FFINPUTS=ff.frm] type=julia maxiter=20 center-mag=-0.1/0.65/1e30
+types/ty30-lambda.gif      [FFINPUTS=ff.frm] type=lambda maxiter=20 center-mag=-0.1/0.65/1e30
+types/ty30-mandel4.gif     [FFINPUTS=ff.frm] type=mandel4 maxiter=20 center-mag=-0.1/0.65/1e30
+types/ty30-manowar.gif     [FFINPUTS=ff.frm] type=manowar maxiter=20 center-mag=-0.1/0.65/1e30
+types/ty30-newton.gif      [FFINPUTS=ff.frm] type=newton maxiter=20 center-mag=-0.1/0.65/1e30
+types/ty30-phoenix.gif     [FFINPUTS=ff.frm] type=phoenix maxiter=20 center-mag=-0.1/0.65/1e30
+types/tyv-formula-1e12.gif [FFINPUTS=ff.frm] type=formula formulafile=ff.frm formulaname=ffquad maxiter=60 passes=1 periodicity=0 center-mag=0.000000000000123/1.000000000000456/1e12
+types/tyv-formula.gif      [FFINPUTS=ff.frm] type=formula formulafile=ff.frm formulaname=ffquad maxiter=60 passes=1 periodicity=0 center-mag=0.000000000000000123/1.000000000000000456/1e15
+types/tyv-mandel-1e12.gif  [FFINPUTS=ff.frm] type=mandel maxiter=60 passes=1 periodicity=0 center-mag=0.000000000000123/1.000000000000456/1e12
+types/tyv-mandel-float.gif [FFINPUTS=ff.frm] type=mandel float=yes maxiter=60 passes=1 periodicity=0 center-mag=0.000000000000000123/1.000000000000000456/1e15

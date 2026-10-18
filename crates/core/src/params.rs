@@ -226,6 +226,9 @@ pub struct Params {
     pub functions: [u8; 4],
     /// 3D viewing, for types that use it.
     pub view3d: View3d,
+    /// For deep zooms: the view with an arbitrary-precision centre.
+    /// `window` then holds the same view rounded to doubles.
+    pub deep: Option<crate::deep::DeepView>,
 }
 
 impl Params {
@@ -250,6 +253,7 @@ impl Params {
             program: None,
             functions: [0, 6, 2, 3],
             view3d: View3d::default(),
+            deep: None,
         }
     }
 
@@ -266,6 +270,7 @@ impl Params {
         let mut p = self.clone();
         p.fractal = julia;
         p.window = julia.default_window;
+        p.deep = None;
         p.params[0] = c.re;
         p.params[1] = c.im;
         p.forced_symmetry = None;
@@ -279,6 +284,7 @@ impl Params {
         let mut p = self.clone();
         p.fractal = mandel;
         p.window = window.unwrap_or(mandel.default_window);
+        p.deep = None;
         p.params[0] = 0.0;
         p.params[1] = 0.0;
         p.forced_symmetry = None;
@@ -312,6 +318,66 @@ impl Params {
             "lorenz3d" | "rossler3d" | "pickover" | "lorenz3d1" | "lorenz3d3" | "lorenz3d4"
             | "kamtorus3d" => true,
             _ => false,
+        }
+    }
+
+    /// Half the width and height of the view.
+    pub fn half_spans(&self) -> (f64, f64) {
+        match &self.deep {
+            Some(d) => (d.half_w, d.half_h),
+            None => (
+                (self.window.x_max - self.window.x_min) / 2.0,
+                (self.window.y_max - self.window.y_min) / 2.0,
+            ),
+        }
+    }
+
+    /// Changes the view by `op`, a change of window (zoom, pan, …), keeping
+    /// full precision for deep views: `op` sees the window relative to the
+    /// view's centre. Switches to or from a deep view as the size needs.
+    pub fn reframe(&mut self, op: impl Fn(&Window) -> Window) {
+        use crate::bignum::BigFixed;
+        use crate::deep::{DeepView, needs_deep};
+        let (hw, hh) = self.half_spans();
+        let (re, im) = match &self.deep {
+            Some(d) => (d.re.clone(), d.im.clone()),
+            None => {
+                let w = &self.window;
+                let frac = crate::bignum::frac_limbs_for(hh / 4096.0);
+                (
+                    BigFixed::from_f64((w.x_min + w.x_max) / 2.0, frac),
+                    BigFixed::from_f64((w.y_min + w.y_max) / 2.0, frac),
+                )
+            }
+        };
+        if self.deep.is_none() {
+            let new = op(&self.window);
+            let (cx, cy) = ((new.x_min + new.x_max) / 2.0, (new.y_min + new.y_max) / 2.0);
+            if !needs_deep(cx, cy, (new.y_max - new.y_min) / 2.0) {
+                self.window = new;
+                return;
+            }
+        }
+        let rel = op(&Window::new(-hw, hw, -hh, hh));
+        let (dx, dy) = ((rel.x_min + rel.x_max) / 2.0, (rel.y_min + rel.y_max) / 2.0);
+        let (nhw, nhh) = ((rel.x_max - rel.x_min) / 2.0, (rel.y_max - rel.y_min) / 2.0);
+        let frac = crate::bignum::frac_limbs_for(nhw.min(nhh) / 4096.0).max(re.frac_limbs());
+        let re = re.with_frac(frac).add(&BigFixed::from_f64(dx, frac));
+        let im = im.with_frac(frac).add(&BigFixed::from_f64(dy, frac));
+        self.set_view(DeepView::new(&re, &im, nhw, nhh));
+    }
+
+    /// Sets the view from a precise centre, as a deep view only when its
+    /// size needs one.
+    pub fn set_view(&mut self, view: crate::deep::DeepView) {
+        let w = view.window();
+        let (cx, cy) = (view.re.to_f64(), view.im.to_f64());
+        if crate::deep::needs_deep(cx, cy, view.half_h) {
+            self.window = w;
+            self.deep = Some(view);
+        } else {
+            self.window = w;
+            self.deep = None;
         }
     }
 
@@ -353,8 +419,25 @@ impl Params {
                 self.fractal.name
             ));
         }
-        if !self.window.is_valid() {
-            return Err(format!("invalid window {:?}", self.window));
+        match &self.deep {
+            // The rounded window of a deep view may have no width.
+            Some(d) => {
+                if !(d.half_w > 0.0
+                    && d.half_h > 0.0
+                    && d.half_w.is_finite()
+                    && d.half_h.is_finite())
+                {
+                    return Err(format!(
+                        "invalid deep view size {} × {}",
+                        d.half_w, d.half_h
+                    ));
+                }
+            }
+            None => {
+                if !self.window.is_valid() {
+                    return Err(format!("invalid window {:?}", self.window));
+                }
+            }
         }
         if self.max_iter == 0 || self.max_iter > MAX_ITER_LIMIT {
             return Err(format!(
@@ -454,6 +537,47 @@ mod tests {
             ..at
         };
         assert_eq!(p.orbit(&inside, 20).unwrap().len(), 20);
+    }
+
+    /// Zooming far in keeps the exact centre; zooming back out returns to
+    /// an ordinary window.
+    #[test]
+    fn reframe_goes_deep_and_back() {
+        let mut p = Params::for_type("mandel").unwrap();
+        let zoom = |w: &Window, f: f64, u: f64| {
+            let (cx, cy) = (w.x_min + u * (w.x_max - w.x_min), (w.y_min + w.y_max) / 2.0);
+            let (hw, hh) = (
+                (w.x_max - w.x_min) / (2.0 * f),
+                (w.y_max - w.y_min) / (2.0 * f),
+            );
+            let (nx, ny) = (cx - (u - 0.5) * 2.0 * hw, cy);
+            Window::new(nx - hw, nx + hw, ny - hh, ny + hh)
+        };
+        for _ in 0..30 {
+            p.reframe(|w| zoom(w, 10.0, 0.75));
+        }
+        let d = p.deep.clone().expect("deep after 30 zooms");
+        assert!((d.half_h - 1.5e-30).abs() < 1e-40);
+        // Zooming about the point at u = 0.75 keeps it fixed: the centre
+        // tends to 0.5 (within the doubles of the early, shallow zooms),
+        // while the deep view keeps digits far below a double's.
+        assert!((d.re.to_f64() - 0.5).abs() < 1e-15);
+        let before = d.re.clone();
+        // A pan by a tenth of the width moves the precise centre by that.
+        p.reframe(|w| {
+            let d = (w.x_max - w.x_min) / 10.0;
+            Window::new(w.x_min + d, w.x_max + d, w.y_min, w.y_max)
+        });
+        let moved = p.deep.as_ref().unwrap().re.sub(&before).to_f64();
+        assert!(
+            (moved / (2.0 * d.half_w / 10.0) - 1.0).abs() < 1e-14,
+            "{moved}"
+        );
+        for _ in 0..30 {
+            p.reframe(|w| zoom(w, 0.1, 0.5));
+        }
+        assert!(p.deep.is_none());
+        assert!((p.window.y_max - 1.5).abs() < 1e-6, "{:?}", p.window);
     }
 
     #[test]

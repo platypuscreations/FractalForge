@@ -2,7 +2,7 @@
 
 # FractalForge native GIF block
 
-Status: **payload version 4**. The block is written after the image data, before any Fractint-format blocks (implemented in `crates/formats/src/gif/native_block.rs`).
+Status: **payload version 5**. The block is written after the image data, before any Fractint-format blocks (implemented in `crates/formats/src/gif/native_block.rs`).
 
 FractalForge stores a complete render checkpoint in its own GIF89a application
 extension. Decoders that don't recognize an application extension skip it, so
@@ -24,14 +24,14 @@ The identifier and authentication code are part of the file format. Never
 change them. Payload versions are carried inside the payload, not in the
 authentication code.
 
-## Payload, version 4
+## Payload, version 5
 
 The sub-blocks, concatenated, form the payload. All integers and floats are
 little-endian; floats are IEEE 754 binary64.
 
 | Bytes | Field |
 |-------|-------|
-| 2 | payload version, `4`. Versions 2 (FractalForge 0.1.0) and 3 are still read: version 2 has 4 type parameters and no fields marked *v3* or *v4*, version 3 none marked *v4*. Version 1 (pre-release) is rejected |
+| 2 | payload version, `5`. Versions 2 (FractalForge 0.1.0) to 4 (0.2.0) are still read, without the fields marked with later versions (version 2 also has only 4 type parameters). Version 1 (pre-release) is rejected |
 | 1 | compression, `1` = raw DEFLATE (RFC 1951) |
 | 8 | uncompressed body length in bytes |
 | n | compressed body |
@@ -58,6 +58,9 @@ little-endian; floats are IEEE 754 binary64.
 | 3×2 | *v4* 3D rotation about x, y and z in degrees, signed 16-bit (default 60, 30, 0) |
 | 2 | *v4* 3D perspective distance, signed 16-bit (0 = none) |
 | 2×2 | *v4* 3D shift right and up in percent, signed 16-bit |
+| 1 | *v5* deep view: `0` = none (the corners above are exact), `1` = the fields below follow |
+| 2 × (1 + 4 + 8·n) | *v5* deep view only: the centre's real and imaginary parts as fixed-point numbers: sign (`1` = negative), limb count n, then n little-endian u64 limbs, least significant first; the last limb is the integer part and the others the fraction (value = limbs / 2^(64·(n−1))) |
+| 8, 8 | *v5* deep view only: half width and half height. The corners above then hold the same view rounded to doubles |
 | 4 | image width W |
 | 4 | image height H |
 | 1 | pass mode: `1` one pass, `2` two passes, `3` guessing |

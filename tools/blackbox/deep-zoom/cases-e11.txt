@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# E11: long center-mag tokens read from a .par file (run with FFINPUTS=dz.par)
+pl-long120  @dz.par/long120
+pl-long140  @dz.par/long140
+pl-long160  @dz.par/long160
+pl-long250  @dz.par/long250
+pl-split160 @dz.par/split160
