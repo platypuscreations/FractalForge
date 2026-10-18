@@ -596,6 +596,8 @@ fn program_symmetry(p: &Params) -> Symmetry {
 /// A Fractint-format formula; the program comes from a `.frm` file.
 pub static FORMULA: FractalType = FractalType {
     needs_program: true,
+    // The formula's own condition decides (frm-semantics.md §1.6).
+    uses_bailout: false,
     // The program applies the colouring options itself.
     orbit_coloring: true,
     ..std_type(

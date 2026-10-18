@@ -34,15 +34,78 @@ pub struct Formula {
     z: Option<u16>,
 }
 
+/// Compiles the entry `name` of a `.frm` text (or any text holding entries,
+/// such as a `.par` file's `frm:` entries). Errors are formatted as Fractint
+/// reports them; warnings note constructs Fractint reads unexpectedly.
+pub fn load(text: &str, name: &str) -> Result<(Program, Vec<String>), String> {
+    let all = parser::entries(text);
+    let entry = parser::find(&all, name).ok_or_else(|| format!("no formula named {name}"))?;
+    let parsed = parser::parse(entry).map_err(|errs| {
+        errs.iter()
+            .map(ToString::to_string)
+            .collect::<Vec<_>>()
+            .join("\n")
+    })?;
+    let f = Formula::compile(&parsed.ast, &entry.text)?;
+    let mut warnings = parsed.warnings;
+    if f.order_dependent {
+        warnings.push(format!(
+            "{name} reads variables before setting them, so each pixel depends on the one before: \
+             it is computed one pixel at a time and can't be resumed"
+        ));
+    }
+    if f.rand.is_some() {
+        warnings.push(format!(
+            "{name} uses rand, whose values differ from Fractint's"
+        ));
+    }
+    Ok((f.into_program(), warnings))
+}
+
+/// Searches the `.frm` files of a folder for an entry, as Fractint does when
+/// a formula file is missing (frm-syntax.md §1.3). Returns the file and its
+/// text.
+pub fn find_in_dir(dir: &std::path::Path, name: &str) -> Option<(std::path::PathBuf, String)> {
+    let mut files: Vec<_> = std::fs::read_dir(dir)
+        .ok()?
+        .filter_map(|e| e.ok().map(|e| e.path()))
+        .filter(|p| p.extension().is_some_and(|e| e.eq_ignore_ascii_case("frm")))
+        .collect();
+    files.sort();
+    files.into_iter().find_map(|p| {
+        let text = read_text(&p).ok()?;
+        parser::find(&parser::entries(&text), name)
+            .is_some()
+            .then_some((p, text))
+    })
+}
+
+/// Reads a formula or parameter file; DOS-era files may not be UTF-8.
+pub fn read_text(path: &std::path::Path) -> std::io::Result<String> {
+    std::fs::read(path).map(|b| String::from_utf8_lossy(&b).into_owned())
+}
+
 impl Formula {
     /// Compiles a parsed entry. `source` is kept for self-contained files.
     pub fn compile(ast: &FormulaAst, source: &str) -> Result<Self, String> {
+        // Formulas embedded in .par files are named `frm:NAME`; the formula
+        // itself is NAME (frm-syntax.md §8.2).
+        let (name, source) = match ast.name.get(..4) {
+            Some(p) if p.eq_ignore_ascii_case("frm:") => {
+                let source = source.trim_start();
+                (
+                    ast.name[4..].to_owned(),
+                    source.get(4..).unwrap_or(source).to_owned(),
+                )
+            }
+            _ => (ast.name.clone(), source.to_owned()),
+        };
         let mut slots = Slots::default();
         let init = vm::compile(&ast.init, &mut slots)?;
         let iter = vm::compile(&ast.iter, &mut slots)?;
         Ok(Self {
-            name: ast.name.clone(),
-            source: source.to_owned(),
+            name,
+            source,
             symmetry: ast.symmetry.clone(),
             order_dependent: analysis::order_dependent(ast),
             pixel: slots.get("pixel"),
@@ -175,6 +238,10 @@ impl FractalProgram for Formula {
 
     fn order_dependent(&self) -> bool {
         self.order_dependent
+    }
+
+    fn mentions(&self, name: &str) -> bool {
+        self.slots.iter().any(|s| s == name)
     }
 
     /// §6.1–6.2.

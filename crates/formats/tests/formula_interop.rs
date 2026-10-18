@@ -183,3 +183,50 @@ fn syntax_corpus_matches_xfractint() {
     assert!(checked.0 > 150 && checked.1 > 500, "{checked:?}");
     assert!(problems.is_empty(), "{}", problems.join("\n"));
 }
+
+/// The `fractint003` block we write for a formula equals XFractint's
+/// (name and the p1–p5 / ismand flags, frm-syntax.md §8.1).
+#[test]
+fn name_block_matches_xfractint() {
+    let read = |p: PathBuf| fractalforge_formula::read_text(&p).unwrap();
+    let cases = read(root().join("corpus/xfractint/frm-syntax/cases.txt"));
+    let mut checked = 0;
+    for line in cases.lines() {
+        let mut it = line.split_whitespace();
+        let Some(case) = it.next() else { continue };
+        if !(case.starts_with("r3-store-s") || case.starts_with("b-rp")) {
+            continue;
+        }
+        let args: Vec<&str> = it.collect();
+        let arg = |k: &str| args.iter().find_map(|a| a.strip_prefix(k)).unwrap();
+        let gif = root().join(format!(
+            "corpus/xfractint/frm-syntax/{}/{case}.gif",
+            case.split('-').next().unwrap()
+        ));
+        let Ok(bytes) = std::fs::read(&gif) else {
+            continue;
+        };
+        let img = GifImage::read(&bytes).unwrap();
+        let theirs = img
+            .extension(fractint_blocks::IDENTIFIER, fractint_blocks::NAME_AUTH)
+            .unwrap()
+            .data();
+        let text = read(
+            root()
+                .join("tools/blackbox/frm-syntax/inputs")
+                .join(arg("formulafile=")),
+        );
+        let (program, _) = fractalforge_formula::load(&text, arg("formulaname=")).unwrap();
+        let mut p = fractint_blocks::read(&img).unwrap().params.unwrap();
+        p.program = Some(program);
+        let (blocks, _) = fractint_blocks::write(&p, PassMode::One, None, 400, 300, 0).unwrap();
+        let ours = blocks
+            .iter()
+            .find(|b| &b.auth_code == fractint_blocks::NAME_AUTH)
+            .unwrap()
+            .data();
+        assert_eq!(ours, theirs, "{case}");
+        checked += 1;
+    }
+    assert!(checked >= 15, "{checked}");
+}

@@ -116,7 +116,7 @@ fn par_entries_match_xfractint() {
         let found = par::request_name_ok(&entry)
             .then(|| par::find(&all, &entry))
             .flatten();
-        let loaded = found.map(|e| par::load(e, Some(&inputs())));
+        let loaded = found.map(|e| par::load(e, Some(&inputs()), Some(&text)));
         if made_image {
             accepted += 1;
             let l = match loaded {

@@ -12,6 +12,8 @@
 #   C. XFractint resumes an unfinished image of ours from our resume block
 #      (in-program r load): it keeps our finished pixels and completes the
 #      rest to match our own full render.
+#   D. XFractint renders a .par entry we wrote whose formula is embedded as
+#      an frm: entry; the image must match ours.
 set -euo pipefail
 here="$(cd "$(dirname "$0")" && pwd)"
 root="$(cd "$here/../.." && pwd)"
@@ -32,7 +34,7 @@ docker run --rm -v "$a:/work" fractalforge-blackbox filename=in.gif savename=ff.
 [ -s "$a/ff.gif" ] || { echo "XFractint saved nothing (see $a/log)"; exit 1; }
 "$ff" info "$a/ff.gif" | tee "$a/info" | grep -E '^(type|params|maxiter):'
 grep -q '^type: *julia' "$a/info"
-grep -q '^params: *-0.8/0.156/0/0' "$a/info"
+grep -q '^params: *-0.8/0.156$' "$a/info"
 grep -q '^maxiter: *255' "$a/info"
 "$ff" compare "$a/in.gif" "$a/ff.gif" --colors
 
@@ -86,5 +88,22 @@ diff = sum(rgb(pal_o, out['pixels'][y * w + x]) != rgb(pal_f, full['pixels'][y *
 print(f"marker kept; {diff} of {len(rows) * w} other pixels differ from our full render")
 assert diff <= 0.001 * len(rows) * w
 PY
+
+echo "== D: XFractint renders a .par entry we wrote, with its formula embedded"
+d="$(fresh formula)"
+cat > "$d/t.frm" <<'FRM'
+fnz(XAXIS_NOPARM) { ; written for this check
+  z = pixel: z = fn1(z) * p1 + pixel
+  |z| < 100 }
+FRM
+fargs=(--formula "$d/t.frm" --formula-name fnz --params 0.5/0.2 --size 400x300 --passes 1)
+"$ff" render "${fargs[@]}" -o "$d/ours.gif" >/dev/null
+"$ff" render "${fargs[@]}" -o "$d/f.par" --entry fz >/dev/null
+rm "$d/t.frm"   # XFractint must use the copy embedded in f.par
+docker run --rm -v "$d:/work" fractalforge-blackbox @f.par/fz viewwindows=2 periodicity=0 \
+  savename=ff.gif >"$d/log" 2>&1 || true
+[ -s "$d/ff.gif" ] || { echo "XFractint saved nothing (see $d/log)"; exit 1; }
+[ ! -s "$d/stopmsg.txt" ] || { echo "XFractint complained:"; cat "$d/stopmsg.txt"; exit 1; }
+"$ff" compare "$d/ours.gif" "$d/ff.gif" --colors --tolerance 0.1
 
 echo "interop OK"

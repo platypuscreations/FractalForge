@@ -578,6 +578,9 @@ pub fn write(
     };
     m[200] = pass;
 
+    if let Some(prog) = &params.program {
+        blocks.push(name_block(prog));
+    }
     blocks.push(AppExtension::new(
         *IDENTIFIER,
         *MAIN_AUTH,
@@ -592,6 +595,28 @@ pub fn write(
     *main = AppExtension::new(*IDENTIFIER, *MAIN_AUTH, &data, Placement::AfterImage);
 
     Some((blocks, notes))
+}
+
+/// The `fractint003` block of a formula image (frm-syntax.md §8.1): the
+/// entry name, flags for which of p1–p5 and `ismand` it mentions, and the
+/// `ismand` setting (1).
+fn name_block(prog: &fractalforge_core::Program) -> AppExtension {
+    let mut d = [0u8; 66];
+    let name = prog.0.name().as_bytes();
+    let n = name.len().min(39);
+    d[..n].copy_from_slice(&name[..n]);
+    for (off, var) in [
+        (40, "p1"),
+        (42, "p2"),
+        (44, "p3"),
+        (46, "ismand"),
+        (50, "p4"),
+        (52, "p5"),
+    ] {
+        put(&mut d, off, &i16::from(prog.0.mentions(var)).to_le_bytes());
+    }
+    put(&mut d, 48, &1i16.to_le_bytes());
+    AppExtension::new(*IDENTIFIER, *NAME_AUTH, &d, Placement::AfterImage)
 }
 
 /// Bytes an extension occupies in the file: `21 FF 0B`, 11 header bytes,

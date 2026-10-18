@@ -43,6 +43,11 @@ pub trait FractalProgram: Send + Sync {
     fn order_dependent(&self) -> bool;
     /// The mirror copying these parameters allow.
     fn symmetry(&self, params: &Params) -> Symmetry;
+    /// Whether the program reads or assigns a predefined name such as `p1`
+    /// (Fractint-format files record this, frm-syntax.md §8.1).
+    fn mentions(&self, _name: &str) -> bool {
+        false
+    }
 }
 
 /// A shared program. Two are equal when their name and source are.
