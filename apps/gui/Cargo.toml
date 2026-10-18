@@ -16,7 +16,7 @@ identifier = "io.github.platypuscreations.fractalforge"
 category = "GraphicsAndDesign"
 copyright = "GPL-3.0-or-later"
 # The .deb's Maintainer field.
-authors = ["FractalForge contributors <https://github.com/platypuscreations/FractalForge>"]
+authors = ["Luke Hindman <luke@platypuscreations.net>"]
 # Each platform picks its format: .icns (macOS), .ico (Windows), .png (Linux).
 icons = ["assets/icon.icns", "assets/icon.ico", "assets/icon-256.png"]
 out-dir = "../../target/packager"
