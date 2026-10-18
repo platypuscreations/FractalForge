@@ -1,0 +1,87 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Orbit-map evidence for docs/specs/orbit-maps.md.
+# Each line: NAME XFRACTINT-ARGS. tools/blackbox/orbit-maps/run-cases.sh adds
+# viewwindows=2 (400x300) and savename=ff.gif; uniq.map (256 distinct colours,
+# from tools/blackbox/coloring/) is available in the work directory.
+#
+# --- defaults, one per type ---
+henon-def type=henon
+hopalong-def type=hopalong
+martin-def type=martin
+gingerbreadman-def type=gingerbreadman
+kamtorus-def type=kamtorus
+chip-def type=chip
+quadruptwo-def type=quadruptwo
+threeply-def type=threeply
+icons-def type=icons
+latoocarfian-def type=latoocarfian
+popcorn-def type=popcorn
+popcornjul-def type=popcornjul
+dynamic-def type=dynamic
+mandelcloud-def type=mandelcloud
+julia_inverse-def type=julia_inverse
+# --- single-orbit time colouring, length, wrap, start colour ---
+henon-mi10 type=henon maxiter=10
+henon-mi100 type=henon maxiter=100
+henon-mi1000 type=henon maxiter=1000
+henon-mi1000-u type=henon maxiter=1000 map=uniq.map
+henon-p13 type=henon params=1.3/0.3 maxiter=10
+henon-in1 type=henon inside=1 maxiter=10
+henon-in5 type=henon inside=5 maxiter=10
+henon-in255-u type=henon inside=255 maxiter=10 map=uniq.map
+henon-in300-u type=henon inside=300 maxiter=10 map=uniq.map
+henon-inbof-u type=henon inside=bof60 maxiter=10 map=uniq.map
+henon-out7 type=henon outside=7 maxiter=10
+henon-float type=henon float=yes maxiter=10
+henon-sym-none type=henon symmetry=none maxiter=10
+henon-pass1 type=henon passes=1 maxiter=10
+hopalong-p3 type=hopalong params=0.4/1/0.5 maxiter=10
+hopalong-p type=hopalong params=-1.1/0.5/0.7 maxiter=20
+martin-p type=martin params=2.5 maxiter=20
+gingerbreadman-p type=gingerbreadman params=0.5/1.5 maxiter=20
+chip-mi2z type=chip maxiter=2 corners=-80/80/-60/60
+chip-p type=chip params=-7/-11/2 maxiter=20
+quadruptwo-p type=quadruptwo params=20/2/3 maxiter=20
+threeply-p type=threeply params=-30/-2/-20 maxiter=20
+# --- hit-count colouring ---
+icons-u type=icons map=uniq.map
+icons-p type=icons params=1.56/-1/0.1/-0.82/0.12/3 maxiter=50
+icons-p5 type=icons params=-2.5/5/-1.9/1/0.188/5 maxiter=50
+latoocarfian-ssss type=latoocarfian function=sin/sin/sin/sin
+latoocarfian-ssss-mi10 type=latoocarfian function=sin/sin/sin/sin maxiter=10
+latoocarfian-ssss-mi40 type=latoocarfian function=sin/sin/sin/sin maxiter=40
+latoocarfian-f1c type=latoocarfian function=cos/sin/sin/sin maxiter=4
+latoocarfian-f2c type=latoocarfian function=sin/cos/sin/sin maxiter=4
+latoocarfian-f3c type=latoocarfian function=sin/sin/cos/sin maxiter=4
+latoocarfian-f4c type=latoocarfian function=sin/sin/sin/cos maxiter=4
+latoocarfian-zero-u type=latoocarfian params=0/0/0/0 maxiter=2 map=uniq.map
+# --- kamtorus ---
+kamtorus-p4-50 type=kamtorus params=1.3/0.05/1.5/50
+kamtorus-p4-2000 type=kamtorus params=1.3/0.05/1.5/2000
+kamtorus-mi10 type=kamtorus maxiter=10
+kamtorus-stop type=kamtorus params=1.3/0.05/0.6/150
+kamtorus-a type=kamtorus params=1.0/0.07/1.5/300
+# --- popcorn / popcornjul ---
+popcorn-st-mi3 type=popcorn function=sin/tan/sin/tan maxiter=3
+popcorn-st-mi10 type=popcorn function=sin/tan/sin/tan maxiter=10
+popcorn-st type=popcorn function=sin/tan/sin/tan
+popcorn-id-mi3 type=popcorn function=ident/ident/ident/ident maxiter=3
+popcorn-mi10 type=popcorn maxiter=10
+popcornjul-st type=popcornjul function=sin/tan/sin/tan
+# --- dynamic / mandelcloud / julia_inverse ---
+dynamic-mi2 type=dynamic maxiter=2
+dynamic-mi10 type=dynamic maxiter=10
+dynamic-p200-mi10 type=dynamic params=200/0.1/1/3 maxiter=10
+dynamic-fn type=dynamic function=cos/cos/cos/cos maxiter=10
+mandelcloud-n10 type=mandelcloud params=10
+mandelcloud-n2-u type=mandelcloud params=2 map=uniq.map
+mandelcloud-mi10 type=mandelcloud maxiter=10
+julia_inverse-rs1 type=julia_inverse rseed=1
+julia_inverse-p8 type=julia_inverse params=-0.11/0.6557/8/1024
+julia_inverse-q64 type=julia_inverse params=-0.11/0.6557/4/64
+julia_inverse-c type=julia_inverse params=-1/0/4/1024
+# --- inside= on other types ---
+kamtorus-in5 type=kamtorus inside=5
+icons-in5 type=icons inside=5 maxiter=10
+popcorn-in5 type=popcorn inside=5 maxiter=10
+dynamic-in5 type=dynamic inside=5 maxiter=10
