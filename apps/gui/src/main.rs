@@ -2,6 +2,9 @@
 
 //! FractalForge desktop app.
 
+// No console window on Windows (debug builds keep it for messages).
+#![cfg_attr(all(windows, not(debug_assertions)), windows_subsystem = "windows")]
+
 mod app;
 mod effects;
 mod fonts;
@@ -12,6 +15,10 @@ mod worker;
 
 use std::path::PathBuf;
 
+/// The Wayland app ID and X11 class: the name of the Linux packages'
+/// .desktop file, so desktops show the window with the app's icon.
+const APP_ID: &str = "fractalforge";
+
 fn main() -> eframe::Result {
     // Older macOS passes a process serial number ("-psn_…") to apps.
     let open = std::env::args_os()
@@ -21,6 +28,7 @@ fn main() -> eframe::Result {
     let options = eframe::NativeOptions {
         viewport: eframe::egui::ViewportBuilder::default()
             .with_title("FractalForge")
+            .with_app_id(APP_ID)
             .with_inner_size([1200.0, 800.0])
             .with_min_inner_size([480.0, 320.0])
             .with_drag_and_drop(true),
