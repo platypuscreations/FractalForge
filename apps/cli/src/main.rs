@@ -108,9 +108,10 @@ struct FractalArgs {
     /// Window corners.
     #[arg(long, value_name = "XMIN/XMAX/YMIN/YMAX", value_parser = parse_floats::<4>, allow_hyphen_values = true)]
     corners: Option<[f64; 4]>,
-    /// Window centre and magnification (1 shows a height of 2).
-    #[arg(long, value_name = "X/Y/MAG", conflicts_with = "corners", value_parser = parse_floats::<3>, allow_hyphen_values = true)]
-    center_mag: Option<[f64; 3]>,
+    /// Window centre and magnification (1 shows a height of 2). The centre
+    /// may have any number of digits: deep zooms keep them all.
+    #[arg(long, value_name = "X/Y/MAG", conflicts_with = "corners", value_parser = parse_center_mag, allow_hyphen_values = true)]
+    center_mag: Option<CenterMag>,
     /// Type parameters, e.g. the Julia constant.
     #[arg(long, value_name = "P1[/P2[/…/P10]]", value_parser = parse_params, allow_hyphen_values = true)]
     params: Option<[f64; PARAM_COUNT]>,
@@ -139,6 +140,38 @@ struct FractalArgs {
     /// Force mirror copying: none, xaxis, yaxis, xyaxis or origin.
     #[arg(long, value_parser = parse_symmetry)]
     symmetry: Option<Symmetry>,
+}
+
+/// A centre kept as text (for deep zooms) and a magnification.
+#[derive(Clone, Debug)]
+struct CenterMag {
+    x: String,
+    y: String,
+    mag: f64,
+}
+
+fn parse_center_mag(s: &str) -> Result<CenterMag, String> {
+    let parts: Vec<&str> = s.split('/').collect();
+    let [x, y, mag] = parts[..] else {
+        return Err("expected X/Y/MAG".into());
+    };
+    for v in [x, y] {
+        v.parse::<f64>()
+            .ok()
+            .filter(|f| f.is_finite())
+            .ok_or_else(|| format!("bad number {v:?}"))?;
+    }
+    let mag: f64 = mag
+        .parse()
+        .map_err(|_| format!("bad magnification {mag:?}"))?;
+    if !(mag.is_finite() && mag > 0.0) {
+        return Err("the magnification must be positive".into());
+    }
+    Ok(CenterMag {
+        x: x.to_owned(),
+        y: y.to_owned(),
+        mag,
+    })
 }
 
 impl FractalArgs {
@@ -171,7 +204,17 @@ impl FractalArgs {
             params.window = Window::new(c[0], c[1], c[2], c[3]);
         }
         if let Some(c) = &self.center_mag {
-            params.window = Window::from_center_mag(Complex::new(c[0], c[1]), c[2], aspect);
+            let (cx, cy) = (c.x.parse::<f64>().unwrap(), c.y.parse::<f64>().unwrap());
+            let half_h = 1.0 / c.mag;
+            params.deep = None;
+            if fractalforge_core::deep::needs_deep(cx, cy, half_h) {
+                let view =
+                    fractalforge_core::deep::DeepView::parse(&c.x, &c.y, half_h * aspect, half_h)
+                        .ok_or("--center-mag: the centre doesn't fit")?;
+                params.set_view(view);
+            } else {
+                params.window = Window::from_center_mag(Complex::new(cx, cy), c.mag, aspect);
+            }
         }
         if let Some(p) = self.params {
             params.params = p;
@@ -895,7 +938,8 @@ mod tests {
         let Command::Render(r) = cli.command else {
             panic!()
         };
-        assert_eq!(r.fractal.center_mag, Some([-0.5, 0.0, 2.0]));
+        let c = r.fractal.center_mag.unwrap();
+        assert_eq!((c.x.as_str(), c.y.as_str(), c.mag), ("-0.5", "0", 2.0));
         assert_eq!(r.fractal.params.unwrap()[..3], [-0.8, 0.156, 0.0]);
         assert_eq!(r.size, Some((64, 48)));
         assert_eq!(r.stop_after, Some(0.5));

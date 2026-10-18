@@ -226,6 +226,9 @@ pub struct Params {
     pub functions: [u8; 4],
     /// 3D viewing, for types that use it.
     pub view3d: View3d,
+    /// For deep zooms: the view with an arbitrary-precision centre.
+    /// `window` then holds the same view rounded to doubles.
+    pub deep: Option<crate::deep::DeepView>,
 }
 
 impl Params {
@@ -250,6 +253,7 @@ impl Params {
             program: None,
             functions: [0, 6, 2, 3],
             view3d: View3d::default(),
+            deep: None,
         }
     }
 
@@ -315,6 +319,66 @@ impl Params {
         }
     }
 
+    /// Half the width and height of the view.
+    pub fn half_spans(&self) -> (f64, f64) {
+        match &self.deep {
+            Some(d) => (d.half_w, d.half_h),
+            None => (
+                (self.window.x_max - self.window.x_min) / 2.0,
+                (self.window.y_max - self.window.y_min) / 2.0,
+            ),
+        }
+    }
+
+    /// Changes the view by `op`, a change of window (zoom, pan, …), keeping
+    /// full precision for deep views: `op` sees the window relative to the
+    /// view's centre. Switches to or from a deep view as the size needs.
+    pub fn reframe(&mut self, op: impl Fn(&Window) -> Window) {
+        use crate::bignum::BigFixed;
+        use crate::deep::{DeepView, needs_deep};
+        let (hw, hh) = self.half_spans();
+        let (re, im) = match &self.deep {
+            Some(d) => (d.re.clone(), d.im.clone()),
+            None => {
+                let w = &self.window;
+                let frac = crate::bignum::frac_limbs_for(hh / 4096.0);
+                (
+                    BigFixed::from_f64((w.x_min + w.x_max) / 2.0, frac),
+                    BigFixed::from_f64((w.y_min + w.y_max) / 2.0, frac),
+                )
+            }
+        };
+        if self.deep.is_none() {
+            let new = op(&self.window);
+            let (cx, cy) = ((new.x_min + new.x_max) / 2.0, (new.y_min + new.y_max) / 2.0);
+            if !needs_deep(cx, cy, (new.y_max - new.y_min) / 2.0) {
+                self.window = new;
+                return;
+            }
+        }
+        let rel = op(&Window::new(-hw, hw, -hh, hh));
+        let (dx, dy) = ((rel.x_min + rel.x_max) / 2.0, (rel.y_min + rel.y_max) / 2.0);
+        let (nhw, nhh) = ((rel.x_max - rel.x_min) / 2.0, (rel.y_max - rel.y_min) / 2.0);
+        let frac = crate::bignum::frac_limbs_for(nhw.min(nhh) / 4096.0).max(re.frac_limbs());
+        let re = re.with_frac(frac).add(&BigFixed::from_f64(dx, frac));
+        let im = im.with_frac(frac).add(&BigFixed::from_f64(dy, frac));
+        self.set_view(DeepView::new(&re, &im, nhw, nhh));
+    }
+
+    /// Sets the view from a precise centre, as a deep view only when its
+    /// size needs one.
+    pub fn set_view(&mut self, view: crate::deep::DeepView) {
+        let w = view.window();
+        let (cx, cy) = (view.re.to_f64(), view.im.to_f64());
+        if crate::deep::needs_deep(cx, cy, view.half_h) {
+            self.window = w;
+            self.deep = Some(view);
+        } else {
+            self.window = w;
+            self.deep = None;
+        }
+    }
+
     /// Whether any colouring option needs per-orbit statistics.
     pub fn needs_orbit_coloring(&self) -> bool {
         !matches!(self.inside, Inside::Color(_) | Inside::MaxIter)
@@ -353,8 +417,25 @@ impl Params {
                 self.fractal.name
             ));
         }
-        if !self.window.is_valid() {
-            return Err(format!("invalid window {:?}", self.window));
+        match &self.deep {
+            // The rounded window of a deep view may have no width.
+            Some(d) => {
+                if !(d.half_w > 0.0
+                    && d.half_h > 0.0
+                    && d.half_w.is_finite()
+                    && d.half_h.is_finite())
+                {
+                    return Err(format!(
+                        "invalid deep view size {} × {}",
+                        d.half_w, d.half_h
+                    ));
+                }
+            }
+            None => {
+                if !self.window.is_valid() {
+                    return Err(format!("invalid window {:?}", self.window));
+                }
+            }
         }
         if self.max_iter == 0 || self.max_iter > MAX_ITER_LIMIT {
             return Err(format!(

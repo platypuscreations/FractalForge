@@ -8,6 +8,9 @@
 //! (docs/specs/types.md §1.6), because off-centre views give different
 //! pixels when copied than when computed.
 
+use std::sync::Arc;
+
+use fractalforge_core::deep::Reference;
 use fractalforge_core::{Carry, Complex, IterBuffer, Params, PixelContext, Symmetry, UNKNOWN};
 
 use crate::checkpoint::{PassMode, RenderState};
@@ -45,6 +48,8 @@ pub(crate) struct Plan {
     residue_rows: Vec<u32>,
     /// PI_SYM: for each pixel, the pixel it copies or [`COMPUTED`].
     copy_map: Option<Vec<u32>>,
+    /// Deep views: the reference orbit pixels are perturbed from.
+    reference: Option<Arc<Reference>>,
 }
 
 /// Rows `r` with `s/2 < r <= s` are copies of row `s - r` (§1.6). Returns
@@ -73,18 +78,21 @@ impl Plan {
             t: 0,
             residue_rows: Vec::new(),
             copy_map: None,
+            reference: None,
         }
     }
 
     pub fn new(params: &Params, width: u32, height: u32, state: &RenderState) -> Self {
         let w = &params.window;
-        let symmetry = if params.use_symmetry && !params.coloring_breaks_symmetry() {
-            params
-                .forced_symmetry
-                .unwrap_or_else(|| (params.fractal.symmetry)(params))
-        } else {
-            Symmetry::None
-        };
+        // Deep views are never mirrored (their axes are far away).
+        let symmetry =
+            if params.use_symmetry && !params.coloring_breaks_symmetry() && params.deep.is_none() {
+                params
+                    .forced_symmetry
+                    .unwrap_or_else(|| (params.fractal.symmetry)(params))
+            } else {
+                Symmetry::None
+            };
         // S = round(2·ymax/Δy) and T = round(−2·xmin/Δx).
         let s = (height > 1)
             .then(|| (2.0 * w.y_max / ((w.y_max - w.y_min) / (height - 1) as f64)).round() as i64);
@@ -148,6 +156,7 @@ impl Plan {
                 t: 0,
                 residue_rows: Vec::new(),
                 copy_map,
+                reference: None,
             };
         }
         let guess = state.pass_mode == PassMode::Guess;
@@ -174,6 +183,11 @@ impl Plan {
             t: t.unwrap_or(0),
             residue_rows,
             copy_map: None,
+            reference: params
+                .deep
+                .as_ref()
+                .filter(|_| fractalforge_core::deep::supports(params))
+                .map(|view| Arc::new(Reference::new(params, view))),
         }
     }
 
@@ -209,7 +223,7 @@ impl Plan {
         buf: &IterBuffer,
         carry: &mut Carry,
     ) -> (u32, Vec<(u32, u32)>) {
-        let px = Pixels::new(params, self.width, self.height);
+        let px = Pixels::new(params, self.width, self.height, self.reference.as_deref());
         match self.stages[stage] {
             Stage::Level { step, first, guess } => {
                 let vy = index * step;
@@ -414,30 +428,51 @@ struct Pixels<'a> {
     dy: f64,
     width: u32,
     height: u32,
+    reference: Option<&'a Reference>,
 }
 
 impl<'a> Pixels<'a> {
-    fn new(params: &'a Params, width: u32, height: u32) -> Self {
-        let w = &params.window;
-        let span = |lo: f64, hi: f64, n: u32| {
+    fn new(params: &'a Params, width: u32, height: u32, reference: Option<&'a Reference>) -> Self {
+        let span = |half: f64, n: u32| {
             if n > 1 {
-                (hi - lo) / (n - 1) as f64
+                2.0 * half / (n - 1) as f64
             } else {
                 0.0
             }
         };
+        let w = &params.window;
+        let (dx, dy) = match &params.deep {
+            Some(d) => (span(d.half_w, width), span(d.half_h, height)),
+            None => (
+                span((w.x_max - w.x_min) / 2.0, width),
+                span((w.y_max - w.y_min) / 2.0, height),
+            ),
+        };
         Self {
             params,
-            dx: span(w.x_min, w.x_max, width),
-            dy: span(w.y_min, w.y_max, height),
+            dx,
+            dy,
             width,
             height,
+            reference,
         }
     }
 
     fn iterate(&self, x: u32, y: u32, carry: &mut Carry) -> u32 {
         let w = &self.params.window;
-        let c = Complex::new(w.x_min + x as f64 * self.dx, w.y_max - y as f64 * self.dy);
+        let c = match &self.params.deep {
+            // Offsets from the precise centre: perturbation where the type
+            // supports it, otherwise the rounded centre plus the offset.
+            Some(d) => {
+                let offset =
+                    Complex::new(x as f64 * self.dx - d.half_w, d.half_h - y as f64 * self.dy);
+                if let Some(r) = self.reference {
+                    return r.value(offset, self.params);
+                }
+                Complex::new(d.re.to_f64(), d.im.to_f64()) + offset
+            }
+            None => Complex::new(w.x_min + x as f64 * self.dx, w.y_max - y as f64 * self.dy),
+        };
         if self.params.program.is_some() {
             let at = PixelContext {
                 pixel: c,
