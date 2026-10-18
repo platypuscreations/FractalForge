@@ -33,7 +33,9 @@ jobs:
         if: runner.os == 'Linux'
         run: sudo apt-get update && sudo apt-get install -y libgtk-3-dev libxkbcommon-dev libwayland-dev
       - run: cargo clippy --workspace --all-targets --locked
-      - run: cargo test --workspace --locked
+      # Optimised: the formula and colouring corpus tests render over a
+      # thousand reference images, which takes ~30 min in a debug build.
+      - run: cargo test --workspace --locked --release
 
   package-macos:
     runs-on: macos-latest
