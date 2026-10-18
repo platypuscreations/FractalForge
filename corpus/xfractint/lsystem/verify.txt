@@ -1,0 +1,5 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# python3 -I tools/blackbox/lsystem/verify.py corpus/xfractint/lsystem   (MAXORDER=8)
+identical 1128, different 0, skipped 146
+# MAXORDER=200 SKIP=<orders above 12, F=FF above 13> verify.py corpus/xfractint/lsystem sem ext
+identical 114, different 0, skipped 28

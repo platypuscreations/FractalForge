@@ -1,0 +1,45 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# python3 -I tools/blackbox/lsystem/summarise.py on round fmt3 (cases-fmt3.txt)
+f-after-open-entry     400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: 'e' file entry item not found
+f-axiom-close          400x300 b5d4a468 bbox=(72,2,327,297) n=466 col=[(15, 466)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-axiom-open           400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: 'e' file entry item not found
+f-brace-nextline       400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: 'e' file entry item not found
+f-brace-nextline-empty 400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='' blocks=003,001
+f-comment-in-name      400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: 'e' file entry item not found
+f-last-wins            400x300 b5d4a468 bbox=(72,2,327,297) n=466 col=[(15, 466)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-last-wins-col0       400x300 b5d4a468 bbox=(72,2,327,297) n=466 col=[(15, 466)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-lk-long-b            400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-lk-noentry           400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-lk-noext-b           400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-lk-noext-c           400x300 f9e7ef36 bbox=(5,37,394,262) n=486 col=[(15, 486)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-lk-nofile-a          400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: 'e' file entry item not found
+f-lk-nofile-ab         400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-lk-nofile-bc         400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-lk-nofile-cz         400x300 f9e7ef36 bbox=(5,37,394,262) n=486 col=[(15, 486)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-lk-own-b             400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-lk-own-c             400x300 f9e7ef36 bbox=(5,37,394,262) n=486 col=[(15, 486)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-lk-upper-b           400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-lk-upper-c           400x300 f9e7ef36 bbox=(5,37,394,262) n=486 col=[(15, 486)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-lname18              400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='kkkkkkkkkkkkkkkkkk' blocks=003,001
+f-lname19              NOIMAGE STOPMSG: Oops. I couldn't understand the argument: |   lname=kkkkkkkkkkkkkkkkkkk |  | (see the Startup Help screens or documentation for a complete |  argument list with descriptions) LOG: Oops. I couldn't understand the argument: lname=kkkkkkkkkkkkkkkkkkk (see the Startup Help screens or documentation for a complete argument list with descriptions) (exit status 1)
+f-lname20              NOIMAGE STOPMSG: Oops. I couldn't understand the argument: |   lname=kkkkkkkkkkkkkkkkkkkk |  | (see the Startup Help screens or documentation for a complete |  argument list with descriptions) LOG: Oops. I couldn't understand the argument: lname=kkkkkkkkkkkkkkkkkkkk (see the Startup Help screens or documentation for a complete argument list with descriptions) (exit status 1)
+f-name-bang            400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='a!b' blocks=003,001
+f-name-brack           400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='a[b' blocks=003,001 STOPMSG: 'a[b' file entry item not found
+f-name-brack-a         400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='a' blocks=003,001
+f-name-dash            400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='a-b' blocks=003,001
+f-name-digit           400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='1abc' blocks=003,001
+f-name-dot             400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='a.b' blocks=003,001
+f-name-eq              400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='a=b' blocks=003,001
+f-name-glued           400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-name-paren           400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='a(b)' blocks=003,001 STOPMSG: 'a(b)' file entry item not found
+f-name-paren-a         400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='a' blocks=003,001
+f-name-slash           400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='a/b' blocks=003,001
+f-name-under           400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='a_b' blocks=003,001
+f-name-upper           400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='eex' blocks=003,001
+f-name18-file24        400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='kkkkkkkkkkkkkkkkkk' blocks=003,001
+f-noclose-col0         400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: 'e' file entry item not found
+f-noclose-col0-close   400x300 b5d4a468 bbox=(72,2,327,297) n=466 col=[(15, 466)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-noclose-indented     400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: 'e' file entry item not found
+f-rule-brace           400x300 69eb943f bbox=- n=0 col=[] t=107 p1=1 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: 'e' file entry item not found
+f-rule-close           400x300 b5d4a468 bbox=(72,2,327,297) n=466 col=[(15, 466)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-second-noblank       400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001

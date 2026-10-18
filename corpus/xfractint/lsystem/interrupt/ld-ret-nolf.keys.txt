@@ -1,0 +1,1 @@
+s10 kReturn s45 kEscape s2 ks | filename=in.gif

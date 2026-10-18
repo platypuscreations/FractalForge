@@ -1,0 +1,4 @@
+Syntax error line 2: angle4
+Syntax error line 3: axiomf+f+f
+Error:  no axiom
+Error:  illegal or missing angle

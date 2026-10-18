@@ -1,0 +1,5 @@
+ffkoch {
+  angle 6
+  axiom F--F--F
+  F=F+F--F+F
+}

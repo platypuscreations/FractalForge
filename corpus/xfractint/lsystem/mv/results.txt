@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# python3 -I tools/blackbox/lsystem/summarise.py on round mv (cases-mv.txt)
+mv-m00                 400x300 7437196b bbox=(53,297,347,297) n=295 col=[(15, 295)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m00' blocks=003,001
+mv-m01                 400x300 fac9d6e6 bbox=(5,150,200,150) n=196 col=[(15, 196)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m01' blocks=003,001
+mv-m02                 400x300 7437196b bbox=(53,297,347,297) n=295 col=[(15, 295)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m02' blocks=003,001
+mv-m03                 400x300 fac9d6e6 bbox=(5,150,200,150) n=196 col=[(15, 196)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m03' blocks=003,001
+mv-m04                 400x300 be1086a6 bbox=(346,3,347,297) n=295 col=[(15, 295)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m04' blocks=003,001
+mv-m05                 400x300 be1086a6 bbox=(346,3,347,297) n=295 col=[(15, 295)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m05' blocks=003,001
+mv-m06                 400x300 be1086a6 bbox=(346,3,347,297) n=295 col=[(15, 295)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m06' blocks=003,001
+mv-m07                 400x300 be1086a6 bbox=(346,3,347,297) n=295 col=[(15, 295)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m07' blocks=003,001
+mv-m08                 400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m08' blocks=003,001
+mv-m09                 400x300 80a65065 bbox=(5,150,395,150) n=391 col=[(15, 391)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m09' blocks=003,001
+mv-m10                 400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m10' blocks=003,001
+mv-m11                 400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m11' blocks=003,001
+mv-m12                 400x300 0d773ac9 bbox=(5,52,395,247) n=392 col=[(15, 392)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m12' blocks=003,001
+mv-m13                 400x300 0d773ac9 bbox=(5,52,395,247) n=392 col=[(15, 392)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m13' blocks=003,001
+mv-m14                 400x300 0d773ac9 bbox=(5,52,395,247) n=392 col=[(15, 392)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m14' blocks=003,001
+mv-m15                 400x300 0d773ac9 bbox=(5,52,395,247) n=392 col=[(15, 392)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m15' blocks=003,001
+mv-m16                 400x300 e0c6828a bbox=(126,3,273,297) n=296 col=[(15, 296)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m16' blocks=003,001
+mv-m17                 400x300 0d773ac9 bbox=(5,52,395,247) n=392 col=[(15, 392)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m17' blocks=003,001
+mv-m18                 400x300 e0c6828a bbox=(126,3,273,297) n=296 col=[(15, 296)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m18' blocks=003,001
+mv-m19                 400x300 0d773ac9 bbox=(5,52,395,247) n=392 col=[(15, 392)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m19' blocks=003,001
+mv-m20                 400x300 ab488934 bbox=(5,150,395,150) n=262 col=[(15, 262)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m20' blocks=003,001
+mv-m21                 400x300 ab488934 bbox=(5,150,395,150) n=262 col=[(15, 262)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m21' blocks=003,001
+mv-m22                 400x300 0d773ac9 bbox=(5,52,395,247) n=392 col=[(15, 392)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m22' blocks=003,001
+mv-m23                 400x300 ab488934 bbox=(5,150,395,150) n=262 col=[(15, 262)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m23' blocks=003,001
+mv-m24                 400x300 c7c4feed bbox=(4,52,395,247) n=392 col=[(15, 392)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m24' blocks=003,001
+mv-m25                 400x300 b2f17576 bbox=(5,149,395,150) n=392 col=[(15, 392)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m25' blocks=003,001
+mv-m26                 400x300 c7c4feed bbox=(4,52,395,247) n=392 col=[(15, 392)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m26' blocks=003,001
+mv-m27                 400x300 b2f17576 bbox=(5,149,395,150) n=392 col=[(15, 392)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m27' blocks=003,001
+mv-m28                 400x300 37aa8bce bbox=(394,52,395,247) n=196 col=[(15, 196)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m28' blocks=003,001
+mv-m29                 400x300 37aa8bce bbox=(394,52,395,247) n=196 col=[(15, 196)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m29' blocks=003,001
+mv-m30                 400x300 a93a72b4 bbox=(5,85,395,215) n=262 col=[(15, 262)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m30' blocks=003,001
+mv-m31                 400x300 a93a72b4 bbox=(5,85,395,215) n=262 col=[(15, 262)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m31' blocks=003,001
+mv-m32                 400x300 a93a72b4 bbox=(5,85,395,215) n=262 col=[(15, 262)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m32' blocks=003,001
+mv-m33                 400x300 bf762d5a bbox=(5,52,200,247) n=391 col=[(15, 391)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m33' blocks=003,001
+mv-m34                 400x300 0d773ac9 bbox=(5,52,395,247) n=392 col=[(15, 392)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='m34' blocks=003,001

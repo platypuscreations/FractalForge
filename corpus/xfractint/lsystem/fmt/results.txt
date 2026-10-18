@@ -1,0 +1,88 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# python3 -I tools/blackbox/lsystem/summarise.py on round fmt (cases-fmt.txt)
+f-after-close          400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-after-open           400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-after-open2          400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-angle-extra          400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: Extra text after command line 2: 5
+f-angle-noval          NOIMAGE LOG: qemu: uncaught target signal 11 (Segmentation fault) - core dumped /usr/local/bin/run-batch: line 23:    18 Segmentation fault      /usr/bin/xfractint batch=yes "$@" (exit status 139)
+f-angle-text           400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: Error:  illegal or missing angle
+f-angle-twice          400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-angle0               400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: Error:  illegal or missing angle
+f-angle1               400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: Error:  illegal or missing angle
+f-angle1000            400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: Error:  illegal or missing angle
+f-angle2               400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: Error:  illegal or missing angle
+f-angle3               400x300 615e1980 bbox=(30,2,369,297) n=929 col=[(15, 929)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-angle360             400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: Error:  illegal or missing angle
+f-angle45              400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-angle50              400x300 67ad94b5 bbox=(4,125,395,174) n=392 col=[(15, 392)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-angle51              400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: Error:  illegal or missing angle
+f-anglem4              400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: Error:  illegal or missing angle
+f-axiom-first          400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-axiom-noval          NOIMAGE LOG: qemu: uncaught target signal 11 (Segmentation fault) - core dumped /usr/local/bin/run-batch: line 23:    18 Segmentation fault      /usr/bin/xfractint batch=yes "$@" (exit status 139)
+f-axiom-space          400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: Extra text after command line 3: +f
+f-axiom-twice          400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-base                 400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-blank                400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-brace-nextline       400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: 'e' file entry item not found
+f-close-sameline       400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: Extra text after command line 3: }
+f-close-sameline2      400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-cmt-angle            400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-cmt-axiom            400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-cmt-brace            400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-cmt-close            400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-cmt-hash             400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-cmt-line             400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-cmt-name             400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-cmt-name2            400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-cmt-rule             400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-cmt-top              400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-crlf                 400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-dupname              400x300 80a65065 bbox=(5,150,395,150) n=391 col=[(15, 391)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-empty                400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: Error:  no axiom | Error:  illegal or missing angle
+f-indent0              400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-kw-abbrev            400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: Syntax error line 2: ang | Syntax error line 3: ax | Error:  no axiom | Error:  illegal or missing angle
+f-kw-mixed             400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-kw-nospace           400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: Syntax error line 2: angle4 | Syntax error line 3: axiomf+f+f | Error:  no axiom | Error:  illegal or missing angle
+f-kw-upper             400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-lname-upper          400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='E' blocks=003,001
+f-missing              400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='zz' blocks=003,001 STOPMSG: 'zz' file entry item not found
+f-name-upper           400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='eex' blocks=003,001
+f-noangle              400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: Error:  illegal or missing angle
+f-noaxiom              400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: Error:  no axiom
+f-noclose              400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: 'e' file entry item not found
+f-noclose2             400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: 'e' file entry item not found
+f-nolname              400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='' blocks=003,001 STOPMSG: '' file entry item not found
+f-nospace-brace        400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-one-line             400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: Extra text after command line 1: axiom | Error:  no axiom
+f-prefix               400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-rule                 400x300 c547b5fc bbox=(52,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-rule-a               400x300 d6485755 bbox=(4,52,395,247) n=781 col=[(15, 781)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-rule-angle           400x300 69eb943f bbox=- n=0 col=[] t=107 p1=1 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: Error:  illegal or missing angle
+f-rule-at              400x300 c8d34940 bbox=(5,20,395,280) n=651 col=[(15, 651)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-rule-axiom           400x300 80a65065 bbox=(5,150,395,150) n=391 col=[(15, 391)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-rule-bracket         400x300 69eb943f bbox=- n=0 col=[] t=107 p1=1 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: Syntax error line 4: Redefined reserved symbol [
+f-rule-c               400x300 69eb943f bbox=- n=0 col=[] t=107 p1=1 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: Syntax error line 4: Redefined reserved symbol c
+f-rule-digit           400x300 33ee01cd bbox=(4,85,395,215) n=651 col=[(15, 651)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-rule-empty           400x300 e32a7a4b bbox=(5,149,395,150) n=587 col=[(15, 587)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-rule-first           400x300 c547b5fc bbox=(52,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-rule-lower           400x300 c547b5fc bbox=(52,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-rule-lower2          400x300 c547b5fc bbox=(52,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-rule-multi           400x300 69eb943f bbox=- n=0 col=[] t=107 p1=1 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: Syntax error line 4: ff
+f-rule-nolhs           400x300 69eb943f bbox=- n=0 col=[] t=107 p1=1 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-rule-plus            400x300 69eb943f bbox=- n=0 col=[] t=107 p1=1 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: Syntax error line 4: Redefined reserved symbol +
+f-rule-sp              400x300 c547b5fc bbox=(52,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-rule-sp2             400x300 c547b5fc bbox=(52,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-rule-sp3             400x300 c547b5fc bbox=(52,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-rule-sp4             400x300 69eb943f bbox=- n=0 col=[] t=107 p1=1 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: Extra text after command line 4: f
+f-rule-space-in        400x300 69eb943f bbox=- n=0 col=[] t=107 p1=1 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: Extra text after command line 4: -f
+f-rule-twice           400x300 ac66267c bbox=(150,2,249,297) n=395 col=[(15, 395)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-rule-x               400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-rule-x0              400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-second               400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-second-noblank       400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-simul                400x300 ec7bbb99 bbox=(199,3,200,297) n=295 col=[(15, 295)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-simul2               400x300 ddf90f93 bbox=(52,3,347,297) n=589 col=[(15, 589)] t=107 p1=2 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-spaces-many          400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-tab                  400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+f-unknown-kw           400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: Syntax error line 3: bogus
+f-unknown-word         400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001 STOPMSG: Syntax error line 4: hello

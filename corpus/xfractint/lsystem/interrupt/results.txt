@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# python3 -I tools/blackbox/lsystem/intsum.py interrupt sem/s-kobig-12.gif
+int-15       status= 3 time= 1443 blocks=003,001 extra=0 missing=1140 markers=0  [run-interrupt 15 | type=lsystem lfile=sem.l lname=kobig params=12 viewwindows=2 map=uniq.map]
+int-30       status= 4 time= 2119 blocks=003,001 extra=0 missing=0 markers=0  [run-interrupt 30 | type=lsystem lfile=sem.l lname=kobig params=12 viewwindows=2 map=uniq.map]
+int-8        status= 3 time=  753 blocks=003,001 extra=0 missing=2178 markers=0  [run-interrupt 8 | type=lsystem lfile=sem.l lname=kobig params=12 viewwindows=2 map=uniq.map]
+ld-batch     status=-1 time= 1443 blocks=003,001 extra=0 missing=1140 markers=0  [batch | filename=in.gif]
+ld-none      status=-1 time= 1443 blocks=003,001 extra=0 missing=1140 markers=0  [s30 ks | filename=in.gif]
+ld-r-mark    status= 3 time= 1443 blocks=003,001 extra=260 missing=1140 markers=260  [s10 kr s3 tin.gif s1 kReturn s70 ks | type=mandel maxiter=10 viewwindows=2 lfile=sem.l]
+ld-ret-mark  status= 4 time= 2235 blocks=003,001 extra=0 missing=0 markers=0  [s10 kReturn s70 ks | filename=in.gif lfile=sem.l]
+ld-ret-nolf  status= 4 time= 4457 blocks=003,001 extra=0 missing=2178 markers=0  [s10 kReturn s45 kEscape s2 ks | filename=in.gif]
+ld-ret       status= 4 time= 2111 blocks=003,001 extra=0 missing=0 markers=0  [s10 kReturn s70 ks | filename=in.gif lfile=sem.l]
+marked       status= 3 time= 1443 blocks=003,001 extra=260 missing=1140 markers=260  []

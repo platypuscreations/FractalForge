@@ -1,0 +1,24 @@
+e {
+ angle 4
+ axiom A
+ X=X
+ X=X
+ X=X
+ X=X
+ X=X
+ X=X
+ X=X
+ X=X
+ X=X
+ X=X
+ X=X
+ X=X
+ X=X
+ X=X
+ X=X
+ X=X
+ X=X
+ X=X
+ X=X
+ A=F+F
+}

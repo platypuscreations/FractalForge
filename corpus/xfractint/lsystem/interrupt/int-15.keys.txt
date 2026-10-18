@@ -1,0 +1,1 @@
+run-interrupt 15 | type=lsystem lfile=sem.l lname=kobig params=12 viewwindows=2 map=uniq.map

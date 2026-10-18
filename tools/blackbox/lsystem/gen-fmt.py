@@ -1,0 +1,112 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Writes the file-format test inputs inputs/fmNNN.l and cases-fmt.txt.
+# Each case gets its own .l file (NNN = position in the list below; names
+# must fit DOS 8.3 or XFractint cannot open them).  Every case runs in a
+# work directory holding only its own file and uniq.map (run-case.sh only=),
+# because XFractint searches the other .l files when an entry is missing so structural mistakes cannot leak into
+# other cases.  The files deliberately carry no licence comment, because a
+# comment line would change what they test.
+#   python3 -I gen-fmt.py
+import os
+here = os.path.dirname(os.path.abspath(__file__))
+SQ = 'angle 4\naxiom F+F+F\n'
+T = {}
+def t(name, text, lname='e', extra='params=0'):
+    T[name] = (text, lname, extra)
+# --- names, case, braces
+t('base', 'e {\n angle 4\n axiom F+F+F\n}\n')
+t('lname-upper', 'e {\n angle 4\n axiom F+F+F\n}\n', lname='E')
+t('name-upper', 'EeX {\n angle 4\n axiom F+F+F\n}\n', lname='eex')
+t('kw-upper', 'e {\n ANGLE 4\n AXIOM F+F+F\n}\n')
+t('kw-mixed', 'e {\n Angle 4\n aXiom F+F+F\n}\n')
+t('nospace-brace', 'e{\n angle 4\n axiom F+F+F\n}\n')
+t('brace-nextline', 'e\n{\n angle 4\n axiom F+F+F\n}\n')
+t('close-sameline', 'e {\n angle 4\n axiom F+F+F }\n')
+t('close-sameline2', 'e {\n angle 4\n axiom F+F+F}\n')
+t('one-line', 'e { angle 4 axiom F+F+F }\n')
+t('after-open', 'e { angle 4\n axiom F+F+F\n}\n')
+t('after-open2', 'e { axiom F+F+F\n angle 4\n}\n')
+t('after-close', 'e {\n angle 4\n axiom F+F+F\n} junk\nf {\n angle 4\n axiom F\n}\n')
+t('noclose', 'e {\n angle 4\n axiom F+F+F\n')
+t('noclose2', 'e {\n angle 4\n axiom F+F+F\nf {\n angle 6\n axiom F+F\n}\n')
+t('second', 'd {\n angle 4\n axiom F\n}\ne {\n angle 4\n axiom F+F+F\n}\n')
+t('second-noblank', 'd {\n angle 4\n axiom F\n}e {\n angle 4\n axiom F+F+F\n}\n')
+t('dupname', 'e {\n angle 4\n axiom F\n}\ne {\n angle 4\n axiom F+F+F\n}\n')
+t('prefix', 'ee {\n angle 4\n axiom F\n}\ne {\n angle 4\n axiom F+F+F\n}\n')
+t('nolname', 'd {\n angle 4\n axiom F\n}\ne {\n angle 4\n axiom F+F+F\n}\n', lname=None)
+t('missing', 'e {\n angle 4\n axiom F+F+F\n}\n', lname='zz')
+t('tab', 'e\t{\n\tangle\t4\n\taxiom\tF+F+F\n}\n')
+t('crlf', 'e {\r\n angle 4\r\n axiom F+F+F\r\n}\r\n')
+t('indent0', 'e {\nangle 4\naxiom F+F+F\n}\n')
+t('blank', '\n\ne {\n\n angle 4\n\n\n axiom F+F+F\n\n}\n\n')
+t('spaces-many', 'e   {\n   angle     4   \n   axiom    F+F+F    \n}\n')
+# --- comments
+t('cmt-top', '; comment\ne {\n angle 4\n axiom F+F+F\n}\n')
+t('cmt-name', 'e { ; comment\n angle 4\n axiom F+F+F\n}\n')
+t('cmt-line', 'e {\n ; comment F=FF\n angle 4\n axiom F+F+F\n}\n')
+t('cmt-angle', 'e {\n angle 4 ; comment\n axiom F+F+F\n}\n')
+t('cmt-axiom', 'e {\n angle 4\n axiom F+F+F;+F\n}\n')
+t('cmt-rule', 'e {\n angle 4\n axiom F+F+F\n F=F;F\n}\n', extra='params=1')
+t('cmt-close', 'e {\n angle 4\n axiom F+F+F\n} ; comment\n')
+t('cmt-brace', '; x {\ne {\n angle 4\n axiom F+F+F\n}\n')
+t('cmt-hash', 'e {\n angle 4\n # comment\n axiom F+F+F\n}\n')
+t('cmt-name2', ';e {\n; angle 4\n; axiom F\n;}\ne {\n angle 4\n axiom F+F+F\n}\n')
+# --- directives
+t('noangle', 'e {\n axiom F+F+F\n}\n')
+t('noaxiom', 'e {\n angle 4\n}\n')
+t('empty', 'e {\n}\n')
+t('angle-twice', 'e {\n angle 6\n angle 4\n axiom F+F+F\n}\n')
+t('axiom-twice', 'e {\n angle 4\n axiom F\n axiom F+F+F\n}\n')
+t('axiom-first', 'e {\n axiom F+F+F\n angle 4\n}\n')
+t('angle0', 'e {\n angle 0\n axiom F+F+F\n}\n')
+t('angle1', 'e {\n angle 1\n axiom F+F+F\n}\n')
+t('angle2', 'e {\n angle 2\n axiom F+F+F\n}\n')
+t('angle3', 'e {\n angle 3\n axiom F+F+F\n}\n')
+t('angle45', 'e {\n angle 4.5\n axiom F+F+F\n}\n')
+t('anglem4', 'e {\n angle -4\n axiom F+F+F\n}\n')
+t('angle50', 'e {\n angle 50\n axiom F+F+F\n}\n')
+t('angle51', 'e {\n angle 51\n axiom F+F+F\n}\n')
+t('angle360', 'e {\n angle 360\n axiom F+F+F\n}\n')
+t('angle1000', 'e {\n angle 1000\n axiom F+F+F\n}\n')
+t('angle-noval', 'e {\n angle\n axiom F+F+F\n}\n')
+t('angle-text', 'e {\n angle x\n axiom F+F+F\n}\n')
+t('angle-extra', 'e {\n angle 4 5\n axiom F+F+F\n}\n')
+t('axiom-noval', 'e {\n angle 4\n axiom\n}\n')
+t('axiom-space', 'e {\n angle 4\n axiom F+F +F\n}\n')
+t('unknown-kw', 'e {\n angle 4\n bogus 7\n axiom F+F+F\n}\n')
+t('unknown-word', 'e {\n angle 4\n axiom F+F+F\n hello\n}\n')
+t('kw-abbrev', 'e {\n ang 4\n ax F+F+F\n}\n')
+t('kw-nospace', 'e {\n angle4\n axiomF+F+F\n}\n')
+# --- rules
+t('rule', 'e {\n angle 4\n axiom F+F+F\n F=F-F\n}\n', extra='params=1')
+t('rule-sp', 'e {\n angle 4\n axiom F+F+F\n F = F-F\n}\n', extra='params=1')
+t('rule-sp2', 'e {\n angle 4\n axiom F+F+F\n F= F-F\n}\n', extra='params=1')
+t('rule-sp3', 'e {\n angle 4\n axiom F+F+F\n F =F-F\n}\n', extra='params=1')
+t('rule-sp4', 'e {\n angle 4\n axiom F+F+F\n F=F- F\n}\n', extra='params=1')
+t('rule-lower', 'e {\n angle 4\n axiom F+F+F\n f=F-F\n}\n', extra='params=1')
+t('rule-lower2', 'e {\n angle 4\n axiom f+F+F\n F=F-F\n}\n', extra='params=1')
+t('rule-twice', 'e {\n angle 4\n axiom F+F+F\n F=F-F\n F=FF\n}\n', extra='params=1')
+t('rule-empty', 'e {\n angle 4\n axiom F+X+F\n X=\n}\n', extra='params=1')
+t('rule-multi', 'e {\n angle 4\n axiom F+F+F\n FF=F-F\n}\n', extra='params=1')
+t('rule-plus', 'e {\n angle 4\n axiom F+F+F\n +=-\n}\n', extra='params=1')
+t('rule-bracket', 'e {\n angle 4\n axiom F+F+F\n [=F\n}\n', extra='params=1')
+t('rule-nolhs', 'e {\n angle 4\n axiom F+F+F\n =F\n}\n', extra='params=1')
+t('rule-first', 'e {\n F=F-F\n angle 4\n axiom F+F+F\n}\n', extra='params=1')
+t('rule-x', 'e {\n angle 4\n axiom X\n X=F+F+F\n}\n', extra='params=1')
+t('rule-x0', 'e {\n angle 4\n axiom X\n X=F+F+F\n}\n', extra='params=0')
+t('rule-angle', 'e {\n angle 4\n axiom F+F+F\n angle=F\n}\n', extra='params=1')
+t('rule-axiom', 'e {\n angle 4\n axiom F+F+F\n axiom=F\n}\n', extra='params=1')
+t('rule-a', 'e {\n angle 4\n axiom A+F+F\n a=F-F\n}\n', extra='params=1')
+t('rule-digit', 'e {\n angle 4\n axiom F2+F+F\n 2=F-F\n}\n', extra='params=1')
+t('rule-c', 'e {\n angle 4\n axiom FC2F+F\n C=F\n}\n', extra='params=1')
+t('rule-at', 'e {\n angle 4\n axiom F@2F+F\n 2=FF\n}\n', extra='params=1')
+t('rule-space-in', 'e {\n angle 4\n axiom F+F+F\n F=F -F\n}\n', extra='params=1')
+# --- ordering in output / simultaneity
+t('simul', 'e {\n angle 4\n axiom A\n A=B+F\n B=A-F\n}\n', extra='params=1')
+t('simul2', 'e {\n angle 4\n axiom A\n A=B+F\n B=A-F\n}\n', extra='params=2')
+C = ['# SPDX-License-Identifier: GPL-3.0-or-later', '# Generated by gen-fmt.py.']
+for i, (name, (text, ln, extra)) in enumerate(T.items(), 1):
+    open(os.path.join(here, 'inputs', f'fm{i:03d}.l'), 'w', newline='').write(text)
+    ls = f' lname={ln}' if ln else ''
+    C.append(f'f-{name} only=fm{i:03d}.l,uniq.map type=lsystem lfile=fm{i:03d}.l{ls} {extra} viewwindows=2 map=uniq.map')
+open(os.path.join(here, 'cases-fmt.txt'), 'w').write('\n'.join(C) + '\n')

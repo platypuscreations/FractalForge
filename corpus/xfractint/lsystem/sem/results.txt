@@ -1,0 +1,95 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# python3 -I tools/blackbox/lsystem/summarise.py on round sem (cases-sem.txt)
+s-at255-0              400x300 083ee423 bbox=(4,10,395,289) n=671 col=[(15, 671)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='at255' blocks=003,001
+s-atbig-0              400x300 d657c6f9 bbox=(52,3,347,296) n=589 col=[(15, 589)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='atbig' blocks=003,001
+s-ati-0                400x300 80a65065 bbox=(5,150,395,150) n=391 col=[(15, 391)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='ati' blocks=003,001
+s-ati0-0               400x300 80a65065 bbox=(5,150,395,150) n=391 col=[(15, 391)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='ati0' blocks=003,001
+s-atii2-0              400x300 ef3c713f bbox=(5,85,395,215) n=521 col=[(15, 521)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='atii2' blocks=003,001
+s-atiq3-0              400x300 77ad40b6 bbox=(5,78,394,221) n=533 col=[(15, 533)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='atiq3' blocks=003,001
+s-atmix-0              400x300 d001f7e6 bbox=(102,3,298,297) n=491 col=[(15, 491)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='atmix' blocks=003,001
+s-atq-0                400x300 80a65065 bbox=(5,150,395,150) n=391 col=[(15, 391)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='atq' blocks=003,001
+s-atq2-0               400x300 7ef4519a bbox=(5,35,394,264) n=619 col=[(15, 619)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='atq2' blocks=003,001
+s-atqq16-0             400x300 330ff140 bbox=(16,3,383,297) n=662 col=[(15, 662)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='atqq16' blocks=003,001
+s-attiny-0             400x300 d8088b87 bbox=(5,149,394,150) n=391 col=[(15, 391)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='attiny' blocks=003,001
+s-bangpipe-0           400x300 25c7e1bd bbox=(5,35,395,264) n=707 col=[(15, 707)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='bangpipe' blocks=003,001
+s-bangrule-3           400x300 3a2ff050 bbox=(4,52,395,247) n=586 col=[(15, 586)] t=107 p1=3 corners=-1,1,-1,1 st=4 003='bangrule' blocks=003,001
+s-bbbranch-0           400x300 f1fac65b bbox=(151,297,249,297) n=99 col=[(15, 99)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='bbbranch' blocks=003,001
+s-bbmove-0             400x300 f1fac65b bbox=(151,297,249,297) n=99 col=[(15, 99)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='bbmove' blocks=003,001
+s-c007-0               400x300 f17fb7f8 bbox=(5,150,395,150) n=391 col=[(7, 196), (15, 195)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='c007' blocks=003,001
+s-c0gt0-0              400x300 c0e1993e bbox=(5,150,395,150) n=391 col=[(255, 196), (15, 195)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='c0gt0' blocks=003,001
+s-c0gt1-0              400x300 c0e1993e bbox=(5,150,395,150) n=391 col=[(255, 196), (15, 195)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='c0gt1' blocks=003,001
+s-c0lt0-0              400x300 2fbe579b bbox=(5,150,395,150) n=391 col=[(1, 196), (15, 195)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='c0lt0' blocks=003,001
+s-c0lt1-0              400x300 2fbe579b bbox=(5,150,395,150) n=391 col=[(1, 196), (15, 195)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='c0lt1' blocks=003,001
+s-c1gt1-0              400x300 c0e1993e bbox=(5,150,395,150) n=391 col=[(255, 196), (15, 195)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='c1gt1' blocks=003,001
+s-c255lt1-0            400x300 2fbe579b bbox=(5,150,395,150) n=391 col=[(1, 196), (15, 195)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='c255lt1' blocks=003,001
+s-cplus-0              400x300 aef71490 bbox=(53,297,346,297) n=294 col=[(15, 294)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='cplus' blocks=003,001
+s-dbl-10               400x300 80a65065 bbox=(5,150,395,150) n=391 col=[(15, 391)] t=107 p1=10 corners=-1,1,-1,1 st=4 003='dbl' blocks=003,001
+s-dbl-14               400x300 80a65065 bbox=(5,150,395,150) n=391 col=[(15, 391)] t=107 p1=14 corners=-1,1,-1,1 st=4 003='dbl' blocks=003,001
+s-dbl-15               400x300 80a65065 bbox=(5,150,395,150) n=391 col=[(15, 391)] t=107 p1=15 corners=-1,1,-1,1 st=4 003='dbl' blocks=003,001
+s-dbl-16               400x300 80a65065 bbox=(5,150,395,150) n=391 col=[(15, 391)] t=107 p1=16 corners=-1,1,-1,1 st=4 003='dbl' blocks=003,001
+s-dbl-17               400x300 80a65065 bbox=(5,150,395,150) n=391 col=[(15, 391)] t=107 p1=17 corners=-1,1,-1,1 st=4 003='dbl' blocks=003,001
+s-dbl-18               400x300 80a65065 bbox=(5,150,395,150) n=391 col=[(15, 391)] t=107 p1=18 corners=-1,1,-1,1 st=4 003='dbl' blocks=003,001
+s-dbl-20               400x300 80a65065 bbox=(5,150,395,150) n=391 col=[(15, 391)] t=107 p1=20 corners=-1,1,-1,1 st=4 003='dbl' blocks=003,001
+s-dbl-24               400x300 80a65065 bbox=(5,150,395,150) n=391 col=[(15, 391)] t=107 p1=24 corners=-1,1,-1,1 st=4 003='dbl' blocks=003,001
+s-dm-0                 400x300 ab488934 bbox=(5,150,395,150) n=262 col=[(15, 262)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='dm' blocks=003,001
+s-erase-0              400x300 0dcfc90b bbox=(5,149,297,149) n=293 col=[(15, 293)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='erase' blocks=003,001
+s-erase2-0             400x300 1ad53811 bbox=(126,2,273,149) n=587 col=[(15, 587)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='erase2' blocks=003,001
+s-gm-0                 400x300 b60cc97d bbox=(5,101,395,198) n=294 col=[(15, 294)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='gm' blocks=003,001
+s-gt1000-0             400x300 d88805da bbox=(5,150,395,150) n=391 col=[(39, 196), (15, 195)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='gt1000' blocks=003,001
+s-gt255-0              400x300 7efc3a52 bbox=(5,150,395,150) n=391 col=[(16, 196), (15, 195)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='gt255' blocks=003,001
+s-gt271-0              400x300 c0e1993e bbox=(5,150,395,150) n=391 col=[(255, 196), (15, 195)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='gt271' blocks=003,001
+s-ko-0                 400x300 80a65065 bbox=(5,150,395,150) n=391 col=[(15, 391)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='ko' blocks=003,001
+s-ko-0p5               400x300 80a65065 bbox=(5,150,395,150) n=391 col=[(15, 391)] t=107 p1=0.5 corners=-1,1,-1,1 st=4 003='ko' blocks=003,001
+s-ko-1                 400x300 49c811f1 bbox=(5,93,394,206) n=487 col=[(15, 487)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='ko' blocks=003,001
+s-ko-1e1               400x300 d21e80b2 bbox=(5,93,394,206) n=2178 col=[(15, 2178)] t=107 p1=10 corners=-1,1,-1,1 st=4 003='ko' blocks=003,001
+s-ko-2                 400x300 e2833ca7 bbox=(5,93,394,206) n=639 col=[(15, 639)] t=107 p1=2 corners=-1,1,-1,1 st=4 003='ko' blocks=003,001
+s-ko-2p5               400x300 e2833ca7 bbox=(5,93,394,206) n=639 col=[(15, 639)] t=107 p1=2.5 corners=-1,1,-1,1 st=4 003='ko' blocks=003,001
+s-ko-2p9               400x300 e2833ca7 bbox=(5,93,394,206) n=639 col=[(15, 639)] t=107 p1=2.9 corners=-1,1,-1,1 st=4 003='ko' blocks=003,001
+s-ko-3                 400x300 765fab73 bbox=(4,93,395,206) n=857 col=[(15, 857)] t=107 p1=3 corners=-1,1,-1,1 st=4 003='ko' blocks=003,001
+s-ko-4                 400x300 efa852e5 bbox=(4,93,395,206) n=1133 col=[(15, 1133)] t=107 p1=4 corners=-1,1,-1,1 st=4 003='ko' blocks=003,001
+s-ko-5                 400x300 07a7577c bbox=(5,93,394,206) n=1479 col=[(15, 1479)] t=107 p1=5 corners=-1,1,-1,1 st=4 003='ko' blocks=003,001
+s-ko-6                 400x300 5e60379d bbox=(5,93,394,206) n=2017 col=[(15, 2017)] t=107 p1=6 corners=-1,1,-1,1 st=4 003='ko' blocks=003,001
+s-ko-7                 400x300 ad4e4bab bbox=(5,93,394,206) n=2138 col=[(15, 2138)] t=107 p1=7 corners=-1,1,-1,1 st=4 003='ko' blocks=003,001
+s-ko-8                 400x300 e0d2b08d bbox=(4,93,395,206) n=2234 col=[(15, 2234)] t=107 p1=8 corners=-1,1,-1,1 st=4 003='ko' blocks=003,001
+s-ko-def               400x300 e2833ca7 bbox=(5,93,394,206) n=639 col=[(15, 639)] t=107 p1=2 corners=-1,1,-1,1 st=4 003='ko' blocks=003,001
+s-ko-m0p5              400x300 80a65065 bbox=(5,150,395,150) n=391 col=[(15, 391)] t=107 p1=-0.5 corners=-1,1,-1,1 st=4 003='ko' blocks=003,001
+s-ko-m1                400x300 80a65065 bbox=(5,150,395,150) n=391 col=[(15, 391)] t=107 p1=-1 corners=-1,1,-1,1 st=4 003='ko' blocks=003,001
+s-kobig-10             400x300 d21e80b2 bbox=(5,93,394,206) n=2178 col=[(15, 2178)] t=107 p1=10 corners=-1,1,-1,1 st=4 003='kobig' blocks=003,001
+s-kobig-100            NOIMAGE LOG: (killed after 300 s) (exit status 137)
+s-kobig-1000           NOIMAGE LOG: (killed after 300 s) (exit status 137)
+s-kobig-12             400x300 d21e80b2 bbox=(5,93,394,206) n=2178 col=[(15, 2178)] t=107 p1=12 corners=-1,1,-1,1 st=4 003='kobig' blocks=003,001
+s-kobig-16             NOIMAGE LOG: (killed after 300 s) (exit status 137)
+s-kobig-30             NOIMAGE LOG: (killed after 300 s) (exit status 137)
+s-kobig-40000          NOIMAGE LOG: (killed after 300 s) (exit status 137)
+s-kobig-9              400x300 56a0bf2d bbox=(4,93,395,206) n=2240 col=[(15, 2240)] t=107 p1=9 corners=-1,1,-1,1 st=4 003='kobig' blocks=003,001
+s-lower-0              400x300 438f1202 bbox=(5,85,264,215) n=262 col=[(15, 262)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='lower' blocks=003,001
+s-lt1000-0             400x300 1d93890c bbox=(5,150,395,150) n=391 col=[(247, 196), (15, 195)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='lt1000' blocks=003,001
+s-lt482-0              400x300 965019e6 bbox=(5,150,395,150) n=391 col=[(241, 196), (15, 195)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='lt482' blocks=003,001
+s-lt497-0              400x300 2fbe579b bbox=(5,150,395,150) n=391 col=[(1, 196), (15, 195)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='lt497' blocks=003,001
+s-nest100-0            400x300 ddf90f93 bbox=(52,3,347,297) n=589 col=[(15, 589)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='nest100' blocks=003,001
+s-nest50-0             400x300 ddf90f93 bbox=(52,3,347,297) n=589 col=[(15, 589)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='nest50' blocks=003,001
+s-nestrule-10          400x300 b21fad42 bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=10 corners=-1,1,-1,1 st=4 003='nestrule' blocks=003,001
+s-nestrule-100         400x300 b21fad42 bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=100 corners=-1,1,-1,1 st=4 003='nestrule' blocks=003,001
+s-nestrule-200         400x300 b21fad42 bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=200 corners=-1,1,-1,1 st=4 003='nestrule' blocks=003,001
+s-nestrule-40          400x300 b21fad42 bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=40 corners=-1,1,-1,1 st=4 003='nestrule' blocks=003,001
+s-overw-0              400x300 4fcc3e57 bbox=(52,2,347,297) n=1471 col=[(2, 882), (3, 589)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='overw' blocks=003,001
+s-pipe3-0              400x300 ea60f7cd bbox=(30,2,369,297) n=635 col=[(15, 635)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='pipe3' blocks=003,001
+s-pipe5-0              400x300 25c7e1bd bbox=(5,35,395,264) n=707 col=[(15, 707)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='pipe5' blocks=003,001
+s-pipe7-0              400x300 8527fd71 bbox=(5,65,395,234) n=742 col=[(15, 742)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='pipe7' blocks=003,001
+s-pipe9-0              400x300 ea60f7cd bbox=(30,2,369,297) n=635 col=[(15, 635)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='pipe9' blocks=003,001
+s-pop0-0               400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='pop0' blocks=003,001
+s-pop1-0               400x300 80a65065 bbox=(5,150,395,150) n=391 col=[(15, 391)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='pop1' blocks=003,001
+s-pop2-0               400x300 80a65065 bbox=(5,150,395,150) n=391 col=[(15, 391)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='pop2' blocks=003,001
+s-pop3-0               400x300 80a65065 bbox=(5,150,395,150) n=391 col=[(15, 391)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='pop3' blocks=003,001
+s-pop4-0               400x300 80a65065 bbox=(5,150,395,150) n=391 col=[(15, 391)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='pop4' blocks=003,001
+s-push1-0              NOIMAGE LOG: qemu: uncaught target signal 11 (Segmentation fault) - core dumped /usr/local/bin/run-batch: line 23:    18 Segmentation fault      /usr/bin/xfractint batch=yes "$@" (exit status 139)
+s-push2-0              NOIMAGE LOG: qemu: uncaught target signal 11 (Segmentation fault) - core dumped /usr/local/bin/run-batch: line 23:    18 Segmentation fault      /usr/bin/xfractint batch=yes "$@" (exit status 139)
+s-push3-0              NOIMAGE LOG: qemu: uncaught target signal 11 (Segmentation fault) - core dumped /usr/local/bin/run-batch: line 23:    18 Segmentation fault      /usr/bin/xfractint batch=yes "$@" (exit status 139)
+s-zero1-0              400x300 94221ecd bbox=(200,150,200,150) n=1 col=[(15, 1)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='zero1' blocks=003,001
+s-zero2-0              400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='zero2' blocks=003,001
+s-zero3-0              400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='zero3' blocks=003,001
+s-zero4-0              400x300 69eb943f bbox=- n=0 col=[] t=107 p1=0 corners=-1,1,-1,1 st=4 003='zero4' blocks=003,001
+s-zero5-0              400x300 fac9d6e6 bbox=(5,150,200,150) n=196 col=[(15, 196)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='zero5' blocks=003,001
+s-zero6-0              400x300 95359411 bbox=(200,150,395,150) n=196 col=[(15, 196)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='zero6' blocks=003,001
+s-zero7-0              400x300 e32a7a4b bbox=(5,149,395,150) n=587 col=[(15, 587)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='zero7' blocks=003,001
+s-zero8-0              400x300 e5e94901 bbox=(5,149,395,150) n=391 col=[(15, 391)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='zero8' blocks=003,001

@@ -1,0 +1,4 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# PROBE_COL=40 python3 -I bisect-origin.py OUT 6 XF 'X=YF+XF+Y;Y=XF-YF-X' 3 42.435245513916016 296.5000025235236411069728035272419219837 295 290
+295 origin y in [-2.0144e-14, -1.9997e-14] relative to the guess
+290 origin y in [-2.0754e-14, -1.9576e-14] relative to the guess

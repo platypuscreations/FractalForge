@@ -1,0 +1,5 @@
+Oops. I couldn't understand the argument:
+  lname=bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+
+(see the Startup Help screens or documentation for a complete
+ argument list with descriptions)
