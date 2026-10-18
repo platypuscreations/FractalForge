@@ -91,7 +91,9 @@ jobs:
           $msi = Get-ChildItem target/packager/*.msi | Select-Object -First 1
           $p = Start-Process msiexec -ArgumentList "/i `"$($msi.FullName)`" /qn /l*v install.log" -Wait -PassThru
           if ($p.ExitCode -ne 0) { Get-Content install.log -Tail 50; exit $p.ExitCode }
-          Get-ChildItem -Recurse "$env:ProgramFiles\FractalForge" | Select-Object FullName
+          $exe = Get-ChildItem -Recurse -Filter fractalforge.exe "$env:ProgramFiles\FractalForge"
+          if (-not $exe) { Write-Error "fractalforge.exe not installed"; exit 1 }
+          $exe.FullName
       - uses: actions/upload-artifact@v4
         with:
           name: FractalForge-windows

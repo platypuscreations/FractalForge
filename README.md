@@ -153,6 +153,27 @@ Or, in Terminal: `xattr -dr com.apple.quarantine /Applications/FractalForge.app`
 
 Building from source (below) avoids the warning entirely.
 
+## Installing on Ubuntu
+
+Download `fractalforge_<version>_amd64.deb` and install it with
+
+```sh
+sudo apt install ./fractalforge_<version>_amd64.deb
+```
+
+It works on Ubuntu 22.04 and later and on distributions based on them
+(Linux Mint, Pop!_OS, elementary OS …). FractalForge then appears among
+your applications, and GIF files can be opened with it. The command-line
+renderer is in `fractalforge-cli-<version>-linux-x86_64.tar.gz`.
+
+## Installing on Windows
+
+Download `fractalforge_<version>_x64_en-US.msi` and run it. The installer
+isn't signed yet, so Windows SmartScreen may say "Windows protected your
+PC": click **More info**, then **Run anyway**. The portable
+`FractalForge-<version>-windows-x86_64.zip` holds the app and the
+command-line renderer without installing anything.
+
 ## Building
 
 ```sh

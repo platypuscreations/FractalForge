@@ -15,6 +15,8 @@ product-name = "FractalForge"
 identifier = "io.github.platypuscreations.fractalforge"
 category = "GraphicsAndDesign"
 copyright = "GPL-3.0-or-later"
+# The .deb's Maintainer field.
+authors = ["FractalForge contributors <https://github.com/platypuscreations/FractalForge>"]
 # Each platform picks its format: .icns (macOS), .ico (Windows), .png (Linux).
 icons = ["assets/icon.icns", "assets/icon.ico", "assets/icon-256.png"]
 out-dir = "../../target/packager"
@@ -32,6 +34,7 @@ minimum-system-version = "11.0"
 # libraries are loaded at run time, so they're listed here rather than
 # linked; the fonts are the ones fonts.rs looks for.
 [package.metadata.packager.deb]
+package-name = "fractalforge"
 depends = [
     "libxkbcommon0",
     "libvulkan1 | libegl1",
