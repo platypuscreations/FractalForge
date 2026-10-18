@@ -283,6 +283,11 @@ fn read_params(b: &Bytes, modern: bool, p: &mut Params, warnings: &mut Vec<Strin
 /// those pixels' colour indices, with every other pixel unknown; `None` when
 /// the image is finished or carries no usable resume data.
 pub fn partial_buffer(image: &GifImage, fractal: &FractalType) -> Option<IterBuffer> {
+    // Plotted types save their own orbit state instead of a work list
+    // (orbit-maps.md §11); FractalForge calculates them again.
+    if fractal.plot.is_some() {
+        return None;
+    }
     let main = image.extension(IDENTIFIER, MAIN_AUTH)?.data();
     let resume = image.extension(IDENTIFIER, RESUME_AUTH)?.data();
     let b = Bytes(&main);

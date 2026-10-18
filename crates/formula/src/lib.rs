@@ -5,7 +5,7 @@
 
 pub mod analysis;
 pub mod ast;
-pub mod funcs;
+pub use fractalforge_core::funcs;
 pub mod parser;
 mod vm;
 

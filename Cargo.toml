@@ -20,6 +20,7 @@ fractalforge-formula = { path = "crates/formula" }
 rayon = "1.10"
 weezl = "0.1.8"
 miniz_oxide = "0.8"
+libm = "0.2.16"
 clap = { version = "4.5", features = ["derive"] }
 ctrlc = "3.4"
 criterion = { version = "0.5", default-features = false, features = ["cargo_bench_support"] }

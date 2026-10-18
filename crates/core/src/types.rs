@@ -46,7 +46,7 @@ pub struct FractalType {
     pub name: &'static str,
     pub description: &'static str,
     pub default_window: Window,
-    pub default_params: [f64; 4],
+    pub default_params: &'static [f64],
     /// Escape when `|z|²` exceeds this unless the user sets a bailout.
     pub default_bailout: f64,
     /// Labels for the meaningful entries of `Params::params`.
@@ -440,7 +440,7 @@ const fn std_type(
     number: i16,
     description: &'static str,
     default_window: Window,
-    default_params: [f64; 4],
+    default_params: &'static [f64],
     param_names: &'static [&'static str],
     iterate: IterateFn,
     symmetry: fn(&Params) -> Symmetry,
@@ -473,7 +473,7 @@ pub static MANDEL: FractalType = FractalType {
         4,
         "Mandelbrot set: z → z² + c, c = pixel",
         MANDEL_WINDOW,
-        [0.0; 4],
+        &[0.0; 4],
         START_OFFSET,
         mandel,
         sym_x_if_a_zero,
@@ -487,7 +487,7 @@ pub static JULIA: FractalType = FractalType {
         6,
         "Julia set: z → z² + c, z(0) = pixel",
         STD_WINDOW,
-        [0.3, 0.6, 0.0, 0.0],
+        &[0.3, 0.6, 0.0, 0.0],
         CONSTANT,
         julia,
         sym_origin,
@@ -499,7 +499,7 @@ pub static LAMBDA: FractalType = std_type(
     75,
     "Lambda map: z → λz(1 − z), z(0) = pixel",
     Window::new(-1.5, 2.5, -1.5, 1.5),
-    [0.85, 0.6, 0.0, 0.0],
+    &[0.85, 0.6, 0.0, 0.0],
     &["Real part of λ", "Imaginary part of λ"],
     lambda,
     sym_none,
@@ -510,7 +510,7 @@ pub static MANDELLAMBDA: FractalType = std_type(
     82,
     "Lambda map: z → λz(1 − z), λ = pixel, z(0) = ½",
     Window::new(-3.0, 5.0, -3.0, 3.0),
-    [0.0; 4],
+    &[0.0; 4],
     START_OFFSET,
     mandellambda,
     sym_x_if_a_zero,
@@ -521,7 +521,7 @@ pub static MANDEL4: FractalType = std_type(
     155,
     "Quartic Mandelbrot: z → z⁴ + c, c = pixel",
     STD_WINDOW,
-    [0.0; 4],
+    &[0.0; 4],
     START_OFFSET,
     mandel4,
     sym_x_if_a_zero,
@@ -532,7 +532,7 @@ pub static JULIA4: FractalType = std_type(
     156,
     "Quartic Julia: z → z⁴ + c, z(0) = pixel",
     STD_WINDOW,
-    [0.6, 0.55, 0.0, 0.0],
+    &[0.6, 0.55, 0.0, 0.0],
     CONSTANT,
     julia4,
     sym_origin,
@@ -543,7 +543,7 @@ pub static MANOWAR: FractalType = std_type(
     9,
     "Man-o'-war: z → z² + z(previous) + c, c = pixel",
     MANDEL_WINDOW,
-    [0.0; 4],
+    &[0.0; 4],
     START_OFFSET,
     manowar,
     sym_x_if_a_zero,
@@ -554,7 +554,7 @@ pub static MANOWARJ: FractalType = std_type(
     108,
     "Man-o'-war Julia: z → z² + z(previous) + c, z(0) = pixel",
     MANDEL_WINDOW,
-    [0.0; 4],
+    &[0.0; 4],
     CONSTANT,
     manowarj,
     sym_none,
@@ -565,7 +565,7 @@ pub static BARNSLEYM1: FractalType = std_type(
     76,
     "Barnsley M1: z → (z ∓ 1)·c by the sign of Re z, c = pixel",
     STD_WINDOW,
-    [0.0; 4],
+    &[0.0; 4],
     START_OFFSET,
     barnsleym1,
     sym_xy_if_a_zero,
@@ -576,7 +576,7 @@ pub static BARNSLEYJ1: FractalType = std_type(
     77,
     "Barnsley J1: z → (z ∓ 1)·c by the sign of Re z, z(0) = pixel",
     STD_WINDOW,
-    [0.6, 1.1, 0.0, 0.0],
+    &[0.6, 1.1, 0.0, 0.0],
     CONSTANT,
     barnsleyj1,
     sym_origin,
@@ -587,7 +587,7 @@ pub static SPIDER: FractalType = std_type(
     93,
     "Spider: z → z² + c, then c → c/2 + z, c(0) = pixel",
     MANDEL_WINDOW,
-    [0.0; 4],
+    &[0.0; 4],
     START_OFFSET,
     spider,
     sym_x_if_a_zero,
@@ -600,7 +600,7 @@ pub static MAGNET1M: FractalType = FractalType {
         96,
         "Magnet model I, parameter plane (c = pixel)",
         Window::new(-4.0, 4.0, -3.0, 3.0),
-        [0.0; 4],
+        &[0.0; 4],
         &["Real part of z(0)", "Imaginary part of z(0)"],
         magnet1m,
         sym_x_if_a_zero,
@@ -614,7 +614,7 @@ pub static MAGNET1J: FractalType = FractalType {
         97,
         "Magnet model I, z(0) = pixel",
         Window::new(-8.0, 8.0, -6.0, 6.0),
-        [0.0; 4],
+        &[0.0; 4],
         CONSTANT,
         magnet1j,
         sym_x_if_p2_zero,
@@ -628,7 +628,7 @@ pub static NEWTON: FractalType = FractalType {
         5,
         "Newton's method for z^d = 1, coloured by step count",
         STD_WINDOW,
-        [3.0, 0.0, 0.0, 0.0],
+        &[3.0, 0.0, 0.0, 0.0],
         &["Degree d"],
         newton,
         sym_x,
@@ -643,7 +643,7 @@ pub static NEWTBASIN: FractalType = FractalType {
         2,
         "Newton's method for z^d = 1, coloured by root",
         STD_WINDOW,
-        [3.0, 0.0, 0.0, 0.0],
+        &[3.0, 0.0, 0.0, 0.0],
         &["Degree d", "Stripes (non-zero = on)"],
         newtbasin,
         sym_x,
@@ -655,7 +655,7 @@ pub static PHOENIX: FractalType = std_type(
     148,
     "Phoenix: z → z² + p + q·z(previous), z(0) = pixel",
     STD_WINDOW,
-    [0.56667, -0.5, 0.0, 0.0],
+    &[0.56667, -0.5, 0.0, 0.0],
     &["p", "q", "Degree (0 = classic)"],
     phoenix,
     sym_x,
@@ -666,7 +666,7 @@ pub static MANDPHOENIX: FractalType = std_type(
     150,
     "Phoenix parameter plane: p + iq = pixel",
     MANDEL_WINDOW,
-    [0.0; 4],
+    &[0.0; 4],
     &[
         "Real offset of z(0)",
         "Imaginary offset of z(0)",
@@ -701,7 +701,7 @@ pub static FORMULA: FractalType = FractalType {
         73,
         "A formula from a .frm file",
         STD_WINDOW,
-        [0.0; 4],
+        &[0.0; 4],
         &[
             "p1 (real)",
             "p1 (imaginary)",
@@ -738,7 +738,7 @@ pub static IFS: FractalType = FractalType {
         26,
         "An iterated function system from a .ifs file",
         Window::new(-8.0, 8.0, -1.0, 11.0),
-        [0.0; 4],
+        &[0.0; 4],
         &["Colour by transform (1 = on)"],
         program_iterate,
         sym_none,
@@ -746,7 +746,194 @@ pub static IFS: FractalType = FractalType {
     )
 };
 
-static ALL: [&FractalType; 19] = [
+/// A type that draws the whole image (docs/specs/orbit-maps.md).
+const fn plot_type(
+    name: &'static str,
+    number: i16,
+    description: &'static str,
+    default_window: Window,
+    default_params: &'static [f64],
+    param_names: &'static [&'static str],
+    plot: crate::PlotFn,
+) -> FractalType {
+    FractalType {
+        uses_bailout: false,
+        resumable: false,
+        plot: Some(plot),
+        ..std_type(
+            name,
+            number,
+            description,
+            default_window,
+            default_params,
+            param_names,
+            program_iterate,
+            sym_none,
+            None,
+        )
+    }
+}
+
+use crate::orbit_maps as om;
+
+const ABC: &[&str] = &["a", "b", "c"];
+/// henon's x corners are single-precision ±1.4 (orbit-maps.md §1).
+const HENON_X: f64 = 1.399999976158142;
+
+pub static HENON: FractalType = plot_type(
+    "henon",
+    88,
+    "Hénon map: x → 1 + y − a·x², y → b·x",
+    Window::new(-HENON_X, HENON_X, -0.5, 0.5),
+    &[1.4, 0.3],
+    &["a", "b"],
+    om::henon,
+);
+pub static HOPALONG: FractalType = plot_type(
+    "hopalong",
+    120,
+    "Martin's hopalong map: x → y − sign(x)·√|b·x − c|, y → a − x",
+    Window::new(-2.0, 3.0, -1.625, 2.625),
+    &[0.4, 1.0, 0.0],
+    ABC,
+    om::hopalong,
+);
+// Fractint's default is 3.14, not π.
+#[allow(clippy::approx_constant)]
+pub static MARTIN: FractalType = plot_type(
+    "martin",
+    122,
+    "Martin map: x → y − sin x, y → a − x",
+    Window::new(-32.0, 32.0, -24.0, 24.0),
+    &[3.14],
+    &["a"],
+    om::martin,
+);
+pub static GINGERBREADMAN: FractalType = plot_type(
+    "gingerbreadman",
+    90,
+    "Gingerbread man: x → 1 − y + |x|, y → x, from (x, y) = (P1, P2)",
+    Window::new(-4.5, 8.5, -4.5, 8.5),
+    &[-0.1, 0.0],
+    &["Start x", "Start y"],
+    om::gingerbreadman,
+);
+pub static CHIP: FractalType = plot_type(
+    "chip",
+    166,
+    "Chip: a hopalong variant with log, cos and atan",
+    Window::new(-760.0, 760.0, -570.0, 570.0),
+    &[-15.0, -19.0, 1.0],
+    ABC,
+    om::chip,
+);
+pub static QUADRUPTWO: FractalType = plot_type(
+    "quadruptwo",
+    167,
+    "Quadruptwo: a hopalong variant with log, sin and atan",
+    Window::new(
+        -82.93364969889323,
+        112.27488199869792,
+        -55.76382827758789,
+        90.64257049560547,
+    ),
+    &[34.0, 1.0, 5.0],
+    ABC,
+    om::quadruptwo,
+);
+pub static THREEPLY: FractalType = plot_type(
+    "threeply",
+    168,
+    "Threeply: a hopalong variant with sin and cos",
+    Window::new(-8000.0, 8000.0, -6000.0, 6000.0),
+    &[-55.0, -1.0, -42.0],
+    ABC,
+    om::threeply,
+);
+pub static ICONS: FractalType = plot_type(
+    "icons",
+    159,
+    "Symmetric icons (Field and Golubitsky), coloured by hits",
+    STD_WINDOW,
+    &[-2.34, 2.0, 0.2, 0.1, 0.0, 3.0],
+    &["λ", "α", "β", "γ", "ω", "Degree"],
+    om::icons,
+);
+pub static LATOOCARFIAN: FractalType = plot_type(
+    "latoocarfian",
+    171,
+    "Latoocarfian: x → fn1(b·y) + c·fn2(b·x), y → fn3(a·x) + d·fn4(a·y)",
+    STD_WINDOW,
+    &[-0.966918, 2.879879, 0.765145, 0.744728],
+    &["a", "b", "c", "d"],
+    om::latoocarfian,
+);
+pub static KAMTORUS: FractalType = plot_type(
+    "kamtorus",
+    40,
+    "KAM torus: orbits of a quadratic area-preserving map",
+    Window::new(-1.0, 1.0, -0.75, 0.75),
+    &[1.3, 0.05, 1.5, 150.0],
+    &["Angle", "Step", "Stop", "Points per orbit"],
+    om::kamtorus,
+);
+pub static POPCORN: FractalType = plot_type(
+    "popcorn",
+    61,
+    "Pickover popcorn: the orbit of every pixel, coloured by row",
+    Window::new(-3.0, 3.0, -2.25, 2.25),
+    &[0.05, 0.0, 3.0],
+    &["Step h", "(unused)", "t"],
+    om::popcorn,
+);
+pub static POPCORNJUL: FractalType = FractalType {
+    uses_bailout: false,
+    ..std_type(
+        "popcornjul",
+        105,
+        "Popcorn map, coloured by escape time",
+        Window::new(-3.0, 3.0, -2.25, 2.25),
+        &[0.05, 0.0, 3.0],
+        &["Step h", "(unused)", "t"],
+        om::popcornjul,
+        sym_none,
+        None,
+    )
+};
+pub static DYNAMIC: FractalType = plot_type(
+    "dynamic",
+    139,
+    "Dynamic system: orbits from a grid of start points",
+    Window::new(-20.0, 20.0, -20.0, 20.0),
+    &[50.0, 0.1, 1.0, 3.0],
+    &["Grid size", "Time step", "a", "b"],
+    om::dynamic,
+);
+pub static MANDELCLOUD: FractalType = plot_type(
+    "mandelcloud",
+    146,
+    "Mandelbrot orbits from a grid of start points",
+    MANDEL_WINDOW,
+    &[50.0],
+    &["Grid size"],
+    om::mandelcloud,
+);
+pub static JULIA_INVERSE: FractalType = plot_type(
+    "julia_inverse",
+    145,
+    "Julia set of z² + c by inverse iteration, coloured by hits",
+    STD_WINDOW,
+    &[-0.11, 0.6557, 4.0, 1024.0],
+    &[
+        "Real part of c",
+        "Imaginary part of c",
+        "Hits per pixel",
+        "(unused)",
+    ],
+    om::julia_inverse,
+);
+
+static ALL: [&FractalType; 34] = [
     &MANDEL,
     &JULIA,
     &LAMBDA,
@@ -766,6 +953,21 @@ static ALL: [&FractalType; 19] = [
     &MANDPHOENIX,
     &FORMULA,
     &IFS,
+    &HENON,
+    &HOPALONG,
+    &MARTIN,
+    &GINGERBREADMAN,
+    &CHIP,
+    &QUADRUPTWO,
+    &THREEPLY,
+    &ICONS,
+    &LATOOCARFIAN,
+    &KAMTORUS,
+    &POPCORN,
+    &POPCORNJUL,
+    &DYNAMIC,
+    &MANDELCLOUD,
+    &JULIA_INVERSE,
 ];
 
 /// Parameter planes and their Julia sets: in each pair the second type

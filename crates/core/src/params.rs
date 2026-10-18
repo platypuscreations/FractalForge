@@ -236,7 +236,7 @@ impl Params {
             window: fractal.default_window,
             params: {
                 let mut p = [0.0; PARAM_COUNT];
-                p[..4].copy_from_slice(&fractal.default_params);
+                p[..fractal.default_params.len()].copy_from_slice(fractal.default_params);
                 p
             },
             max_iter: 150,

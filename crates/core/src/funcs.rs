@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-//! Formula functions and operators, as defined in docs/specs/frm-semantics.md
+//! Fractint's functions and formula operators, as defined in docs/specs/frm-semantics.md
 //! (cited as §n). Operations that Fractint treats as math errors (§1.7)
 //! return `Err`.
 
 use std::f64::consts::FRAC_PI_2;
 
-use fractalforge_core::Complex;
+use crate::Complex;
 
 /// A math error ends the pixel as escaped (§1.7).
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
