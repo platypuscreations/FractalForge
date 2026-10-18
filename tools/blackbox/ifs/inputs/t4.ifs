@@ -1,0 +1,8 @@
+; SPDX-License-Identifier: GPL-3.0-or-later
+; Black-box test entries for XFractint's IFS type (FractalForge, own file).
+march2 {
+  1 0 0 1 0.0001 0 1
+}
+march3 {
+  1 0 0 1 0.00002 0 1
+}

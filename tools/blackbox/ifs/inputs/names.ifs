@@ -1,0 +1,24 @@
+; SPDX-License-Identifier: GPL-3.0-or-later
+; Black-box test entries for XFractint's IFS type (FractalForge, own file).
+; Entry-name length tests (names are n + letters, total length in the name).
+n16xxxxxxxxxxxxx {
+  0 0 0 0 1 2 1
+}
+n17xxxxxxxxxxxxxx {
+  0 0 0 0 1 2 1
+}
+n18xxxxxxxxxxxxxxx {
+  0 0 0 0 1 2 1
+}
+n19xxxxxxxxxxxxxxxx {
+  0 0 0 0 1 2 1
+}
+n20xxxxxxxxxxxxxxxxx {
+  0 0 0 0 1 2 1
+}
+n24xxxxxxxxxxxxxxxxxxxxx {
+  0 0 0 0 1 2 1
+}
+n28xxxxxxxxxxxxxxxxxxxxxxxxx {
+  0 0 0 0 1 2 1
+}

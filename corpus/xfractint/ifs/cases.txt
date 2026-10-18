@@ -1,0 +1,239 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+# XFractint command lines for every file in this folder (docs/specs/ifs.md).
+# Format: NAME | MODE | XFRACTINT ARGUMENTS | ENVIRONMENT
+# Every case ran through tools/blackbox/ifs/render.sh MODE OUT NAME ARGS, which
+# runs in an empty directory holding tools/blackbox/ifs/inputs/*.ifs and adds
+# savename=ff.gif. MODE batch = run-batch (batch=yes); int:N = run-interrupt
+# (press s after N s); keys:ACTIONS = tools/blackbox/resume/run-keys.sh.
+# NAME.stopmsg.txt is the message XFractint wrote; a case without NAME.gif
+# saved no image.
+#
+
+# 1. File format (section 1 of docs/specs/ifs.md)
+fmt-oneline            | batch | type=ifs ifsfile=t2.ifs ifs=c3 viewwindows=2
+# fmt-oneline-crash     | batch | type=ifs ifsfile=t2.ifs ifs=tri1 viewwindows=2
+#   (no file: XFractint died with signal 11 (segmentation fault) under qemu;
+#   the same happened for t1.ifs entry march)
+fmt-firstline          | batch | type=ifs ifsfile=t3.ifs ifs=c4 viewwindows=2
+fmt-split              | batch | type=ifs ifsfile=fmt.ifs ifs=split corners=0/1/0.0009765625/1.1708984375 maxiter=2
+fmt-trail              | batch | type=ifs ifsfile=fmt.ifs ifs=trail corners=0/1/0.0009765625/1.1708984375 maxiter=2
+fmt-mixed              | batch | type=ifs ifsfile=fmt.ifs ifs=Mixed corners=0/1/0.0009765625/1.1708984375 maxiter=2
+fmt-lower              | batch | type=ifs ifsfile=fmt.ifs ifs=mixed corners=0/1/0.0009765625/1.1708984375 maxiter=2
+fmt-upper              | batch | type=ifs ifsfile=fmt.ifs ifs=MIXED corners=0/1/0.0009765625/1.1708984375 maxiter=2
+fmt-tabs               | batch | type=ifs ifsfile=fmt.ifs ifs=tabs corners=0/1/0.0009765625/1.1708984375 maxiter=2
+fmt-close              | batch | type=ifs ifsfile=fmt.ifs ifs=close corners=0/1/0.0009765625/1.1708984375 maxiter=2
+fmt-dup                | batch | type=ifs ifsfile=fmt.ifs ifs=dup corners=0/1/0.0009765625/1.1708984375 maxiter=2
+fmt-six                | batch | type=ifs ifsfile=fmt.ifs ifs=six maxiter=2 corners=0/1/0.0009765625/1.1708984375
+fmt-eight              | batch | type=ifs ifsfile=fmt.ifs ifs=eight maxiter=2 corners=0/1/0.0009765625/1.1708984375
+fmt-p8x6               | batch | type=ifs ifsfile=prob.ifs ifs=p8x6 corners=0/1/0.0009765625/1.1708984375 maxiter=2
+hdr-nospace            | batch | type=ifs ifsfile=hdr.ifs ifs=nospace viewwindows=2 maxiter=2
+hdr-nextline           | batch | type=ifs ifsfile=hdr.ifs ifs=nextline viewwindows=2 maxiter=2
+hdr-indented           | batch | type=ifs ifsfile=hdr.ifs ifs=indented viewwindows=2 maxiter=2
+hdr-sp3d               | batch | type=ifs ifsfile=hdr.ifs ifs=sp3d viewwindows=2 maxiter=2
+lim-d63                | batch | type=ifs ifsfile=digits.ifs ifs=d63 maxiter=2 corners=0/1/0.0009765625/1.1708984375
+lim-d64                | batch | type=ifs ifsfile=digits.ifs ifs=d64 maxiter=2 corners=0/1/0.0009765625/1.1708984375
+lim-g63                | batch | type=ifs ifsfile=limits.ifs ifs=g63 maxiter=2 viewwindows=2 rotation=0/0/0
+lim-g64                | batch | type=ifs ifsfile=limits.ifs ifs=g64 maxiter=2 viewwindows=2 rotation=0/0/0
+lim-empty              | batch | type=ifs ifsfile=limits.ifs ifs=empty maxiter=2 viewwindows=2 rotation=0/0/0
+lim-last               | batch | type=ifs ifsfile=limits.ifs ifs=last maxiter=2 viewwindows=2 rotation=0/0/0
+name-18                | batch | type=ifs ifsfile=names.ifs ifs=n18xxxxxxxxxxxxxxx viewwindows=2 maxiter=2
+name-19                | batch | type=ifs ifsfile=names.ifs ifs=n19xxxxxxxxxxxxxxxx viewwindows=2 maxiter=2
+
+# 2. Selecting the entry (section 2)
+sel-ifsname            | batch | type=ifs ifsfile=ffcopy.ifs ifsname=fftri viewwindows=2
+sel-fileonly           | batch | type=ifs ifsfile=ffcopy.ifs viewwindows=2
+sel-noentry            | batch | type=ifs ifsfile=ffcopy.ifs ifs=nosuch viewwindows=2
+sel-missingfile        | batch | type=ifs ifsfile=missing.ifs ifs=fftri viewwindows=2 | NOINPUTS=1 EXTRA=zz.ifs (zz.ifs = copy of ffcopy.ifs)
+sel-nofile             | batch | type=ifs ifs=fftri viewwindows=2 | NOINPUTS=1
+sel-none               | batch | type=ifs viewwindows=2 | NOINPUTS=1
+sel-params             | batch | type=ifs ifsfile=ffcopy.ifs ifs=fftri viewwindows=2 params=1/2/3/4
+
+# 3. 2D algorithm (section 3)
+fftri                  | batch | type=ifs ifsfile=ffcopy.ifs ifs=fftri viewwindows=2
+fftri-unit             | batch | type=ifs ifsfile=ffcopy.ifs ifs=fftri viewwindows=2 corners=0/1/0/1
+fftri-z10              | batch | type=ifs ifsfile=ffcopy.ifs ifs=fftri viewwindows=2 corners=0.25/0.35/0.25/0.35
+fftri-z100             | batch | type=ifs ifsfile=ffcopy.ifs ifs=fftri viewwindows=2 corners=0.25/0.26/0.25/0.26
+coef-asym              | batch | type=ifs ifsfile=t3.ifs ifs=asym viewwindows=2
+march-1e-3             | batch | type=ifs ifsfile=t3.ifs ifs=march viewwindows=2
+march-1e-4             | batch | type=ifs ifsfile=t3.ifs ifs=march2 viewwindows=2
+march-1e-4-float       | batch | type=ifs ifsfile=t4.ifs ifs=march2 viewwindows=2 float=yes
+march-2e-5             | batch | type=ifs ifsfile=t4.ifs ifs=march3 viewwindows=2
+march-2e-5-float       | batch | type=ifs ifsfile=t4.ifs ifs=march3 viewwindows=2 float=yes
+march-2e-5-mi1000      | batch | type=ifs ifsfile=t4.ifs ifs=march3 viewwindows=2 maxiter=1000
+march-2e-5-mi20000     | batch | type=ifs ifsfile=t4.ifs ifs=march3 viewwindows=2 maxiter=20000
+count-mi2a             | batch | type=ifs ifsfile=t5.ifs ifs=unit viewwindows=2 corners=0/0.035/-0.01/0.01 maxiter=2
+count-mi2b             | batch | type=ifs ifsfile=t5.ifs ifs=unit viewwindows=2 corners=0.025/0.035/-0.01/0.01 maxiter=2
+count-mi3              | batch | type=ifs ifsfile=t5.ifs ifs=unit viewwindows=2 corners=0/0.06/-0.01/0.01 maxiter=3
+count-start            | batch | type=ifs ifsfile=t5.ifs ifs=unit viewwindows=2 corners=-0.002/0.004/-0.001/0.001
+const-mi150            | batch | type=ifs ifsfile=t2.ifs ifs=c1 viewwindows=2
+const-mi2              | batch | type=ifs ifsfile=t5.ifs ifs=c1 viewwindows=2 maxiter=2
+const-mi17             | batch | type=ifs ifsfile=t5.ifs ifs=c1 viewwindows=2 maxiter=17
+const-mi1              | batch | type=ifs ifsfile=t5.ifs ifs=c1 viewwindows=2 maxiter=1
+prec-half              | batch | type=ifs ifsfile=prec.ifs ifs=p1 viewwindows=2 corners=-0.00001/0.00008/-0.00001/0.00008 maxiter=2
+prec-3q                | batch | type=ifs ifsfile=prec.ifs ifs=p2 viewwindows=2 corners=-0.00001/0.00008/-0.00001/0.00008 maxiter=2
+prec-half3             | batch | type=ifs ifsfile=prec.ifs ifs=p3 viewwindows=2 corners=-0.00001/0.00008/-0.00001/0.00008 maxiter=2
+num-negstep            | batch | type=ifs ifsfile=num.ifs ifs=negstep viewwindows=2
+num-negprod            | batch | type=ifs ifsfile=num.ifs ifs=negprod viewwindows=2 corners=-0.00008/0.00001/-0.00001/0.00008 maxiter=2
+num-nearone            | batch | type=ifs ifsfile=num.ifs ifs=nearone viewwindows=2 corners=-0.00001/0.00008/-0.00001/0.00008 maxiter=2
+leaf                   | batch | type=ifs ifsfile=ffleaf.ifs ifs=ffleaf viewwindows=2
+leaf-wide              | batch | type=ifs ifsfile=ffleaf.ifs ifs=ffleaf viewwindows=2 corners=-3.1/3.3/-0.4/9.7 maxiter=400
+leaf-zoom              | batch | type=ifs ifsfile=ffleaf.ifs ifs=ffleaf viewwindows=2 corners=-0.6/0.4/3.0/3.8 maxiter=300
+leaf-800               | batch | type=ifs ifsfile=ffleaf.ifs ifs=ffleaf corners=-3.1/3.3/-0.4/9.7
+noeffect-inout         | batch | type=ifs ifsfile=ffcopy.ifs ifs=fftri viewwindows=2 outside=5 inside=3
+noeffect-sym           | batch | type=ifs ifsfile=ffcopy.ifs ifs=fftri viewwindows=2 symmetry=xaxis passes=1
+noeffect-3dparams      | batch | type=ifs ifsfile=ffcopy.ifs ifs=fftri viewwindows=2 rotation=10/20/30 xyshift=3/4 perspective=150
+
+# 3.6 Colour by transform (param 1)
+bytr-p1                | batch | type=ifs ifsfile=ffcopy.ifs ifs=fftri viewwindows=2 params=1
+bytr-p2                | batch | type=ifs ifsfile=ffcopy.ifs ifs=fftri viewwindows=2 params=2
+bytr-pm1               | batch | type=ifs ifsfile=ffcopy.ifs ifs=fftri viewwindows=2 params=-1
+bytr-p05               | batch | type=ifs ifsfile=ffcopy.ifs ifs=fftri viewwindows=2 params=0.5
+bytr-p099              | batch | type=ifs ifsfile=ffcopy.ifs ifs=fftri viewwindows=2 params=0.99
+bytr-p2only            | batch | type=ifs ifsfile=ffcopy.ifs ifs=fftri viewwindows=2 params=0/1
+bytr-d63               | batch | type=ifs ifsfile=digits.ifs ifs=d63 maxiter=2 corners=0/1/0.0009765625/1.1708984375 params=1
+bytr-leaf              | batch | type=ifs ifsfile=ffleaf.ifs ifs=ffleaf viewwindows=2 corners=-3.1/3.3/-0.4/9.7 params=1
+
+# 3.5 Far points stop the calculation
+far-x0740              | batch | type=ifs ifsfile=t5.ifs ifs=unit viewwindows=2 corners=0.074/0.077/-0.01/0.01
+far-x0741              | batch | type=ifs ifsfile=t5.ifs ifs=unit viewwindows=2 corners=0.0741/0.0771/-0.01/0.01
+far-top0750            | batch | type=ifs ifsfile=t5.ifs ifs=unit viewwindows=2 corners=0.075/0.078/-0.0199/0.0001
+far-top0752            | batch | type=ifs ifsfile=t5.ifs ifs=unit viewwindows=2 corners=0.0752/0.0782/-0.0199/0.0001
+far-bot0728            | batch | type=ifs ifsfile=t5.ifs ifs=unit viewwindows=2 corners=0.0728/0.0758/-0.0001/0.0199
+far-bot0745            | batch | type=ifs ifsfile=t5.ifs ifs=unit viewwindows=2 corners=0.0745/0.0775/-0.0001/0.0199
+far-diag037            | batch | type=ifs ifsfile=t5.ifs ifs=diag viewwindows=2 corners=0.037/0.04/-0.039625/-0.037375
+far-diag0385           | batch | type=ifs ifsfile=t5.ifs ifs=diag viewwindows=2 corners=0.0385/0.0415/-0.041125/-0.038875
+far-right0735          | batch | type=ifs ifsfile=t5.ifs ifs=unitneg viewwindows=2 corners=-0.0735/-0.0705/-0.01/0.01
+far-right0745          | batch | type=ifs ifsfile=t5.ifs ifs=unitneg viewwindows=2 corners=-0.0745/-0.0715/-0.01/0.01
+far-800-363            | batch | type=ifs ifsfile=t5.ifs ifs=unit corners=0.363/0.393/-0.01/0.01
+far-800-365            | batch | type=ifs ifsfile=t5.ifs ifs=unit corners=0.365/0.395/-0.01/0.01
+
+# 3.4 Pixel mapping: long march lines (maxiter 1100)
+line-def-unit          | batch | type=ifs ifsfile=t5.ifs ifs=unit viewwindows=2 maxiter=1100
+line-odd-unit          | batch | type=ifs ifsfile=t5.ifs ifs=unit viewwindows=2 maxiter=1100 corners=-7.123/6.877/-6.031/5.97
+line-def-unitneg       | batch | type=ifs ifsfile=t5.ifs ifs=unitneg viewwindows=2 maxiter=1100
+line-odd-unitneg       | batch | type=ifs ifsfile=t5.ifs ifs=unitneg viewwindows=2 maxiter=1100 corners=-7.123/6.877/-6.031/5.97
+line-def-unity         | batch | type=ifs ifsfile=t5.ifs ifs=unity viewwindows=2 maxiter=1100
+line-odd-unity         | batch | type=ifs ifsfile=t5.ifs ifs=unity viewwindows=2 maxiter=1100 corners=-7.123/6.877/-6.031/5.97
+line-def-unitdown      | batch | type=ifs ifsfile=t5.ifs ifs=unitdown viewwindows=2 maxiter=1100
+line-odd-unitdown      | batch | type=ifs ifsfile=t5.ifs ifs=unitdown viewwindows=2 maxiter=1100 corners=-7.123/6.877/-6.031/5.97
+
+# 4. Random numbers and probabilities (section 4)
+rng-seed-1234a         | batch | type=ifs ifsfile=rng.ifs ifs=bits maxiter=2 rseed=1234 corners=0/1/0.0009765625/1.1708984375
+rng-seed-1234b         | batch | type=ifs ifsfile=rng.ifs ifs=bits maxiter=2 rseed=1234 corners=0/1/0.0009765625/1.1708984375
+rng-seed-1235          | batch | type=ifs ifsfile=rng.ifs ifs=bits maxiter=2 rseed=1235 corners=0/1/0.0009765625/1.1708984375
+rng-seed-0             | batch | type=ifs ifsfile=rng.ifs ifs=bits maxiter=2 rseed=0 corners=0/1/0.0009765625/1.1708984375
+rng-seed-none          | batch | type=ifs ifsfile=rng.ifs ifs=bits maxiter=2 corners=0/1/0.0009765625/1.1708984375
+rng-d2                 | batch | type=ifs ifsfile=digits.ifs ifs=d2 maxiter=2 corners=0/1/0.0009765625/1.1708984375
+rng-d3                 | batch | type=ifs ifsfile=digits.ifs ifs=d3 maxiter=2 corners=0/1/0.0009765625/1.1708984375
+rng-d10                | batch | type=ifs ifsfile=digits.ifs ifs=d10 maxiter=2 corners=0/1/0.0009765625/1.1708984375
+rng-d32                | batch | type=ifs ifsfile=digits.ifs ifs=d32 maxiter=2 corners=0/1/0.0009765625/1.1708984375
+rng-d33                | batch | type=ifs ifsfile=digits.ifs ifs=d33 maxiter=2 corners=0/1/0.0009765625/1.1708984375
+rng-d34                | batch | type=ifs ifsfile=digits.ifs ifs=d34 maxiter=2 corners=0/1/0.0009765625/1.1708984375
+rng-d63                | batch | type=ifs ifsfile=digits.ifs ifs=d63 maxiter=2 corners=0/1/0.0009765625/1.1708984375
+prob-ones              | batch | type=ifs ifsfile=pone.ifs ifs=d10one maxiter=2 corners=0/1/0.0009765625/1.1708984375
+prob-low               | batch | type=ifs ifsfile=prob.ifs ifs=low corners=0/1/0.0009765625/1.1708984375 maxiter=2
+prob-zero              | batch | type=ifs ifsfile=prob.ifs ifs=zero corners=0/1/0.0009765625/1.1708984375 maxiter=2
+prob-neg               | batch | type=ifs ifsfile=prob.ifs ifs=neg corners=0/1/0.0009765625/1.1708984375 maxiter=2
+prob-allzero           | batch | type=ifs ifsfile=prob.ifs ifs=allzero corners=0/1/0.0009765625/1.1708984375 maxiter=2
+prob-big               | batch | type=ifs ifsfile=prob.ifs ifs=big corners=0/1/0.0009765625/1.1708984375 maxiter=2
+prob-th                | batch | type=ifs ifsfile=prob.ifs ifs=th corners=0/1/0.0009765625/1.1708984375 maxiter=2
+
+# 5. Interrupt, save, reload (section 5); in20.gif is a copy of int-20.gif
+int-20                 | int:20 | type=ifs ifsfile=ffcopy.ifs ifs=fftri viewwindows=2 maxiter=30000
+int-35                 | int:35 | type=ifs ifsfile=ffcopy.ifs ifs=fftri viewwindows=2 maxiter=30000
+int-done               | int:20 | type=ifs ifsfile=ffcopy.ifs ifs=fftri viewwindows=2 maxiter=3000
+load-batch             | batch | filename=in20.gif ifsfile=ffcopy.ifs | EXTRA=in20.gif
+load-cmdline-enter     | keys:s10 kReturn s10 ks | filename=in20.gif ifsfile=ffcopy.ifs viewwindows=2 | EXTRA=in20.gif
+load-r                 | keys:s10 kr s3 tin20.gif s1 kReturn s12 ks | ifsfile=ffcopy.ifs viewwindows=2 | EXTRA=in20.gif
+load-r-enter           | keys:s10 kr s3 tin20.gif s1 kReturn s5 kReturn s12 ks | ifsfile=ffcopy.ifs viewwindows=2 | EXTRA=in20.gif
+second-run             | keys:s12 kr s3 tin20.gif s1 kReturn s5 kReturn s10 ks | type=ifs ifsfile=ffcopy.ifs ifs=fftri maxiter=100 viewwindows=2 | EXTRA=in20.gif
+
+# 6. 3D entries (section 6)
+3d-plain13             | batch | type=ifs ifsfile=d3.ifs ifs=plain13 corners=0/1/0.0009765625/1.1708984375 maxiter=2
+3d-mark1               | batch | type=ifs ifsfile=d3.ifs ifs=mark1 corners=0/1/0.0009765625/1.1708984375 maxiter=2
+3d-mark2               | batch | type=ifs ifsfile=d3.ifs ifs=mark2 corners=0/1/0.0009765625/1.1708984375 maxiter=2
+3d-mark3               | batch | type=ifs ifsfile=d3.ifs ifs=mark3 corners=0/1/0.0009765625/1.1708984375 maxiter=2
+3d-mark7               | batch | type=ifs ifsfile=d3.ifs ifs=mark7 corners=0/1/0.0009765625/1.1708984375 maxiter=2
+3d-basis               | batch | type=ifs ifsfile=b3.ifs ifs=basis viewwindows=2 maxiter=2
+3d-basis-r0            | batch | type=ifs ifsfile=b3.ifs ifs=basis viewwindows=2 maxiter=2 rotation=0/0/0
+3d-single              | batch | type=ifs ifsfile=probe3.ifs ifs=q9 viewwindows=2 maxiter=2
+3d-probe-w0            | batch | type=ifs ifsfile=probe3.ifs ifs=w0 viewwindows=2 maxiter=2
+3d-probe-w5            | batch | type=ifs ifsfile=probe3.ifs ifs=w5 viewwindows=2 maxiter=2
+3d-probe-w9            | batch | type=ifs ifsfile=probe3.ifs ifs=w9 viewwindows=2 maxiter=2
+3d-probe-w10           | batch | type=ifs ifsfile=probe3.ifs ifs=w10 viewwindows=2 maxiter=2
+3d-probe-w11           | batch | type=ifs ifsfile=probe3.ifs ifs=w11 viewwindows=2 maxiter=2
+3d-pair-r000-a100      | batch | type=ifs ifsfile=pair3.ifs ifs=a100 viewwindows=2 maxiter=2 rotation=0/0/0
+3d-pair-r000-a400      | batch | type=ifs ifsfile=pair3.ifs ifs=a400 viewwindows=2 maxiter=2 rotation=0/0/0
+3d-pair-r000-a010      | batch | type=ifs ifsfile=pair3.ifs ifs=a010 viewwindows=2 maxiter=2 rotation=0/0/0
+3d-pair-r000-a040      | batch | type=ifs ifsfile=pair3.ifs ifs=a040 viewwindows=2 maxiter=2 rotation=0/0/0
+3d-pair-r000-a001      | batch | type=ifs ifsfile=pair3.ifs ifs=a001 viewwindows=2 maxiter=2 rotation=0/0/0
+3d-pair-r000-a111      | batch | type=ifs ifsfile=pair3.ifs ifs=a111 viewwindows=2 maxiter=2 rotation=0/0/0
+3d-pair-r000-a321      | batch | type=ifs ifsfile=pair3.ifs ifs=a321 viewwindows=2 maxiter=2 rotation=0/0/0
+3d-pair-r000-s100      | batch | type=ifs ifsfile=pair3.ifs ifs=s100 viewwindows=2 maxiter=2 rotation=0/0/0
+3d-pair-def-a100       | batch | type=ifs ifsfile=pair3.ifs ifs=a100 viewwindows=2 maxiter=2
+3d-pair-def-a400       | batch | type=ifs ifsfile=pair3.ifs ifs=a400 viewwindows=2 maxiter=2
+3d-pair-def-a010       | batch | type=ifs ifsfile=pair3.ifs ifs=a010 viewwindows=2 maxiter=2
+3d-pair-def-a040       | batch | type=ifs ifsfile=pair3.ifs ifs=a040 viewwindows=2 maxiter=2
+3d-pair-def-a001       | batch | type=ifs ifsfile=pair3.ifs ifs=a001 viewwindows=2 maxiter=2
+3d-pair-def-a111       | batch | type=ifs ifsfile=pair3.ifs ifs=a111 viewwindows=2 maxiter=2
+3d-pair-def-a321       | batch | type=ifs ifsfile=pair3.ifs ifs=a321 viewwindows=2 maxiter=2
+3d-pair-def-s100       | batch | type=ifs ifsfile=pair3.ifs ifs=s100 viewwindows=2 maxiter=2
+3d-rot0_0_90-a100      | batch | type=ifs ifsfile=pair3.ifs ifs=a100 viewwindows=2 maxiter=2 rotation=0/0/90
+3d-rot0_0_90-a010      | batch | type=ifs ifsfile=pair3.ifs ifs=a010 viewwindows=2 maxiter=2 rotation=0/0/90
+3d-rot0_0_90-a001      | batch | type=ifs ifsfile=pair3.ifs ifs=a001 viewwindows=2 maxiter=2 rotation=0/0/90
+3d-rot90_0_0-a100      | batch | type=ifs ifsfile=pair3.ifs ifs=a100 viewwindows=2 maxiter=2 rotation=90/0/0
+3d-rot90_0_0-a010      | batch | type=ifs ifsfile=pair3.ifs ifs=a010 viewwindows=2 maxiter=2 rotation=90/0/0
+3d-rot90_0_0-a001      | batch | type=ifs ifsfile=pair3.ifs ifs=a001 viewwindows=2 maxiter=2 rotation=90/0/0
+3d-rot0_90_0-a100      | batch | type=ifs ifsfile=pair3.ifs ifs=a100 viewwindows=2 maxiter=2 rotation=0/90/0
+3d-rot0_90_0-a010      | batch | type=ifs ifsfile=pair3.ifs ifs=a010 viewwindows=2 maxiter=2 rotation=0/90/0
+3d-rot0_90_0-a001      | batch | type=ifs ifsfile=pair3.ifs ifs=a001 viewwindows=2 maxiter=2 rotation=0/90/0
+3d-rot30_0_0-a100      | batch | type=ifs ifsfile=pair3.ifs ifs=a100 viewwindows=2 maxiter=2 rotation=30/0/0
+3d-rot30_0_0-a010      | batch | type=ifs ifsfile=pair3.ifs ifs=a010 viewwindows=2 maxiter=2 rotation=30/0/0
+3d-rot30_0_0-a001      | batch | type=ifs ifsfile=pair3.ifs ifs=a001 viewwindows=2 maxiter=2 rotation=30/0/0
+3d-rot0_0_30-a100      | batch | type=ifs ifsfile=pair3.ifs ifs=a100 viewwindows=2 maxiter=2 rotation=0/0/30
+3d-rot0_0_30-a010      | batch | type=ifs ifsfile=pair3.ifs ifs=a010 viewwindows=2 maxiter=2 rotation=0/0/30
+3d-rot0_0_30-a001      | batch | type=ifs ifsfile=pair3.ifs ifs=a001 viewwindows=2 maxiter=2 rotation=0/0/30
+3d-rot0_30_0-a100      | batch | type=ifs ifsfile=pair3.ifs ifs=a100 viewwindows=2 maxiter=2 rotation=0/30/0
+3d-rot0_30_0-a010      | batch | type=ifs ifsfile=pair3.ifs ifs=a010 viewwindows=2 maxiter=2 rotation=0/30/0
+3d-rot0_30_0-a001      | batch | type=ifs ifsfile=pair3.ifs ifs=a001 viewwindows=2 maxiter=2 rotation=0/30/0
+3d-rot0_30_30-a100     | batch | type=ifs ifsfile=pair3.ifs ifs=a100 viewwindows=2 maxiter=2 rotation=0/30/30
+3d-rot0_30_30-a010     | batch | type=ifs ifsfile=pair3.ifs ifs=a010 viewwindows=2 maxiter=2 rotation=0/30/30
+3d-rot0_30_30-a001     | batch | type=ifs ifsfile=pair3.ifs ifs=a001 viewwindows=2 maxiter=2 rotation=0/30/30
+3d-rot30_0_30-a100     | batch | type=ifs ifsfile=pair3.ifs ifs=a100 viewwindows=2 maxiter=2 rotation=30/0/30
+3d-rot30_0_30-a010     | batch | type=ifs ifsfile=pair3.ifs ifs=a010 viewwindows=2 maxiter=2 rotation=30/0/30
+3d-rot30_0_30-a001     | batch | type=ifs ifsfile=pair3.ifs ifs=a001 viewwindows=2 maxiter=2 rotation=30/0/30
+3d-rot30_30_30-a100    | batch | type=ifs ifsfile=pair3.ifs ifs=a100 viewwindows=2 maxiter=2 rotation=30/30/30
+3d-rot30_30_30-a010    | batch | type=ifs ifsfile=pair3.ifs ifs=a010 viewwindows=2 maxiter=2 rotation=30/30/30
+3d-rot30_30_30-a001    | batch | type=ifs ifsfile=pair3.ifs ifs=a001 viewwindows=2 maxiter=2 rotation=30/30/30
+3d-rot45_20_70-a100    | batch | type=ifs ifsfile=pair3.ifs ifs=a100 viewwindows=2 maxiter=2 rotation=45/20/70
+3d-rot45_20_70-a010    | batch | type=ifs ifsfile=pair3.ifs ifs=a010 viewwindows=2 maxiter=2 rotation=45/20/70
+3d-rot45_20_70-a001    | batch | type=ifs ifsfile=pair3.ifs ifs=a001 viewwindows=2 maxiter=2 rotation=45/20/70
+3d-persp150-a400       | batch | type=ifs ifsfile=pair3.ifs ifs=a400 viewwindows=2 maxiter=2 perspective=150
+3d-persp150-a111       | batch | type=ifs ifsfile=pair3.ifs ifs=a111 viewwindows=2 maxiter=2 perspective=150
+3d-shift3_4-a400       | batch | type=ifs ifsfile=pair3.ifs ifs=a400 viewwindows=2 maxiter=2 xyshift=3/4
+3d-shift3_4-a111       | batch | type=ifs ifsfile=pair3.ifs ifs=a111 viewwindows=2 maxiter=2 xyshift=3/4
+3d-scale50-a400        | batch | type=ifs ifsfile=pair3.ifs ifs=a400 viewwindows=2 maxiter=2 scalexyz=50/50/50
+3d-scale50-a111        | batch | type=ifs ifsfile=pair3.ifs ifs=a111 viewwindows=2 maxiter=2 scalexyz=50/50/50
+3d-sphere-a400         | batch | type=ifs ifsfile=pair3.ifs ifs=a400 viewwindows=2 maxiter=2 sphere=yes
+3d-sphere-a111         | batch | type=ifs ifsfile=pair3.ifs ifs=a111 viewwindows=2 maxiter=2 sphere=yes
+3d-stereo1-a400        | batch | type=ifs ifsfile=pair3.ifs ifs=a400 viewwindows=2 maxiter=2 stereo=1
+3d-stereo1-a111        | batch | type=ifs ifsfile=pair3.ifs ifs=a111 viewwindows=2 maxiter=2 stereo=1
+3d-centre-w3           | batch | type=ifs ifsfile=pair3.ifs ifs=w3 viewwindows=2 maxiter=2 rotation=0/0/0
+3d-centre-t3c          | batch | type=ifs ifsfile=pair3.ifs ifs=t3c viewwindows=2 maxiter=2
+3d-rec-start           | batch | type=ifs ifsfile=rec3.ifs ifs=rec3 maxiter=2 rotation=0/0/0 corners=-0.5/0.5/0.0009765625/1.1708984375
+3d-rec-start-mi3       | batch | type=ifs ifsfile=rec3.ifs ifs=rec3 maxiter=3 rotation=0/0/0 corners=-0.5/0.5/0.0009765625/1.1708984375
+3d-rec-end             | batch | type=ifs ifsfile=rec3.ifs ifs=rec3 maxiter=2 rotation=0/0/0 corners=-0.5/0.5/3.5009765625/4.6708984375
+3d-rec-end-mi3         | batch | type=ifs ifsfile=rec3.ifs ifs=rec3 maxiter=3 rotation=0/0/0 corners=-0.5/0.5/5.5009765625/6.6708984375
+3d-rec-def             | batch | type=ifs ifsfile=rec3.ifs ifs=rec3 maxiter=2 corners=0/1/0.0009765625/1.1708984375
+3d-e3                  | batch | type=ifs ifsfile=digits3.ifs ifs=e3 maxiter=2 rotation=0/0/0 corners=-0.5/0.5/0.0009765625/1.1708984375
+3d-e10                 | batch | type=ifs ifsfile=digits3.ifs ifs=e10 maxiter=2 rotation=0/0/0 corners=-0.5/0.5/0.0009765625/1.1708984375
+3d-e33                 | batch | type=ifs ifsfile=digits3.ifs ifs=e33 maxiter=2 rotation=0/0/0 corners=-0.5/0.5/0.0009765625/1.1708984375
+3d-e10-mi150           | batch | type=ifs ifsfile=digits3.ifs ifs=e10 viewwindows=2 rotation=0/0/0
+3d-lowp                | batch | type=ifs ifsfile=pair3.ifs ifs=lowp viewwindows=2 maxiter=2 rotation=0/0/0
+3d-bytr                | batch | type=ifs ifsfile=pair3.ifs ifs=t3c viewwindows=2 maxiter=2 params=1
+3d-shift-m5-10         | batch | type=ifs ifsfile=pair3.ifs ifs=a400 viewwindows=2 maxiter=2 xyshift=-5/10
+3d-far                 | batch | type=ifs ifsfile=digits3.ifs ifs=e10 viewwindows=2 maxiter=2 rotation=0/0/0 corners=-0.5/0.5/3.0/3.045
+3d-spiral              | batch | type=ifs ifsfile=ffleaf.ifs ifs=ffspiral viewwindows=2
+3d-spiral-rot          | batch | type=ifs ifsfile=ffleaf.ifs ifs=ffspiral viewwindows=2 rotation=20/-40/75 corners=-3/3/-2.25/2.25 maxiter=300
+3d-spiral-shift        | batch | type=ifs ifsfile=ffleaf.ifs ifs=ffspiral viewwindows=2 corners=-3/3/-2.25/2.25 xyshift=10/-20
