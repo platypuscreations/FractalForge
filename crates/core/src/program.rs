@@ -43,6 +43,17 @@ pub trait FractalProgram: Send + Sync {
     fn order_dependent(&self) -> bool;
     /// The mirror copying these parameters allow.
     fn symmetry(&self, params: &Params) -> Symmetry;
+    /// Reports the values of `z` after each iteration of the point `at`
+    /// (the orbit window). Returns false if the program has no orbit.
+    fn orbit(
+        &self,
+        _at: &PixelContext,
+        _params: &Params,
+        _carry: &mut Carry,
+        _visit: &mut dyn FnMut(Complex),
+    ) -> bool {
+        false
+    }
     /// Whether the program reads or assigns a predefined name such as `p1`
     /// (Fractint-format files record this, frm-syntax.md §8.1).
     fn mentions(&self, _name: &str) -> bool {

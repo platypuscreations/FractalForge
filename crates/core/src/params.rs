@@ -233,6 +233,52 @@ impl Params {
         types::lookup(name).map(Self::new)
     }
 
+    /// The Julia set for the constant `c` (a point of this parameter-plane
+    /// image), in its type's default window. Parameters past the first two
+    /// (e.g. phoenix's degree) and the other settings carry over.
+    pub fn to_julia(&self, c: Complex) -> Option<Self> {
+        let julia = types::julia_of(self.fractal)?;
+        let mut p = self.clone();
+        p.fractal = julia;
+        p.window = julia.default_window;
+        p.params[0] = c.re;
+        p.params[1] = c.im;
+        p.forced_symmetry = None;
+        Some(p)
+    }
+
+    /// The parameter plane this Julia set belongs to, in `window` (or its
+    /// default window), with no start offset.
+    pub fn to_mandel(&self, window: Option<Window>) -> Option<Self> {
+        let mandel = types::mandel_of(self.fractal)?;
+        let mut p = self.clone();
+        p.fractal = mandel;
+        p.window = window.unwrap_or(mandel.default_window);
+        p.params[0] = 0.0;
+        p.params[1] = 0.0;
+        p.forced_symmetry = None;
+        Some(p)
+    }
+
+    /// The orbit of the point at `pixel`: at most `limit` iterates, in
+    /// order. `None` for types without orbits.
+    pub fn orbit(&self, at: &crate::PixelContext, limit: u32) -> Option<Vec<Complex>> {
+        let mut p = self.clone();
+        p.max_iter = p.max_iter.min(limit.saturating_add(1)).max(1);
+        let mut points = Vec::new();
+        let mut visit = |z: Complex| points.push(z);
+        if let Some(prog) = &p.program {
+            let mut carry = prog.0.new_carry(&p, at.width, at.height);
+            if !prog.0.orbit(at, &p, &mut carry, &mut visit) {
+                return None;
+            }
+        } else {
+            (self.fractal.orbit?)(at.pixel, &p, &mut visit);
+        }
+        points.truncate(limit as usize);
+        Some(points)
+    }
+
     /// Whether any colouring option needs per-orbit statistics.
     pub fn needs_orbit_coloring(&self) -> bool {
         !matches!(self.inside, Inside::Color(_) | Inside::MaxIter)
@@ -307,6 +353,71 @@ mod tests {
         assert_eq!(w.y_max - w.y_min, 1.0);
         assert!(((w.x_max - w.x_min) - 4.0 / 3.0).abs() < 1e-15);
         assert!(((w.x_min + w.x_max) / 2.0 + 0.5).abs() < 1e-15);
+    }
+
+    #[test]
+    fn julia_toggle_round_trip() {
+        let m = Params::for_type("mandphoenix").unwrap();
+        let mut m = m;
+        m.params[2] = 3.0;
+        let j = m.to_julia(Complex::new(0.25, -0.5)).unwrap();
+        assert_eq!(j.fractal.name, "phoenix");
+        assert_eq!(&j.params[..3], &[0.25, -0.5, 3.0]);
+        let back = j.to_mandel(Some(m.window)).unwrap();
+        assert_eq!(back.fractal.name, "mandphoenix");
+        assert_eq!(back.window, m.window);
+        assert_eq!(&back.params[..3], &[0.0, 0.0, 3.0]);
+        assert!(
+            Params::for_type("spider")
+                .unwrap()
+                .to_julia(Complex::ZERO)
+                .is_none()
+        );
+        assert!(
+            Params::for_type("newton")
+                .unwrap()
+                .to_mandel(None)
+                .is_none()
+        );
+    }
+
+    /// The parameter plane's colour at c is the Julia set's (for that c)
+    /// at the parameter plane's start value.
+    #[test]
+    fn julia_pairs_share_the_map() {
+        let c = Complex::new(0.31, 0.47);
+        // mandel starts at 0; mandel4 and barnsleym1 at the pixel.
+        for (m, start) in [("mandel", Complex::ZERO), ("mandel4", c), ("barnsleym1", c)] {
+            let mp = Params::for_type(m).unwrap();
+            let jp = mp.to_julia(c).unwrap();
+            assert_eq!(
+                (mp.fractal.iterate)(c, &mp),
+                (jp.fractal.iterate)(start, &jp),
+                "{m}"
+            );
+        }
+    }
+
+    #[test]
+    fn orbit_ends_at_escape() {
+        let p = Params::for_type("mandel").unwrap();
+        let at = crate::PixelContext {
+            pixel: Complex::new(1.0, 1.0),
+            col: 0,
+            row: 0,
+            width: 1,
+            height: 1,
+        };
+        // 0 → 1+i → 1+3i, which escapes.
+        assert_eq!(
+            p.orbit(&at, 100).unwrap(),
+            vec![Complex::new(1.0, 1.0), Complex::new(1.0, 3.0)]
+        );
+        let inside = crate::PixelContext {
+            pixel: Complex::ZERO,
+            ..at
+        };
+        assert_eq!(p.orbit(&inside, 20).unwrap().len(), 20);
     }
 
     #[test]

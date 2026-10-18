@@ -99,6 +99,13 @@ pub struct App {
     title: String,
 
     drag: Option<Drag>,
+    /// Draw the orbit of the point under the pointer over the image.
+    show_orbit: bool,
+    /// The pointer's normalised image position, while over the image.
+    hover: Option<(f64, f64)>,
+    /// Parameter-plane views left with the Julia toggle, most recent last,
+    /// so toggling back returns to them.
+    mandel_views: Vec<(&'static str, Window)>,
     /// A .par file with several entries, waiting for the user to pick one.
     par_choice: Option<(PathBuf, Vec<String>)>,
     /// A Fractint formula GIF waiting for its .frm file: the entry name and
@@ -151,6 +158,9 @@ impl App {
             messages: Vec::new(),
             title: String::new(),
             drag: None,
+            show_orbit: false,
+            hover: None,
+            mandel_views: Vec::new(),
             par_choice: None,
             pending_formula: None,
             par_save: None,
@@ -812,6 +822,9 @@ impl App {
             if i.key_pressed(Key::C) {
                 self.cycling = !self.cycling;
             }
+            if i.key_pressed(Key::O) {
+                self.show_orbit = !self.show_orbit;
+            }
             if i.key_pressed(Key::Plus) || i.key_pressed(Key::Equals) {
                 self.cycle_speed = (self.cycle_speed * 1.5).min(500.0);
             }
@@ -819,6 +832,9 @@ impl App {
                 self.cycle_speed = (self.cycle_speed / 1.5).max(1.0);
             }
         });
+        if ctx.input(|i| i.key_pressed(Key::Space)) {
+            self.toggle_julia();
+        }
         if ctx.input(|i| i.key_pressed(Key::Escape)) {
             self.pause();
         }
@@ -856,6 +872,47 @@ impl App {
             4.0 / 3.0
         } else {
             w as f64 / h as f64
+        }
+    }
+
+    /// Switches between a parameter-plane type and its Julia sets: to the
+    /// Julia set for the point under the pointer (or the view's centre), or
+    /// back to the parameter-plane view it came from.
+    fn toggle_julia(&mut self) {
+        let w = self.params.window;
+        if types::julia_of(self.params.fractal).is_some() {
+            let (u, v) = self.hover.unwrap_or((0.5, 0.5));
+            let (x, y) = view::point_at(&w, u, v);
+            let Some(mut p) = self.params.to_julia(fractalforge_core::Complex::new(x, y)) else {
+                return;
+            };
+            self.mandel_views.push((self.params.fractal.name, w));
+            p.window = view::fit_aspect(&p.window, self.aspect());
+            self.params = p;
+        } else {
+            let saved = self
+                .mandel_views
+                .pop()
+                .filter(|(name, _)| {
+                    types::mandel_of(self.params.fractal).is_some_and(|m| m.name == *name)
+                })
+                .map(|(_, w)| w);
+            let Some(mut p) = self.params.to_mandel(saved) else {
+                return;
+            };
+            p.window = view::fit_aspect(&p.window, self.aspect());
+            self.params = p;
+        }
+        self.changed();
+    }
+
+    fn julia_toggle_label(&self) -> Option<&'static str> {
+        if types::julia_of(self.params.fractal).is_some() {
+            Some("Julia Set at Pointer")
+        } else if types::mandel_of(self.params.fractal).is_some() {
+            Some("Back to Parameter Plane")
+        } else {
+            None
         }
     }
 
@@ -909,6 +966,22 @@ impl App {
                 {
                     self.redo();
                 }
+            });
+            ui.menu_button("Fractal", |ui| {
+                let label = self.julia_toggle_label();
+                if ui
+                    .add_enabled(
+                        label.is_some(),
+                        egui::Button::new(label.unwrap_or("Julia Set")).shortcut_text("Space"),
+                    )
+                    .on_hover_text("Uses the view's centre when chosen from this menu")
+                    .clicked()
+                {
+                    self.hover = None;
+                    self.toggle_julia();
+                }
+                ui.checkbox(&mut self.show_orbit, "Show Orbits (O)")
+                    .on_hover_text("Draws the orbit of the point under the pointer");
             });
             ui.menu_button("Render", |ui| {
                 if ui
@@ -1248,6 +1321,14 @@ impl App {
             painter.image(shown.texture.id(), r, uv, Color32::WHITE);
         }
 
+        self.hover = response.hover_pos().filter(|p| rect.contains(*p)).map(norm);
+        if self.show_orbit
+            && self.drag.is_none()
+            && let Some((u, v)) = self.hover
+        {
+            self.draw_orbit(&painter, rect, u, v);
+        }
+
         // Zoom with scroll wheel or pinch, about the pointer.
         if let Some(pos) = response.hover_pos() {
             let (zoom, scroll) = ctx.input(|i| (i.zoom_delta(), i.smooth_scroll_delta.y));
@@ -1380,6 +1461,77 @@ impl App {
 }
 
 /// A rectangle from `a` towards `b` with the image's aspect ratio.
+/// Most iterates the orbit window draws.
+const ORBIT_POINTS: u32 = 5000;
+
+impl App {
+    /// Draws the orbit of the point at normalised position `(u, v)`, as
+    /// dots joined by faint lines, with its start and length in a label.
+    fn draw_orbit(&self, painter: &egui::Painter, rect: Rect, u: f64, v: f64) {
+        let w = self.params.window;
+        let (x, y) = view::point_at(&w, u, v);
+        let (width, height) = self.render_size;
+        let at = fractalforge_core::PixelContext {
+            pixel: fractalforge_core::Complex::new(x, y),
+            col: (u * width.saturating_sub(1) as f64).round() as u32,
+            row: (v * height.saturating_sub(1) as f64).round() as u32,
+            width,
+            height,
+        };
+        let Some(points) = self.params.orbit(&at, ORBIT_POINTS) else {
+            return;
+        };
+        let to_screen = |z: fractalforge_core::Complex| {
+            let pu = (z.re - w.x_min) / (w.x_max - w.x_min);
+            let pv = (w.y_max - z.im) / (w.y_max - w.y_min);
+            rect.lerp_inside(Vec2::new(pu as f32, pv as f32))
+        };
+        let finite =
+            |p: &Pos2| p.x.is_finite() && p.y.is_finite() && p.x.abs() < 1e6 && p.y.abs() < 1e6;
+        let screen: Vec<Pos2> = std::iter::once(at.pixel)
+            .chain(points.iter().copied())
+            .map(to_screen)
+            .take_while(finite)
+            .collect();
+        let line = Stroke::new(1.0, Color32::from_white_alpha(70));
+        for pair in screen.windows(2) {
+            painter.line_segment([pair[0], pair[1]], line);
+        }
+        for p in &screen[1..] {
+            painter.circle_filled(*p, 1.5, Color32::YELLOW);
+        }
+        painter.circle_stroke(screen[0], 3.0, Stroke::new(1.5, Color32::WHITE));
+        // With the plain colouring, a value tells escaped from inside.
+        let plain = Params {
+            inside: Inside::Color(0),
+            outside: Outside::Iter,
+            decomp: 0,
+            biomorph: None,
+            ..self.params.clone()
+        };
+        let value = match &plain.program {
+            Some(prog) => {
+                let mut carry = prog.0.new_carry(&plain, width, height);
+                prog.0.iterate(&at, &plain, &mut carry)
+            }
+            None => (plain.fractal.iterate)(at.pixel, &plain),
+        };
+        let escaped = value != fractalforge_core::INSIDE;
+        let text = format!(
+            "{x:.6} {y:+.6}i\n{} iterates{}",
+            points.len(),
+            if escaped { "" } else { " (no escape)" }
+        );
+        painter.text(
+            rect.left_top() + Vec2::new(8.0, 8.0),
+            egui::Align2::LEFT_TOP,
+            text,
+            egui::FontId::monospace(12.0),
+            Color32::WHITE,
+        );
+    }
+}
+
 fn aspect_box(a: Pos2, b: Pos2, aspect: f32) -> Rect {
     let d = b - a;
     let w = d.x.abs().max(d.y.abs() * aspect);

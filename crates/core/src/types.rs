@@ -37,6 +37,10 @@ pub enum Symmetry {
 /// Returns the colour value of one point (see the module docs).
 pub type IterateFn = fn(pixel: Complex, params: &Params) -> u32;
 
+/// Reports the iterates z₁, z₂, … the type's iterate function computes for
+/// one point, in order, up to the point where it stops.
+pub type OrbitFn = fn(pixel: Complex, params: &Params, visit: &mut dyn FnMut(Complex));
+
 pub struct FractalType {
     /// Short identifier used in files and on the command line.
     pub name: &'static str,
@@ -50,6 +54,9 @@ pub struct FractalType {
     pub iterate: IterateFn,
     /// The symmetry these particular parameters have.
     pub symmetry: fn(&Params) -> Symmetry,
+    /// The orbit of a point, for types that iterate one (shown by the
+    /// orbit window).
+    pub orbit: Option<OrbitFn>,
     /// How a colour value changes when copied to its mirror pixel, for
     /// types whose colours aren't symmetric (newtbasin's roots).
     pub mirror_value: Option<fn(u32, &Params) -> u32>,
@@ -143,13 +150,30 @@ fn sym_x_if_p2_zero(p: &Params) -> Symmetry {
     }
 }
 
+// ---- orbits ------------------------------------------------------------
+
+/// Defines a type's iterate function and its orbit function from one
+/// generic loop that reports each iterate to an observer, so the two can't
+/// disagree. The no-op observer compiles away.
+macro_rules! observed {
+    ($run:ident => $iter:ident, $orbit:ident) => {
+        fn $iter(w: Complex, p: &Params) -> u32 {
+            $run(w, p, &mut |_| {})
+        }
+        fn $orbit(w: Complex, p: &Params, f: &mut dyn FnMut(Complex)) {
+            $run(w, p, f);
+        }
+    };
+}
+
 // ---- mandel and julia (gif-fractint-blocks §9) --------------------------
 
 /// Counting from z0 with the start untested: n is the first iterate past
 /// the bailout (1..=max_iter); these two types colour by n − 1, minimum 1.
-fn quadratic(mut z: Complex, c: Complex, p: &Params) -> u32 {
+fn quadratic<F: FnMut(Complex) + ?Sized>(mut z: Complex, c: Complex, p: &Params, f: &mut F) -> u32 {
     for n in 1..=p.max_iter {
         z = z.square() + c;
+        f(z);
         if z.norm_sqr() > p.bailout {
             return (n - 1).max(1);
         }
@@ -157,13 +181,15 @@ fn quadratic(mut z: Complex, c: Complex, p: &Params) -> u32 {
     INSIDE
 }
 
-fn mandel(w: Complex, p: &Params) -> u32 {
-    quadratic(a(p), w, p)
+fn mandel_run<F: FnMut(Complex) + ?Sized>(w: Complex, p: &Params, f: &mut F) -> u32 {
+    quadratic(a(p), w, p, f)
 }
+observed!(mandel_run => mandel, mandel_orbit);
 
-fn julia(w: Complex, p: &Params) -> u32 {
-    quadratic(w, a(p), p)
+fn julia_run<F: FnMut(Complex) + ?Sized>(w: Complex, p: &Params, f: &mut F) -> u32 {
+    quadratic(w, a(p), p, f)
 }
+observed!(julia_run => julia, julia_orbit);
 
 // ---- §3 ----------------------------------------------------------------
 
@@ -171,55 +197,76 @@ fn lambda_step(z: Complex, l: Complex) -> Complex {
     l * z * (Complex::new(1.0, 0.0) - z)
 }
 
-fn lambda(w: Complex, p: &Params) -> u32 {
+fn lambda_run<F: FnMut(Complex) + ?Sized>(w: Complex, p: &Params, f: &mut F) -> u32 {
     let l = a(p);
     escape(w, p.max_iter, |z| {
         *z = lambda_step(*z, l);
+        f(*z);
         z.norm_sqr() > p.bailout
     })
 }
+observed!(lambda_run => lambda, lambda_orbit);
 
-fn mandellambda(w: Complex, p: &Params) -> u32 {
+fn mandellambda_run<F: FnMut(Complex) + ?Sized>(w: Complex, p: &Params, f: &mut F) -> u32 {
     escape(Complex::new(0.5, 0.0) + a(p), p.max_iter, |z| {
         *z = lambda_step(*z, w);
+        f(*z);
         z.norm_sqr() > p.bailout
     })
 }
+observed!(mandellambda_run => mandellambda, mandellambda_orbit);
 
-fn mandel4(w: Complex, p: &Params) -> u32 {
-    escape(w + a(p), p.max_iter, |z| {
-        *z = z.square().square() + w;
-        z.norm_sqr() > p.bailout
-    })
-}
-
-fn julia4(w: Complex, p: &Params) -> u32 {
-    let c = a(p);
-    escape(w, p.max_iter, |z| {
+fn quartic<F: FnMut(Complex) + ?Sized>(z0: Complex, c: Complex, p: &Params, f: &mut F) -> u32 {
+    escape(z0, p.max_iter, |z| {
         *z = z.square().square() + c;
+        f(*z);
         z.norm_sqr() > p.bailout
     })
 }
+
+fn mandel4_run<F: FnMut(Complex) + ?Sized>(w: Complex, p: &Params, f: &mut F) -> u32 {
+    quartic(w + a(p), w, p, f)
+}
+observed!(mandel4_run => mandel4, mandel4_orbit);
+
+fn julia4_run<F: FnMut(Complex) + ?Sized>(w: Complex, p: &Params, f: &mut F) -> u32 {
+    quartic(w, a(p), p, f)
+}
+observed!(julia4_run => julia4, julia4_orbit);
 
 /// z(k+1) = z(k)² + z(k−1) + c, state (z(k), z(k−1)).
-fn manowar_loop(z0: Complex, prev: Complex, c: Complex, p: &Params) -> u32 {
+fn manowar_loop<F: FnMut(Complex) + ?Sized>(
+    z0: Complex,
+    prev: Complex,
+    c: Complex,
+    p: &Params,
+    f: &mut F,
+) -> u32 {
     escape((z0, prev), p.max_iter, |(z, prev)| {
         let next = z.square() + *prev + c;
         *prev = *z;
         *z = next;
+        f(*z);
         z.norm_sqr() > p.bailout
     })
 }
 
-fn manowar(w: Complex, p: &Params) -> u32 {
-    manowar_loop(w + a(p), w, w, p)
+fn manowar_run<F: FnMut(Complex) + ?Sized>(w: Complex, p: &Params, f: &mut F) -> u32 {
+    manowar_loop(w + a(p), w, w, p, f)
 }
+observed!(manowar_run => manowar, manowar_orbit);
 
-fn manowarj(w: Complex, p: &Params) -> u32 {
-    manowar_loop(w, w, a(p), p)
+fn manowarj_run<F: FnMut(Complex) + ?Sized>(w: Complex, p: &Params, f: &mut F) -> u32 {
+    manowar_loop(w, w, a(p), p, f)
 }
+observed!(manowarj_run => manowarj, manowarj_orbit);
 
-fn barnsley_loop(z0: Complex, c: Complex, p: &Params) -> u32 {
+fn barnsley_loop<F: FnMut(Complex) + ?Sized>(
+    z0: Complex,
+    c: Complex,
+    p: &Params,
+    f: &mut F,
+) -> u32 {
     let one = Complex::new(1.0, 0.0);
     escape(z0, p.max_iter, |z| {
         *z = if z.re >= 0.0 {
@@ -227,46 +274,54 @@ fn barnsley_loop(z0: Complex, c: Complex, p: &Params) -> u32 {
         } else {
             (*z + one) * c
         };
+        f(*z);
         z.norm_sqr() > p.bailout
     })
 }
 
-fn barnsleym1(w: Complex, p: &Params) -> u32 {
-    barnsley_loop(w + a(p), w, p)
+fn barnsleym1_run<F: FnMut(Complex) + ?Sized>(w: Complex, p: &Params, f: &mut F) -> u32 {
+    barnsley_loop(w + a(p), w, p, f)
 }
+observed!(barnsleym1_run => barnsleym1, barnsleym1_orbit);
 
-fn barnsleyj1(w: Complex, p: &Params) -> u32 {
-    barnsley_loop(w, a(p), p)
+fn barnsleyj1_run<F: FnMut(Complex) + ?Sized>(w: Complex, p: &Params, f: &mut F) -> u32 {
+    barnsley_loop(w, a(p), p, f)
 }
+observed!(barnsleyj1_run => barnsleyj1, barnsleyj1_orbit);
 
-fn spider(w: Complex, p: &Params) -> u32 {
+fn spider_run<F: FnMut(Complex) + ?Sized>(w: Complex, p: &Params, f: &mut F) -> u32 {
     escape((w + a(p), w), p.max_iter, |(z, c)| {
         *z = z.square() + *c;
         *c = c.scale(0.5) + *z;
+        f(*z);
         z.norm_sqr() > p.bailout
     })
 }
+observed!(spider_run => spider, spider_orbit);
 
 /// Magnet stop threshold for convergence to the fixed point 1: 2⁻¹⁵.
 const MAGNET_CONVERGED: f64 = 1.0 / 32768.0;
 
-fn magnet_loop(z0: Complex, c: Complex, p: &Params) -> u32 {
+fn magnet_loop<F: FnMut(Complex) + ?Sized>(z0: Complex, c: Complex, p: &Params, f: &mut F) -> u32 {
     let one = Complex::new(1.0, 0.0);
     let two = Complex::new(2.0, 0.0);
     escape(z0, p.max_iter, |z| {
         let q = (z.square() + c - one) / (z.scale(2.0) + c - two);
         *z = q.square();
+        f(*z);
         z.norm_sqr() > p.bailout || (*z - one).norm_sqr() < MAGNET_CONVERGED
     })
 }
 
-fn magnet1m(w: Complex, p: &Params) -> u32 {
-    magnet_loop(a(p), w, p)
+fn magnet1m_run<F: FnMut(Complex) + ?Sized>(w: Complex, p: &Params, f: &mut F) -> u32 {
+    magnet_loop(a(p), w, p, f)
 }
+observed!(magnet1m_run => magnet1m, magnet1m_orbit);
 
-fn magnet1j(w: Complex, p: &Params) -> u32 {
-    magnet_loop(w, a(p), p)
+fn magnet1j_run<F: FnMut(Complex) + ?Sized>(w: Complex, p: &Params, f: &mut F) -> u32 {
+    magnet_loop(w, a(p), p, f)
 }
+observed!(magnet1j_run => magnet1j, magnet1j_orbit);
 
 /// Newton convergence constant C (§3.12: anything in (0.9424745, 0.9424869]).
 const NEWTON_C: f64 = 0.942478;
@@ -278,7 +333,11 @@ fn newton_degree(p: &Params) -> i32 {
 /// Newton's method for z^d = 1 from z0 = w. Returns (k, z(k)) for the first
 /// k ≥ 0 that passes the convergence test, or `None` when n = k + 1 would
 /// reach max_iter.
-fn newton_orbit(w: Complex, p: &Params) -> Option<(u32, Complex)> {
+fn newton_orbit_run<F: FnMut(Complex) + ?Sized>(
+    w: Complex,
+    p: &Params,
+    f: &mut F,
+) -> Option<(u32, Complex)> {
     let d = newton_degree(p);
     let limit = NEWTON_C / d as f64;
     let one = Complex::new(1.0, 0.0);
@@ -290,16 +349,21 @@ fn newton_orbit(w: Complex, p: &Params) -> Option<(u32, Complex)> {
             return Some((k, z));
         }
         z = (zd.scale((d - 1) as f64) + one) / zd1.scale(d as f64);
+        f(z);
     }
     None
 }
 
 fn newton(w: Complex, p: &Params) -> u32 {
-    newton_orbit(w, p).map_or(INSIDE, |(k, _)| k + 1)
+    newton_orbit_run(w, p, &mut |_| {}).map_or(INSIDE, |(k, _)| k + 1)
+}
+
+fn newton_orbit(w: Complex, p: &Params, f: &mut dyn FnMut(Complex)) {
+    newton_orbit_run(w, p, f);
 }
 
 fn newtbasin(w: Complex, p: &Params) -> u32 {
-    let Some((k, z)) = newton_orbit(w, p) else {
+    let Some((k, z)) = newton_orbit_run(w, p, &mut |_| {}) else {
         return INSIDE;
     };
     let d = newton_degree(p);
@@ -326,7 +390,13 @@ fn newtbasin_mirror(v: u32, p: &Params) -> u32 {
 }
 
 /// z(k+1) = z^D + p·z^(D−1) + q·z(k−1) (D ≠ 0) or z² + p + q·z(k−1) (D = 0).
-fn phoenix_loop(z0: Complex, pc: f64, qc: f64, p: &Params) -> u32 {
+fn phoenix_loop<F: FnMut(Complex) + ?Sized>(
+    z0: Complex,
+    pc: f64,
+    qc: f64,
+    p: &Params,
+    f: &mut F,
+) -> u32 {
     let degree = p.params[2].trunc() as i32;
     escape((z0, Complex::ZERO), p.max_iter, |(z, prev)| {
         let next = if degree == 0 {
@@ -337,17 +407,20 @@ fn phoenix_loop(z0: Complex, pc: f64, qc: f64, p: &Params) -> u32 {
         };
         *prev = *z;
         *z = next;
+        f(*z);
         z.norm_sqr() > p.bailout
     })
 }
 
-fn phoenix(w: Complex, p: &Params) -> u32 {
-    phoenix_loop(w, p.params[0], p.params[1], p)
+fn phoenix_run<F: FnMut(Complex) + ?Sized>(w: Complex, p: &Params, f: &mut F) -> u32 {
+    phoenix_loop(w, p.params[0], p.params[1], p, f)
 }
+observed!(phoenix_run => phoenix, phoenix_orbit);
 
-fn mandphoenix(w: Complex, p: &Params) -> u32 {
-    phoenix_loop(w + a(p), w.re, w.im, p)
+fn mandphoenix_run<F: FnMut(Complex) + ?Sized>(w: Complex, p: &Params, f: &mut F) -> u32 {
+    phoenix_loop(w + a(p), w.re, w.im, p, f)
 }
+observed!(mandphoenix_run => mandphoenix, mandphoenix_orbit);
 
 // ---- registry ----------------------------------------------------------
 
@@ -368,6 +441,7 @@ const fn std_type(
     param_names: &'static [&'static str],
     iterate: IterateFn,
     symmetry: fn(&Params) -> Symmetry,
+    orbit: Option<OrbitFn>,
 ) -> FractalType {
     FractalType {
         name,
@@ -378,6 +452,7 @@ const fn std_type(
         param_names,
         iterate,
         symmetry,
+        orbit,
         mirror_value: None,
         uses_bailout: true,
         resumable: true,
@@ -398,6 +473,7 @@ pub static MANDEL: FractalType = FractalType {
         START_OFFSET,
         mandel,
         sym_x_if_a_zero,
+        Some(mandel_orbit),
     )
 };
 pub static JULIA: FractalType = FractalType {
@@ -411,6 +487,7 @@ pub static JULIA: FractalType = FractalType {
         CONSTANT,
         julia,
         sym_origin,
+        Some(julia_orbit),
     )
 };
 pub static LAMBDA: FractalType = std_type(
@@ -422,6 +499,7 @@ pub static LAMBDA: FractalType = std_type(
     &["Real part of λ", "Imaginary part of λ"],
     lambda,
     sym_none,
+    Some(lambda_orbit),
 );
 pub static MANDELLAMBDA: FractalType = std_type(
     "mandellambda",
@@ -432,6 +510,7 @@ pub static MANDELLAMBDA: FractalType = std_type(
     START_OFFSET,
     mandellambda,
     sym_x_if_a_zero,
+    Some(mandellambda_orbit),
 );
 pub static MANDEL4: FractalType = std_type(
     "mandel4",
@@ -442,6 +521,7 @@ pub static MANDEL4: FractalType = std_type(
     START_OFFSET,
     mandel4,
     sym_x_if_a_zero,
+    Some(mandel4_orbit),
 );
 pub static JULIA4: FractalType = std_type(
     "julia4",
@@ -452,6 +532,7 @@ pub static JULIA4: FractalType = std_type(
     CONSTANT,
     julia4,
     sym_origin,
+    Some(julia4_orbit),
 );
 pub static MANOWAR: FractalType = std_type(
     "manowar",
@@ -462,6 +543,7 @@ pub static MANOWAR: FractalType = std_type(
     START_OFFSET,
     manowar,
     sym_x_if_a_zero,
+    Some(manowar_orbit),
 );
 pub static MANOWARJ: FractalType = std_type(
     "manowarj",
@@ -472,6 +554,7 @@ pub static MANOWARJ: FractalType = std_type(
     CONSTANT,
     manowarj,
     sym_none,
+    Some(manowarj_orbit),
 );
 pub static BARNSLEYM1: FractalType = std_type(
     "barnsleym1",
@@ -482,6 +565,7 @@ pub static BARNSLEYM1: FractalType = std_type(
     START_OFFSET,
     barnsleym1,
     sym_xy_if_a_zero,
+    Some(barnsleym1_orbit),
 );
 pub static BARNSLEYJ1: FractalType = std_type(
     "barnsleyj1",
@@ -492,6 +576,7 @@ pub static BARNSLEYJ1: FractalType = std_type(
     CONSTANT,
     barnsleyj1,
     sym_origin,
+    Some(barnsleyj1_orbit),
 );
 pub static SPIDER: FractalType = std_type(
     "spider",
@@ -502,6 +587,7 @@ pub static SPIDER: FractalType = std_type(
     START_OFFSET,
     spider,
     sym_x_if_a_zero,
+    Some(spider_orbit),
 );
 pub static MAGNET1M: FractalType = FractalType {
     default_bailout: 100.0,
@@ -514,6 +600,7 @@ pub static MAGNET1M: FractalType = FractalType {
         &["Real part of z(0)", "Imaginary part of z(0)"],
         magnet1m,
         sym_x_if_a_zero,
+        Some(magnet1m_orbit),
     )
 };
 pub static MAGNET1J: FractalType = FractalType {
@@ -527,6 +614,7 @@ pub static MAGNET1J: FractalType = FractalType {
         CONSTANT,
         magnet1j,
         sym_x_if_p2_zero,
+        Some(magnet1j_orbit),
     )
 };
 pub static NEWTON: FractalType = FractalType {
@@ -540,6 +628,7 @@ pub static NEWTON: FractalType = FractalType {
         &["Degree d"],
         newton,
         sym_x,
+        Some(newton_orbit),
     )
 };
 pub static NEWTBASIN: FractalType = FractalType {
@@ -554,6 +643,7 @@ pub static NEWTBASIN: FractalType = FractalType {
         &["Degree d", "Stripes (non-zero = on)"],
         newtbasin,
         sym_x,
+        Some(newton_orbit),
     )
 };
 pub static PHOENIX: FractalType = std_type(
@@ -565,6 +655,7 @@ pub static PHOENIX: FractalType = std_type(
     &["p", "q", "Degree (0 = classic)"],
     phoenix,
     sym_x,
+    Some(phoenix_orbit),
 );
 pub static MANDPHOENIX: FractalType = std_type(
     "mandphoenix",
@@ -579,6 +670,7 @@ pub static MANDPHOENIX: FractalType = std_type(
     ],
     mandphoenix,
     sym_none,
+    Some(mandphoenix_orbit),
 );
 
 /// Programs are called through [`crate::color::program_value`], which
@@ -620,6 +712,7 @@ pub static FORMULA: FractalType = FractalType {
         ],
         program_iterate,
         program_symmetry,
+        None,
     )
 };
 
@@ -643,6 +736,29 @@ static ALL: [&FractalType; 18] = [
     &MANDPHOENIX,
     &FORMULA,
 ];
+
+/// Parameter planes and their Julia sets: in each pair the second type
+/// iterates the first one's map with the pixel as the start value and the
+/// first type's pixel as the constant (its first two parameters).
+static JULIA_PAIRS: [(&FractalType, &FractalType); 7] = [
+    (&MANDEL, &JULIA),
+    (&MANDELLAMBDA, &LAMBDA),
+    (&MANDEL4, &JULIA4),
+    (&MANOWAR, &MANOWARJ),
+    (&BARNSLEYM1, &BARNSLEYJ1),
+    (&MAGNET1M, &MAGNET1J),
+    (&MANDPHOENIX, &PHOENIX),
+];
+
+/// The Julia-set type of a parameter-plane type.
+pub fn julia_of(t: &FractalType) -> Option<&'static FractalType> {
+    JULIA_PAIRS.iter().find(|(m, _)| *m == t).map(|(_, j)| *j)
+}
+
+/// The parameter-plane type of a Julia-set type.
+pub fn mandel_of(t: &FractalType) -> Option<&'static FractalType> {
+    JULIA_PAIRS.iter().find(|(_, j)| *j == t).map(|(m, _)| *m)
+}
 
 pub fn all() -> &'static [&'static FractalType] {
     &ALL
