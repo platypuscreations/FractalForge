@@ -4,7 +4,8 @@
 //! render checkpoint. See `docs/specs/gif-native-block.md`.
 
 use fractalforge_core::{
-    Inside, IterBuffer, Outside, PARAM_COUNT, Palette, Params, Program, Symmetry, Window, types,
+    Inside, IterBuffer, Outside, PARAM_COUNT, Palette, Params, Program, Symmetry, View3d, Window,
+    types,
 };
 use fractalforge_formula::{Formula, parser};
 use fractalforge_render::{PassMode, RenderState};
@@ -18,10 +19,10 @@ pub const APP_IDENTIFIER: &[u8; 8] = b"FRCTFRGE";
 /// Application authentication code (3 bytes). Part of the file format.
 pub const AUTH_CODE: &[u8; 3] = b"1.0";
 
-/// Payload layout version written by this code. Version 2 (v0.1.0) is
-/// still read; version 1 (pre-release) stored escape counts rather than
-/// colour values and isn't.
-pub const PAYLOAD_VERSION: u16 = 3;
+/// Payload layout version written by this code. Versions 2 (v0.1.0) and
+/// 3 are still read; version 1 (pre-release) stored escape counts rather
+/// than colour values and isn't.
+pub const PAYLOAD_VERSION: u16 = 4;
 
 const COMPRESSION_DEFLATE: u8 = 1;
 /// Refuse to inflate bodies larger than this (a 16k × 16k buffer is 1 GiB).
@@ -85,6 +86,10 @@ pub fn encode(c: &Checkpoint) -> AppExtension {
     for text in [name, source] {
         body.extend_from_slice(&(text.len() as u32).to_le_bytes());
         body.extend_from_slice(text.as_bytes());
+    }
+    let v = &p.view3d;
+    for x in v.rotation.iter().chain([&v.perspective]).chain(&v.xyshift) {
+        body.extend_from_slice(&x.to_le_bytes());
     }
 
     body.extend_from_slice(&c.buffer.width().to_le_bytes());
@@ -172,8 +177,20 @@ pub fn decode(ext: &AppExtension) -> Result<Checkpoint, Error> {
         };
         let (name, source) = (text()?, text()?);
         if !source.is_empty() {
-            program = Some(compile_formula(&name, &source)?);
+            program = Some(compile_program(fractal, &name, &source)?);
         }
+    }
+    let mut view3d = View3d::default();
+    if version >= 4 {
+        let mut i16s = [0i16; 6];
+        for v in &mut i16s {
+            *v = i16::from_le_bytes(r.take(2)?.try_into().unwrap());
+        }
+        view3d = View3d {
+            rotation: [i16s[0], i16s[1], i16s[2]],
+            perspective: i16s[3],
+            xyshift: [i16s[4], i16s[5]],
+        };
     }
     let params = Params {
         fractal,
@@ -189,6 +206,7 @@ pub fn decode(ext: &AppExtension) -> Result<Checkpoint, Error> {
         forced_symmetry,
         program,
         functions,
+        view3d,
     };
 
     let width = r.u32()?;
@@ -228,8 +246,16 @@ pub fn decode(ext: &AppExtension) -> Result<Checkpoint, Error> {
     })
 }
 
-/// Compiles a formula stored in the block (its entry text).
-fn compile_formula(name: &str, source: &str) -> Result<Program, Error> {
+/// Rebuilds the program stored in the block (its entry text).
+fn compile_program(
+    fractal: &fractalforge_core::FractalType,
+    name: &str,
+    source: &str,
+) -> Result<Program, Error> {
+    if *fractal == types::IFS {
+        return fractalforge_core::ifs::load(source, name)
+            .map_err(|e| bad(format!("stored IFS {name}: {e}")));
+    }
     let entries = parser::entries(source);
     let entry = parser::find(&entries, name)
         .ok_or_else(|| bad(format!("stored formula {name} can't be read")))?;
@@ -331,6 +357,11 @@ mod tests {
         params.decomp = 300;
         params.biomorph = Some(77);
         params.max_iter = 123_456;
+        params.view3d = View3d {
+            rotation: [-10, 200, 7],
+            perspective: 150,
+            xyshift: [3, -4],
+        };
         let data = (0..15u32 * 7)
             .map(|i| [i, INSIDE, UNKNOWN][i as usize % 3])
             .collect();
@@ -357,6 +388,17 @@ mod tests {
         assert_eq!(back, c);
         // -0.0 and tiny values survive bit for bit.
         assert_eq!(back.params.params[3].to_bits(), (-0.0f64).to_bits());
+    }
+
+    #[test]
+    fn ifs_round_trip() {
+        let mut c = sample();
+        let text = "; c\ntri (3D) {\n 0.5 0 0 0 0.5 0 0 0 0.5 0 0 0 1\n}\n";
+        c.params = Params::for_type("ifs").unwrap();
+        c.params.program = Some(fractalforge_core::ifs::load(text, "TRI").unwrap());
+        let back = decode(&encode(&c)).unwrap();
+        assert_eq!(back, c);
+        assert_eq!(back.params.program.unwrap().0.name(), "tri");
     }
 
     #[test]

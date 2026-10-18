@@ -47,6 +47,28 @@ impl Window {
     }
 }
 
+/// Fractint's 3D viewing settings, used by the types that draw 3D objects
+/// (gif-fractint-blocks.md §2.1, offsets 128–148).
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct View3d {
+    /// Rotation about x, y and z, in degrees.
+    pub rotation: [i16; 3],
+    /// Perspective distance; 0 = none.
+    pub perspective: i16,
+    /// Shift right and up, in percent of the view.
+    pub xyshift: [i16; 2],
+}
+
+impl Default for View3d {
+    fn default() -> Self {
+        Self {
+            rotation: [60, 30, 0],
+            perspective: 0,
+            xyshift: [0, 0],
+        }
+    }
+}
+
 /// Colour used for points that never escape. All but `Color` and
 /// `MaxIter` follow docs/specs/coloring.md §6 and need orbit colouring.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -202,6 +224,8 @@ pub struct Params {
     /// Functions bound to fn1…fn4, as indices into Fractint's function
     /// table (gif-fractint-blocks.md §6.2). Default sin, sqr, sinh, cosh.
     pub functions: [u8; 4],
+    /// 3D viewing, for types that use it.
+    pub view3d: View3d,
 }
 
 impl Params {
@@ -225,6 +249,7 @@ impl Params {
             forced_symmetry: None,
             program: None,
             functions: [0, 6, 2, 3],
+            view3d: View3d::default(),
         }
     }
 

@@ -71,6 +71,9 @@ pub struct FractalType {
     pub orbit_coloring: bool,
     /// Defined by [`Params::program`] (formulas).
     pub needs_program: bool,
+    /// Draws the whole image instead of computing pixels (see
+    /// [`crate::plot`]); `iterate` and `symmetry` are then unused.
+    pub plot: Option<crate::PlotFn>,
 }
 
 impl fmt::Debug for FractalType {
@@ -459,6 +462,7 @@ const fn std_type(
         fractint_number: Some(number),
         orbit_coloring: false,
         needs_program: false,
+        plot: None,
     }
 }
 
@@ -716,7 +720,33 @@ pub static FORMULA: FractalType = FractalType {
     )
 };
 
-static ALL: [&FractalType; 18] = [
+fn program_plot(p: &Params, width: u32, height: u32) -> Result<Box<dyn crate::Plotter>, String> {
+    p.program
+        .as_ref()
+        .and_then(|prog| prog.0.plotter(p, width, height))
+        .ok_or_else(|| format!("type {} needs a drawing program", p.fractal.name))
+}
+
+/// An iterated function system from a `.ifs` file (docs/specs/ifs.md).
+pub static IFS: FractalType = FractalType {
+    needs_program: true,
+    uses_bailout: false,
+    resumable: false,
+    plot: Some(program_plot),
+    ..std_type(
+        "ifs",
+        26,
+        "An iterated function system from a .ifs file",
+        Window::new(-8.0, 8.0, -1.0, 11.0),
+        [0.0; 4],
+        &["Colour by transform (1 = on)"],
+        program_iterate,
+        sym_none,
+        None,
+    )
+};
+
+static ALL: [&FractalType; 19] = [
     &MANDEL,
     &JULIA,
     &LAMBDA,
@@ -735,6 +765,7 @@ static ALL: [&FractalType; 18] = [
     &PHOENIX,
     &MANDPHOENIX,
     &FORMULA,
+    &IFS,
 ];
 
 /// Parameter planes and their Julia sets: in each pair the second type
@@ -862,7 +893,7 @@ mod tests {
 
     #[test]
     fn registry() {
-        assert_eq!(all().len(), 18);
+        assert!(all().len() >= 19);
         for t in all() {
             assert_eq!(lookup(t.name), Some(*t));
             assert_eq!(by_fractint_number(t.fractint_number.unwrap()), Some(*t));

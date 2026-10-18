@@ -54,6 +54,16 @@ pub trait FractalProgram: Send + Sync {
     ) -> bool {
         false
     }
+    /// For programs that draw the whole image (IFS, L-systems): starts
+    /// the drawing. `None` for per-pixel programs.
+    fn plotter(
+        &self,
+        _params: &Params,
+        _width: u32,
+        _height: u32,
+    ) -> Option<Box<dyn crate::Plotter>> {
+        None
+    }
     /// Whether the program reads or assigns a predefined name such as `p1`
     /// (Fractint-format files record this, frm-syntax.md §8.1).
     fn mentions(&self, _name: &str) -> bool {

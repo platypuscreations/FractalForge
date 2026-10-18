@@ -12,7 +12,7 @@ use fractalforge_core::{
     Complex, Inside, Outside, PARAM_COUNT, PRESETS, Palette, Params, Symmetry, Window, types,
 };
 use fractalforge_formats::gif::{self, Checkpoint, Content};
-use fractalforge_formats::par;
+use fractalforge_formats::{par, programs};
 use fractalforge_render::{Control, Outcome, PassMode, Render};
 
 #[derive(Parser)]
@@ -70,12 +70,17 @@ struct RenderArgs {
     /// Palette from a Fractint-format .map file.
     #[arg(long, conflicts_with = "palette")]
     map: Option<PathBuf>,
-    /// Render a formula from this .frm file (also where to look for the
-    /// formula of a Fractint formula GIF or .par entry).
-    #[arg(long, value_name = "FILE.frm")]
+    /// Render an entry of this .frm (formula) or .ifs file (also where to
+    /// look for the entry of a Fractint GIF or .par entry).
+    #[arg(long, visible_alias = "ifs", value_name = "FILE")]
     formula: Option<PathBuf>,
-    /// The formula entry to use from --formula (default: its first entry).
-    #[arg(long, value_name = "NAME", requires = "formula")]
+    /// The entry to use from --formula (default: its first entry).
+    #[arg(
+        long,
+        visible_alias = "ifs-name",
+        value_name = "NAME",
+        requires = "formula"
+    )]
     formula_name: Option<String>,
     /// Continue the unfinished render saved in INPUT.
     #[arg(long, requires = "input")]
@@ -345,6 +350,17 @@ fn load_par(path: &Path, entry: Option<&str>) -> Result<Source, String> {
 fn list_entries(path: &Path) -> Result<(), String> {
     let text =
         fractalforge_formula::read_text(path).map_err(|e| format!("{}: {e}", path.display()))?;
+    if is_ext(path, "ifs") {
+        for e in fractalforge_core::ifs::entries(&text) {
+            let status = match fractalforge_core::ifs::parse(&e) {
+                Ok(ifs) => format!("{} transforms", ifs.transforms.len()),
+                Err(err) => format!("error: {}", err.lines().last().unwrap_or("")),
+            };
+            let dim = if e.three_d { "(3D)" } else { "" };
+            println!("{:<19} {:<14} {status}", e.name, dim);
+        }
+        return Ok(());
+    }
     if is_ext(path, "frm") {
         for e in fractalforge_formula::parser::entries(&text) {
             let status = match fractalforge_formula::parser::parse(&e) {
@@ -388,20 +404,10 @@ fn list_entries(path: &Path) -> Result<(), String> {
     Ok(())
 }
 
-/// Compiles a formula entry from a file (the first entry when `name` is
-/// `None`), printing Fractint-style errors and warnings.
+/// Loads a formula or IFS entry from a file (the first entry when `name`
+/// is `None`), printing Fractint-style errors and warnings.
 fn load_formula(file: &Path, name: Option<&str>) -> Result<fractalforge_core::Program, String> {
-    let text =
-        fractalforge_formula::read_text(file).map_err(|e| format!("{}: {e}", file.display()))?;
-    let name = match name {
-        Some(n) => n.to_owned(),
-        None => fractalforge_formula::parser::entries(&text)
-            .first()
-            .map(|e| e.name.clone())
-            .ok_or_else(|| format!("{}: no formulas", file.display()))?,
-    };
-    let (program, warnings) =
-        fractalforge_formula::load(&text, &name).map_err(|e| format!("{}: {e}", file.display()))?;
+    let (program, warnings) = programs::load_file(file, name)?;
     for w in warnings {
         eprintln!("note: {w}");
     }
@@ -427,19 +433,22 @@ fn load_source(path: &Path, entry: Option<&str>, formula: Option<&Path>) -> Resu
                 )
             })?;
             if params.fractal.needs_program {
-                // The GIF names the formula but not its file (frm-syntax.md
-                // §8.1): use --formula, else the .frm files next to the GIF.
+                // The GIF names the entry but not its file (frm-syntax.md
+                // §8.1): use --formula, else the files next to the GIF.
                 let name = info.formula_name.clone().unwrap_or_default();
+                let kind = programs::Kind::of_type(params.fractal).unwrap();
                 let file = match formula {
                     Some(f) => f.to_owned(),
                     None => path
                         .parent()
-                        .and_then(|d| fractalforge_formula::find_in_dir(d, &name))
+                        .and_then(|d| kind.find_in_dir(d, &name))
                         .map(|(p, _)| p)
                         .ok_or_else(|| {
                             format!(
-                                "{}: needs formula '{name}'; give its .frm file with --formula",
-                                path.display()
+                                "{}: needs {} '{name}'; give its .{} file with --formula",
+                                path.display(),
+                                kind.noun(),
+                                kind.extension()
                             )
                         })?,
                 };
@@ -491,7 +500,8 @@ fn render(args: RenderArgs) -> Result<(), String> {
     let palette = palette.unwrap_or_default();
 
     let mut render = match source {
-        Some(Source::Checkpoint(c)) if args.resume => {
+        // Plotted types aren't resumable: they're calculated again below.
+        Some(Source::Checkpoint(c)) if args.resume && c.params.fractal.plot.is_none() => {
             if !args.fractal.is_empty() || args.size.is_some() || args.passes.is_some() {
                 return Err(
                     "--resume continues a render exactly; it can't change parameters, size or passes"
@@ -518,6 +528,12 @@ fn render(args: RenderArgs) -> Result<(), String> {
         source => {
             let (base, size, file_mode) = match source {
                 Some(Source::Checkpoint(c)) => {
+                    if args.resume {
+                        eprintln!(
+                            "note: {} images can't be resumed; calculating from the start",
+                            c.params.fractal.name
+                        );
+                    }
                     let size = (c.buffer.width(), c.buffer.height());
                     (c.params, size, Some(c.state.pass_mode))
                 }
@@ -546,10 +562,11 @@ fn render(args: RenderArgs) -> Result<(), String> {
             let mut params = args.fractal.apply_unchecked(base, w as f64 / h as f64)?;
             if let (Some(file), true) = (&args.formula, args.input.is_none()) {
                 let program = load_formula(file, args.formula_name.as_deref())?;
-                if params.fractal != &fractalforge_core::types::FORMULA {
+                let fractal = programs::Kind::of_path(file).fractal();
+                if params.fractal != fractal {
                     params = Params {
                         program: None,
-                        ..Params::new(&fractalforge_core::types::FORMULA)
+                        ..Params::new(fractal)
                     };
                     params = args.fractal.apply_unchecked(params, w as f64 / h as f64)?;
                 }
@@ -618,6 +635,11 @@ fn render(args: RenderArgs) -> Result<(), String> {
     let secs = checkpoint.state.elapsed_us as f64 / 1e6;
     match outcome {
         Outcome::Complete => println!("complete in {secs:.2}s: {}", args.output.display()),
+        Outcome::Stopped if !checkpoint.params.fractal.resumable => println!(
+            "stopped at {:.1}% after {secs:.2}s; {} images can't be resumed",
+            progress * 100.0,
+            checkpoint.params.fractal.name
+        ),
         Outcome::Stopped => println!(
             "stopped at {:.1}% after {secs:.2}s; resume with: fractalforge-cli render {} --resume -o OUT.gif",
             progress * 100.0,
@@ -678,7 +700,7 @@ fn print_params(p: &Params, pass_mode: PassMode) {
     let list: Vec<String> = p.params[..used].iter().map(f64::to_string).collect();
     println!("params:     {}", list.join("/"));
     if let Some(prog) = &p.program {
-        println!("formula:    {}", prog.0.name());
+        println!("entry:      {}", prog.0.name());
     }
     println!("maxiter:    {}", p.max_iter);
     println!("bailout:    {}", p.bailout);
@@ -703,11 +725,13 @@ fn info(path: &Path) -> Result<(), String> {
         Content::Native(c) => {
             print_params(&c.params, c.state.pass_mode);
             println!("calc time:  {:.2}s", c.state.elapsed_us as f64 / 1e6);
-            let r = Render::resume(c.params, c.state, c.buffer).map_err(|e| e.to_string())?;
-            if r.is_complete() {
-                println!("status:     complete");
-            } else {
-                println!("status:     {:.1}% done, resumable", r.progress() * 100.0);
+            match Render::resume(c.params, c.state, c.buffer) {
+                Ok(r) if r.is_complete() => println!("status:     complete"),
+                Ok(r) => println!("status:     {:.1}% done, resumable", r.progress() * 100.0),
+                Err(fractalforge_render::ResumeError::NotResumable(_)) => {
+                    println!("status:     unfinished, not resumable")
+                }
+                Err(e) => return Err(e.to_string()),
             }
         }
         Content::Fractint(info) => {

@@ -6,6 +6,7 @@ pub mod gif;
 pub mod map;
 pub mod par;
 pub mod png;
+pub mod programs;
 
 use std::fmt;
 

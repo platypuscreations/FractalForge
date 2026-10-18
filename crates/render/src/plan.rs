@@ -59,6 +59,23 @@ fn copies(n: u32, s: Option<i64>) -> Vec<Option<u32>> {
 }
 
 impl Plan {
+    /// No stages: for plotted types, which don't compute pixels.
+    pub fn empty() -> Self {
+        Self {
+            width: 0,
+            height: 0,
+            stages: Vec::new(),
+            symmetry: Symmetry::None,
+            rows: Vec::new(),
+            cols: Vec::new(),
+            row_copy: Vec::new(),
+            col_copy: Vec::new(),
+            t: 0,
+            residue_rows: Vec::new(),
+            copy_map: None,
+        }
+    }
+
     pub fn new(params: &Params, width: u32, height: u32, state: &RenderState) -> Self {
         let w = &params.window;
         let symmetry = if params.use_symmetry && !params.coloring_breaks_symmetry() {
