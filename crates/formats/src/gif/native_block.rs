@@ -3,7 +3,10 @@
 //! FractalForge's own GIF application-extension block, holding a complete
 //! render checkpoint. See `docs/specs/gif-native-block.md`.
 
-use fractalforge_core::{Inside, IterBuffer, Outside, Palette, Params, Window, types};
+use fractalforge_core::{
+    Inside, IterBuffer, Outside, PARAM_COUNT, Palette, Params, Program, Symmetry, Window, types,
+};
+use fractalforge_formula::{Formula, parser};
 use fractalforge_render::{PassMode, RenderState};
 
 use super::container::{AppExtension, Placement};
@@ -15,9 +18,10 @@ pub const APP_IDENTIFIER: &[u8; 8] = b"FRCTFRGE";
 /// Application authentication code (3 bytes). Part of the file format.
 pub const AUTH_CODE: &[u8; 3] = b"1.0";
 
-/// Payload layout version written by this code. Version 1 (pre-release)
-/// stored escape counts rather than colour values and isn't read.
-pub const PAYLOAD_VERSION: u16 = 2;
+/// Payload layout version written by this code. Version 2 (v0.1.0) is
+/// still read; version 1 (pre-release) stored escape counts rather than
+/// colour values and isn't.
+pub const PAYLOAD_VERSION: u16 = 3;
 
 const COMPRESSION_DEFLATE: u8 = 1;
 /// Refuse to inflate bodies larger than this (a 16k × 16k buffer is 1 GiB).
@@ -72,6 +76,16 @@ pub fn encode(c: &Checkpoint) -> AppExtension {
     body.extend_from_slice(&p.decomp.to_le_bytes());
     body.extend_from_slice(&p.biomorph.map_or(-1i64, i64::from).to_le_bytes());
     body.push(p.use_symmetry as u8);
+    body.push(p.forced_symmetry.map_or(0, symmetry_tag));
+    body.extend_from_slice(&p.functions);
+    let (name, source) = p
+        .program
+        .as_ref()
+        .map_or(("", ""), |prog| (prog.0.name(), prog.0.source()));
+    for text in [name, source] {
+        body.extend_from_slice(&(text.len() as u32).to_le_bytes());
+        body.extend_from_slice(text.as_bytes());
+    }
 
     body.extend_from_slice(&c.buffer.width().to_le_bytes());
     body.extend_from_slice(&c.buffer.height().to_le_bytes());
@@ -102,7 +116,7 @@ pub fn decode(ext: &AppExtension) -> Result<Checkpoint, Error> {
     let payload = ext.data();
     let mut r = Cursor(&payload);
     let version = r.u16()?;
-    if version != PAYLOAD_VERSION {
+    if !(2..=PAYLOAD_VERSION).contains(&version) {
         return Err(bad(format!("unsupported payload version {version}")));
     }
     if r.u8()? != COMPRESSION_DEFLATE {
@@ -123,7 +137,11 @@ pub fn decode(ext: &AppExtension) -> Result<Checkpoint, Error> {
     let fractal =
         types::lookup(name).ok_or_else(|| bad(format!("unknown fractal type {name:?}")))?;
     let window = Window::new(r.f64()?, r.f64()?, r.f64()?, r.f64()?);
-    let params = [r.f64()?, r.f64()?, r.f64()?, r.f64()?];
+    let mut params = [0.0; PARAM_COUNT];
+    let stored = if version >= 3 { PARAM_COUNT } else { 4 };
+    for v in params.iter_mut().take(stored) {
+        *v = r.f64()?;
+    }
     let max_iter = r.u32()?;
     let bailout = r.f64()?;
     let inside = match (r.u8()?, r.u8()?) {
@@ -141,6 +159,22 @@ pub fn decode(ext: &AppExtension) -> Result<Checkpoint, Error> {
     let decomp = r.u32()?;
     let biomorph = u32::try_from(r.u64()? as i64).ok();
     let use_symmetry = r.u8()? != 0;
+    let mut forced_symmetry = None;
+    let mut functions = [0, 6, 2, 3];
+    let mut program = None;
+    if version >= 3 {
+        forced_symmetry = symmetry_from_tag(r.u8()?);
+        functions.copy_from_slice(r.take(4)?);
+        let mut text = || -> Result<String, Error> {
+            let n = r.u32()? as usize;
+            String::from_utf8(r.take(n)?.to_vec())
+                .map_err(|_| bad("formula text isn't UTF-8".into()))
+        };
+        let (name, source) = (text()?, text()?);
+        if !source.is_empty() {
+            program = Some(compile_formula(&name, &source)?);
+        }
+    }
     let params = Params {
         fractal,
         window,
@@ -152,8 +186,9 @@ pub fn decode(ext: &AppExtension) -> Result<Checkpoint, Error> {
         decomp,
         biomorph,
         use_symmetry,
-        program: None,
-        functions: [0, 6, 2, 3],
+        forced_symmetry,
+        program,
+        functions,
     };
 
     let width = r.u32()?;
@@ -190,6 +225,41 @@ pub fn decode(ext: &AppExtension) -> Result<Checkpoint, Error> {
         state,
         buffer,
         palette,
+    })
+}
+
+/// Compiles a formula stored in the block (its entry text).
+fn compile_formula(name: &str, source: &str) -> Result<Program, Error> {
+    let entries = parser::entries(source);
+    let entry = parser::find(&entries, name)
+        .ok_or_else(|| bad(format!("stored formula {name} can't be read")))?;
+    let parsed =
+        parser::parse(entry).map_err(|e| bad(format!("stored formula {name}: {}", e[0])))?;
+    Formula::compile(&parsed.ast, &entry.text)
+        .map(Formula::into_program)
+        .map_err(|e| bad(format!("stored formula {name}: {e}")))
+}
+
+fn symmetry_tag(s: Symmetry) -> u8 {
+    match s {
+        Symmetry::None => 5,
+        Symmetry::XAxis => 1,
+        Symmetry::YAxis => 2,
+        Symmetry::XY => 3,
+        Symmetry::Origin => 4,
+        Symmetry::Pi => 6,
+    }
+}
+
+fn symmetry_from_tag(t: u8) -> Option<Symmetry> {
+    Some(match t {
+        1 => Symmetry::XAxis,
+        2 => Symmetry::YAxis,
+        3 => Symmetry::XY,
+        4 => Symmetry::Origin,
+        5 => Symmetry::None,
+        6 => Symmetry::Pi,
+        _ => return None,
     })
 }
 
@@ -252,7 +322,10 @@ mod tests {
 
     fn sample() -> Checkpoint {
         let mut params = Params::for_type("julia").unwrap();
-        params.params = [-0.8, 0.156, 1e-300, -0.0];
+        params.params[..4].copy_from_slice(&[-0.8, 0.156, 1e-300, -0.0]);
+        params.params[9] = 7.5;
+        params.forced_symmetry = Some(Symmetry::YAxis);
+        params.functions = [9, 4, 5, 10];
         params.inside = Inside::Bof61;
         params.outside = Outside::Color(9);
         params.decomp = 300;

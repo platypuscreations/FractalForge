@@ -193,6 +193,9 @@ pub fn lookup(name: &str) -> Option<Builtin> {
         "acosh" => acosh,
         "atan" => atan,
         "atanh" => atanh,
+        // Parses in Fractint, but its value is unknown (frm-semantics.md
+        // §2.1): the identity here.
+        "srand" => Ok,
         _ => return None,
     })
 }

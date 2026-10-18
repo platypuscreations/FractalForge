@@ -20,7 +20,12 @@ pub(crate) enum Stage {
     /// Compute pixels of copied rows that no mirror filled (origin
     /// symmetry, where the mirrored column falls outside the image).
     Residue,
+    /// Fill the copied pixels of a copy map (PI_SYM).
+    Resolve,
 }
+
+/// Copy-map entry for a pixel that is computed rather than copied.
+const COMPUTED: u32 = u32::MAX;
 
 #[derive(Clone, Debug)]
 pub(crate) struct Plan {
@@ -38,6 +43,8 @@ pub(crate) struct Plan {
     t: i64,
     /// Copied rows, for the residue stage.
     residue_rows: Vec<u32>,
+    /// PI_SYM: for each pixel, the pixel it copies or [`COMPUTED`].
+    copy_map: Option<Vec<u32>>,
 }
 
 /// Rows `r` with `s/2 < r <= s` are copies of row `s - r` (§1.6). Returns
@@ -55,7 +62,9 @@ impl Plan {
     pub fn new(params: &Params, width: u32, height: u32, state: &RenderState) -> Self {
         let w = &params.window;
         let symmetry = if params.use_symmetry && !params.coloring_breaks_symmetry() {
-            (params.fractal.symmetry)(params)
+            params
+                .forced_symmetry
+                .unwrap_or_else(|| (params.fractal.symmetry)(params))
         } else {
             Symmetry::None
         };
@@ -65,7 +74,7 @@ impl Plan {
         let t = (width > 1)
             .then(|| (2.0 * -w.x_min / ((w.x_max - w.x_min) / (width - 1) as f64)).round() as i64);
         let (row_from, col_from) = match symmetry {
-            Symmetry::None => (copies(height, None), copies(width, None)),
+            Symmetry::None | Symmetry::Pi => (copies(height, None), copies(width, None)),
             Symmetry::XAxis | Symmetry::Origin => (copies(height, s), copies(width, None)),
             Symmetry::YAxis => (copies(height, None), copies(width, t)),
             Symmetry::XY => (copies(height, s), copies(width, t)),
@@ -93,7 +102,37 @@ impl Plan {
             _ => Vec::new(),
         };
 
+        let copy_map = (symmetry == Symmetry::Pi).then(|| {
+            // Columns per period of π (frm-semantics.md §6.2).
+            let p = (std::f64::consts::PI * width as f64 / (w.x_max - w.x_min)).floor() as i64;
+            let p = if p >= 1 { p } else { width as i64 };
+            pi_copy_map(width, height, s, t, p)
+        });
+
         let mut stages = Vec::new();
+        if copy_map.is_some() {
+            // Copy maps don't fit the coarse grids: one full pass, then fill.
+            return Self {
+                width,
+                height,
+                stages: vec![
+                    Stage::Level {
+                        step: 1,
+                        first: true,
+                        guess: false,
+                    },
+                    Stage::Resolve,
+                ],
+                symmetry,
+                row_copy: vec![None; height as usize],
+                col_copy: vec![None; width as usize],
+                rows: (0..height).collect(),
+                cols: (0..width).collect(),
+                t: 0,
+                residue_rows: Vec::new(),
+                copy_map,
+            };
+        }
         let guess = state.pass_mode == PassMode::Guess;
         let mut step = state.coarsest_step;
         let mut first = true;
@@ -117,6 +156,7 @@ impl Plan {
             cols,
             t: t.unwrap_or(0),
             residue_rows,
+            copy_map: None,
         }
     }
 
@@ -125,6 +165,7 @@ impl Plan {
         match self.stages[stage] {
             Stage::Level { step, .. } => (self.rows.len() as u32).div_ceil(step),
             Stage::Residue => self.residue_rows.len() as u32,
+            Stage::Resolve => self.height,
         }
     }
 
@@ -163,21 +204,45 @@ impl Plan {
                 };
                 let out = (start..self.cols.len() as u32)
                     .step_by(stride as usize)
-                    .map(|vx| {
+                    .filter_map(|vx| {
                         let x = self.cols[vx as usize];
+                        if let Some(map) = &self.copy_map
+                            && map[(y * self.width + x) as usize] != COMPUTED
+                        {
+                            return None;
+                        }
                         // Pixels already known (taken from another program's
                         // partial image) are kept. In our own renders a
                         // pixel is never known before its stage visits it.
                         let known = buf.get(x, y);
                         if known != UNKNOWN {
-                            return (x, known);
+                            return Some((x, known));
                         }
                         let guessed = if guess && !first {
                             self.guess(buf, vx, vy, step)
                         } else {
                             None
                         };
-                        (x, guessed.unwrap_or_else(|| px.iterate(x, y, carry)))
+                        Some((x, guessed.unwrap_or_else(|| px.iterate(x, y, carry))))
+                    })
+                    .collect();
+                (y, out)
+            }
+            Stage::Resolve => {
+                // Every chain of copies ends at a computed pixel, all of
+                // which the previous stage has filled.
+                let map = self.copy_map.as_ref().expect("resolve needs a copy map");
+                let y = index;
+                let out = (0..self.width)
+                    .filter_map(|x| {
+                        let mut i = map[(y * self.width + x) as usize];
+                        if i == COMPUTED {
+                            return None;
+                        }
+                        while map[i as usize] != COMPUTED {
+                            i = map[i as usize];
+                        }
+                        Some((x, buf.data()[i as usize]))
                     })
                     .collect();
                 (y, out)
@@ -229,7 +294,7 @@ impl Plan {
         for &(x, v) in values {
             buf.set(x, y, v);
             match self.symmetry {
-                Symmetry::None => {}
+                Symmetry::None | Symmetry::Pi => {}
                 Symmetry::XAxis => {
                     if let Some(ry) = row_copy {
                         buf.set(x, ry, reflect(v));
@@ -263,6 +328,66 @@ impl Plan {
             }
         }
     }
+}
+
+/// The PI_SYM copy map (frm-semantics.md §6.2): for each pixel, the pixel
+/// it copies or [`COMPUTED`]. `s` and `t` are the row and column mirror
+/// sums (types.md §1.6), `p` the period in columns.
+fn pi_copy_map(width: u32, height: u32, s: Option<i64>, t: Option<i64>, p: i64) -> Vec<u32> {
+    let (w, h) = (width as i64, height as i64);
+    let idx = |x: i64, y: i64| (y * w + x) as u32;
+    let mut map = vec![COMPUTED; (w * h) as usize];
+    let mirror_col = |c: i64| t.map(|t| t - c);
+    let copied_col = |c: i64| mirror_col(c).is_some_and(|m| 0 <= m && m < c);
+    let source_col = |c: i64| !copied_col(c) && mirror_col(c).is_some_and(|m| 0 <= m && m < w);
+
+    // Period copies inside each maximal run of consecutive columns that all
+    // satisfy `member` and share the same `class`.
+    let period_runs =
+        |map: &mut Vec<u32>, r: i64, member: &dyn Fn(i64) -> bool, class: &dyn Fn(i64) -> bool| {
+            let mut c = 0;
+            while c < w {
+                if !member(c) {
+                    c += 1;
+                    continue;
+                }
+                let (a, k) = (c, class(c));
+                while c < w && member(c) && class(c) == k {
+                    if c >= a + p {
+                        map[idx(c, r) as usize] = idx(c - p, r);
+                    }
+                    c += 1;
+                }
+            }
+        };
+
+    for r in 0..h {
+        let partner = s.map(|s| s - r);
+        let copied_row = partner.is_some_and(|m| 0 <= m && m < r);
+        let band_row = !copied_row && partner.is_some_and(|m| 0 <= m && m < h);
+        if copied_row {
+            let sr = partner.unwrap();
+            for c in 0..w {
+                if let Some(m) = mirror_col(c).filter(|m| (0..w).contains(m)) {
+                    map[idx(c, r) as usize] = idx(m, sr);
+                }
+            }
+            let unpaired = |c: i64| !mirror_col(c).is_some_and(|m| (0..w).contains(&m));
+            period_runs(&mut map, r, &unpaired, &|_| true);
+        } else if band_row {
+            for c in 0..w {
+                if copied_col(c) {
+                    map[idx(c, r) as usize] = idx(mirror_col(c).unwrap(), r);
+                }
+            }
+            period_runs(&mut map, r, &|c| !copied_col(c), &source_col);
+        } else {
+            for c in p..w {
+                map[idx(c, r) as usize] = idx(c - p, r);
+            }
+        }
+    }
+    map
 }
 
 /// Maps pixel coordinates to the complex plane.
@@ -313,6 +438,30 @@ impl<'a> Pixels<'a> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn pi_map_free_rows_repeat_with_the_period() {
+        // No axis in view: every row repeats every 3 columns.
+        let map = pi_copy_map(8, 2, None, None, 3);
+        assert_eq!(&map[0..3], &[COMPUTED; 3]);
+        assert_eq!(map[3], 0);
+        assert_eq!(map[7], 4);
+        assert_eq!(map[8 + 5], 8 + 2);
+    }
+
+    #[test]
+    fn pi_map_chains_end_at_computed_pixels() {
+        let map = pi_copy_map(40, 30, Some(29), Some(39), 7);
+        for start in 0..map.len() {
+            let mut i = start as u32;
+            let mut steps = 0;
+            while map[i as usize] != COMPUTED {
+                i = map[i as usize];
+                steps += 1;
+                assert!(steps < 100, "cycle from {start}");
+            }
+        }
+    }
 
     #[test]
     fn copy_rule() {

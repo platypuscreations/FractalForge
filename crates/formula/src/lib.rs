@@ -6,6 +6,7 @@
 pub mod analysis;
 pub mod ast;
 pub mod funcs;
+pub mod parser;
 mod vm;
 
 use fractalforge_core::orbit_color::Orbit;
@@ -66,14 +67,21 @@ impl Formula {
         match name {
             "p1" => pair(0),
             "p2" => pair(2),
+            "p3" => pair(4),
+            "p4" => pair(6),
+            "p5" => pair(8),
             "pi" => Complex::new(std::f64::consts::PI, 0.0),
             "e" => Complex::new(std::f64::consts::E, 0.0),
             "maxit" => Complex::new(p.max_iter as f64, 0.0),
             "scrnmax" => Complex::new(width as f64, height as f64),
             "center" => Complex::new((w.x_min + w.x_max) / 2.0, (w.y_min + w.y_max) / 2.0),
-            "magxmag" => Complex::new(2.0 / (w.y_max - w.y_min), 1.0),
+            // xmag: how much narrower the view is than 4:3 (par.md §5.2).
+            "magxmag" => Complex::new(
+                2.0 / (w.y_max - w.y_min),
+                (w.y_max - w.y_min) * (4.0 / 3.0) / (w.x_max - w.x_min),
+            ),
             "ismand" => Complex::new(1.0, 0.0),
-            // p3–p5 (params 5–10), rotskew and lastsqr are 0 here.
+            // rotskew (rotated views aren't supported) and lastsqr are 0.
             _ => Complex::ZERO,
         }
     }
@@ -151,7 +159,8 @@ impl FractalProgram for Formula {
             stack.clear();
             match vm::run(&self.iter, vars, &mut stack, fns) {
                 Err(_) => return escaped(k, vars, &orbit),
-                Ok(v) if v.re == 0.0 => return escaped(k, vars, &orbit),
+                // An empty iteration section never stops (frm-syntax.md §2.3).
+                Ok(v) if v.re == 0.0 && !self.iter.is_empty() => return escaped(k, vars, &orbit),
                 Ok(_) => {}
             }
             if let Some(o) = &mut orbit {
@@ -168,16 +177,20 @@ impl FractalProgram for Formula {
         self.order_dependent
     }
 
-    /// §6.1. PI_SYM's periodic copying isn't implemented; such formulas
-    /// compute every pixel.
+    /// §6.1–6.2.
     fn symmetry(&self, p: &Params) -> Symmetry {
         let Some(word) = &self.symmetry else {
             return Symmetry::None;
         };
         let word = word.to_ascii_uppercase();
+        // PI_SYM has an underscore in its name: split off only the
+        // _NOPARM / _NOREAL / _NOIMAG condition.
+        let word = word.replacen("PI_SYM", "PI", 1);
         let (base, cond) = word.split_once('_').unwrap_or((&word, ""));
-        let real_set = p.params[0] != 0.0 || p.params[2] != 0.0;
-        let imag_set = p.params[1] != 0.0 || p.params[3] != 0.0;
+        // Real parts are the odd-numbered params (P1, P3, …), imaginary
+        // parts the even ones; P4 and above count like P1–P3 (hypothesis).
+        let real_set = p.params.iter().step_by(2).any(|&v| v != 0.0);
+        let imag_set = p.params.iter().skip(1).step_by(2).any(|&v| v != 0.0);
         let allowed = match cond {
             "" => true,
             "NOPARM" => !real_set && !imag_set,
@@ -193,6 +206,7 @@ impl FractalProgram for Formula {
             "YAXIS" => Symmetry::YAxis,
             "XYAXIS" => Symmetry::XY,
             "ORIGIN" => Symmetry::Origin,
+            "PI" => Symmetry::Pi,
             _ => Symmetry::None,
         }
     }
@@ -358,7 +372,8 @@ mod tests {
             ("YAXIS", 0.0, Symmetry::YAxis),
             ("XYAXIS", 0.0, Symmetry::XY),
             ("ORIGIN", 0.0, Symmetry::Origin),
-            ("PI_SYM", 0.0, Symmetry::None),
+            ("PI_SYM", 0.0, Symmetry::Pi),
+            ("PI_SYM_NOPARM", 0.1, Symmetry::None),
             ("NOSYM", 0.0, Symmetry::None),
         ] {
             ast.symmetry = Some(word.into());

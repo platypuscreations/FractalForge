@@ -151,8 +151,10 @@ pub(crate) fn run(
             Op::Load(i) => stack.push(vars[i as usize]),
             Op::Store(i) => vars[i as usize] = *stack.last().unwrap(),
             Op::Neg => {
+                // 0 − a, so a zero part stays +0: (−1)^0.5 is +i, not −i
+                // (frm-semantics.md §3, `mpowneg`).
                 let a = stack.pop().unwrap();
-                stack.push(-a);
+                stack.push(Complex::new(0.0 - a.re, 0.0 - a.im));
             }
             Op::Modulus => {
                 let a = stack.pop().unwrap();

@@ -33,17 +33,21 @@ pub fn encode(params: &Params, buffer: &IterBuffer, palette: &Palette) -> Result
 /// A one-line description of the parameters.
 pub fn describe(p: &Params) -> String {
     let w = &p.window;
+    let used = p
+        .params
+        .iter()
+        .rposition(|&v| v != 0.0)
+        .map_or(2, |i| i + 1)
+        .max(2);
+    let params: Vec<String> = p.params[..used].iter().map(f64::to_string).collect();
     format!(
-        "type={} corners={}/{}/{}/{} params={}/{}/{}/{} maxiter={} bailout={}",
+        "type={} corners={}/{}/{}/{} params={} maxiter={} bailout={}",
         p.fractal.name,
         w.x_min,
         w.x_max,
         w.y_min,
         w.y_max,
-        p.params[0],
-        p.params[1],
-        p.params[2],
-        p.params[3],
+        params.join("/"),
         p.max_iter,
         p.bailout
     )

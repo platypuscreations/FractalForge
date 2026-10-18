@@ -8,7 +8,9 @@ use std::sync::Arc;
 use std::sync::atomic::{AtomicBool, Ordering};
 
 use clap::{Args, Parser, Subcommand, ValueEnum};
-use fractalforge_core::{Complex, Inside, Outside, PRESETS, Palette, Params, Window, types};
+use fractalforge_core::{
+    Complex, Inside, Outside, PARAM_COUNT, PRESETS, Palette, Params, Symmetry, Window, types,
+};
 use fractalforge_formats::gif::{self, Checkpoint, Content};
 use fractalforge_formats::par;
 use fractalforge_render::{Control, Outcome, PassMode, Render};
@@ -98,8 +100,8 @@ struct FractalArgs {
     #[arg(long, value_name = "X/Y/MAG", conflicts_with = "corners", value_parser = parse_floats::<3>, allow_hyphen_values = true)]
     center_mag: Option<[f64; 3]>,
     /// Type parameters, e.g. the Julia constant.
-    #[arg(long, value_name = "P1[/P2[/P3[/P4]]]", value_parser = parse_params, allow_hyphen_values = true)]
-    params: Option<[f64; 4]>,
+    #[arg(long, value_name = "P1[/P2[/…/P10]]", value_parser = parse_params, allow_hyphen_values = true)]
+    params: Option<[f64; PARAM_COUNT]>,
     #[arg(long)]
     maxiter: Option<u32>,
     /// Escape when |z|² exceeds this.
@@ -120,8 +122,11 @@ struct FractalArgs {
     #[arg(long)]
     biomorph: Option<u32>,
     /// Compute every pixel instead of copying mirrored ones.
-    #[arg(long)]
+    #[arg(long, conflicts_with = "symmetry")]
     no_symmetry: bool,
+    /// Force mirror copying: none, xaxis, yaxis, xyaxis or origin.
+    #[arg(long, value_parser = parse_symmetry)]
+    symmetry: Option<Symmetry>,
 }
 
 impl FractalArgs {
@@ -137,6 +142,7 @@ impl FractalArgs {
             && self.decomp.is_none()
             && self.biomorph.is_none()
             && !self.no_symmetry
+            && self.symmetry.is_none()
     }
 
     /// Applies the overrides to `params` (or to the defaults of a new type).
@@ -177,8 +183,10 @@ impl FractalArgs {
                 params.bailout = params.default_bailout();
             }
         }
-        if self.no_symmetry {
+        if self.no_symmetry || self.symmetry == Some(Symmetry::None) {
             params.use_symmetry = false;
+        } else if let Some(s) = self.symmetry {
+            params.forced_symmetry = Some(s);
         }
         params.validate()?;
         Ok(params)
@@ -566,10 +574,17 @@ fn print_params(p: &Params, pass_mode: PassMode) {
         "corners:    {}/{}/{}/{}",
         w.x_min, w.x_max, w.y_min, w.y_max
     );
-    println!(
-        "params:     {}/{}/{}/{}",
-        p.params[0], p.params[1], p.params[2], p.params[3]
-    );
+    let used = p
+        .params
+        .iter()
+        .rposition(|&v| v != 0.0)
+        .map_or(2, |i| i + 1)
+        .max(2);
+    let list: Vec<String> = p.params[..used].iter().map(f64::to_string).collect();
+    println!("params:     {}", list.join("/"));
+    if let Some(prog) = &p.program {
+        println!("formula:    {}", prog.0.name());
+    }
     println!("maxiter:    {}", p.max_iter);
     println!("bailout:    {}", p.bailout);
     println!("inside:     {:?}", p.inside);
@@ -663,13 +678,24 @@ fn parse_floats<const N: usize>(s: &str) -> Result<[f64; N], String> {
         .map_err(|_| format!("expected {N} values separated by '/'"))
 }
 
-/// One to four values; missing ones are 0.
-fn parse_params(s: &str) -> Result<[f64; 4], String> {
+fn parse_symmetry(s: &str) -> Result<Symmetry, String> {
+    Ok(match s.to_ascii_lowercase().as_str() {
+        "none" => Symmetry::None,
+        "xaxis" => Symmetry::XAxis,
+        "yaxis" => Symmetry::YAxis,
+        "xyaxis" => Symmetry::XY,
+        "origin" => Symmetry::Origin,
+        _ => return Err("symmetry must be none, xaxis, yaxis, xyaxis or origin".into()),
+    })
+}
+
+/// One to ten values; missing ones are 0.
+fn parse_params(s: &str) -> Result<[f64; PARAM_COUNT], String> {
     let v = split_floats(s)?;
-    if !(1..=4).contains(&v.len()) {
-        return Err("expected 1 to 4 values separated by '/'".into());
+    if !(1..=PARAM_COUNT).contains(&v.len()) {
+        return Err("expected 1 to 10 values separated by '/'".into());
     }
-    let mut out = [0.0; 4];
+    let mut out = [0.0; PARAM_COUNT];
     out[..v.len()].copy_from_slice(&v);
     Ok(out)
 }
@@ -744,7 +770,7 @@ mod tests {
             panic!()
         };
         assert_eq!(r.fractal.center_mag, Some([-0.5, 0.0, 2.0]));
-        assert_eq!(r.fractal.params, Some([-0.8, 0.156, 0.0, 0.0]));
+        assert_eq!(r.fractal.params.unwrap()[..3], [-0.8, 0.156, 0.0]);
         assert_eq!(r.size, Some((64, 48)));
         assert_eq!(r.stop_after, Some(0.5));
         assert_eq!(r.fractal.inside, Some(Inside::MaxIter));

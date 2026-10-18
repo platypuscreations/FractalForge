@@ -9,7 +9,9 @@
 
 use std::path::Path;
 
-use fractalforge_core::{FractalType, Inside, Outside, Palette, Params, Window, types};
+use fractalforge_core::{
+    FractalType, Inside, Outside, PARAM_COUNT, Palette, Params, Symmetry, Window, types,
+};
 use fractalforge_render::PassMode;
 
 use crate::Error;
@@ -171,7 +173,7 @@ pub struct Loaded {
 struct State {
     fractal: Option<&'static FractalType>,
     window: Option<Window>,
-    params: Option<[f64; 4]>,
+    params: Option<[f64; PARAM_COUNT]>,
     max_iter: Option<u32>,
     bailout: Option<f64>,
     inside: Option<Inside>,
@@ -179,6 +181,7 @@ struct State {
     decomp: Option<u32>,
     biomorph: Option<Option<u32>>,
     use_symmetry: Option<bool>,
+    forced_symmetry: Option<Symmetry>,
     pass_mode: Option<PassMode>,
     reset: bool,
 }
@@ -270,10 +273,7 @@ pub fn load(entry: &RawEntry, dir: Option<&Path>) -> Result<Loaded, Error> {
                     if p.len() > 10 {
                         return Err("params takes at most 10 values".into());
                     }
-                    if p.iter().skip(4).any(|&x| x != 0.0) {
-                        warnings.push("parameters 5-10 are ignored".into());
-                    }
-                    let mut out = [0.0; 4];
+                    let mut out = [0.0; PARAM_COUNT];
                     for (o, x) in out.iter_mut().zip(&p) {
                         *o = *x;
                     }
@@ -316,6 +316,10 @@ pub fn load(entry: &RawEntry, dir: Option<&Path>) -> Result<Loaded, Error> {
                 }
                 "symmetry" => match v.to_lowercase().as_str() {
                     "none" => st.use_symmetry = Some(false),
+                    "xaxis" => st.forced_symmetry = Some(Symmetry::XAxis),
+                    "yaxis" => st.forced_symmetry = Some(Symmetry::YAxis),
+                    "xyaxis" => st.forced_symmetry = Some(Symmetry::XY),
+                    "origin" => st.forced_symmetry = Some(Symmetry::Origin),
                     other => {
                         warnings.push(format!("symmetry={other} isn't supported; using automatic"))
                     }
@@ -387,6 +391,7 @@ pub fn load(entry: &RawEntry, dir: Option<&Path>) -> Result<Loaded, Error> {
     p.decomp = st.decomp.unwrap_or(0);
     p.biomorph = st.biomorph.flatten();
     p.use_symmetry = st.use_symmetry.unwrap_or(true);
+    p.forced_symmetry = st.forced_symmetry;
     p.bailout = st.bailout.unwrap_or_else(|| p.default_bailout());
     if p.needs_orbit_coloring() && !p.fractal.orbit_coloring {
         warnings.push(format!(
@@ -640,8 +645,19 @@ pub fn write_entry(
     if let Some(b) = p.biomorph {
         tokens.push(format!("biomorph={b}"));
     }
-    if !p.use_symmetry {
-        tokens.push("symmetry=none".into());
+    match (p.use_symmetry, p.forced_symmetry) {
+        (false, _) | (true, Some(Symmetry::None)) => tokens.push("symmetry=none".into()),
+        (true, Some(s)) => tokens.push(format!(
+            "symmetry={}",
+            match s {
+                Symmetry::XAxis => "xaxis",
+                Symmetry::YAxis => "yaxis",
+                Symmetry::XY => "xyaxis",
+                Symmetry::Pi => "pi",
+                _ => "origin",
+            }
+        )),
+        (true, None) => {}
     }
 
     let mut out = format!("{name:<19}{{");
@@ -765,7 +781,7 @@ Second { reset type=mandel maxiter=77;maxiter=998\n\
     #[test]
     fn write_then_read() {
         let mut p = Params::for_type("julia").unwrap();
-        p.params = [-0.8, 0.156, 0.0, 0.0];
+        p.params[..2].copy_from_slice(&[-0.8, 0.156]);
         p.window = Window::new(-1.5, 1.5, -1.0e-20, 1.25);
         p.max_iter = 1000;
         p.outside = Outside::Real;

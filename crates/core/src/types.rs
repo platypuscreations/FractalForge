@@ -29,6 +29,9 @@ pub enum Symmetry {
     /// Pixels below the real axis are copies of the pixel reflected through
     /// the origin.
     Origin,
+    /// Origin mirroring plus copies one period of π apart along x
+    /// (formula qualifier PI_SYM, frm-semantics.md §6.2).
+    Pi,
 }
 
 /// Returns the colour value of one point (see the module docs).
@@ -601,7 +604,18 @@ pub static FORMULA: FractalType = FractalType {
         "A formula from a .frm file",
         STD_WINDOW,
         [0.0; 4],
-        &["p1 (real)", "p1 (imaginary)", "p2 (real)", "p2 (imaginary)"],
+        &[
+            "p1 (real)",
+            "p1 (imaginary)",
+            "p2 (real)",
+            "p2 (imaginary)",
+            "p3 (real)",
+            "p3 (imaginary)",
+            "p4 (real)",
+            "p4 (imaginary)",
+            "p5 (real)",
+            "p5 (imaginary)",
+        ],
         program_iterate,
         program_symmetry,
     )
@@ -672,7 +686,7 @@ mod tests {
     #[test]
     fn julia_known_points() {
         let mut p = Params::new(&JULIA);
-        p.params = [0.0; 4];
+        p.params = [0.0; 10];
         assert_eq!(at(&JULIA, &p, 0.5, 0.5), INSIDE);
         assert_eq!(at(&JULIA, &p, 3.0, 0.0), 1);
         // 1.1 → 1.21, 1.4641, 2.1436 (|z|² 4.6): n = 3 → value 2.
@@ -683,7 +697,7 @@ mod tests {
     fn escape_types_colour_by_first_escaping_iterate() {
         // lambda with λ = 1: z → z(1 − z). From 3: −6 → e = 1.
         let mut p = Params::new(&LAMBDA);
-        p.params = [1.0, 0.0, 0.0, 0.0];
+        p.params[..2].copy_from_slice(&[1.0, 0.0]);
         assert_eq!(at(&LAMBDA, &p, 3.0, 0.0), 1);
         // mandel4 from z0 = c = 1.2: 1.2⁴ + 1.2 = 3.27 (|z|² 10.7) → e = 1.
         let p = Params::new(&MANDEL4);

@@ -963,6 +963,7 @@ name = "fractalforge-formats"
 version = "0.1.0"
 dependencies = [
  "fractalforge-core",
+ "fractalforge-formula",
  "fractalforge-render",
  "miniz_oxide 0.8.9",
  "png",

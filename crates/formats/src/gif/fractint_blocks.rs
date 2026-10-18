@@ -7,7 +7,9 @@
 //! source.
 
 use fractalforge_core::color::wrap;
-use fractalforge_core::{FractalType, Inside, IterBuffer, Outside, Params, Window, types};
+use fractalforge_core::{
+    FractalType, Inside, IterBuffer, Outside, Params, Symmetry, Window, types,
+};
 use fractalforge_render::PassMode;
 
 use super::container::{AppExtension, GifImage, Placement};
@@ -19,6 +21,8 @@ pub const MAIN_AUTH: &[u8; 3] = b"001";
 pub const RESUME_AUTH: &[u8; 3] = b"002";
 /// Arbitrary-precision coordinates (§2.4).
 pub const DEEP_AUTH: &[u8; 3] = b"005";
+/// Entry name of a formula, L-system or IFS (frm-syntax.md §8.1).
+pub const NAME_AUTH: &[u8; 3] = b"003";
 
 const MAIN_LEN: usize = 504;
 const RESUME_LEN: usize = 392;
@@ -73,6 +77,10 @@ pub struct FractintInfo {
     pub finished: bool,
     /// Settings in the file that FractalForge ignored or approximated.
     pub warnings: Vec<String>,
+    /// For formula images: the entry name. The caller must find the formula
+    /// (the file name isn't stored) and attach it to `params`, which are
+    /// returned unvalidated until then.
+    pub formula_name: Option<String>,
 }
 
 /// Reads the Fractint-format blocks of an image, if it has a main block.
@@ -117,15 +125,25 @@ pub fn read(image: &GifImage) -> Option<FractintInfo> {
             if image.extension(IDENTIFIER, DEEP_AUTH).is_some() {
                 warnings.push("deep-zoom coordinates were rounded to double precision".into());
             }
-            match p.validate() {
-                Ok(()) => Some(p),
-                Err(e) => {
-                    warnings.push(format!("unusable parameters: {e}"));
-                    None
+            if fractal.needs_program {
+                Some(p)
+            } else {
+                match p.validate() {
+                    Ok(()) => Some(p),
+                    Err(e) => {
+                        warnings.push(format!("unusable parameters: {e}"));
+                        None
+                    }
                 }
             }
         }
     };
+    let formula_name = image.extension(IDENTIFIER, NAME_AUTH).and_then(|e| {
+        let d = e.data();
+        let name = &d[..d.len().min(40)];
+        let end = name.iter().position(|&c| c == 0).unwrap_or(name.len());
+        (end > 0).then(|| String::from_utf8_lossy(&name[..end]).into_owned())
+    });
 
     Some(FractintInfo {
         type_number,
@@ -133,6 +151,7 @@ pub fn read(image: &GifImage) -> Option<FractintInfo> {
         pass_mode,
         finished,
         warnings,
+        formula_name,
     })
 }
 
@@ -147,9 +166,8 @@ fn read_params(b: &Bytes, modern: bool, p: &mut Params, warnings: &mut Vec<Strin
             );
         }
     }
-    p.params = [f(44), f(52), f(270), f(278)];
-    if modern && (354..402).step_by(8).any(|off| f(off) != 0.0) {
-        warnings.push("parameters 5-10 are ignored".into());
+    for (v, off) in p.params.iter_mut().zip(PARAM_OFFSETS) {
+        *v = if modern || off < 354 { f(off) } else { 0.0 };
     }
 
     // 408 is authoritative; 8 is a clamped 16-bit copy (§2.1 notes).
@@ -161,6 +179,12 @@ fn read_params(b: &Bytes, modern: bool, p: &mut Params, warnings: &mut Vec<Strin
 
     if !modern {
         return;
+    }
+    // fn1–fn4 bindings (gif-fractint-blocks.md §6.2).
+    for (i, f) in p.functions.iter_mut().enumerate() {
+        if let Some(v) = b.u8(218 + i) {
+            *f = v;
+        }
     }
     // Biomorph and decomposition come first: biomorph changes the default
     // bailout (coloring.md §8).
@@ -179,9 +203,12 @@ fn read_params(b: &Bytes, modern: bool, p: &mut Params, warnings: &mut Vec<Strin
     match b.i16(124).unwrap_or(999) {
         999 => {}
         0 => p.use_symmetry = false,
-        v => warnings.push(format!(
-            "forced symmetry setting {v} isn't supported; using automatic"
-        )),
+        v => match symmetry_from_code(v) {
+            Some(s) => p.forced_symmetry = Some(s),
+            None => warnings.push(format!(
+                "forced symmetry setting {v} isn't supported; using automatic"
+            )),
+        },
     }
     if b.i16(406).unwrap_or(0) != 0 {
         warnings.push("bailout tests other than the default modulus test are ignored".into());
@@ -343,6 +370,33 @@ fn inner_known(mode: u8, n: i64, row: i64, col: i64, pass: i64, r: i64, c: i64) 
     }
 }
 
+/// Offsets of params 1–10 in the main block (gif-fractint-blocks.md §2.1).
+const PARAM_OFFSETS: [usize; 10] = [44, 52, 270, 278, 354, 362, 370, 378, 386, 394];
+
+/// Forced symmetry codes at offset 124: 1 x-axis and 4 origin (par.md
+/// §5.1), 2 y-axis (frm-syntax.md §8.1), 3 xy-axis (hypothesis).
+fn symmetry_from_code(code: i16) -> Option<Symmetry> {
+    Some(match code {
+        1 => Symmetry::XAxis,
+        2 => Symmetry::YAxis,
+        3 => Symmetry::XY,
+        4 => Symmetry::Origin,
+        _ => return None,
+    })
+}
+
+fn symmetry_code(s: Symmetry) -> i16 {
+    match s {
+        Symmetry::None => 0,
+        Symmetry::XAxis => 1,
+        Symmetry::YAxis => 2,
+        Symmetry::XY => 3,
+        Symmetry::Origin => 4,
+        // No Fractint code was observed for forcing PI_SYM.
+        Symmetry::Pi => 999,
+    }
+}
+
 /// Inside colouring codes at offset 104 (coloring.md §6; n ≥ 0 = colour n).
 const INSIDE_CODES: [(i16, Inside); 7] = [
     (-1, Inside::MaxIter),
@@ -428,9 +482,10 @@ pub fn write(
     ] {
         put(&mut m, off, &v.to_le_bytes());
     }
-    for (off, v) in [44, 52, 270, 278].into_iter().zip(params.params) {
+    for (off, v) in PARAM_OFFSETS.into_iter().zip(params.params) {
         put(&mut m, off, &v.to_le_bytes());
     }
+    put(&mut m, 218, &params.functions);
 
     let max_iter = params.max_iter.min(i32::MAX as u32) as i32;
     put(&mut m, 408, &max_iter.to_le_bytes());
@@ -455,7 +510,11 @@ pub fn write(
     put(&mut m, 104, &inside_code(params.inside).to_le_bytes());
     let outside = outside_code(params.outside);
     put(&mut m, 182, &outside.to_le_bytes());
-    let symmetry: i16 = if params.use_symmetry { 999 } else { 0 };
+    let symmetry: i16 = match (params.use_symmetry, params.forced_symmetry) {
+        (false, _) => 0,
+        (true, Some(s)) => symmetry_code(s),
+        (true, None) => 999,
+    };
     let biomorph = params
         .biomorph
         .map_or(-1, |b| b.min(i16::MAX as u32) as i16);

@@ -297,7 +297,7 @@ mod tests {
 
     fn julia() -> Params {
         let mut p = Params::for_type("julia").unwrap();
-        p.params = [-0.8, 0.156, 0.0, 0.0];
+        p.params[..2].copy_from_slice(&[-0.8, 0.156]);
         p
     }
 

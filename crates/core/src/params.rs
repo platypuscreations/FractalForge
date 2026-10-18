@@ -168,6 +168,9 @@ impl Outside {
     }
 }
 
+/// Number of type parameters, as in Fractint (`params=` takes up to 10).
+pub const PARAM_COUNT: usize = 10;
+
 /// Highest allowed iteration limit. Larger values collide with the buffer's
 /// sentinel values.
 pub const MAX_ITER_LIMIT: u32 = 1 << 30;
@@ -177,7 +180,7 @@ pub struct Params {
     pub fractal: &'static FractalType,
     pub window: Window,
     /// Type-specific parameters (e.g. the Julia constant in the first two).
-    pub params: [f64; 4],
+    pub params: [f64; PARAM_COUNT],
     pub max_iter: u32,
     /// Escape when `|z|²` exceeds this.
     pub bailout: f64,
@@ -191,6 +194,9 @@ pub struct Params {
     /// Copy mirrored pixels where the type is symmetric (the usual
     /// setting). Off computes every pixel; off-centre views then differ.
     pub use_symmetry: bool,
+    /// Mirror copying chosen explicitly (Fractint's `symmetry=xaxis` etc.),
+    /// replacing the type's own.
+    pub forced_symmetry: Option<crate::Symmetry>,
     /// The run-time definition for types that need one (formulas).
     pub program: Option<crate::Program>,
     /// Functions bound to fn1…fn4, as indices into Fractint's function
@@ -204,7 +210,11 @@ impl Params {
         Self {
             fractal,
             window: fractal.default_window,
-            params: fractal.default_params,
+            params: {
+                let mut p = [0.0; PARAM_COUNT];
+                p[..4].copy_from_slice(&fractal.default_params);
+                p
+            },
             max_iter: 150,
             bailout: fractal.default_bailout,
             inside: Inside::Color(0),
@@ -212,6 +222,7 @@ impl Params {
             decomp: 0,
             biomorph: None,
             use_symmetry: true,
+            forced_symmetry: None,
             program: None,
             functions: [0, 6, 2, 3],
         }
