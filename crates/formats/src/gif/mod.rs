@@ -101,6 +101,63 @@ pub fn save(c: &Checkpoint, finished: bool) -> Result<Saved, Error> {
     })
 }
 
+/// The palette of red/cyan stereo images (FractalForge's own: Fractint
+/// saves its default palette instead, 3d-lighting.md §8.5). Mode 1 values
+/// below 128 are eye A in red, from 128 eye B in cyan; mode 2 packs the two
+/// levels as 16·B + A.
+pub fn stereo_palette(mode: u8) -> fractalforge_core::Palette {
+    let mut p = [[0u8; 3]; 256];
+    for (i, c) in p.iter_mut().enumerate() {
+        *c = match mode {
+            1 if i < 128 => [((128 - i) * 2).min(255) as u8, 0, 0],
+            1 => {
+                let v = ((256 - i) * 2).min(255) as u8;
+                [0, v, v]
+            }
+            _ => {
+                let (a, b) = ((i % 16) as u8 * 17, (i / 16) as u8 * 17);
+                [a, b, b]
+            }
+        };
+    }
+    fractalforge_core::Palette(p)
+}
+
+/// Encodes a 3D transform's output as a GIF with Fractint's block for it
+/// (3d-transform.md §7). Background pixels get the first black palette
+/// entry, or 0. `input_main` is the source image's `fractint001` block.
+pub fn save_3d(
+    out: &fractalforge_core::three_d::Output,
+    palette: &fractalforge_core::Palette,
+    settings: &fractalforge_core::three_d::Settings,
+    input_main: Option<&[u8]>,
+) -> Result<Vec<u8>, Error> {
+    let too_big = || {
+        Error::Invalid(format!(
+            "{}x{} is larger than a GIF can hold",
+            out.width, out.height
+        ))
+    };
+    let width = u16::try_from(out.width).map_err(|_| too_big())?;
+    let height = u16::try_from(out.height).map_err(|_| too_big())?;
+    let palette = if matches!(settings.stereo, 1 | 2) {
+        stereo_palette(settings.stereo)
+    } else {
+        palette.clone()
+    };
+    let black = palette.0.iter().position(|c| *c == [0, 0, 0]).unwrap_or(0) as u8;
+    let image = GifImage {
+        width,
+        height,
+        palette: palette.0.to_vec(),
+        background: black,
+        aspect: 0,
+        pixels: out.pixels.iter().map(|p| p.unwrap_or(black)).collect(),
+        extensions: vec![fractint_blocks::write_3d(input_main, settings)],
+    };
+    image.write()
+}
+
 pub fn load(bytes: &[u8]) -> Result<Loaded, Error> {
     let image = GifImage::read(bytes)?;
     let content = match image.extension(native_block::APP_IDENTIFIER, native_block::AUTH_CODE) {

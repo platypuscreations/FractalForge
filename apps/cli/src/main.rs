@@ -34,6 +34,21 @@ enum Command {
     Info { file: PathBuf },
     /// List the available fractal types.
     Types,
+    /// Fractint-style 3D transform of an image: its colours become heights
+    /// (docs/specs/3d-transform.md). Settings use Fractint's keys, e.g.
+    /// `rotation=60/30/0 filltype=5 lightsource=1/-1/1 stereo=2`.
+    #[command(name = "3d")]
+    ThreeD {
+        input: PathBuf,
+        #[arg(short, long)]
+        output: PathBuf,
+        /// KEY=VALUE settings: rotation, scalexyz, roughness, waterline,
+        /// filltype, perspective, xyshift, transparent, sphere, longitude,
+        /// latitude, radius, lightsource, smoothing, ambient, stereo,
+        /// interocular, converge, crop.
+        #[arg(value_name = "KEY=VALUE", allow_hyphen_values = true)]
+        settings: Vec<String>,
+    },
     /// List the entries in a .par or .frm file.
     Entries { file: PathBuf },
     /// Compare the pixels (and iteration data, when both have it) of two
@@ -281,6 +296,11 @@ fn main() -> ExitCode {
             colors,
         } => compare(&a, &b, tolerance, colors),
         Command::Entries { file } => list_entries(&file),
+        Command::ThreeD {
+            input,
+            output,
+            settings,
+        } => three_d(&input, &output, &settings),
         Command::Types => {
             for t in types::all() {
                 println!("{:<10} {}", t.name, t.description);
@@ -523,6 +543,63 @@ fn load_source(path: &Path, entry: Option<&str>, formula: Option<&Path>) -> Resu
             path.display()
         )),
     }
+}
+
+fn three_d(input: &Path, output: &Path, settings: &[String]) -> Result<(), String> {
+    use fractalforge_core::three_d::{Settings, Source, render};
+    let mut s = Settings::default();
+    for kv in settings {
+        let (k, v) = kv
+            .split_once('=')
+            .ok_or_else(|| format!("expected KEY=VALUE, got {kv:?}"))?;
+        s.apply(&k.to_ascii_lowercase(), v)?;
+    }
+    let bytes = std::fs::read(input).map_err(|e| format!("{}: {e}", input.display()))?;
+    let img = gif::GifImage::read(&bytes).map_err(|e| format!("{}: {e}", input.display()))?;
+    let out = render(
+        &Source {
+            pixels: &img.pixels,
+            width: img.width.into(),
+            height: img.height.into(),
+            colours: img.palette.len() as u32,
+        },
+        &s,
+    );
+    let mut palette = Palette([[0; 3]; 256]);
+    for (c, p) in palette.0.iter_mut().zip(&img.palette) {
+        *c = *p;
+    }
+    let main = img
+        .extension(
+            gif::fractint_blocks::IDENTIFIER,
+            gif::fractint_blocks::MAIN_AUTH,
+        )
+        .map(|e| e.data());
+    let bytes = if is_ext(output, "png") {
+        let black = palette.0.iter().position(|c| *c == [0, 0, 0]).unwrap_or(0) as u8;
+        let pal = if matches!(s.stereo, 1 | 2) {
+            gif::stereo_palette(s.stereo)
+        } else {
+            palette
+        };
+        let rgb: Vec<u8> = out
+            .pixels
+            .iter()
+            .flat_map(|p| pal.0[p.unwrap_or(black) as usize])
+            .collect();
+        fractalforge_formats::png::encode_rgb(out.width, out.height, &rgb)
+            .map_err(|e| e.to_string())?
+    } else {
+        gif::save_3d(&out, &palette, &s, main.as_deref()).map_err(|e| e.to_string())?
+    };
+    std::fs::write(output, bytes).map_err(|e| format!("{}: {e}", output.display()))?;
+    println!(
+        "3D image {}x{}: {}",
+        out.width,
+        out.height,
+        output.display()
+    );
+    Ok(())
 }
 
 fn render(args: RenderArgs) -> Result<(), String> {

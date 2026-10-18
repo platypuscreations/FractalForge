@@ -21,6 +21,7 @@ mod orbit_maps;
 pub mod params;
 pub mod plot;
 pub mod program;
+pub mod three_d;
 pub mod types;
 
 pub use color::{PRESETS, Palette, color_index, pixel_value};

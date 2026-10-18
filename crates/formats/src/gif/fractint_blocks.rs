@@ -738,6 +738,64 @@ fn name_block(prog: &fractalforge_core::Program) -> AppExtension {
     AppExtension::new(*IDENTIFIER, *NAME_AUTH, &d, Placement::AfterImage)
 }
 
+/// The `fractint001` block of a 3D transform's output (3d-transform.md §7,
+/// 3d-lighting.md §9.1): the input's block (or the defaults) with type 7,
+/// status 4, offset 252 = 1 and the 3D settings.
+pub fn write_3d(input: Option<&[u8]>, s: &fractalforge_core::three_d::Settings) -> AppExtension {
+    let mut m = BASELINE;
+    match input.filter(|d| d.len() == MAIN_LEN) {
+        Some(d) => m.copy_from_slice(d),
+        None => {
+            for (off, v) in [
+                (12, -1.0f64),
+                (20, 1.0),
+                (28, -1.0),
+                (36, 1.0),
+                (184, -1.0),
+                (192, -1.0),
+            ] {
+                put(&mut m, off, &v.to_le_bytes());
+            }
+        }
+    }
+    let i = |v: f64| (v.round().clamp(i16::MIN as f64, i16::MAX as f64) as i16).to_le_bytes();
+    put(&mut m, 10, &7i16.to_le_bytes());
+    put(&mut m, 126, &(s.sphere as i16).to_le_bytes());
+    for (off, v) in [
+        (128, s.rotation[0]),
+        (130, s.rotation[1]),
+        (132, s.rotation[2]),
+        (134, s.scale[0]),
+        (136, s.scale[1]),
+        (138, s.roughness),
+        (140, s.waterline as f64),
+        (142, s.fill as f64),
+        (144, s.perspective),
+        (146, s.xyshift[0]),
+        (148, s.xyshift[1]),
+        (150, s.light[0]),
+        (152, s.light[1]),
+        (154, s.light[2]),
+        (156, s.smoothing as f64),
+        (164, s.crop[0]),
+        (166, s.crop[1]),
+        (168, s.crop[2]),
+        (170, s.crop[3]),
+        (176, s.converge),
+        (178, s.interocular),
+        (180, s.stereo as f64),
+        (254, s.transparent.0 as f64),
+        (256, s.transparent.1 as f64),
+        (258, s.ambient as f64),
+    ] {
+        put(&mut m, off, &i(v));
+    }
+    put(&mut m, 202, &4i16.to_le_bytes());
+    put(&mut m, 204, &521u16.to_le_bytes());
+    put(&mut m, 252, &1i16.to_le_bytes());
+    AppExtension::new(*IDENTIFIER, *MAIN_AUTH, &m, Placement::AfterImage)
+}
+
 /// The `fractint003` block of an IFS or L-system image: just the entry
 /// name, NUL-padded (ifs.md §2.3).
 fn entry_name_block(prog: &fractalforge_core::Program) -> AppExtension {
