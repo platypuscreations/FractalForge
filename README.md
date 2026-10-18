@@ -6,7 +6,7 @@ FractalForge is a fast, modern fractal explorer written in Rust. It aims to give
 long-time Fractint and XFractint users a familiar workflow on macOS, then Linux
 and Windows.
 
-It reads and writes Fractint-format PAR, MAP, FRM and GIF files, including the
+It reads and writes Fractint-format PAR, MAP, FRM, IFS, L and GIF files, including the
 parameters and resume data stored inside GIFs. That means a long render can be
 saved partway through and finished later, in FractalForge or in Fractint.
 
@@ -15,13 +15,23 @@ Fractint source code and is not affiliated with the Stone Soup Group.
 
 ## Status
 
-**v0.1** (macOS), with Phase 3 (formulas) on `main`. FractalForge has a
+**v0.1** (macOS), with Phase 3 (formulas) on `main` and Phase 4 in progress.
+FractalForge has a
 desktop app and a command-line renderer.
 
-- 17 escape-time types (mandel, julia, lambda, mandellambda, mandel4, julia4,
+- 18 escape-time types (mandel, julia, lambda, mandellambda, mandel4, julia4,
   manowar, manowarj, barnsleym1, barnsleyj1, spider, magnet1m, magnet1j,
-  newton, newtbasin, phoenix, mandphoenix), rendered with the same pixels as
-  Fractint-format renderers.
+  newton, newtbasin, phoenix, mandphoenix, popcornjul), rendered with the
+  same pixels as Fractint-format renderers.
+- L-systems (`.l`) and iterated function systems (`.ifs`), with
+  XFractint's pixels, entries embedded in PAR files and stored in GIFs.
+- Orbit-plotting types: henon, hopalong, martin, gingerbreadman, chip,
+  quadruptwo, threeply, icons, latoocarfian, kamtorus, popcorn, dynamic,
+  mandelcloud and julia_inverse, and the strange attractors lorenz,
+  lorenz3d, rossler3d, pickover, lorenz3d1, lorenz3d3, lorenz3d4 and
+  kamtorus3d, with 3D rotation, shift and perspective.
+- An orbit window (press O) that draws the orbit of the point under the
+  pointer, and a Mandelbrot/Julia toggle (Space) for the types that pair up.
 - Inside/outside colouring modes, decomposition and biomorph (mandel and
   julia), colour cycling and a palette editor.
 - Stop a render, save it as a GIF and resume it later with identical
@@ -41,13 +51,23 @@ cargo run --release -p fractalforge-cli -- render big.gif --resume -o big-done.g
 cargo run --release -p fractalforge-cli -- render saved-by-fractint.gif -o again.gif
 cargo run --release -p fractalforge-cli -- render my.par --entry myentry -o out.png
 cargo run --release -p fractalforge-cli -- render --formula my.frm --formula-name myformula -o f.gif
+cargo run --release -p fractalforge-cli -- render --lsystem plants.l --lsystem-name fern --params 5 -o fern.gif
+cargo run --release -p fractalforge-cli -- render --ifs ferns.ifs -o fern.png
+cargo run --release -p fractalforge-cli -- render --type lorenz3d -o lorenz.png
 cargo run --release -p fractalforge-cli -- entries my.frm
 ```
 
 Ctrl-C during a render also saves a resumable GIF.
 
-Not yet: L-system, IFS and other Fractint types; rotated views; Fractint's
-`rand` sequence in formulas; screen-reader support; notarized macOS builds.
+Not yet: other Fractint types (such as bifurcation, lyapunov, plasma and
+icons3d); rotated views; Fractint's `rand` sequence in formulas; resuming
+unfinished orbit-plotting images (they are recalculated, as Fractint does
+for most of them); screen-reader support; notarized macOS builds.
+
+A few chaotic orbit types (martin, chip, quadruptwo, threeply, latoocarfian,
+pickover and the long lorenz3d1/3/4 orbits) draw the same attractors as
+XFractint but not identical pixels: their orbits depend on the last bit of
+the C library's sine and cosine.
 
 Roadmap:
 
