@@ -64,10 +64,27 @@ icons3d); rotated views; Fractint's `rand` sequence in formulas; resuming
 unfinished orbit-plotting images (they are recalculated, as Fractint does
 for most of them); screen-reader support; notarized macOS builds.
 
-A few chaotic orbit types (martin, chip, quadruptwo, threeply, latoocarfian,
-pickover and the long lorenz3d1/3/4 orbits) draw the same attractors as
-XFractint but not identical pixels: their orbits depend on the last bit of
-the C library's sine and cosine.
+### How exact is it?
+
+Most types reproduce XFractint's images pixel for pixel, and the test suite
+checks this against hundreds of reference images saved by XFractint. Not
+everything is bit-exact, though:
+
+- **Chaotic orbit types** (martin, chip, quadruptwo, threeply, latoocarfian,
+  pickover, and the long orbits of lorenz3d1, lorenz3d3 and lorenz3d4) draw
+  the same attractors as XFractint, but the pixels differ. In a chaotic
+  system a difference in the last bit of one number grows until the orbit
+  goes somewhere else entirely, usually within a few hundred to a few
+  thousand points. XFractint's orbits depend on the exact results of the C
+  library's `sin`, `cos`, `log` and `atan` (glibc on Linux), which aren't
+  always correctly rounded. FractalForge uses its own portable math, so its
+  images are the same on every platform, but they can't follow glibc's
+  last-bit choices without copying glibc itself.
+- **IFS** images can differ in a few pixels where a point falls almost
+  exactly on the boundary between two pixels.
+- **mandelcloud, julia_inverse, kamtorus3d** and the three- and four-lobe
+  Lorenz systems follow our best black-box models, which match 96–99.9% of
+  pixels.
 
 Roadmap:
 
