@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# python3 -I tools/blackbox/frm-syntax/summarise.py on round cal (cases-cal.txt)
+cal-k0                     740c5da2 [(1, 120000)] t=73 sym=999 003='k0' f40..=48:1
+cal-k1                     3b688d0d [(2, 120000)] t=73 sym=999 003='k1' f40..=48:1
+cal-k10                    7d289d89 [(11, 120000)] t=73 sym=999 003='k10' f40..=48:1
+cal-k100                   a7c56294 [(101, 120000)] t=73 sym=999 003='k100' f40..=48:1
+cal-k2                     000eebd6 [(3, 120000)] t=73 sym=999 003='k2' f40..=48:1
+cal-k200                   a7245789 [(201, 120000)] t=73 sym=999 003='k200' f40..=48:1
+cal-k2p5                   000eebd6 [(3, 120000)] t=73 sym=999 003='k2p5' f40..=48:1
+cal-k3                     18bcce3b [(4, 120000)] t=73 sym=999 003='k3' f40..=48:1
+cal-k300                   bef5e171 [(46, 120000)] t=73 sym=999 003='k300' f40..=48:1
+cal-k5                     cf621e79 [(6, 120000)] t=73 sym=999 003='k5' f40..=48:1
+cal-km1                    740c5da2 [(1, 120000)] t=73 sym=999 003='km1' f40..=48:1

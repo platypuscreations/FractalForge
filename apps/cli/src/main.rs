@@ -8,7 +8,9 @@ use std::sync::Arc;
 use std::sync::atomic::{AtomicBool, Ordering};
 
 use clap::{Args, Parser, Subcommand, ValueEnum};
-use fractalforge_core::{Complex, Inside, Outside, PRESETS, Palette, Params, Window, types};
+use fractalforge_core::{
+    Complex, Inside, Outside, PARAM_COUNT, PRESETS, Palette, Params, Symmetry, Window, types,
+};
 use fractalforge_formats::gif::{self, Checkpoint, Content};
 use fractalforge_formats::par;
 use fractalforge_render::{Control, Outcome, PassMode, Render};
@@ -32,7 +34,7 @@ enum Command {
     Info { file: PathBuf },
     /// List the available fractal types.
     Types,
-    /// List the entries in a .par file.
+    /// List the entries in a .par or .frm file.
     Entries { file: PathBuf },
     /// Compare the pixels (and iteration data, when both have it) of two
     /// GIFs. Fails if more than the tolerated share of pixels differ.
@@ -68,6 +70,13 @@ struct RenderArgs {
     /// Palette from a Fractint-format .map file.
     #[arg(long, conflicts_with = "palette")]
     map: Option<PathBuf>,
+    /// Render a formula from this .frm file (also where to look for the
+    /// formula of a Fractint formula GIF or .par entry).
+    #[arg(long, value_name = "FILE.frm")]
+    formula: Option<PathBuf>,
+    /// The formula entry to use from --formula (default: its first entry).
+    #[arg(long, value_name = "NAME", requires = "formula")]
+    formula_name: Option<String>,
     /// Continue the unfinished render saved in INPUT.
     #[arg(long, requires = "input")]
     resume: bool,
@@ -98,8 +107,8 @@ struct FractalArgs {
     #[arg(long, value_name = "X/Y/MAG", conflicts_with = "corners", value_parser = parse_floats::<3>, allow_hyphen_values = true)]
     center_mag: Option<[f64; 3]>,
     /// Type parameters, e.g. the Julia constant.
-    #[arg(long, value_name = "P1[/P2[/P3[/P4]]]", value_parser = parse_params, allow_hyphen_values = true)]
-    params: Option<[f64; 4]>,
+    #[arg(long, value_name = "P1[/P2[/…/P10]]", value_parser = parse_params, allow_hyphen_values = true)]
+    params: Option<[f64; PARAM_COUNT]>,
     #[arg(long)]
     maxiter: Option<u32>,
     /// Escape when |z|² exceeds this.
@@ -120,8 +129,11 @@ struct FractalArgs {
     #[arg(long)]
     biomorph: Option<u32>,
     /// Compute every pixel instead of copying mirrored ones.
-    #[arg(long)]
+    #[arg(long, conflicts_with = "symmetry")]
     no_symmetry: bool,
+    /// Force mirror copying: none, xaxis, yaxis, xyaxis or origin.
+    #[arg(long, value_parser = parse_symmetry)]
+    symmetry: Option<Symmetry>,
 }
 
 impl FractalArgs {
@@ -137,10 +149,13 @@ impl FractalArgs {
             && self.decomp.is_none()
             && self.biomorph.is_none()
             && !self.no_symmetry
+            && self.symmetry.is_none()
     }
 
-    /// Applies the overrides to `params` (or to the defaults of a new type).
-    fn apply(&self, mut params: Params, aspect: f64) -> Result<Params, String> {
+    /// Applies the overrides to `params` (or to the defaults of a new
+    /// type). The caller validates, since a formula may still have to be
+    /// attached.
+    fn apply_unchecked(&self, mut params: Params, aspect: f64) -> Result<Params, String> {
         if let Some(name) = &self.fractal_type {
             let t = types::lookup(name).ok_or_else(|| format!("unknown fractal type {name:?}"))?;
             if t != params.fractal {
@@ -177,10 +192,11 @@ impl FractalArgs {
                 params.bailout = params.default_bailout();
             }
         }
-        if self.no_symmetry {
+        if self.no_symmetry || self.symmetry == Some(Symmetry::None) {
             params.use_symmetry = false;
+        } else if let Some(s) = self.symmetry {
+            params.forced_symmetry = Some(s);
         }
-        params.validate()?;
         Ok(params)
     }
 }
@@ -302,7 +318,8 @@ fn is_ext(path: &Path, ext: &str) -> bool {
 }
 
 fn load_par(path: &Path, entry: Option<&str>) -> Result<Source, String> {
-    let text = std::fs::read_to_string(path).map_err(|e| format!("{}: {e}", path.display()))?;
+    let text =
+        fractalforge_formula::read_text(path).map_err(|e| format!("{}: {e}", path.display()))?;
     let all = par::entries(&text);
     let raw = match entry {
         Some(name) => par::find(&all, name)
@@ -311,7 +328,7 @@ fn load_par(path: &Path, entry: Option<&str>) -> Result<Source, String> {
             .first()
             .ok_or_else(|| format!("{}: no entries", path.display()))?,
     };
-    let loaded = par::load(raw, path.parent()).map_err(|e| e.to_string())?;
+    let loaded = par::load(raw, path.parent(), Some(&text)).map_err(|e| e.to_string())?;
     for w in &loaded.warnings {
         eprintln!("note: {}: {w}", raw.name);
     }
@@ -326,9 +343,38 @@ fn load_par(path: &Path, entry: Option<&str>) -> Result<Source, String> {
 }
 
 fn list_entries(path: &Path) -> Result<(), String> {
-    let text = std::fs::read_to_string(path).map_err(|e| format!("{}: {e}", path.display()))?;
+    let text =
+        fractalforge_formula::read_text(path).map_err(|e| format!("{}: {e}", path.display()))?;
+    if is_ext(path, "frm") {
+        for e in fractalforge_formula::parser::entries(&text) {
+            let status = match fractalforge_formula::parser::parse(&e) {
+                Ok(_) => "ok".to_owned(),
+                Err(errs) => format!(
+                    "error: {}",
+                    errs[0].to_string().lines().next().unwrap_or("")
+                ),
+            };
+            let sym = e
+                .qualifier
+                .as_deref()
+                .map(|q| format!("({q})"))
+                .unwrap_or_default();
+            println!("{:<19} {:<14} {status}", e.name, sym);
+        }
+        return Ok(());
+    }
     for e in par::entries(&text) {
-        let kind = par::load(&e, path.parent()).map_or_else(
+        if e.name
+            .get(..4)
+            .is_some_and(|p| p.eq_ignore_ascii_case("frm:"))
+        {
+            println!(
+                "{:<19} {:<12} formula used by this file's entries",
+                e.name, "(formula)"
+            );
+            continue;
+        }
+        let kind = par::load(&e, path.parent(), Some(&text)).map_or_else(
             |err| format!("({err})"),
             |l| l.params.fractal.name.to_owned(),
         );
@@ -342,7 +388,27 @@ fn list_entries(path: &Path) -> Result<(), String> {
     Ok(())
 }
 
-fn load_source(path: &Path, entry: Option<&str>) -> Result<Source, String> {
+/// Compiles a formula entry from a file (the first entry when `name` is
+/// `None`), printing Fractint-style errors and warnings.
+fn load_formula(file: &Path, name: Option<&str>) -> Result<fractalforge_core::Program, String> {
+    let text =
+        fractalforge_formula::read_text(file).map_err(|e| format!("{}: {e}", file.display()))?;
+    let name = match name {
+        Some(n) => n.to_owned(),
+        None => fractalforge_formula::parser::entries(&text)
+            .first()
+            .map(|e| e.name.clone())
+            .ok_or_else(|| format!("{}: no formulas", file.display()))?,
+    };
+    let (program, warnings) =
+        fractalforge_formula::load(&text, &name).map_err(|e| format!("{}: {e}", file.display()))?;
+    for w in warnings {
+        eprintln!("note: {w}");
+    }
+    Ok(program)
+}
+
+fn load_source(path: &Path, entry: Option<&str>, formula: Option<&Path>) -> Result<Source, String> {
     if is_ext(path, "par") {
         return load_par(path, entry);
     }
@@ -354,12 +420,31 @@ fn load_source(path: &Path, entry: Option<&str>) -> Result<Source, String> {
             for w in &info.warnings {
                 eprintln!("note: {w}");
             }
-            let params = info.params.ok_or_else(|| {
+            let mut params = info.params.ok_or_else(|| {
                 format!(
                     "{}: FractalForge can't render this Fractint image yet",
                     path.display()
                 )
             })?;
+            if params.fractal.needs_program {
+                // The GIF names the formula but not its file (frm-syntax.md
+                // §8.1): use --formula, else the .frm files next to the GIF.
+                let name = info.formula_name.clone().unwrap_or_default();
+                let file = match formula {
+                    Some(f) => f.to_owned(),
+                    None => path
+                        .parent()
+                        .and_then(|d| fractalforge_formula::find_in_dir(d, &name))
+                        .map(|(p, _)| p)
+                        .ok_or_else(|| {
+                            format!(
+                                "{}: needs formula '{name}'; give its .frm file with --formula",
+                                path.display()
+                            )
+                        })?,
+                };
+                params.program = Some(load_formula(&file, Some(&name))?);
+            }
             let mut colors = [[0u8; 3]; 256];
             for (c, p) in colors.iter_mut().zip(&loaded.image.palette) {
                 *c = *p;
@@ -385,7 +470,7 @@ fn render(args: RenderArgs) -> Result<(), String> {
     let source = args
         .input
         .as_deref()
-        .map(|p| load_source(p, args.entry.as_deref()))
+        .map(|p| load_source(p, args.entry.as_deref(), args.formula.as_deref()))
         .transpose()?;
     let mut palette = match &source {
         Some(Source::Checkpoint(c)) => Some(c.palette.clone()),
@@ -458,7 +543,19 @@ fn render(args: RenderArgs) -> Result<(), String> {
                 }
             };
             let (w, h) = args.size.unwrap_or(size);
-            let params = args.fractal.apply(base, w as f64 / h as f64)?;
+            let mut params = args.fractal.apply_unchecked(base, w as f64 / h as f64)?;
+            if let (Some(file), true) = (&args.formula, args.input.is_none()) {
+                let program = load_formula(file, args.formula_name.as_deref())?;
+                if params.fractal != &fractalforge_core::types::FORMULA {
+                    params = Params {
+                        program: None,
+                        ..Params::new(&fractalforge_core::types::FORMULA)
+                    };
+                    params = args.fractal.apply_unchecked(params, w as f64 / h as f64)?;
+                }
+                params.program = Some(program);
+            }
+            params.validate()?;
             let mode = args
                 .passes
                 .map(PassMode::from)
@@ -549,10 +646,16 @@ fn write_settings(
             .entry
             .clone()
             .unwrap_or_else(|| stem.chars().take(18).collect());
-        let entry = par::write_entry(&name, args.comment.as_deref(), params, mode, Some(palette))
-            .map_err(|e| e.to_string())?;
         let existing = std::fs::read_to_string(out).unwrap_or_default();
-        par::upsert(&existing, &name, &entry)
+        par::save_entry(
+            &existing,
+            &name,
+            args.comment.as_deref(),
+            params,
+            mode,
+            Some(palette),
+        )
+        .map_err(|e| e.to_string())?
     };
     std::fs::write(out, text).map_err(|e| format!("{}: {e}", out.display()))?;
     println!("wrote {}", out.display());
@@ -566,10 +669,17 @@ fn print_params(p: &Params, pass_mode: PassMode) {
         "corners:    {}/{}/{}/{}",
         w.x_min, w.x_max, w.y_min, w.y_max
     );
-    println!(
-        "params:     {}/{}/{}/{}",
-        p.params[0], p.params[1], p.params[2], p.params[3]
-    );
+    let used = p
+        .params
+        .iter()
+        .rposition(|&v| v != 0.0)
+        .map_or(2, |i| i + 1)
+        .max(2);
+    let list: Vec<String> = p.params[..used].iter().map(f64::to_string).collect();
+    println!("params:     {}", list.join("/"));
+    if let Some(prog) = &p.program {
+        println!("formula:    {}", prog.0.name());
+    }
     println!("maxiter:    {}", p.max_iter);
     println!("bailout:    {}", p.bailout);
     println!("inside:     {:?}", p.inside);
@@ -663,13 +773,24 @@ fn parse_floats<const N: usize>(s: &str) -> Result<[f64; N], String> {
         .map_err(|_| format!("expected {N} values separated by '/'"))
 }
 
-/// One to four values; missing ones are 0.
-fn parse_params(s: &str) -> Result<[f64; 4], String> {
+fn parse_symmetry(s: &str) -> Result<Symmetry, String> {
+    Ok(match s.to_ascii_lowercase().as_str() {
+        "none" => Symmetry::None,
+        "xaxis" => Symmetry::XAxis,
+        "yaxis" => Symmetry::YAxis,
+        "xyaxis" => Symmetry::XY,
+        "origin" => Symmetry::Origin,
+        _ => return Err("symmetry must be none, xaxis, yaxis, xyaxis or origin".into()),
+    })
+}
+
+/// One to ten values; missing ones are 0.
+fn parse_params(s: &str) -> Result<[f64; PARAM_COUNT], String> {
     let v = split_floats(s)?;
-    if !(1..=4).contains(&v.len()) {
-        return Err("expected 1 to 4 values separated by '/'".into());
+    if !(1..=PARAM_COUNT).contains(&v.len()) {
+        return Err("expected 1 to 10 values separated by '/'".into());
     }
-    let mut out = [0.0; 4];
+    let mut out = [0.0; PARAM_COUNT];
     out[..v.len()].copy_from_slice(&v);
     Ok(out)
 }
@@ -744,7 +865,7 @@ mod tests {
             panic!()
         };
         assert_eq!(r.fractal.center_mag, Some([-0.5, 0.0, 2.0]));
-        assert_eq!(r.fractal.params, Some([-0.8, 0.156, 0.0, 0.0]));
+        assert_eq!(r.fractal.params.unwrap()[..3], [-0.8, 0.156, 0.0]);
         assert_eq!(r.size, Some((64, 48)));
         assert_eq!(r.stop_after, Some(0.5));
         assert_eq!(r.fractal.inside, Some(Inside::MaxIter));

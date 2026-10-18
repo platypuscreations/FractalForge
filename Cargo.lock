@@ -935,6 +935,7 @@ dependencies = [
  "eframe",
  "fractalforge-core",
  "fractalforge-formats",
+ "fractalforge-formula",
  "fractalforge-render",
  "objc2 0.6.5",
  "objc2-foundation 0.3.2",
@@ -951,6 +952,7 @@ dependencies = [
  "ctrlc",
  "fractalforge-core",
  "fractalforge-formats",
+ "fractalforge-formula",
  "fractalforge-render",
 ]
 
@@ -963,10 +965,18 @@ name = "fractalforge-formats"
 version = "0.1.0"
 dependencies = [
  "fractalforge-core",
+ "fractalforge-formula",
  "fractalforge-render",
  "miniz_oxide 0.8.9",
  "png",
  "weezl",
+]
+
+[[package]]
+name = "fractalforge-formula"
+version = "0.1.0"
+dependencies = [
+ "fractalforge-core",
 ]
 
 [[package]]

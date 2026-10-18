@@ -1,0 +1,5 @@
+
+Error(1) at line 2:  Should be an Operator
+  k=100+(1|1)
+          ^
+

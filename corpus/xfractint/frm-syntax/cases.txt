@@ -1,0 +1,872 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Every case: <name> <arguments>. tools/blackbox/frm-syntax/run-case.sh runs
+#   xfractint batch=yes type=formula passes=1 periodicity=0 viewwindows=2 map=uniq.map <arguments> savename=ff.gif
+# in a fresh directory holding tools/blackbox/frm-syntax/inputs/*.
+# --- cases-cal.txt -> cal/
+cal-k0 formulafile=cal.frm formulaname=k0 maxiter=1000
+cal-k1 formulafile=cal.frm formulaname=k1 maxiter=1000
+cal-k2 formulafile=cal.frm formulaname=k2 maxiter=1000
+cal-k3 formulafile=cal.frm formulaname=k3 maxiter=1000
+cal-k5 formulafile=cal.frm formulaname=k5 maxiter=1000
+cal-k10 formulafile=cal.frm formulaname=k10 maxiter=1000
+cal-k2p5 formulafile=cal.frm formulaname=k2p5 maxiter=1000
+cal-km1 formulafile=cal.frm formulaname=km1 maxiter=1000
+cal-k100 formulafile=cal.frm formulaname=k100 maxiter=1000
+cal-k200 formulafile=cal.frm formulaname=k200 maxiter=1000
+cal-k300 formulafile=cal.frm formulaname=k300 maxiter=1000
+# --- cases-a.txt -> a/
+a-quad formulafile=a.frm formulaname=quad
+a-bad1 formulafile=a.frm formulaname=bad1
+a-unkfn formulafile=a.frm formulaname=unkfn
+a-noinit formulafile=a.frm formulaname=noinit
+a-undef formulafile=a.frm formulaname=undef
+a-missing formulafile=a.frm formulaname=nosuch
+a-nofile formulafile=zz.frm formulaname=quad
+# --- cases-p.txt -> p/
+p-mul formulafile=p.frm formulaname=mul maxiter=1000
+p-pow2 formulafile=p.frm formulaname=pow2 maxiter=1000
+p-neg2 formulafile=p.frm formulaname=neg2 maxiter=1000
+p-neg2b formulafile=p.frm formulaname=neg2b maxiter=1000
+p-neg2c formulafile=p.frm formulaname=neg2c maxiter=1000
+p-mulneg formulafile=p.frm formulaname=mulneg maxiter=1000
+p-sub3 formulafile=p.frm formulaname=sub3 maxiter=1000
+p-div3 formulafile=p.frm formulaname=div3 maxiter=1000
+p-powneg formulafile=p.frm formulaname=powneg maxiter=1000
+p-powmul formulafile=p.frm formulaname=powmul maxiter=1000
+p-powunary formulafile=p.frm formulaname=powunary maxiter=1000
+p-modsq formulafile=p.frm formulaname=modsq maxiter=1000
+p-modsum formulafile=p.frm formulaname=modsum maxiter=1000
+p-cmp1 formulafile=p.frm formulaname=cmp1 maxiter=1000
+p-cmp2 formulafile=p.frm formulaname=cmp2 maxiter=1000
+p-cmp3 formulafile=p.frm formulaname=cmp3 maxiter=1000
+p-cmp4 formulafile=p.frm formulaname=cmp4 maxiter=1000
+p-cmp5 formulafile=p.frm formulaname=cmp5 maxiter=1000
+p-cmp6 formulafile=p.frm formulaname=cmp6 maxiter=1000
+p-cmp7 formulafile=p.frm formulaname=cmp7 maxiter=1000
+p-and1 formulafile=p.frm formulaname=and1 maxiter=1000
+p-and2 formulafile=p.frm formulaname=and2 maxiter=1000
+p-and3 formulafile=p.frm formulaname=and3 maxiter=1000
+p-and4 formulafile=p.frm formulaname=and4 maxiter=1000
+p-and5 formulafile=p.frm formulaname=and5 maxiter=1000
+p-asg1 formulafile=p.frm formulaname=asg1 maxiter=1000
+p-asg2 formulafile=p.frm formulaname=asg2 maxiter=1000
+p-asg3 formulafile=p.frm formulaname=asg3 maxiter=1000
+p-uplus formulafile=p.frm formulaname=uplus maxiter=1000
+p-uneg2 formulafile=p.frm formulaname=uneg2 maxiter=1000
+p-uneg3 formulafile=p.frm formulaname=uneg3 maxiter=1000
+p-star2 formulafile=p.frm formulaname=star2 maxiter=1000
+p-pct formulafile=p.frm formulaname=pct maxiter=1000
+p-imul formulafile=p.frm formulaname=imul maxiter=1000
+p-negmul formulafile=p.frm formulaname=negmul maxiter=1000
+p-negpow2 formulafile=p.frm formulaname=negpow2 maxiter=1000
+p-pow2b formulafile=p.frm formulaname=pow2b maxiter=1000
+p-pow3 formulafile=p.frm formulaname=pow3 maxiter=1000
+p-cmp8 formulafile=p.frm formulaname=cmp8 maxiter=1000
+p-and6 formulafile=p.frm formulaname=and6 maxiter=1000
+p-negp1 formulafile=p.frm formulaname=negp1 maxiter=1000
+p-negp2 formulafile=p.frm formulaname=negp2 maxiter=1000
+p-negp3 formulafile=p.frm formulaname=negp3 maxiter=1000
+p-negp4 formulafile=p.frm formulaname=negp4 maxiter=1000
+p-negp5 formulafile=p.frm formulaname=negp5 maxiter=1000
+p-negp6 formulafile=p.frm formulaname=negp6 maxiter=1000
+p-negp7 formulafile=p.frm formulaname=negp7 maxiter=1000
+p-negp8 formulafile=p.frm formulaname=negp8 maxiter=1000
+p-negp9 formulafile=p.frm formulaname=negp9 maxiter=1000
+p-neg3 formulafile=p.frm formulaname=neg3 maxiter=1000
+p-inside formulafile=p.frm formulaname=inside maxiter=1000
+p-modsq2 formulafile=p.frm formulaname=modsq2 maxiter=1000
+p-modnest formulafile=p.frm formulaname=modnest maxiter=1000
+p-modnest2 formulafile=p.frm formulaname=modnest2 maxiter=1000
+p-cplx1 formulafile=p.frm formulaname=cplx1 maxiter=1000
+p-cplx2 formulafile=p.frm formulaname=cplx2 maxiter=1000
+p-cplx3 formulafile=p.frm formulaname=cplx3 maxiter=1000
+p-cplx4 formulafile=p.frm formulaname=cplx4 maxiter=1000
+p-cplx5 formulafile=p.frm formulaname=cplx5 maxiter=1000
+p-cplx6 formulafile=p.frm formulaname=cplx6 maxiter=1000
+p-cplx7 formulafile=p.frm formulaname=cplx7 maxiter=1000
+p-not1 formulafile=p.frm formulaname=not1 maxiter=1000
+p-and7 formulafile=p.frm formulaname=and7 maxiter=1000
+p-or7 formulafile=p.frm formulaname=or7 maxiter=1000
+p-lit1 formulafile=p.frm formulaname=lit1 maxiter=1000
+p-lit2 formulafile=p.frm formulaname=lit2 maxiter=1000
+p-lit3 formulafile=p.frm formulaname=lit3 maxiter=1000
+p-lit4 formulafile=p.frm formulaname=lit4 maxiter=1000
+p-lit5 formulafile=p.frm formulaname=lit5 maxiter=1000
+p-lit6 formulafile=p.frm formulaname=lit6 maxiter=1000
+p-lit7 formulafile=p.frm formulaname=lit7 maxiter=1000
+p-lit8 formulafile=p.frm formulaname=lit8 maxiter=1000
+p-lit9 formulafile=p.frm formulaname=lit9 maxiter=1000
+p-lit10 formulafile=p.frm formulaname=lit10 maxiter=1000
+p-lit11 formulafile=p.frm formulaname=lit11 maxiter=1000
+p-lit12 formulafile=p.frm formulaname=lit12 maxiter=1000
+p-lit13 formulafile=p.frm formulaname=lit13 maxiter=1000
+p-lit14 formulafile=p.frm formulaname=lit14 maxiter=1000
+p-lit15 formulafile=p.frm formulaname=lit15 maxiter=1000
+p-lit16 formulafile=p.frm formulaname=lit16 maxiter=1000
+p-lit17 formulafile=p.frm formulaname=lit17 maxiter=1000
+p-lit18 formulafile=p.frm formulaname=lit18 maxiter=1000
+p-lit19 formulafile=p.frm formulaname=lit19 maxiter=1000
+p-ws1 formulafile=p.frm formulaname=ws1 maxiter=1000
+p-ws2 formulafile=p.frm formulaname=ws2 maxiter=1000
+p-ws3 formulafile=p.frm formulaname=ws3 maxiter=1000
+p-ws4 formulafile=p.frm formulaname=ws4 maxiter=1000
+p-ws5 formulafile=p.frm formulaname=ws5 maxiter=1000
+p-ws6 formulafile=p.frm formulaname=ws6 maxiter=1000
+# --- cases-u.txt -> u/
+u-u1 formulafile=u.frm formulaname=u1 maxiter=1000
+u-u2 formulafile=u.frm formulaname=u2 maxiter=1000
+u-u3 formulafile=u.frm formulaname=u3 maxiter=1000
+u-u4 formulafile=u.frm formulaname=u4 maxiter=1000
+u-u5 formulafile=u.frm formulaname=u5 maxiter=1000
+u-u6 formulafile=u.frm formulaname=u6 maxiter=1000
+u-u7 formulafile=u.frm formulaname=u7 maxiter=1000
+u-u8 formulafile=u.frm formulaname=u8 maxiter=1000
+u-u10 formulafile=u.frm formulaname=u10 maxiter=1000
+u-u11 formulafile=u.frm formulaname=u11 maxiter=1000
+u-u13 formulafile=u.frm formulaname=u13 maxiter=1000
+u-u15 formulafile=u.frm formulaname=u15 maxiter=1000
+u-u16 formulafile=u.frm formulaname=u16 maxiter=1000
+u-u17 formulafile=u.frm formulaname=u17 maxiter=1000
+u-u18 formulafile=u.frm formulaname=u18 maxiter=1000
+u-u19 formulafile=u.frm formulaname=u19 maxiter=1000
+u-u20 formulafile=u.frm formulaname=u20 maxiter=1000
+u-u21 formulafile=u.frm formulaname=u21 maxiter=1000
+u-u22 formulafile=u.frm formulaname=u22 maxiter=1000
+u-u23 formulafile=u.frm formulaname=u23 maxiter=1000
+u-u24 formulafile=u.frm formulaname=u24 maxiter=1000
+u-u25 formulafile=u.frm formulaname=u25 maxiter=1000
+u-u26 formulafile=u.frm formulaname=u26 maxiter=1000
+u-u27 formulafile=u.frm formulaname=u27 maxiter=1000
+u-u28 formulafile=u.frm formulaname=u28 maxiter=1000
+u-u29 formulafile=u.frm formulaname=u29 maxiter=1000
+u-u30 formulafile=u.frm formulaname=u30 maxiter=1000
+u-u31 formulafile=u.frm formulaname=u31 maxiter=1000
+u-e1 formulafile=u.frm formulaname=e1 maxiter=1000
+u-e2 formulafile=u.frm formulaname=e2 maxiter=1000
+u-e3 formulafile=u.frm formulaname=e3 maxiter=1000
+u-e4 formulafile=u.frm formulaname=e4 maxiter=1000
+u-e5 formulafile=u.frm formulaname=e5 maxiter=1000
+u-e6 formulafile=u.frm formulaname=e6 maxiter=1000
+u-e7 formulafile=u.frm formulaname=e7 maxiter=1000
+u-e8 formulafile=u.frm formulaname=e8 maxiter=1000
+u-e9 formulafile=u.frm formulaname=e9 maxiter=1000
+u-e10 formulafile=u.frm formulaname=e10 maxiter=1000
+u-e11 formulafile=u.frm formulaname=e11 maxiter=1000
+u-e12 formulafile=u.frm formulaname=e12 maxiter=1000
+u-e13 formulafile=u.frm formulaname=e13 maxiter=1000
+u-e14 formulafile=u.frm formulaname=e14 maxiter=1000
+u-e15 formulafile=u.frm formulaname=e15 maxiter=1000
+u-e16 formulafile=u.frm formulaname=e16 maxiter=1000
+u-e17 formulafile=u.frm formulaname=e17 maxiter=1000
+u-e18 formulafile=u.frm formulaname=e18 maxiter=1000
+u-e19 formulafile=u.frm formulaname=e19 maxiter=1000
+# --- cases-s.txt -> s/
+s-comments formulafile=s01.frm formulaname=c1 maxiter=1000
+s-text-before formulafile=s02.frm formulaname=c2 maxiter=1000
+s-text-between formulafile=s02.frm formulaname=c2b maxiter=1000
+s-brace-c3 formulafile=s03.frm formulaname=c3 maxiter=1000
+s-brace-c3b formulafile=s03.frm formulaname=c3b maxiter=1000
+s-brace-c3c formulafile=s03.frm formulaname=c3c maxiter=1000
+s-brace-c3d formulafile=s03.frm formulaname=c3d maxiter=1000
+s-hdr-c4a formulafile=s04.frm formulaname=c4a maxiter=1000
+s-hdr-c4b formulafile=s04.frm formulaname=c4b maxiter=1000
+s-hdr-c4c formulafile=s04.frm formulaname=c4c maxiter=1000
+s-hdr-c4d formulafile=s04.frm formulaname=c4d maxiter=1000
+s-hdr-c4e formulafile=s04.frm formulaname=c4e maxiter=1000
+s-hdr-c4f formulafile=s04.frm formulaname=c4f maxiter=1000
+s-hdr-c4g formulafile=s04.frm formulaname=c4g maxiter=1000
+s-hdr-c4h formulafile=s04.frm formulaname=c4h maxiter=1000
+s-hdr-c4i formulafile=s04.frm formulaname=c4i maxiter=1000
+s-hdr-c4j formulafile=s04.frm formulaname=c4j maxiter=1000
+s-hdr-c4k formulafile=s04.frm formulaname=c4k maxiter=1000
+s-hdr-c4l formulafile=s04.frm formulaname=c4l maxiter=1000
+s-hdr-c4m formulafile=s04.frm formulaname=c4m maxiter=1000
+s-hdr-c4n formulafile=s04.frm formulaname=c4n maxiter=1000
+s-hdr-c4o formulafile=s04.frm formulaname=c4o maxiter=1000
+s-hdr-c4p formulafile=s04.frm formulaname=c4p maxiter=1000
+s-hdr-c4q formulafile=s04.frm formulaname=c4q maxiter=1000
+s-hdr-c4r formulafile=s04.frm formulaname=c4r maxiter=1000
+s-hdr-c4s formulafile=s04.frm formulaname=c4s maxiter=1000
+s-hdr-c4t formulafile=s04.frm formulaname=c4t maxiter=1000
+s-hdr-c4u formulafile=s04.frm formulaname=c4u maxiter=1000
+s-hdr-c4v formulafile=s04.frm formulaname=c4v maxiter=1000
+s-line-c5 formulafile=s05.frm formulaname=c5 maxiter=1000
+s-line-c5b formulafile=s05.frm formulaname=c5b maxiter=1000
+s-line-c5c formulafile=s05.frm formulaname=c5c maxiter=1000
+s-line-c5d formulafile=s05.frm formulaname=c5d maxiter=1000
+s-line-c5e formulafile=s05.frm formulaname=c5e maxiter=1000
+s-crlf formulafile=s06.frm formulaname=c6 maxiter=1000
+s-crlf2 formulafile=s06.frm formulaname=c6b maxiter=1000
+s-dup formulafile=s07.frm formulaname=dup maxiter=1000
+s-case-dupU formulafile=s07.frm formulaname=DUP maxiter=1000
+s-case-mixed formulafile=s07.frm formulaname=mixed maxiter=1000
+s-case-upper formulafile=s07.frm formulaname=upper maxiter=1000
+s-case-upper2 formulafile=s07.frm formulaname=UPPER maxiter=1000
+s-len15 formulafile=s08.frm formulaname=n15abcdefghijkl maxiter=1000
+s-len16 formulafile=s08.frm formulaname=n16abcdefghijklm maxiter=1000
+s-len16-cut15 formulafile=s08.frm formulaname=n16abcdefghijkl maxiter=1000
+s-len17 formulafile=s08.frm formulaname=n17abcdefghijklmn maxiter=1000
+s-len17-cut15 formulafile=s08.frm formulaname=n17abcdefghijkl maxiter=1000
+s-len18 formulafile=s08.frm formulaname=n18abcdefghijklmno maxiter=1000
+s-len18-cut15 formulafile=s08.frm formulaname=n18abcdefghijkl maxiter=1000
+s-len20 formulafile=s08.frm formulaname=n20abcdefghijklmnopq maxiter=1000
+s-len20-cut15 formulafile=s08.frm formulaname=n20abcdefghijkl maxiter=1000
+s-len32 formulafile=s08.frm formulaname=n32abcdefghijklmnopqrstuvwxyzabc maxiter=1000
+s-len32-cut15 formulafile=s08.frm formulaname=n32abcdefghijkl maxiter=1000
+s-len40 formulafile=s08.frm formulaname=n40abcdefghijklmnopqrstuvwxyzabcdefghijk maxiter=1000
+s-len40-cut15 formulafile=s08.frm formulaname=n40abcdefghijkl maxiter=1000
+s-len47 formulafile=s08.frm formulaname=n47abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqr maxiter=1000
+s-len47-cut15 formulafile=s08.frm formulaname=n47abcdefghijkl maxiter=1000
+s-len48 formulafile=s08.frm formulaname=n48abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrs maxiter=1000
+s-len48-cut15 formulafile=s08.frm formulaname=n48abcdefghijkl maxiter=1000
+s-len49 formulafile=s08.frm formulaname=n49abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrst maxiter=1000
+s-len49-cut15 formulafile=s08.frm formulaname=n49abcdefghijkl maxiter=1000
+s-len60 formulafile=s08.frm formulaname=n60abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcde maxiter=1000
+s-len60-cut15 formulafile=s08.frm formulaname=n60abcdefghijkl maxiter=1000
+s-char0 formulafile=s09.frm formulaname=a-b maxiter=1000
+s-char1 formulafile=s09.frm formulaname=a_b maxiter=1000
+s-char2 formulafile=s09.frm formulaname=a.b maxiter=1000
+s-char3 formulafile=s09.frm formulaname=1ab maxiter=1000
+s-char4 formulafile=s09.frm formulaname=a#b maxiter=1000
+s-char5 formulafile=s09.frm formulaname=a!b maxiter=1000
+s-char6 formulafile=s09.frm formulaname=a+b maxiter=1000
+s-char7 formulafile=s09.frm formulaname=a@b maxiter=1000
+s-char8 formulafile=s09.frm formulaname=a/b maxiter=1000
+s-char9 formulafile=s09.frm formulaname=a$b maxiter=1000
+s-split-c10 formulafile=s10.frm formulaname=c10 maxiter=1000
+s-split-c10b formulafile=s10.frm formulaname=c10b maxiter=1000
+s-split-c10c formulafile=s10.frm formulaname=c10c maxiter=1000
+s-split-c10d formulafile=s10.frm formulaname=c10d maxiter=1000
+s-noclose-eof formulafile=s12.frm formulaname=c12 maxiter=1000
+s-noclose-eof-first formulafile=s12.frm formulaname=c12a maxiter=1000
+s-noclose-a formulafile=s13.frm formulaname=c13a maxiter=1000
+s-noclose-b formulafile=s13.frm formulaname=c13b maxiter=1000
+s-noclose-c formulafile=s13.frm formulaname=c13c maxiter=1000
+s-brace-in-c15 formulafile=s15.frm formulaname=c15 maxiter=1000
+s-brace-in-c15b formulafile=s15.frm formulaname=c15b maxiter=1000
+s-brace-in-c15c formulafile=s15.frm formulaname=c15c maxiter=1000
+s-empty-c17 formulafile=s17.frm formulaname=c17 maxiter=1000
+s-empty-c17b formulafile=s17.frm formulaname=c17b maxiter=1000
+s-empty-c17c formulafile=s17.frm formulaname=c17c maxiter=1000
+s-sep-two formulafile=s18.frm formulaname=two maxiter=1000
+s-sep-none formulafile=s18.frm formulaname=none maxiter=1000
+s-sep-none2 formulafile=s18.frm formulaname=none2 maxiter=1000
+s-sep-mid formulafile=s18.frm formulaname=mid maxiter=1000
+s-sep-mid2 formulafile=s18.frm formulaname=mid2 maxiter=1000
+s-sep-asg formulafile=s18.frm formulaname=asg maxiter=1000
+s-sep-asgk formulafile=s18.frm formulaname=asgk maxiter=1000
+s-sep-asg0 formulafile=s18.frm formulaname=asg0 maxiter=1000
+s-sep-emptyit formulafile=s18.frm formulaname=emptyit maxiter=1000
+s-sep-emptyin formulafile=s18.frm formulaname=emptyin maxiter=1000
+s-sep-sameln formulafile=s18.frm formulaname=sameln maxiter=1000
+s-sep-space formulafile=s18.frm formulaname=space maxiter=1000
+s-sep-testinit formulafile=s18.frm formulaname=testinit maxiter=1000
+s-sep-colon2 formulafile=s18.frm formulaname=colon2 maxiter=1000
+s-sep-empty formulafile=s18.frm formulaname=empty maxiter=1000
+s-sep-onlytest formulafile=s18.frm formulaname=onlytest maxiter=1000
+s-long-l200 formulafile=s26.frm formulaname=l200 maxiter=1000
+s-long-l600 formulafile=s26.frm formulaname=l600 maxiter=1000
+s-long-l2000 formulafile=s26.frm formulaname=l2000 maxiter=1000
+s-long-m300 formulafile=s26.frm formulaname=m300 maxiter=1000
+s-long-m2000 formulafile=s26.frm formulaname=m2000 maxiter=1000
+s-hdr2-my formulafile=s28.frm formulaname=my maxiter=1000
+s-hdr2-c28 formulafile=s28.frm formulaname=c28 maxiter=1000
+s-hdr2-c28b formulafile=s28.frm formulaname=c28b maxiter=1000
+s-hdr2-c28c formulafile=s28.frm formulaname=c28c maxiter=1000
+s-hdr2-c28d formulafile=s28.frm formulaname=c28d maxiter=1000
+s-hdr2-myname formulafile=s28.frm formulaname="my name" maxiter=1000
+s-cmt-h formulafile=s34.frm formulaname=cch maxiter=1000
+s-cmt-sl formulafile=s34.frm formulaname=ccsl maxiter=1000
+s-cmt-ap formulafile=s34.frm formulaname=ccap maxiter=1000
+s-cmt-rem formulafile=s34.frm formulaname=ccrem maxiter=1000
+s-cmt-bang formulafile=s34.frm formulaname=ccbang maxiter=1000
+s-lineno-err formulafile=s35.frm formulaname=err maxiter=1000
+s-lineno-err2 formulafile=s35.frm formulaname=err2 maxiter=1000
+s-lineno-err3 formulafile=s35.frm formulaname=err3 maxiter=1000
+# --- cases-n.txt -> n/
+n-n1 formulafile=n.frm formulaname=n1 maxiter=1000
+n-n2 formulafile=n.frm formulaname=n2 maxiter=1000
+n-n3 formulafile=n.frm formulaname=n3 maxiter=1000
+n-n4 formulafile=n.frm formulaname=n4 maxiter=1000
+n-n5 formulafile=n.frm formulaname=n5 maxiter=1000
+n-n6 formulafile=n.frm formulaname=n6 maxiter=1000
+n-n7 formulafile=n.frm formulaname=n7 maxiter=1000
+n-n8 formulafile=n.frm formulaname=n8 maxiter=1000
+n-n9 formulafile=n.frm formulaname=n9 maxiter=1000
+n-n10 formulafile=n.frm formulaname=n10 maxiter=1000
+n-n11 formulafile=n.frm formulaname=n11 maxiter=1000
+n-n12 formulafile=n.frm formulaname=n12 maxiter=1000
+n-n13 formulafile=n.frm formulaname=n13 maxiter=1000
+n-n14 formulafile=n.frm formulaname=n14 maxiter=1000
+n-n15 formulafile=n.frm formulaname=n15 maxiter=1000
+n-n16 formulafile=n.frm formulaname=n16 maxiter=1000
+n-n17 formulafile=n.frm formulaname=n17 maxiter=1000
+n-n18 formulafile=n.frm formulaname=n18 maxiter=1000
+n-n19 formulafile=n.frm formulaname=n19 maxiter=1000
+n-n20 formulafile=n.frm formulaname=n20 maxiter=1000
+n-n21 formulafile=n.frm formulaname=n21 maxiter=1000
+n-n22 formulafile=n.frm formulaname=n22 maxiter=1000
+n-n23 formulafile=n.frm formulaname=n23 maxiter=1000
+n-n24 formulafile=n.frm formulaname=n24 maxiter=1000
+n-n25 formulafile=n.frm formulaname=n25 maxiter=1000
+# --- cases-i.txt -> i/
+i-id1 formulafile=i.frm formulaname=id1 maxiter=1000
+i-id2 formulafile=i.frm formulaname=id2 maxiter=1000
+i-id3 formulafile=i.frm formulaname=id3 maxiter=1000
+i-id4 formulafile=i.frm formulaname=id4 maxiter=1000
+i-id5 formulafile=i.frm formulaname=id5 maxiter=1000
+i-id6 formulafile=i.frm formulaname=id6 maxiter=1000
+i-id7 formulafile=i.frm formulaname=id7 maxiter=1000
+i-id8 formulafile=i.frm formulaname=id8 maxiter=1000
+i-id9 formulafile=i.frm formulaname=id9 maxiter=1000
+i-id10 formulafile=i.frm formulaname=id10 maxiter=1000
+i-id11 formulafile=i.frm formulaname=id11 maxiter=1000
+i-id12 formulafile=i.frm formulaname=id12 maxiter=1000
+i-id13 formulafile=i.frm formulaname=id13 maxiter=1000
+i-id14 formulafile=i.frm formulaname=id14 maxiter=1000
+i-id15 formulafile=i.frm formulaname=id15 maxiter=1000
+i-if1 formulafile=i.frm formulaname=if1 maxiter=1000
+i-if2 formulafile=i.frm formulaname=if2 maxiter=1000
+i-if3 formulafile=i.frm formulaname=if3 maxiter=1000
+i-if4 formulafile=i.frm formulaname=if4 maxiter=1000
+i-if5 formulafile=i.frm formulaname=if5 maxiter=1000
+i-if6 formulafile=i.frm formulaname=if6 maxiter=1000
+i-if7 formulafile=i.frm formulaname=if7 maxiter=1000
+i-if8 formulafile=i.frm formulaname=if8 maxiter=1000
+i-if9 formulafile=i.frm formulaname=if9 maxiter=1000
+i-if10 formulafile=i.frm formulaname=if10 maxiter=1000
+i-if11 formulafile=i.frm formulaname=if11 maxiter=1000
+i-if12 formulafile=i.frm formulaname=if12 maxiter=1000
+i-if13 formulafile=i.frm formulaname=if13 maxiter=1000
+i-if14 formulafile=i.frm formulaname=if14 maxiter=1000
+i-if15 formulafile=i.frm formulaname=if15 maxiter=1000
+i-if16 formulafile=i.frm formulaname=if16 maxiter=1000
+i-if17 formulafile=i.frm formulaname=if17 maxiter=1000
+i-if18 formulafile=i.frm formulaname=if18 maxiter=1000
+i-if19 formulafile=i.frm formulaname=if19 maxiter=1000
+i-if20 formulafile=i.frm formulaname=if20 maxiter=1000
+i-if21 formulafile=i.frm formulaname=if21 maxiter=1000
+i-if22 formulafile=i.frm formulaname=if22 maxiter=1000
+i-if23 formulafile=i.frm formulaname=if23 maxiter=1000
+i-if24 formulafile=i.frm formulaname=if24 maxiter=1000
+i-if25 formulafile=i.frm formulaname=if25 maxiter=1000
+i-if26 formulafile=i.frm formulaname=if26 maxiter=1000
+i-if27 formulafile=i.frm formulaname=if27 maxiter=1000
+i-if28 formulafile=i.frm formulaname=if28 maxiter=1000
+i-if29 formulafile=i.frm formulaname=if29 maxiter=1000
+i-if30 formulafile=i.frm formulaname=if30 maxiter=1000
+i-if31 formulafile=i.frm formulaname=if31 maxiter=1000
+i-if32 formulafile=i.frm formulaname=if32 maxiter=1000
+i-if33 formulafile=i.frm formulaname=if33 maxiter=1000
+i-if34 formulafile=i.frm formulaname=if34 maxiter=1000
+# --- cases-b.txt -> b/
+b-rpixel formulafile=b.frm formulaname=rpixel maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-ripixel formulafile=b.frm formulaname=ripixel maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-apixel formulafile=b.frm formulaname=apixel maxiter=1000
+b-rz formulafile=b.frm formulaname=rz maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-riz formulafile=b.frm formulaname=riz maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-az formulafile=b.frm formulaname=az maxiter=1000
+b-rc formulafile=b.frm formulaname=rc maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-ric formulafile=b.frm formulaname=ric maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-ac formulafile=b.frm formulaname=ac maxiter=1000
+b-rp1 formulafile=b.frm formulaname=rp1 maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-rip1 formulafile=b.frm formulaname=rip1 maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-ap1 formulafile=b.frm formulaname=ap1 maxiter=1000
+b-rp2 formulafile=b.frm formulaname=rp2 maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-rip2 formulafile=b.frm formulaname=rip2 maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-ap2 formulafile=b.frm formulaname=ap2 maxiter=1000
+b-rp3 formulafile=b.frm formulaname=rp3 maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-rip3 formulafile=b.frm formulaname=rip3 maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-ap3 formulafile=b.frm formulaname=ap3 maxiter=1000
+b-rp4 formulafile=b.frm formulaname=rp4 maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-rip4 formulafile=b.frm formulaname=rip4 maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-ap4 formulafile=b.frm formulaname=ap4 maxiter=1000
+b-rp5 formulafile=b.frm formulaname=rp5 maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-rip5 formulafile=b.frm formulaname=rip5 maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-ap5 formulafile=b.frm formulaname=ap5 maxiter=1000
+b-rp6 formulafile=b.frm formulaname=rp6 maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-rip6 formulafile=b.frm formulaname=rip6 maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-ap6 formulafile=b.frm formulaname=ap6 maxiter=1000
+b-rpi formulafile=b.frm formulaname=rpi maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-ripi formulafile=b.frm formulaname=ripi maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-api formulafile=b.frm formulaname=api maxiter=1000
+b-re formulafile=b.frm formulaname=re maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-rie formulafile=b.frm formulaname=rie maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-ae formulafile=b.frm formulaname=ae maxiter=1000
+b-rrand formulafile=b.frm formulaname=rrand maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-rirand formulafile=b.frm formulaname=rirand maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-arand formulafile=b.frm formulaname=arand maxiter=1000
+b-rlastsqr formulafile=b.frm formulaname=rlastsqr maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-rilastsqr formulafile=b.frm formulaname=rilastsqr maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-alastsqr formulafile=b.frm formulaname=alastsqr maxiter=1000
+b-rwhitesq formulafile=b.frm formulaname=rwhitesq maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-riwhitesq formulafile=b.frm formulaname=riwhitesq maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-awhitesq formulafile=b.frm formulaname=awhitesq maxiter=1000
+b-rscrnpix formulafile=b.frm formulaname=rscrnpix maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-riscrnpix formulafile=b.frm formulaname=riscrnpix maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-ascrnpix formulafile=b.frm formulaname=ascrnpix maxiter=1000
+b-rscrnmax formulafile=b.frm formulaname=rscrnmax maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-riscrnmax formulafile=b.frm formulaname=riscrnmax maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-ascrnmax formulafile=b.frm formulaname=ascrnmax maxiter=1000
+b-rmaxit formulafile=b.frm formulaname=rmaxit maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-rimaxit formulafile=b.frm formulaname=rimaxit maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-amaxit formulafile=b.frm formulaname=amaxit maxiter=1000
+b-rismand formulafile=b.frm formulaname=rismand maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-riismand formulafile=b.frm formulaname=riismand maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-aismand formulafile=b.frm formulaname=aismand maxiter=1000
+b-rcenter formulafile=b.frm formulaname=rcenter maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-ricenter formulafile=b.frm formulaname=ricenter maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-acenter formulafile=b.frm formulaname=acenter maxiter=1000
+b-rmagxmag formulafile=b.frm formulaname=rmagxmag maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-rimagxmag formulafile=b.frm formulaname=rimagxmag maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-amagxmag formulafile=b.frm formulaname=amagxmag maxiter=1000
+b-rrotskew formulafile=b.frm formulaname=rrotskew maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-rirotskew formulafile=b.frm formulaname=rirotskew maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-arotskew formulafile=b.frm formulaname=arotskew maxiter=1000
+b-rx formulafile=b.frm formulaname=rx maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-rix formulafile=b.frm formulaname=rix maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-ax formulafile=b.frm formulaname=ax maxiter=1000
+b-ry formulafile=b.frm formulaname=ry maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-riy formulafile=b.frm formulaname=riy maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-ay formulafile=b.frm formulaname=ay maxiter=1000
+b-ri formulafile=b.frm formulaname=ri maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-rii formulafile=b.frm formulaname=rii maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-ai formulafile=b.frm formulaname=ai maxiter=1000
+b-rj formulafile=b.frm formulaname=rj maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-rij formulafile=b.frm formulaname=rij maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-aj formulafile=b.frm formulaname=aj maxiter=1000
+b-rt formulafile=b.frm formulaname=rt maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-rit formulafile=b.frm formulaname=rit maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-at formulafile=b.frm formulaname=at maxiter=1000
+b-rw formulafile=b.frm formulaname=rw maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-riw formulafile=b.frm formulaname=riw maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-aw formulafile=b.frm formulaname=aw maxiter=1000
+b-rq formulafile=b.frm formulaname=rq maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-riq formulafile=b.frm formulaname=riq maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-aq formulafile=b.frm formulaname=aq maxiter=1000
+b-rzero formulafile=b.frm formulaname=rzero maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-rizero formulafile=b.frm formulaname=rizero maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-azero formulafile=b.frm formulaname=azero maxiter=1000
+b-rone formulafile=b.frm formulaname=rone maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-rione formulafile=b.frm formulaname=rione maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-aone formulafile=b.frm formulaname=aone maxiter=1000
+b-rfn1 formulafile=b.frm formulaname=rfn1 maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-rifn1 formulafile=b.frm formulaname=rifn1 maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-afn1 formulafile=b.frm formulaname=afn1 maxiter=1000
+b-rsin formulafile=b.frm formulaname=rsin maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-risin formulafile=b.frm formulaname=risin maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-asin formulafile=b.frm formulaname=asin maxiter=1000
+b-rif formulafile=b.frm formulaname=rif maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-riif formulafile=b.frm formulaname=riif maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-aif formulafile=b.frm formulaname=aif maxiter=1000
+b-rendif formulafile=b.frm formulaname=rendif maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-riendif formulafile=b.frm formulaname=riendif maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-aendif formulafile=b.frm formulaname=aendif maxiter=1000
+b-relse formulafile=b.frm formulaname=relse maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-rielse formulafile=b.frm formulaname=rielse maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-aelse formulafile=b.frm formulaname=aelse maxiter=1000
+b-relseif formulafile=b.frm formulaname=relseif maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-rielseif formulafile=b.frm formulaname=rielseif maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-aelseif formulafile=b.frm formulaname=aelseif maxiter=1000
+b-rreal formulafile=b.frm formulaname=rreal maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-rireal formulafile=b.frm formulaname=rireal maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+b-areal formulafile=b.frm formulaname=areal maxiter=1000
+b-fsin formulafile=b.frm formulaname=fsin maxiter=1000
+b-fcos formulafile=b.frm formulaname=fcos maxiter=1000
+b-ftan formulafile=b.frm formulaname=ftan maxiter=1000
+b-fcot formulafile=b.frm formulaname=fcot maxiter=1000
+b-fsec formulafile=b.frm formulaname=fsec maxiter=1000
+b-fcsc formulafile=b.frm formulaname=fcsc maxiter=1000
+b-fsinh formulafile=b.frm formulaname=fsinh maxiter=1000
+b-fcosh formulafile=b.frm formulaname=fcosh maxiter=1000
+b-ftanh formulafile=b.frm formulaname=ftanh maxiter=1000
+b-fcoth formulafile=b.frm formulaname=fcoth maxiter=1000
+b-fsech formulafile=b.frm formulaname=fsech maxiter=1000
+b-fcsch formulafile=b.frm formulaname=fcsch maxiter=1000
+b-fasin formulafile=b.frm formulaname=fasin maxiter=1000
+b-facos formulafile=b.frm formulaname=facos maxiter=1000
+b-fatan formulafile=b.frm formulaname=fatan maxiter=1000
+b-facot formulafile=b.frm formulaname=facot maxiter=1000
+b-fasinh formulafile=b.frm formulaname=fasinh maxiter=1000
+b-facosh formulafile=b.frm formulaname=facosh maxiter=1000
+b-fatanh formulafile=b.frm formulaname=fatanh maxiter=1000
+b-fsqrt formulafile=b.frm formulaname=fsqrt maxiter=1000
+b-fsqr formulafile=b.frm formulaname=fsqr maxiter=1000
+b-fcube formulafile=b.frm formulaname=fcube maxiter=1000
+b-fexp formulafile=b.frm formulaname=fexp maxiter=1000
+b-flog formulafile=b.frm formulaname=flog maxiter=1000
+b-fln formulafile=b.frm formulaname=fln maxiter=1000
+b-flog10 formulafile=b.frm formulaname=flog10 maxiter=1000
+b-fabs formulafile=b.frm formulaname=fabs maxiter=1000
+b-fcabs formulafile=b.frm formulaname=fcabs maxiter=1000
+b-fconj formulafile=b.frm formulaname=fconj maxiter=1000
+b-fflip formulafile=b.frm formulaname=fflip maxiter=1000
+b-freal formulafile=b.frm formulaname=freal maxiter=1000
+b-fimag formulafile=b.frm formulaname=fimag maxiter=1000
+b-fident formulafile=b.frm formulaname=fident maxiter=1000
+b-fzero formulafile=b.frm formulaname=fzero maxiter=1000
+b-fone formulafile=b.frm formulaname=fone maxiter=1000
+b-ffloor formulafile=b.frm formulaname=ffloor maxiter=1000
+b-fceil formulafile=b.frm formulaname=fceil maxiter=1000
+b-ftrunc formulafile=b.frm formulaname=ftrunc maxiter=1000
+b-fround formulafile=b.frm formulaname=fround maxiter=1000
+b-frecip formulafile=b.frm formulaname=frecip maxiter=1000
+b-fneg formulafile=b.frm formulaname=fneg maxiter=1000
+b-farg formulafile=b.frm formulaname=farg maxiter=1000
+b-fmod formulafile=b.frm formulaname=fmod maxiter=1000
+b-fnorm formulafile=b.frm formulaname=fnorm maxiter=1000
+b-ffn1 formulafile=b.frm formulaname=ffn1 maxiter=1000
+b-ffn2 formulafile=b.frm formulaname=ffn2 maxiter=1000
+b-ffn3 formulafile=b.frm formulaname=ffn3 maxiter=1000
+b-ffn4 formulafile=b.frm formulaname=ffn4 maxiter=1000
+b-ffn5 formulafile=b.frm formulaname=ffn5 maxiter=1000
+b-ffn0 formulafile=b.frm formulaname=ffn0 maxiter=1000
+b-frand formulafile=b.frm formulaname=frand maxiter=1000
+b-fsrand formulafile=b.frm formulaname=fsrand maxiter=1000
+b-fpow formulafile=b.frm formulaname=fpow maxiter=1000
+b-fmax formulafile=b.frm formulaname=fmax maxiter=1000
+b-fmin formulafile=b.frm formulaname=fmin maxiter=1000
+b-fcosxx formulafile=b.frm formulaname=fcosxx maxiter=1000
+b-fsign formulafile=b.frm formulaname=fsign maxiter=1000
+b-fpixel formulafile=b.frm formulaname=fpixel maxiter=1000
+b-fz formulafile=b.frm formulaname=fz maxiter=1000
+b-fp1 formulafile=b.frm formulaname=fp1 maxiter=1000
+b-fpi formulafile=b.frm formulaname=fpi maxiter=1000
+b-zz1 formulafile=b.frm formulaname=zz1 maxiter=1000
+b-zz2 formulafile=b.frm formulaname=zz2 maxiter=1000
+b-zz3 formulafile=b.frm formulaname=zz3 maxiter=1000
+b-zz4 formulafile=b.frm formulaname=zz4 maxiter=1000
+b-zz5 formulafile=b.frm formulaname=zz5 maxiter=1000
+b-call1 formulafile=b.frm formulaname=call1 maxiter=1000
+b-call2 formulafile=b.frm formulaname=call2 maxiter=1000
+b-call3 formulafile=b.frm formulaname=call3 maxiter=1000
+b-call4 formulafile=b.frm formulaname=call4 maxiter=1000
+b-call5 formulafile=b.frm formulaname=call5 maxiter=1000
+b-call6 formulafile=b.frm formulaname=call6 maxiter=1000
+b-call7 formulafile=b.frm formulaname=call7 maxiter=1000
+# --- cases-t.txt -> t/
+t-stmts50 formulafile=t01.frm formulaname=st50 maxiter=1000
+t-stmts100 formulafile=t01.frm formulaname=st100 maxiter=1000
+t-stmts150 formulafile=t01.frm formulaname=st150 maxiter=1000
+t-stmts200 formulafile=t01.frm formulaname=st200 maxiter=1000
+t-stmts250 formulafile=t01.frm formulaname=st250 maxiter=1000
+t-terms100 formulafile=t02.frm formulaname=tm100 maxiter=1000
+t-terms150 formulafile=t02.frm formulaname=tm150 maxiter=1000
+t-terms200 formulafile=t02.frm formulaname=tm200 maxiter=1000
+t-terms250 formulafile=t02.frm formulaname=tm250 maxiter=1000
+t-terms300 formulafile=t02.frm formulaname=tm300 maxiter=1000
+t-terms400 formulafile=t02.frm formulaname=tm400 maxiter=1000
+t-longcomment300 formulafile=t03.frm formulaname=lc300 maxiter=1000
+t-longcomment1000 formulafile=t03.frm formulaname=lc1000 maxiter=1000
+t-longcomment3000 formulafile=t03.frm formulaname=lc3000 maxiter=1000
+t-longtext formulafile=t03.frm formulaname=lc maxiter=1000
+t-char0 formulafile=t04.frm formulaname=a,b maxiter=1000
+t-char1 formulafile=t04.frm formulaname=a;b maxiter=1000
+t-char2 formulafile=t04.frm formulaname=a:b maxiter=1000
+t-char3 formulafile=t04.frm formulaname=a\"b maxiter=1000
+t-char4 formulafile=t04.frm formulaname=a}b maxiter=1000
+t-char5 formulafile=t04.frm formulaname=a)b maxiter=1000
+t-char6 formulafile=t04.frm formulaname=a\\b maxiter=1000
+t-char7 formulafile=t04.frm formulaname=a|b maxiter=1000
+t-leadspace formulafile=t04.frm formulaname=lead maxiter=1000
+t-brace-c5d formulafile=t05.frm formulaname=c5d maxiter=1000
+t-brace-c5e formulafile=t05.frm formulaname=c5e maxiter=1000
+t-brace-c5f formulafile=t05.frm formulaname=c5f maxiter=1000
+t-brace-c5g formulafile=t05.frm formulaname=c5g maxiter=1000
+t-brace-c5h formulafile=t05.frm formulaname=c5h maxiter=1000
+t-cont-c6a formulafile=t06.frm formulaname=c6a maxiter=1000
+t-cont-c6b formulafile=t06.frm formulaname=c6b maxiter=1000
+t-cont-c6c formulafile=t06.frm formulaname=c6c maxiter=1000
+t-cont-c6d formulafile=t06.frm formulaname=c6d maxiter=1000
+t-cont-c6e formulafile=t06.frm formulaname=c6e maxiter=1000
+t-cont-c6f formulafile=t06.frm formulaname=c6f maxiter=1000
+t-cont-c6g formulafile=t06.frm formulaname=c6g maxiter=1000
+t-cont-c6h formulafile=t06.frm formulaname=c6h maxiter=1000
+t-nofile-c1 formulafile=zz.frm formulaname=c1 maxiter=1000
+t-nofileparam-c1 formulaname=c1 maxiter=1000
+t-noname formulafile=s01.frm maxiter=1000
+t-upperfile formulafile=S01.FRM formulaname=c1 maxiter=1000
+t-noext formulafile=s01 formulaname=c1 maxiter=1000
+t-ctrlz-before formulafile=t08.frm formulaname=c8a maxiter=1000
+t-ctrlz-after formulafile=t08.frm formulaname=c8b maxiter=1000
+t-latin1-comment formulafile=t09.frm formulaname=c9a maxiter=1000
+t-latin1-name formulafile=t09.frm formulaname=c9é maxiter=1000
+t-misc-c10a formulafile=t10.frm formulaname=c10a maxiter=1000
+t-misc-c10b formulafile=t10.frm formulaname=c10b maxiter=1000
+t-misc-c10c formulafile=t10.frm formulaname=c10c maxiter=1000
+t-misc-c10d formulafile=t10.frm formulaname=c10d maxiter=1000
+t-misc-c10e formulafile=t10.frm formulaname=c10e maxiter=1000
+t-nest5 formulafile=t11.frm formulaname=nest5 maxiter=1000
+t-nest20 formulafile=t11.frm formulaname=nest20 maxiter=1000
+t-nest50 formulafile=t11.frm formulaname=nest50 maxiter=1000
+t-nest100 formulafile=t11.frm formulaname=nest100 maxiter=1000
+t-nest200 formulafile=t11.frm formulaname=nest200 maxiter=1000
+t-ifit-it1 formulafile=t12.frm formulaname=it1 maxiter=1000
+t-ifit-it2 formulafile=t12.frm formulaname=it2 maxiter=1000
+t-ifit-it3 formulafile=t12.frm formulaname=it3 maxiter=1000
+t-ifit-it4 formulafile=t12.frm formulaname=it4 maxiter=1000
+t-ifit-it5 formulafile=t12.frm formulaname=it5 maxiter=1000
+t-ifit-it6 formulafile=t12.frm formulaname=it6 maxiter=1000
+t-ifit-it7 formulafile=t12.frm formulaname=it7 maxiter=1000
+# --- cases-y.txt -> y/
+y-00-plain formulafile=y.frm formulaname=y00
+y-01-xaxis formulafile=y.frm formulaname=y01
+y-02-yaxis formulafile=y.frm formulaname=y02
+y-03-xyaxis formulafile=y.frm formulaname=y03
+y-04-origin formulafile=y.frm formulaname=y04
+y-05-pi_sym formulafile=y.frm formulaname=y05
+y-06-xaxis_noparm formulafile=y.frm formulaname=y06
+y-06-xaxis_noparm-pre formulafile=y.frm formulaname=y06 params=0.5/0
+y-06-xaxis_noparm-pim formulafile=y.frm formulaname=y06 params=0/0.5
+y-06-xaxis_noparm-pboth formulafile=y.frm formulaname=y06 params=0.5/0.5
+y-07-xaxis_noreal formulafile=y.frm formulaname=y07
+y-07-xaxis_noreal-pre formulafile=y.frm formulaname=y07 params=0.5/0
+y-07-xaxis_noreal-pim formulafile=y.frm formulaname=y07 params=0/0.5
+y-07-xaxis_noreal-pboth formulafile=y.frm formulaname=y07 params=0.5/0.5
+y-08-xaxis_noimag formulafile=y.frm formulaname=y08
+y-08-xaxis_noimag-pre formulafile=y.frm formulaname=y08 params=0.5/0
+y-08-xaxis_noimag-pim formulafile=y.frm formulaname=y08 params=0/0.5
+y-08-xaxis_noimag-pboth formulafile=y.frm formulaname=y08 params=0.5/0.5
+y-09-yaxis_noparm formulafile=y.frm formulaname=y09
+y-09-yaxis_noparm-pre formulafile=y.frm formulaname=y09 params=0.5/0
+y-09-yaxis_noparm-pim formulafile=y.frm formulaname=y09 params=0/0.5
+y-09-yaxis_noparm-pboth formulafile=y.frm formulaname=y09 params=0.5/0.5
+y-10-xyaxis_noparm formulafile=y.frm formulaname=y10
+y-10-xyaxis_noparm-pre formulafile=y.frm formulaname=y10 params=0.5/0
+y-10-xyaxis_noparm-pim formulafile=y.frm formulaname=y10 params=0/0.5
+y-10-xyaxis_noparm-pboth formulafile=y.frm formulaname=y10 params=0.5/0.5
+y-11-origin_noparm formulafile=y.frm formulaname=y11
+y-11-origin_noparm-pre formulafile=y.frm formulaname=y11 params=0.5/0
+y-11-origin_noparm-pim formulafile=y.frm formulaname=y11 params=0/0.5
+y-11-origin_noparm-pboth formulafile=y.frm formulaname=y11 params=0.5/0.5
+y-12-pi_sym_noparm formulafile=y.frm formulaname=y12
+y-12-pi_sym_noparm-pre formulafile=y.frm formulaname=y12 params=0.5/0
+y-12-pi_sym_noparm-pim formulafile=y.frm formulaname=y12 params=0/0.5
+y-12-pi_sym_noparm-pboth formulafile=y.frm formulaname=y12 params=0.5/0.5
+y-13-nosym formulafile=y.frm formulaname=y13
+y-14-bogus formulafile=y.frm formulaname=y14
+y-15-xaxis formulafile=y.frm formulaname=y15
+y-16-none formulafile=y.frm formulaname=y16
+y-17-x-axis formulafile=y.frm formulaname=y17
+y-18-xaxis-junk formulafile=y.frm formulaname=y18
+y-01-xaxis-symnone formulafile=y.frm formulaname=y01 symmetry=none
+y-00-plain-symx formulafile=y.frm formulaname=y00 symmetry=xaxis
+y-01-xaxis-symy formulafile=y.frm formulaname=y01 symmetry=yaxis
+# --- cases-r3.txt -> r3/
+r3-zinit-za formulafile=r3a.frm formulaname=za maxiter=1000
+r3-zinit-zb formulafile=r3a.frm formulaname=zb maxiter=1000
+r3-zinit-zc formulafile=r3a.frm formulaname=zc maxiter=1000
+r3-zinit-zd formulafile=r3a.frm formulaname=zd maxiter=1000
+r3-zinit-ze formulafile=r3a.frm formulaname=ze maxiter=1000
+r3-zinit-zf formulafile=r3a.frm formulaname=zf maxiter=1000
+r3-zinit-zg formulafile=r3a.frm formulaname=zg maxiter=1000
+r3-zinit-zh formulafile=r3a.frm formulaname=zh maxiter=1000
+r3-zinit-zi formulafile=r3a.frm formulaname=zi maxiter=1000
+r3-zinit-zj formulafile=r3a.frm formulaname=zj maxiter=1000
+r3-zinit-zk formulafile=r3a.frm formulaname=zk maxiter=1000
+r3-zinit-zl formulafile=r3a.frm formulaname=zl maxiter=1000
+r3-zinit-zm formulafile=r3a.frm formulaname=zm maxiter=1000
+r3-zinit-zn formulafile=r3a.frm formulaname=zn maxiter=1000
+r3-bslash-bs1 formulafile=r3b.frm formulaname=bs1 maxiter=1000
+r3-bslash-bs2 formulafile=r3b.frm formulaname=bs2 maxiter=1000
+r3-bslash-bs3 formulafile=r3b.frm formulaname=bs3 maxiter=1000
+r3-jumps-if49 formulafile=r3c.frm formulaname=jp49 maxiter=1000
+r3-jumps-if50 formulafile=r3c.frm formulaname=jp50 maxiter=1000
+r3-jumps-if51 formulafile=r3c.frm formulaname=jp51 maxiter=1000
+r3-jumps-if99 formulafile=r3c.frm formulaname=jp99 maxiter=1000
+r3-jumps-if100 formulafile=r3c.frm formulaname=jp100 maxiter=1000
+r3-jumps-if101 formulafile=r3c.frm formulaname=jp101 maxiter=1000
+r3-jumps-ife33 formulafile=r3c.frm formulaname=je33 maxiter=1000
+r3-jumps-ife34 formulafile=r3c.frm formulaname=je34 maxiter=1000
+r3-jumps-ife66 formulafile=r3c.frm formulaname=je66 maxiter=1000
+r3-jumps-ife67 formulafile=r3c.frm formulaname=je67 maxiter=1000
+r3-store-sn formulafile=r3e.frm formulaname=sn maxiter=1000
+r3-store-s1 formulafile=r3e.frm formulaname=s1 maxiter=1000
+r3-store-s2 formulafile=r3e.frm formulaname=s2 maxiter=1000
+r3-store-s3 formulafile=r3e.frm formulaname=s3 maxiter=1000
+r3-store-s4 formulafile=r3e.frm formulaname=s4 maxiter=1000
+r3-store-s5 formulafile=r3e.frm formulaname=s5 maxiter=1000
+r3-store-sf1 formulafile=r3e.frm formulaname=sf1 maxiter=1000
+r3-store-sf2 formulafile=r3e.frm formulaname=sf2 maxiter=1000
+r3-store-sf3 formulafile=r3e.frm formulaname=sf3 maxiter=1000
+r3-store-sf4 formulafile=r3e.frm formulaname=sf4 maxiter=1000
+r3-store-s13 formulafile=r3e.frm formulaname=s13 maxiter=1000
+r3-store-spx formulafile=r3e.frm formulaname=spx maxiter=1000
+r3-store-srs formulafile=r3e.frm formulaname=srs maxiter=1000 maxiter=20
+r3-store-sws formulafile=r3e.frm formulaname=sws maxiter=1000
+r3-store-ssn formulafile=r3e.frm formulaname=ssn maxiter=1000
+r3-store-sab formulafile=r3e.frm formulaname=sab maxiter=1000
+r3-store-sp6 formulafile=r3e.frm formulaname=sp6 maxiter=1000
+r3-store-ssin formulafile=r3e.frm formulaname=ssin maxiter=1000
+r3-store-ssm formulafile=r3e.frm formulaname=ssm maxiter=1000
+r3-store-smi formulafile=r3e.frm formulaname=smi maxiter=1000
+r3-store-sis formulafile=r3e.frm formulaname=sis maxiter=1000
+r3-store-sce formulafile=r3e.frm formulaname=sce maxiter=1000
+r3-store-smx formulafile=r3e.frm formulaname=smx maxiter=1000
+r3-store-srk formulafile=r3e.frm formulaname=srk maxiter=1000
+r3-store-sls formulafile=r3e.frm formulaname=sls maxiter=1000
+r3-store-spi formulafile=r3e.frm formulaname=spi maxiter=1000
+r3-store-se formulafile=r3e.frm formulaname=se maxiter=1000
+r3-store-len18 formulafile=r3e.frm formulaname=n18abcdefghijklmno maxiter=1000
+r3-store-p2iter formulafile=r3e.frm formulaname=sit2 maxiter=1000
+r3-store-fnset formulafile=r3e.frm formulaname=sf1 maxiter=1000 function=cos/tan/exp/log
+r3-store-params formulafile=r3e.frm formulaname=s2 maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+r3-store-paramsnone formulafile=r3e.frm formulaname=sn maxiter=1000 params=1/2/3/4/5/6/7/8/9/10
+r3-pisym-ps-wide formulafile=r3d.frm formulaname=ps corners=-10/10/-7.5/7.5
+r3-pisym-pn-wide formulafile=r3d.frm formulaname=pn corners=-10/10/-7.5/7.5
+r3-pisym-pxy-wide formulafile=r3d.frm formulaname=pxy corners=-10/10/-7.5/7.5
+r3-pisym-qs-wide formulafile=r3d.frm formulaname=qs corners=-10/10/-7.5/7.5
+r3-pisym-qn-wide formulafile=r3d.frm formulaname=qn corners=-10/10/-7.5/7.5
+r3-pisym-ps-narrow formulafile=r3d.frm formulaname=ps corners=-1/1/-0.75/0.75
+r3-pisym-pn-narrow formulafile=r3d.frm formulaname=pn corners=-1/1/-0.75/0.75
+r3-pisym-pxy-narrow formulafile=r3d.frm formulaname=pxy corners=-1/1/-0.75/0.75
+r3-pisym-qs-narrow formulafile=r3d.frm formulaname=qs corners=-1/1/-0.75/0.75
+r3-pisym-qn-narrow formulafile=r3d.frm formulaname=qn corners=-1/1/-0.75/0.75
+r3-pisym-ps-off formulafile=r3d.frm formulaname=ps corners=-1/7/-3/3
+r3-pisym-pn-off formulafile=r3d.frm formulaname=pn corners=-1/7/-3/3
+r3-pisym-pxy-off formulafile=r3d.frm formulaname=pxy corners=-1/7/-3/3
+r3-pisym-qs-off formulafile=r3d.frm formulaname=qs corners=-1/7/-3/3
+r3-pisym-qn-off formulafile=r3d.frm formulaname=qn corners=-1/7/-3/3
+r3-longent-lg1 formulafile=r3g.frm formulaname=lg1 maxiter=1000
+r3-longent-lg2 formulafile=r3g.frm formulaname=lg2 maxiter=1000
+r3-longent-lg3 formulafile=r3g.frm formulaname=lg3 maxiter=1000
+r3-uminus-um1 formulafile=r3h.frm formulaname=um1 maxiter=1000
+r3-uminus-um2 formulafile=r3h.frm formulaname=um2 maxiter=1000
+r3-uminus-um3 formulafile=r3h.frm formulaname=um3 maxiter=1000
+r3-uminus-um4 formulafile=r3h.frm formulaname=um4 maxiter=1000
+r3-uminus-um5 formulafile=r3h.frm formulaname=um5 maxiter=1000
+r3-uminus-um6 formulafile=r3h.frm formulaname=um6 maxiter=1000
+r3-uminus-um7 formulafile=r3h.frm formulaname=um7 maxiter=1000
+r3-uminus-um8 formulafile=r3h.frm formulaname=um8 maxiter=1000
+r3-uminus-um9 formulafile=r3h.frm formulaname=um9 maxiter=1000
+r3-uminus-um10 formulafile=r3h.frm formulaname=um10 maxiter=1000
+r3-uminus-um11 formulafile=r3h.frm formulaname=um11 maxiter=1000
+r3-par-img1 @p1.par/img1
+r3-par-img2 @p1.par/img2
+r3-par-img3 @p1.par/img3
+r3-par-frmfile formulafile=p1.par formulaname=pq maxiter=1000
+r3-par-frmfile2 formulafile=p1.par formulaname=frm:pq maxiter=1000
+r3-par-frmfile3 formulafile=p1.par formulaname=pr maxiter=1000
+r3-par-cmdfile formulafile=p1.par @p1.par/img1
+# --- cases-e.txt -> e/
+e-er1 formulafile=e.frm formulaname=er1 maxiter=1000
+e-er2 formulafile=e.frm formulaname=er2 maxiter=1000
+e-er3 formulafile=e.frm formulaname=er3 maxiter=1000
+e-er4 formulafile=e.frm formulaname=er4 maxiter=1000
+e-er5 formulafile=e.frm formulaname=er5 maxiter=1000
+e-er6 formulafile=e.frm formulaname=er6 maxiter=1000
+e-er7 formulafile=e.frm formulaname=er7 maxiter=1000
+e-er8 formulafile=e.frm formulaname=er8 maxiter=1000
+e-er9 formulafile=e.frm formulaname=er9 maxiter=1000
+e-er10 formulafile=e.frm formulaname=er10 maxiter=1000
+e-er11 formulafile=e.frm formulaname=er11 maxiter=1000
+e-er12 formulafile=e.frm formulaname=er12 maxiter=1000
+e-er13 formulafile=e.frm formulaname=er13 maxiter=1000
+e-er14 formulafile=e.frm formulaname=er14 maxiter=1000
+e-er15 formulafile=e.frm formulaname=er15 maxiter=1000
+e-er16 formulafile=e.frm formulaname=er16 maxiter=1000
+e-er17 formulafile=e.frm formulaname=er17 maxiter=1000
+e-er18 formulafile=e.frm formulaname=er18 maxiter=1000
+e-er19 formulafile=e.frm formulaname=er19 maxiter=1000
+e-er20 formulafile=e.frm formulaname=er20 maxiter=1000
+e-er21 formulafile=e.frm formulaname=er21 maxiter=1000
+e-er22 formulafile=e.frm formulaname=er22 maxiter=1000
+e-er23 formulafile=e.frm formulaname=er23 maxiter=1000
+e-er24 formulafile=e.frm formulaname=er24 maxiter=1000
+e-er25 formulafile=e.frm formulaname=er25 maxiter=1000
+e-er26 formulafile=e.frm formulaname=er26 maxiter=1000
+e-er27 formulafile=e.frm formulaname=er27 maxiter=1000
+e-er28 formulafile=e.frm formulaname=er28 maxiter=1000
+e-er29 formulafile=e.frm formulaname=er29 maxiter=1000
+e-er30 formulafile=e.frm formulaname=er30 maxiter=1000
+e-er31 formulafile=e.frm formulaname=er31 maxiter=1000
+e-er32 formulafile=e.frm formulaname=er32 maxiter=1000
+e-er33 formulafile=e.frm formulaname=er33 maxiter=1000
+e-er34 formulafile=e.frm formulaname=er34 maxiter=1000
+e-er35 formulafile=e.frm formulaname=er35 maxiter=1000
+e-er36 formulafile=e.frm formulaname=er36 maxiter=1000
+e-er37 formulafile=e.frm formulaname=er37 maxiter=1000
+# --- cases-r4.txt -> r4/
+r4-it-ie1 formulafile=r4.frm formulaname=ie1
+r4-it-ie2 formulafile=r4.frm formulaname=ie2
+r4-it-ie3 formulafile=r4.frm formulaname=ie3
+r4-it-ie4 formulafile=r4.frm formulaname=ie4
+r4-it-ie5 formulafile=r4.frm formulaname=ie5
+r4-it-ie6 formulafile=r4.frm formulaname=ie6
+r4-par-img4 @p2.par/img4
+r4-par-img5 @p2.par/img5
+r4-par-img6 @p2.par/img6
+r4-par-img7 formulafile=s08.frm @p2.par/img7
+r4-par-img8 @p2.par/img8
+r4-par-img9 @p2.par/img9
+r4-par-img10 @p2.par/img10
+r4-par-img10f formulafile=a.frm @p2.par/img10
+r4-par-img5f formulafile=s01.frm @p2.par/img5
+# --- cases-q.txt -> q/
+q-q1 formulafile=q.frm formulaname=q1 maxiter=1000
+q-q2 formulafile=q.frm formulaname=q2 maxiter=1000
+q-q3 formulafile=q.frm formulaname=q3 maxiter=1000
+q-q4 formulafile=q.frm formulaname=q4 maxiter=1000
+q-q5 formulafile=q.frm formulaname=q5 maxiter=1000
+q-q6 formulafile=q.frm formulaname=q6 maxiter=1000
+q-q7 formulafile=q.frm formulaname=q7 maxiter=1000
+q-q8 formulafile=q.frm formulaname=q8 maxiter=1000
+q-q9 formulafile=q.frm formulaname=q9 maxiter=1000
+q-q10 formulafile=q.frm formulaname=q10 maxiter=1000
+q-q11 formulafile=q.frm formulaname=q11 maxiter=1000
+q-q12 formulafile=q.frm formulaname=q12 maxiter=1000
+q-q13 formulafile=q.frm formulaname=q13 maxiter=1000
+q-q14 formulafile=q.frm formulaname=q14 maxiter=1000
+q-q15 formulafile=q.frm formulaname=q15 maxiter=1000
+q-q16 formulafile=q.frm formulaname=q16 maxiter=1000
+q-q17 formulafile=q.frm formulaname=q17 maxiter=1000
+q-q18 formulafile=q.frm formulaname=q18 maxiter=1000
+q-q19 formulafile=q.frm formulaname=q19 maxiter=1000
+q-q20 formulafile=q.frm formulaname=q20 maxiter=1000
+# --- cases-v.txt -> v/
+v-v1 formulafile=v.frm formulaname=v1 maxiter=1000 corners=1/3/-1/1
+v-v2 formulafile=v.frm formulaname=v2 maxiter=1000 corners=-1/1/1/3
+v-v3 formulafile=v.frm formulaname=v3 maxiter=1000 center-mag=0/0/1/1/30/0
+v-v4 formulafile=v.frm formulaname=v4 maxiter=1000 center-mag=0/0/1/1/0/10
+v-v5 formulafile=v.frm formulaname=v5 maxiter=1000 maxiter=20
+v-v6 formulafile=v.frm formulaname=v6 maxiter=1000
+v-v7 formulafile=v.frm formulaname=v7 maxiter=1000
+v-v8 formulafile=v.frm formulaname=v8 maxiter=1000 params=1/2
+v-v9 formulafile=v.frm formulaname=v9 maxiter=1000 center-mag=0/0/2/3
+v-v10 formulafile=v.frm formulaname=v10 maxiter=1000
+v-v11 formulafile=v.frm formulaname=v11 maxiter=1000
+v-v12 formulafile=v.frm formulaname=v12 maxiter=1000
+v-v13 formulafile=v.frm formulaname=v13 maxiter=1000
+v-v14 formulafile=v.frm formulaname=v14 maxiter=1000 ismand=no
+v-v15 formulafile=v.frm formulaname=v15 maxiter=1000 maxiter=40
+v-v16 formulafile=v.frm formulaname=v16 maxiter=1000
+v-v17 formulafile=v.frm formulaname=v17 maxiter=1000
+v-v18 formulafile=v.frm formulaname=v18 maxiter=1000
+v-v19 formulafile=v.frm formulaname=v19 maxiter=1000 params=1/2/3/4/5/6/7/8/9/10/11/12
+v-v20 formulafile=v.frm formulaname=v20 maxiter=1000
+# --- cases-r5.txt -> r5/
+r5-lastsqr1 formulafile=r5.frm formulaname=ls1 maxiter=1000
+r5-lastsqr2 formulafile=r5.frm formulaname=ls2 maxiter=1000
+r5-fallback-par formulafile=zz.frm formulaname=pr maxiter=1000
+r5-fallback-frm formulafile=zz.frm formulaname=ls1 maxiter=1000
+# --- cases-r6.txt -> r6/
+r6-brk-full formulafile=r6.frm formulaname=x[y maxiter=1000
+r6-brk-short formulafile=r6.frm formulaname=x maxiter=1000
+r6-brk2-full formulafile=r6.frm formulaname=w[1] maxiter=1000
+r6-brk2-short formulafile=r6.frm formulaname=w maxiter=1000
+r6-eq-full formulafile=r6.frm formulaname=v=w maxiter=1000
+r6-eq-short formulafile=r6.frm formulaname=v maxiter=1000
+r6-paren formulafile=r6.frm formulaname=u maxiter=1000
+r6-symjunk formulafile=r6.frm formulaname=t maxiter=1000
+r6-junksym formulafile=r6.frm formulaname=s maxiter=1000
+# --- cases-w.txt -> w/
+w-w1 formulafile=w.frm formulaname=w1 maxiter=1000
+w-w2 formulafile=w.frm formulaname=w2 maxiter=1000
+w-w3 formulafile=w.frm formulaname=w3 maxiter=1000
+w-w4 formulafile=w.frm formulaname=w4 maxiter=1000
+w-w5 formulafile=w.frm formulaname=w5 maxiter=1000
+w-w6 formulafile=w.frm formulaname=w6 maxiter=1000
+w-w7 formulafile=w.frm formulaname=w7 maxiter=1000
+w-w8 formulafile=w.frm formulaname=w8 maxiter=1000
+w-w9 formulafile=w.frm formulaname=w9 maxiter=1000
+w-w10 formulafile=w.frm formulaname=w10 maxiter=1000

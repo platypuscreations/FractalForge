@@ -32,6 +32,7 @@ minimum-system-version = "11.0"
 fractalforge-core.workspace = true
 fractalforge-render.workspace = true
 fractalforge-formats.workspace = true
+fractalforge-formula.workspace = true
 eframe.workspace = true
 # Defaults off: the title-text decoration feature pulls in an unmaintained
 # font parser. Wayland windows get frames without title text instead.

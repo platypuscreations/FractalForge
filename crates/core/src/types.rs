@@ -21,12 +21,17 @@ pub enum Symmetry {
     None,
     /// Rows below the real axis are copies of rows above it.
     XAxis,
+    /// Columns right of the imaginary axis are copies of columns left of it.
+    YAxis,
     /// Rows and columns are copied independently about the real and
     /// imaginary axes.
     XY,
     /// Pixels below the real axis are copies of the pixel reflected through
     /// the origin.
     Origin,
+    /// Origin mirroring plus copies one period of π apart along x
+    /// (formula qualifier PI_SYM, frm-semantics.md §6.2).
+    Pi,
 }
 
 /// Returns the colour value of one point (see the module docs).
@@ -57,6 +62,8 @@ pub struct FractalType {
     /// Supports the inside/outside/decomp/biomorph options (otherwise only
     /// the default colouring).
     pub orbit_coloring: bool,
+    /// Defined by [`Params::program`] (formulas).
+    pub needs_program: bool,
 }
 
 impl fmt::Debug for FractalType {
@@ -376,6 +383,7 @@ const fn std_type(
         resumable: true,
         fractint_number: Some(number),
         orbit_coloring: false,
+        needs_program: false,
     }
 }
 
@@ -573,7 +581,49 @@ pub static MANDPHOENIX: FractalType = std_type(
     sym_none,
 );
 
-static ALL: [&FractalType; 17] = [
+/// Programs are called through [`crate::color::program_value`], which
+/// supplies the pixel position and carried state.
+fn program_iterate(_: Complex, _: &Params) -> u32 {
+    INSIDE
+}
+
+fn program_symmetry(p: &Params) -> Symmetry {
+    p.program
+        .as_ref()
+        .map_or(Symmetry::None, |prog| prog.0.symmetry(p))
+}
+
+/// A Fractint-format formula; the program comes from a `.frm` file.
+pub static FORMULA: FractalType = FractalType {
+    needs_program: true,
+    // The formula's own condition decides (frm-semantics.md §1.6).
+    uses_bailout: false,
+    // The program applies the colouring options itself.
+    orbit_coloring: true,
+    ..std_type(
+        "formula",
+        73,
+        "A formula from a .frm file",
+        STD_WINDOW,
+        [0.0; 4],
+        &[
+            "p1 (real)",
+            "p1 (imaginary)",
+            "p2 (real)",
+            "p2 (imaginary)",
+            "p3 (real)",
+            "p3 (imaginary)",
+            "p4 (real)",
+            "p4 (imaginary)",
+            "p5 (real)",
+            "p5 (imaginary)",
+        ],
+        program_iterate,
+        program_symmetry,
+    )
+};
+
+static ALL: [&FractalType; 18] = [
     &MANDEL,
     &JULIA,
     &LAMBDA,
@@ -591,6 +641,7 @@ static ALL: [&FractalType; 17] = [
     &NEWTBASIN,
     &PHOENIX,
     &MANDPHOENIX,
+    &FORMULA,
 ];
 
 pub fn all() -> &'static [&'static FractalType] {
@@ -637,7 +688,7 @@ mod tests {
     #[test]
     fn julia_known_points() {
         let mut p = Params::new(&JULIA);
-        p.params = [0.0; 4];
+        p.params = [0.0; 10];
         assert_eq!(at(&JULIA, &p, 0.5, 0.5), INSIDE);
         assert_eq!(at(&JULIA, &p, 3.0, 0.0), 1);
         // 1.1 → 1.21, 1.4641, 2.1436 (|z|² 4.6): n = 3 → value 2.
@@ -648,7 +699,7 @@ mod tests {
     fn escape_types_colour_by_first_escaping_iterate() {
         // lambda with λ = 1: z → z(1 − z). From 3: −6 → e = 1.
         let mut p = Params::new(&LAMBDA);
-        p.params = [1.0, 0.0, 0.0, 0.0];
+        p.params[..2].copy_from_slice(&[1.0, 0.0]);
         assert_eq!(at(&LAMBDA, &p, 3.0, 0.0), 1);
         // mandel4 from z0 = c = 1.2: 1.2⁴ + 1.2 = 3.27 (|z|² 10.7) → e = 1.
         let p = Params::new(&MANDEL4);
@@ -695,11 +746,11 @@ mod tests {
 
     #[test]
     fn registry() {
-        assert_eq!(all().len(), 17);
+        assert_eq!(all().len(), 18);
         for t in all() {
             assert_eq!(lookup(t.name), Some(*t));
             assert_eq!(by_fractint_number(t.fractint_number.unwrap()), Some(*t));
-            Params::new(t).validate().unwrap();
+            assert_eq!(Params::new(t).validate().is_ok(), !t.needs_program);
         }
         assert_eq!(lookup("Mandel"), Some(&MANDEL));
         assert_eq!(lookup("nope"), None);

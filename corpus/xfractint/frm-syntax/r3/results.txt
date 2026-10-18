@@ -1,0 +1,97 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# python3 -I tools/blackbox/frm-syntax/summarise.py on round r3 (cases-r3.txt)
+r3-bslash-bs1              740c5da2 [(1, 120000)] t=73 sym=999 003='bs1' f40..=48:1 STOPMSG: Error(0) at line 3:  Should be an Argument |   +3 |   ^
+r3-bslash-bs2              e75556eb [(104, 120000)] t=73 sym=999 003='bs2' f40..=48:1
+r3-bslash-bs3              6e70fbb3 [(105, 120000)] t=73 sym=999 003='bs3' f40..=48:1
+r3-jumps-if100             740c5da2 [(1, 120000)] t=73 sym=999 003='jp100' f40..=48:1 STOPMSG: Error(23) at line 305:  Formula has too many jump commands |   real(z)<=real(k) |                   ^
+r3-jumps-if101             740c5da2 [(1, 120000)] t=73 sym=999 003='jp101' f40..=48:1 STOPMSG: Error(23) at line 308:  Formula has too many jump commands |   real(z)<=real(k) |                   ^
+r3-jumps-if49              f42ad54a [(150, 120000)] t=73 sym=999 003='jp49' f40..=48:1 LOG: munmap_chunk(): invalid pointer qemu: uncaught target signal 6 (Aborted) - core dumped /usr/local/bin/run-batch: line 23:    21 Aborted                 /usr/bin/xfractint batch=yes "$@" (exit status 134)
+r3-jumps-if50              5f91397a [(151, 120000)] t=73 sym=999 003='jp50' f40..=48:1 LOG: munmap_chunk(): invalid pointer qemu: uncaught target signal 6 (Aborted) - core dumped /usr/local/bin/run-batch: line 23:    24 Aborted                 /usr/bin/xfractint batch=yes "$@" (exit status 134)
+r3-jumps-if51              f55581ac [(152, 120000)] t=73 sym=999 003='jp51' f40..=48:1 LOG: munmap_chunk(): invalid pointer qemu: uncaught target signal 6 (Aborted) - core dumped /usr/local/bin/run-batch: line 23:    18 Aborted                 /usr/bin/xfractint batch=yes "$@" (exit status 134)
+r3-jumps-if99              NOIMAGE LOG: qemu: uncaught target signal 11 (Segmentation fault) - core dumped /usr/local/bin/run-batch: line 23:    21 Segmentation fault      /usr/bin/xfractint batch=yes "$@" (exit status 139)
+r3-jumps-ife33             810f2b59 [(134, 120000)] t=73 sym=999 003='je33' f40..=48:1 LOG: free(): invalid pointer qemu: uncaught target signal 6 (Aborted) - core dumped /usr/local/bin/run-batch: line 23:    18 Aborted                 /usr/bin/xfractint batch=yes "$@" (exit status 134)
+r3-jumps-ife34             ef2fcbb0 [(135, 120000)] t=73 sym=999 003='je34' f40..=48:1 LOG: free(): invalid pointer qemu: uncaught target signal 6 (Aborted) - core dumped /usr/local/bin/run-batch: line 23:    18 Aborted                 /usr/bin/xfractint batch=yes "$@" (exit status 134)
+r3-jumps-ife66             NOIMAGE LOG: qemu: uncaught target signal 11 (Segmentation fault) - core dumped /usr/local/bin/run-batch: line 23:    21 Segmentation fault      /usr/bin/xfractint batch=yes "$@" (exit status 139)
+r3-jumps-ife67             740c5da2 [(1, 120000)] t=73 sym=999 003='je67' f40..=48:1 STOPMSG: Error(23) at line 340:  Formula has too many jump commands |   real(z)<=real(k) |                   ^
+r3-longent-lg1             b2550cd3 [(72, 120000)] t=73 sym=999 003='lg1' f40..=48:1
+r3-longent-lg2             a3337df6 [(73, 120000)] t=73 sym=999 003='lg2' f40..=48:1
+r3-longent-lg3             e00b063a [(74, 120000)] t=73 sym=999 003='lg3' f40..=48:1
+r3-par-cmdfile             6c4ec117 [(31, 120000)] t=73 sym=999 003='pq' f40..=48:1
+r3-par-frmfile             740c5da2 [(1, 120000)] t=73 sym=999 003='pq' f40..=48:1 STOPMSG: 'pq' file entry item not found | Could not open file where formula located
+r3-par-frmfile2            6c4ec117 [(31, 120000)] t=73 sym=999 003='frm:pq' f40..=48:1
+r3-par-frmfile3            e44914e0 [(32, 120000)] t=73 sym=999 003='pr' f40..=48:1
+r3-par-img1                6c4ec117 [(31, 120000)] t=73 sym=999 003='pq' f40..=48:1
+r3-par-img2                6c4ec117 [(31, 120000)] t=73 sym=999 003='pq' f40..=48:1
+r3-par-img3                740c5da2 [(1, 120000)] t=73 sym=999 003='frm:pq' f40..=48:1 STOPMSG: 'frm:pq' file entry item not found | Could not open file where formula located
+r3-pisym-pn-narrow         7dea662b [(0, 77532), (2, 10449), (3, 8811), (4, 5532)] t=73 sym=999 003='pn' f40..=48:1
+r3-pisym-pn-off            8fe89a3f [(1, 106425), (0, 5403), (2, 3535), (3, 1502)] t=73 sym=999 003='pn' f40..=48:1
+r3-pisym-pn-wide           ff094b3d [(1, 117500), (0, 890), (2, 753), (3, 314)] t=73 sym=999 003='pn' f40..=48:1
+r3-pisym-ps-narrow         7995c890 [(0, 98344), (3, 5552), (4, 5492), (5, 3324)] t=73 sym=999 003='ps' f40..=48:1
+r3-pisym-ps-off            ad1b49e2 [(1, 107102), (0, 6660), (2, 3642), (3, 1194)] t=73 sym=999 003='ps' f40..=48:1
+r3-pisym-ps-wide           740c5da2 [(1, 120000)] t=73 sym=999 003='ps' f40..=48:1
+r3-pisym-pxy-narrow        7995c890 [(0, 98344), (3, 5552), (4, 5492), (5, 3324)] t=73 sym=999 003='pxy' f40..=48:1
+r3-pisym-pxy-off           a3eb777f [(1, 107864), (0, 6660), (2, 2880), (3, 1194)] t=73 sym=999 003='pxy' f40..=48:1
+r3-pisym-pxy-wide          8c8c18ce [(1, 117600), (0, 1076), (2, 792), (3, 304)] t=73 sym=999 003='pxy' f40..=48:1
+r3-pisym-qn-narrow         5687b8d9 [(0, 58485), (2, 17166), (3, 12563), (4, 8024)] t=73 sym=999 003='qn' f40..=48:1
+r3-pisym-qn-off            ef16d36f [(1, 80734), (0, 13303), (2, 10727), (3, 6441)] t=73 sym=999 003='qn' f40..=48:1
+r3-pisym-qn-wide           22c32842 [(1, 104699), (0, 4887), (2, 4580), (3, 2628)] t=73 sym=999 003='qn' f40..=48:1
+r3-pisym-qs-narrow         9a29c24d [(0, 92852), (5, 7448), (6, 5444), (7, 3316)] t=73 sym=999 003='qs' f40..=48:1
+r3-pisym-qs-off            93a5904e [(1, 83063), (0, 15533), (2, 11100), (3, 3131)] t=73 sym=999 003='qs' f40..=48:1
+r3-pisym-qs-wide           31b898af [(1, 102188), (0, 5756), (3, 3628), (2, 3328)] t=73 sym=999 003='qs' f40..=48:1
+r3-store-fnset             cf621e79 [(6, 120000)] t=73 sym=999 003='sf1' f40..=48:1
+r3-store-len18             cf621e79 [(6, 120000)] t=73 sym=999 003='n18abcdefghijklmno' f40..=42:1,48:1
+r3-store-p2iter            cf621e79 [(6, 120000)] t=73 sym=999 003='sit2' f40..=42:1,48:1
+r3-store-params            cf621e79 [(6, 120000)] t=73 sym=999 003='s2' f40..=42:1,48:1
+r3-store-paramsnone        cf621e79 [(6, 120000)] t=73 sym=999 003='sn' f40..=48:1
+r3-store-s1                cf621e79 [(6, 120000)] t=73 sym=999 003='s1' f40..=40:1,48:1
+r3-store-s13               cf621e79 [(6, 120000)] t=73 sym=999 003='s13' f40..=40:1,44:1,48:1
+r3-store-s2                cf621e79 [(6, 120000)] t=73 sym=999 003='s2' f40..=42:1,48:1
+r3-store-s3                cf621e79 [(6, 120000)] t=73 sym=999 003='s3' f40..=44:1,48:1
+r3-store-s4                cf621e79 [(6, 120000)] t=73 sym=999 003='s4' f40..=48:1,50:1
+r3-store-s5                cf621e79 [(6, 120000)] t=73 sym=999 003='s5' f40..=48:1,52:1
+r3-store-sab               cf621e79 [(6, 120000)] t=73 sym=999 003='sab' f40..=40:1,48:1
+r3-store-sce               cf621e79 [(6, 120000)] t=73 sym=999 003='sce' f40..=48:1
+r3-store-se                cf621e79 [(6, 120000)] t=73 sym=999 003='se' f40..=48:1
+r3-store-sf1               cf621e79 [(6, 120000)] t=73 sym=999 003='sf1' f40..=48:1
+r3-store-sf2               cf621e79 [(6, 120000)] t=73 sym=999 003='sf2' f40..=48:1
+r3-store-sf3               cf621e79 [(6, 120000)] t=73 sym=999 003='sf3' f40..=48:1
+r3-store-sf4               cf621e79 [(6, 120000)] t=73 sym=999 003='sf4' f40..=48:1
+r3-store-sis               cf621e79 [(6, 120000)] t=73 sym=999 003='sis' f40..=46:1,48:1
+r3-store-sls               cf621e79 [(6, 120000)] t=73 sym=999 003='sls' f40..=48:1
+r3-store-smi               cf621e79 [(6, 120000)] t=73 sym=999 003='smi' f40..=48:1
+r3-store-smx               cf621e79 [(6, 120000)] t=73 sym=999 003='smx' f40..=48:1
+r3-store-sn                cf621e79 [(6, 120000)] t=73 sym=999 003='sn' f40..=48:1
+r3-store-sp6               cf621e79 [(6, 120000)] t=73 sym=999 003='sp6' f40..=48:1
+r3-store-spi               cf621e79 [(6, 120000)] t=73 sym=999 003='spi' f40..=48:1
+r3-store-spx               cf621e79 [(6, 120000)] t=73 sym=999 003='spx' f40..=48:1
+r3-store-srk               cf621e79 [(6, 120000)] t=73 sym=999 003='srk' f40..=48:1
+r3-store-srs               cf621e79 [(6, 120000)] t=73 sym=999 003='srs' f40..=48:1
+r3-store-ssin              cf621e79 [(6, 120000)] t=73 sym=999 003='ssin' f40..=48:1
+r3-store-ssm               cf621e79 [(6, 120000)] t=73 sym=999 003='ssm' f40..=48:1
+r3-store-ssn               cf621e79 [(6, 120000)] t=73 sym=999 003='ssn' f40..=48:1
+r3-store-sws               cf621e79 [(6, 120000)] t=73 sym=999 003='sws' f40..=48:1
+r3-uminus-um1              490179e0 [(131, 120000)] t=73 sym=999 003='um1' f40..=48:1
+r3-uminus-um10             0a56cfaf [(41, 120000)] t=73 sym=999 003='um10' f40..=48:1
+r3-uminus-um11             a7c56294 [(101, 120000)] t=73 sym=999 003='um11' f40..=48:1
+r3-uminus-um2              95fcf5b3 [(51, 120000)] t=73 sym=999 003='um2' f40..=48:1
+r3-uminus-um3              a7c56294 [(101, 120000)] t=73 sym=999 003='um3' f40..=48:1
+r3-uminus-um4              740c5da2 [(1, 120000)] t=73 sym=999 003='um4' f40..=48:1
+r3-uminus-um5              740c5da2 [(1, 120000)] t=73 sym=999 003='um5' f40..=48:1
+r3-uminus-um6              740c5da2 [(1, 120000)] t=73 sym=999 003='um6' f40..=48:1
+r3-uminus-um7              f5a7b64c [(111, 120000)] t=73 sym=999 003='um7' f40..=48:1
+r3-uminus-um8              f5a7b64c [(111, 120000)] t=73 sym=999 003='um8' f40..=48:1
+r3-uminus-um9              a7c56294 [(101, 120000)] t=73 sym=999 003='um9' f40..=48:1
+r3-zinit-za                490179e0 [(131, 120000)] t=73 sym=999 003='za' f40..=48:1
+r3-zinit-zb                490179e0 [(131, 120000)] t=73 sym=999 003='zb' f40..=48:1
+r3-zinit-zc                490179e0 [(131, 120000)] t=73 sym=999 003='zc' f40..=48:1
+r3-zinit-zd                5f91397a [(151, 120000)] t=73 sym=999 003='zd' f40..=48:1
+r3-zinit-ze                490179e0 [(131, 120000)] t=73 sym=999 003='ze' f40..=48:1
+r3-zinit-zf                9d0c89e8 [(171, 120000)] t=73 sym=999 003='zf' f40..=48:1
+r3-zinit-zg                749d154b [(81, 3000), (82, 3000), (83, 3000), (84, 3000)] t=73 sym=999 003='zg' f40..=48:1
+r3-zinit-zh                490179e0 [(131, 120000)] t=73 sym=999 003='zh' f40..=48:1
+r3-zinit-zi                490179e0 [(131, 120000)] t=73 sym=999 003='zi' f40..=48:1
+r3-zinit-zj                490179e0 [(131, 120000)] t=73 sym=999 003='zj' f40..=48:1
+r3-zinit-zk                a7c56294 [(101, 120000)] t=73 sym=999 003='zk' f40..=48:1
+r3-zinit-zl                490179e0 [(131, 120000)] t=73 sym=999 003='zl' f40..=48:1
+r3-zinit-zm                490179e0 [(131, 120000)] t=73 sym=999 003='zm' f40..=48:1
+r3-zinit-zn                490179e0 [(131, 120000)] t=73 sym=999 003='zn' f40..=48:1

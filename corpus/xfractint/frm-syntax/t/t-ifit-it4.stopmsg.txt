@@ -1,0 +1,8 @@
+
+Error(20) at line 3:  "if()" in initialization has no matching "endif"
+  if(1)
+       ^
+Error(18) at line 5:  "endif" has no matching "if"
+  endif
+  ^^^^^
+

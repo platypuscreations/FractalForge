@@ -1,0 +1,5 @@
+
+Error(34) at line 3:  Only one ":" permitted in a formula
+  z=z+1:
+       ^
+

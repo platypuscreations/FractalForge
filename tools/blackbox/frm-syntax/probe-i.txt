@@ -1,0 +1,51 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Identifier, reserved-name and control-flow probes: name<TAB>init<TAB>extra args.
+id1	abc_1 = 5, k = 100 + abc_1
+id2	_a = 5, k = 100 + _a
+id3	a1b2 = 5, k = 100 + a1b2
+id4	Ab = 5, k = 100 + aB
+id5	abcdefghijklmnopqrstuvwxyzabcdefgx = 5, abcdefghijklmnopqrstuvwxyzabcdefgy = 7, k = 100 + abcdefghijklmnopqrstuvwxyzabcdefgx
+id6	abcdefghijklmnopqrstuvwxyzabcdex = 5, abcdefghijklmnopqrstuvwxyzabcdey = 7, k = 100 + abcdefghijklmnopqrstuvwxyzabcdex
+id7	abcdefghijklmnopx = 5, abcdefghijklmnopy = 7, k = 100 + abcdefghijklmnopx
+id8	a.b = 5, k = 100 + a.b
+id9	a$ = 5, k = 100 + a$
+id10	k = 100 + qq
+id11	k = 100 + real(qq) + 10 * imag(qq)
+id12	Z = 5, k = 100 + real(Z)
+id13	K = 105
+id14	a = 5, A = 7, k = 100 + a
+id15	abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz = 5, k = 100 + abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz
+if1	k = 100\nif (1)\nk = 105\nendif
+if2	k = 100\nif (0)\nk = 105\nendif
+if3	k = 100\nif (0)\nk = 105\nelse\nk = 106\nendif
+if4	k = 100\nif (0)\nk = 105\nelseif (1)\nk = 107\nelse\nk = 106\nendif
+if5	k = 100, if (1), k = 105, endif
+if6	k = 100\nif 1\nk = 105\nendif
+if7	k = 100\nIF (1)\nk = 105\nENDIF
+if8	k = 100\nif (1) k = 105\nendif
+if9	k = 100\nif (1)\nk = 105
+if10	k = 100\nendif
+if11	k = 100\nif (1)\nk = 105\nelse\nk = 106\nelse\nk = 107\nendif
+if12	k = 100\nif (1)\nif (0)\nk = 105\nelse\nk = 108\nendif\nendif
+if13	k = 100\nif (1)\nelse\nk = 106\nendif
+if14	k = 100\nif ()\nk = 105\nendif
+if15	k = 100\nif (1 < 2 && 3 > 4)\nk = 105\nelse\nk = 109\nendif
+if16	k = 100\nif (0)\nk = 105\nelse if (1)\nk = 107\nendif
+if17	k = 100\nif (0)\nk = 105\nelseif (0)\nk = 107\nelseif (1)\nk = 111\nendif
+if18	k = 100\nif (1)\nk = 105\nend if
+if19	k = 100\nif (1), endif
+if20	k = 100\nif (j = 1)\nk = 105\nendif
+if21	k = 100\nif ((0,1))\nk = 105\nendif
+if22	k = 100\nif (1) then\nk = 105\nendif
+if23	k = 100\nelse\nendif
+if24	k = 100\nif (1)\nk = 105\nendif (1)
+if25	k = 100\nif (0)\nk = 105\nelse (1)\nk = 106\nendif
+if26	k = 100\nendif = 5
+if27	if = 5, k = 100 + if
+if28	k = 100\nif(0)\nk = 105\nelseif(0)\nk = 107\nendif
+if29	k = 100\nwhile (1)\nk = 105\nendwhile
+if30	k = 100\nif (0.5)\nk = 105\nendif
+if31	k = 100\nif (-1)\nk = 105\nendif
+if32	k = 100\nif ((0,0))\nk = 105\nendif
+if33	k = 100\nif (1)\nk = 105\nelseif (1)\nk = 107\nendif
+if34	k = 100\nelseif (1)\nendif

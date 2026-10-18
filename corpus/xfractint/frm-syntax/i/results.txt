@@ -1,0 +1,51 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# python3 -I tools/blackbox/frm-syntax/summarise.py on round i (cases-i.txt)
+i-id1                      c11b4b59 [(106, 120000)] t=73 sym=999 003='id1' f40..=48:1
+i-id10                     a7c56294 [(101, 120000)] t=73 sym=999 003='id10' f40..=48:1
+i-id11                     a7c56294 [(101, 120000)] t=73 sym=999 003='id11' f40..=48:1
+i-id12                     a7c56294 [(101, 120000)] t=73 sym=999 003='id12' f40..=48:1
+i-id13                     c11b4b59 [(106, 120000)] t=73 sym=999 003='id13' f40..=48:1
+i-id14                     958db946 [(108, 120000)] t=73 sym=999 003='id14' f40..=48:1
+i-id15                     740c5da2 [(1, 120000)] t=73 sym=999 003='id15' f40..=48:1 STOPMSG: Error(33) at line 2:  Variable or constant exceeds 32 character limit |   abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuv |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ | Error(33) at line 2:  Variable or constant exceeds 32 character limit |   abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuv |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+i-id2                      c11b4b59 [(106, 120000)] t=73 sym=999 003='id2' f40..=48:1
+i-id3                      c11b4b59 [(106, 120000)] t=73 sym=999 003='id3' f40..=48:1
+i-id4                      c11b4b59 [(106, 120000)] t=73 sym=999 003='id4' f40..=48:1
+i-id5                      740c5da2 [(1, 120000)] t=73 sym=999 003='id5' f40..=48:1 STOPMSG: Error(33) at line 2:  Variable or constant exceeds 32 character limit |   abcdefghijklmnopqrstuvwxyzabcdefgx=5 |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ | Error(33) at line 2:  Variable or constant exceeds 32 character limit |   abcdefghijklmnopqrstuvwxyzabcdefgy=7 |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ | Error(33) at line 2:  Variable or constant exceeds 32 character limit |   k=100+abcdefghijklmnopqrstuvwxyzabcdefgx |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+i-id6                      c11b4b59 [(106, 120000)] t=73 sym=999 003='id6' f40..=48:1
+i-id7                      c11b4b59 [(106, 120000)] t=73 sym=999 003='id7' f40..=48:1
+i-id8                      740c5da2 [(1, 120000)] t=73 sym=999 003='id8' f40..=48:1 STOPMSG: Error(26) at line 2:  Illegal variable name |   a.b=5 |   ^^ | Error(26) at line 2:  Illegal variable name |   k=100+a.b |         ^^
+i-id9                      740c5da2 [(1, 120000)] t=73 sym=999 003='id9' f40..=48:1 STOPMSG: Error(28) at line 2:  This character not supported by parser |   a$=5 |    ^ | Error(28) at line 2:  This character not supported by parser |   k=100+a$ |          ^
+i-if1                      c11b4b59 [(106, 120000)] t=73 sym=999 003='if1' f40..=48:1
+i-if10                     740c5da2 [(1, 120000)] t=73 sym=999 003='if10' f40..=48:1 STOPMSG: Error(18) at line 3:  "endif" has no matching "if" |   endif |   ^^^^^
+i-if11                     740c5da2 [(1, 120000)] t=73 sym=999 003='if11' f40..=48:1 STOPMSG: Error(17) at line 7:  Next jump after "else" must be "endif" |   else |   ^^^^
+i-if12                     97c9c3aa [(109, 120000)] t=73 sym=999 003='if12' f40..=48:1
+i-if13                     a7c56294 [(101, 120000)] t=73 sym=999 003='if13' f40..=48:1
+i-if14                     740c5da2 [(1, 120000)] t=73 sym=999 003='if14' f40..=48:1 STOPMSG: Error(0) at line 3:  Should be an Argument |   if() |      ^
+i-if15                     c2fe6c03 [(110, 120000)] t=73 sym=999 003='if15' f40..=48:1
+i-if16                     958db946 [(108, 120000)] t=73 sym=999 003='if16' f40..=48:1
+i-if17                     203d6932 [(112, 120000)] t=73 sym=999 003='if17' f40..=48:1
+i-if18                     c11b4b59 [(106, 120000)] t=73 sym=999 003='if18' f40..=48:1
+i-if19                     a7c56294 [(101, 120000)] t=73 sym=999 003='if19' f40..=48:1
+i-if2                      a7c56294 [(101, 120000)] t=73 sym=999 003='if2' f40..=48:1
+i-if20                     740c5da2 [(1, 120000)] t=73 sym=999 003='if20' f40..=48:1 STOPMSG: Error(25) at line 3:  Only variables are allowed to left of assignment |   if(j=1) |       ^
+i-if21                     a7c56294 [(101, 120000)] t=73 sym=999 003='if21' f40..=48:1
+i-if22                     740c5da2 [(1, 120000)] t=73 sym=999 003='if22' f40..=48:1 STOPMSG: Error(1) at line 3:  Should be an Operator |   if(1)then |        ^^^^
+i-if23                     740c5da2 [(1, 120000)] t=73 sym=999 003='if23' f40..=48:1 STOPMSG: Error(19) at line 3:  Misplaced "else" or "elseif()" |   else |   ^^^^ | Error(18) at line 4:  "endif" has no matching "if" |   endif |   ^^^^^
+i-if24                     740c5da2 [(1, 120000)] t=73 sym=999 003='if24' f40..=48:1 STOPMSG: Error(15) at line 5:  No characters may follow this jump instruction |   endif(1) |   ^^^^^
+i-if25                     740c5da2 [(1, 120000)] t=73 sym=999 003='if25' f40..=48:1 STOPMSG: Error(15) at line 5:  No characters may follow this jump instruction |   else(1) |   ^^^^
+i-if26                     740c5da2 [(1, 120000)] t=73 sym=999 003='if26' f40..=48:1 STOPMSG: Error(15) at line 3:  No characters may follow this jump instruction |   endif=5 |   ^^^^^
+i-if27                     740c5da2 [(1, 120000)] t=73 sym=999 003='if27' f40..=48:1 STOPMSG: Error(16) at line 2:  Jump instruction missing required (boolean argument) |   if=5 |   ^^ | Error(16) at line 2:  Jump instruction missing required (boolean argument) |   k=100+if |         ^^
+i-if28                     a7c56294 [(101, 120000)] t=73 sym=999 003='if28' f40..=48:1
+i-if29                     740c5da2 [(1, 120000)] t=73 sym=999 003='if29' f40..=48:1 STOPMSG: Error(5) at line 3:  Undefined Function |   while(1) |   ^^^^^
+i-if3                      2baf7a8d [(107, 120000)] t=73 sym=999 003='if3' f40..=48:1
+i-if30                     c11b4b59 [(106, 120000)] t=73 sym=999 003='if30' f40..=48:1
+i-if31                     c11b4b59 [(106, 120000)] t=73 sym=999 003='if31' f40..=48:1
+i-if32                     a7c56294 [(101, 120000)] t=73 sym=999 003='if32' f40..=48:1
+i-if33                     c11b4b59 [(106, 120000)] t=73 sym=999 003='if33' f40..=48:1
+i-if34                     740c5da2 [(1, 120000)] t=73 sym=999 003='if34' f40..=48:1 STOPMSG: Error(19) at line 3:  Misplaced "else" or "elseif()" |   elseif(1) |   ^^^^^^ | Error(18) at line 4:  "endif" has no matching "if" |   endif |   ^^^^^
+i-if4                      958db946 [(108, 120000)] t=73 sym=999 003='if4' f40..=48:1
+i-if5                      c11b4b59 [(106, 120000)] t=73 sym=999 003='if5' f40..=48:1
+i-if6                      740c5da2 [(1, 120000)] t=73 sym=999 003='if6' f40..=48:1 STOPMSG: Error(18) at line 5:  "endif" has no matching "if" |   endif |   ^^^^^
+i-if7                      c11b4b59 [(106, 120000)] t=73 sym=999 003='if7' f40..=48:1
+i-if8                      740c5da2 [(1, 120000)] t=73 sym=999 003='if8' f40..=48:1 STOPMSG: Error(1) at line 3:  Should be an Operator |   if(1)k=105 |        ^
+i-if9                      740c5da2 [(1, 120000)] t=73 sym=999 003='if9' f40..=48:1 STOPMSG: Error(20) at line 4:  "if()" in initialization has no matching "endif" |   k=105 |        ^

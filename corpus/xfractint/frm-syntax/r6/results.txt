@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# python3 -I tools/blackbox/frm-syntax/summarise.py on round r6 (cases-r6.txt)
+r6-brk-full                740c5da2 [(1, 120000)] t=73 sym=999 003='x[y' f40..=48:1 STOPMSG: 'x[y' file entry item not found | Could not open file where formula located
+r6-brk-short               382ce746 [(61, 120000)] t=73 sym=999 003='x' f40..=48:1
+r6-brk2-full               740c5da2 [(1, 120000)] t=73 sym=999 003='w[1]' f40..=48:1 STOPMSG: 'w[1]' file entry item not found | Could not open file where formula located
+r6-brk2-short              f36fadf8 [(62, 120000)] t=73 sym=999 003='w' f40..=48:1
+r6-eq-full                 a8156f3a [(63, 120000)] t=73 sym=999 003='v=w' f40..=48:1
+r6-eq-short                740c5da2 [(1, 120000)] t=73 sym=999 003='v' f40..=48:1 STOPMSG: 'v' file entry item not found | Could not open file where formula located
+r6-junksym                 b5b40f74 [(66, 120000)] t=73 sym=999 003='s' f40..=48:1
+r6-paren                   740c5da2 [(1, 120000)] t=73 sym=999 003='u' f40..=48:1 STOPMSG: Didn't find matching ')' in symmetry declaration
+r6-symjunk                 255c9f8f [(65, 120000)] t=73 sym=999 003='t' f40..=48:1

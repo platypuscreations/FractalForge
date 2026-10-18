@@ -1,0 +1,11 @@
+
+Error(0) at line 3:  Should be an Argument
+  z=z+*0
+      ^
+Error(0) at line 4:  Should be an Argument
+  z=z+*1
+      ^
+Error(0) at line 5:  Should be an Argument
+  z=z+*2
+      ^
+

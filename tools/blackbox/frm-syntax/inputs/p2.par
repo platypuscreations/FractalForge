@@ -1,0 +1,32 @@
+frm:pq {
+  z = 0, k = 40:
+  z = z + 1
+  real(z) <= real(k)
+}
+pr {
+  z = 0, k = 41:
+  z = z + 1
+  real(z) <= real(k)
+}
+img4 { reset type=formula formulaname=pr maxiter=1000 viewwindows=2 passes=1 periodicity=0 map=uniq.map }
+img5 { reset type=formula formulaname=c1 maxiter=1000 viewwindows=2 passes=1 periodicity=0 map=uniq.map }
+img6 { reset type=formula formulaname=later maxiter=1000 viewwindows=2 passes=1 periodicity=0 map=uniq.map }
+img7 { reset type=formula formulaname=n20abcdefghijklmnopq maxiter=1000 viewwindows=2 passes=1 periodicity=0 map=uniq.map }
+img8 { reset type=formula formulaname=PQ maxiter=1000 viewwindows=2 passes=1 periodicity=0 map=uniq.map }
+frm:later {
+  z = 0, k = 42:
+  z = z + 1
+  real(z) <= real(k)
+}
+FRM:upper {
+  z = 0, k = 43:
+  z = z + 1
+  real(z) <= real(k)
+}
+img9 { reset type=formula formulaname=upper maxiter=1000 viewwindows=2 passes=1 periodicity=0 map=uniq.map }
+img10 { reset type=formula formulaname=quad maxiter=1000 viewwindows=2 passes=1 periodicity=0 map=uniq.map }
+frm:quad {
+  z = 0, k = 44:
+  z = z + 1
+  real(z) <= real(k)
+}

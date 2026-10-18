@@ -1,0 +1,5 @@
+
+Error(0) at line 3:  Should be an Argument
+  z=z*+pixel
+      ^
+

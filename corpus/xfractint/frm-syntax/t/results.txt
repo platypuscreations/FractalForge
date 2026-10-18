@@ -1,0 +1,65 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# python3 -I tools/blackbox/frm-syntax/summarise.py on round t (cases-t.txt)
+t-brace-c5d                dd9f4e35 [(54, 120000)] t=73 sym=999 003='c5d' f40..=48:1
+t-brace-c5e                69eb943f [(0, 120000)] t=73 sym=999 003='c5e' f40..=48:1
+t-brace-c5f                dd9f4e35 [(54, 120000)] t=73 sym=999 003='c5f' f40..=48:1
+t-brace-c5g                740c5da2 [(1, 120000)] t=73 sym=999 003='c5g' f40..=48:1 STOPMSG: 'c5g' file entry item not found | Could not open file where formula located
+t-brace-c5h                51ea158d [(56, 120000)] t=73 sym=999 003='c5h' f40..=48:1
+t-char0                    0a56cfaf [(41, 120000)] t=73 sym=999 003='a,b' f40..=48:1
+t-char1                    740c5da2 [(1, 120000)] t=73 sym=999 003='a;b' f40..=48:1 STOPMSG: 'a;b' file entry item not found | Could not open file where formula located
+t-char2                    3bcce3cc [(43, 120000)] t=73 sym=999 003='a:b' f40..=48:1
+t-char3                    fd2a604b [(44, 120000)] t=73 sym=999 003='a"b' f40..=48:1
+t-char4                    ce9be07f [(45, 120000)] t=73 sym=999 003='a}b' f40..=48:1
+t-char5                    bef5e171 [(46, 120000)] t=73 sym=999 003='a)b' f40..=48:1
+t-char6                    7ea7b82c [(47, 120000)] t=73 sym=999 003='a\\b' f40..=48:1
+t-char7                    35c8a8ab [(48, 120000)] t=73 sym=999 003='a|b' f40..=48:1
+t-cont-c6a                 4207ea34 [(102, 120000)] t=73 sym=999 003='c6a' f40..=48:1
+t-cont-c6b                 5b75a5b6 [(103, 120000)] t=73 sym=999 003='c6b' f40..=48:1
+t-cont-c6c                 e75556eb [(104, 120000)] t=73 sym=999 003='c6c' f40..=48:1
+t-cont-c6d                 6e70fbb3 [(105, 120000)] t=73 sym=999 003='c6d' f40..=48:1
+t-cont-c6e                 c11b4b59 [(106, 120000)] t=73 sym=999 003='c6e' f40..=48:1
+t-cont-c6f                 2baf7a8d [(107, 120000)] t=73 sym=999 003='c6f' f40..=48:1
+t-cont-c6g                 69eb943f [(0, 120000)] t=73 sym=999 003='c6g' f40..=48:1
+t-cont-c6h                 97c9c3aa [(109, 120000)] t=73 sym=999 003='c6h' f40..=48:1
+t-ctrlz-after              740c5da2 [(1, 120000)] t=73 sym=999 003='c8b' f40..=48:1 STOPMSG: 'c8b' file entry item not found | Could not open file where formula located
+t-ctrlz-before             517c756d [(81, 120000)] t=73 sym=999 003='c8a' f40..=48:1
+t-ifit-it1                 6d7d7c44 [(121, 120000)] t=73 sym=999 003='it1' f40..=48:1
+t-ifit-it2                 b42eaccf [(122, 120000)] t=73 sym=999 003='it2' f40..=48:1
+t-ifit-it3                 740c5da2 [(1, 120000)] t=73 sym=999 003='it3' f40..=48:1
+t-ifit-it4                 740c5da2 [(1, 120000)] t=73 sym=999 003='it4' f40..=48:1 STOPMSG: Error(20) at line 3:  "if()" in initialization has no matching "endif" |   if(1) |        ^ | Error(18) at line 5:  "endif" has no matching "if" |   endif |   ^^^^^
+t-ifit-it5                 8a0e0327 [(125, 120000)] t=73 sym=999 003='it5' f40..=48:1
+t-ifit-it6                 3d9fb727 [(126, 120000)] t=73 sym=999 003='it6' f40..=48:1
+t-ifit-it7                 740c5da2 [(1, 120000)] t=73 sym=999 003='it7' f40..=48:1
+t-latin1-comment           3c09bcad [(91, 120000)] t=73 sym=999 003='c9a' f40..=48:1
+t-latin1-name              740c5da2 [(1, 120000)] t=73 sym=999 003='c9ï¿½' f40..=48:1 STOPMSG: 'c9�' file entry item not found | Could not open file where formula located
+t-leadspace                13f01e70 [(49, 120000)] t=73 sym=999 003='lead' f40..=48:1
+t-longcomment1000          7d289d89 [(11, 120000)] t=73 sym=999 003='lc1000' f40..=48:1
+t-longcomment300           18bcce3b [(4, 120000)] t=73 sym=999 003='lc300' f40..=48:1
+t-longcomment3000          6c4ec117 [(31, 120000)] t=73 sym=999 003='lc3000' f40..=48:1
+t-longtext                 28932dea [(34, 120000)] t=73 sym=999 003='lc' f40..=48:1
+t-misc-c10a                a7c56294 [(101, 120000)] t=73 sym=999 003='c10a' f40..=48:1
+t-misc-c10b                740c5da2 [(1, 120000)] t=73 sym=999 003='c10b' f40..=48:1 STOPMSG: Formula has no executable instructions
+t-misc-c10c                740c5da2 [(1, 120000)] t=73 sym=999 003='c10c' f40..=48:1 STOPMSG: Formula has no executable instructions
+t-misc-c10d                740c5da2 [(1, 120000)] t=73 sym=999 003='c10d' f40..=48:1 STOPMSG: Formula has no executable instructions
+t-misc-c10e                6e70fbb3 [(105, 120000)] t=73 sym=999 003='c10e' f40..=48:1
+t-nest100                  740c5da2 [(1, 120000)] t=73 sym=999 003='nest100' f40..=48:1 STOPMSG: Error(23) at line 206:  Formula has too many jump commands |   real(z)<=real(k) |                   ^
+t-nest20                   490179e0 [(131, 120000)] t=73 sym=999 003='nest20' f40..=48:1
+t-nest200                  740c5da2 [(1, 120000)] t=73 sym=999 003='nest200' f40..=48:1 STOPMSG: Error(23) at line 406:  Formula has too many jump commands |   real(z)<=real(k) |                   ^
+t-nest5                    fbfea27a [(116, 120000)] t=73 sym=999 003='nest5' f40..=48:1
+t-nest50                   366b890d [(161, 120000)] t=73 sym=999 003='nest50' f40..=48:1
+t-noext                    7d289d89 [(11, 120000)] t=73 sym=999 003='c1' f40..=48:1
+t-nofile-c1                7d289d89 [(11, 120000)] t=73 sym=999 003='c1' f40..=48:1
+t-nofileparam-c1           740c5da2 [(1, 120000)] t=73 sym=999 003='c1' f40..=48:1 STOPMSG: 'c1' file entry item not found | Could not open file where formula located
+t-noname                   740c5da2 [(1, 120000)] t=73 sym=999 003='' f40..=48:1
+t-stmts100                 a7c56294 [(101, 120000)] t=73 sym=999 003='st100' f40..=48:1 LOG: munmap_chunk(): invalid pointer qemu: uncaught target signal 6 (Aborted) - core dumped /usr/local/bin/run-batch: line 23:    18 Aborted                 /usr/bin/xfractint batch=yes "$@" (exit status 134)
+t-stmts150                 NOIMAGE LOG: qemu: uncaught target signal 11 (Segmentation fault) - core dumped /usr/local/bin/run-batch: line 23:    17 Segmentation fault      /usr/bin/xfractint batch=yes "$@" (exit status 139)
+t-stmts200                 NOIMAGE LOG: qemu: uncaught target signal 11 (Segmentation fault) - core dumped /usr/local/bin/run-batch: line 23:    18 Segmentation fault      /usr/bin/xfractint batch=yes "$@" (exit status 139)
+t-stmts250                 NOIMAGE LOG: qemu: uncaught target signal 11 (Segmentation fault) - core dumped /usr/local/bin/run-batch: line 23:    18 Segmentation fault      /usr/bin/xfractint batch=yes "$@" (exit status 139)
+t-stmts50                  95fcf5b3 [(51, 120000)] t=73 sym=999 003='st50' f40..=48:1
+t-terms100                 a7c56294 [(101, 120000)] t=73 sym=999 003='tm100' f40..=48:1
+t-terms150                 5f91397a [(151, 120000)] t=73 sym=999 003='tm150' f40..=48:1
+t-terms200                 a7245789 [(201, 120000)] t=73 sym=999 003='tm200' f40..=48:1
+t-terms250                 c1cbabd8 [(251, 120000)] t=73 sym=999 003='tm250' f40..=48:1 LOG: munmap_chunk(): invalid pointer qemu: uncaught target signal 6 (Aborted) - core dumped /usr/local/bin/run-batch: line 23:    21 Aborted                 /usr/bin/xfractint batch=yes "$@" (exit status 134)
+t-terms300                 bef5e171 [(46, 120000)] t=73 sym=999 003='tm300' f40..=48:1 LOG: munmap_chunk(): invalid pointer qemu: uncaught target signal 6 (Aborted) - core dumped /usr/local/bin/run-batch: line 23:    15 Aborted                 /usr/bin/xfractint batch=yes "$@" (exit status 134)
+t-terms400                 NOIMAGE LOG: qemu: uncaught target signal 11 (Segmentation fault) - core dumped /usr/local/bin/run-batch: line 23:    15 Segmentation fault      /usr/bin/xfractint batch=yes "$@" (exit status 139)
+t-upperfile                7d289d89 [(11, 120000)] t=73 sym=999 003='c1' f40..=48:1

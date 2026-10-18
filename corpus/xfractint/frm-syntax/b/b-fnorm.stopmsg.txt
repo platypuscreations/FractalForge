@@ -1,0 +1,5 @@
+
+Error(5) at line 2:  Undefined Function
+  k=100+10*real(norm(0.5))
+                ^^^^
+

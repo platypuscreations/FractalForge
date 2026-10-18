@@ -1,0 +1,6 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# python3 -I tools/blackbox/frm-syntax/summarise.py on round r5 (cases-r5.txt)
+r5-fallback-frm            a7c56294 [(101, 120000)] t=73 sym=999 003='ls1' f40..=48:1
+r5-fallback-par            740c5da2 [(1, 120000)] t=73 sym=999 003='pr' f40..=48:1 STOPMSG: 'pr' file entry item not found | Could not open file where formula located
+r5-lastsqr1                a7c56294 [(101, 120000)] t=73 sym=999 003='ls1' f40..=48:1
+r5-lastsqr2                a7c56294 [(101, 120000)] t=73 sym=999 003='ls2' f40..=48:1

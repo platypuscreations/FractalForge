@@ -1,0 +1,5 @@
+WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
+munmap_chunk(): invalid pointer
+qemu: uncaught target signal 6 (Aborted) - core dumped
+/usr/local/bin/run-batch: line 23:    24 Aborted                 /usr/bin/xfractint batch=yes "$@"
+(exit status 134)

@@ -1,0 +1,5 @@
+
+Error(32) at line 2:  Negative exponent must be enclosed in parens
+  k=100+2^-(1)*10
+          ^
+

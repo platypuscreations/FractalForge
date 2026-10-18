@@ -1,0 +1,4 @@
+WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
+qemu: uncaught target signal 11 (Segmentation fault) - core dumped
+/usr/local/bin/run-batch: line 23:    18 Segmentation fault      /usr/bin/xfractint batch=yes "$@"
+(exit status 139)

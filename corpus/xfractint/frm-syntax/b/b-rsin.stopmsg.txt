@@ -1,0 +1,5 @@
+
+Error(31) at line 2:  Can't use function name as variable
+  k=100+10*real(sin)
+                ^^^
+

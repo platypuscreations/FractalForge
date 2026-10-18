@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# python3 -I tools/blackbox/frm-syntax/summarise.py on round q (cases-q.txt)
+q-q1                       5545b558 [(17, 120000)] t=73 sym=999 003='q1' f40..=48:1
+q-q10                      f5a7b64c [(111, 120000)] t=73 sym=999 003='q10' f40..=48:1
+q-q11                      f5a7b64c [(111, 120000)] t=73 sym=999 003='q11' f40..=48:1
+q-q12                      f5a7b64c [(111, 120000)] t=73 sym=999 003='q12' f40..=48:1
+q-q13                      70a6d744 [(119, 120000)] t=73 sym=999 003='q13' f40..=48:1
+q-q14                      5b75a5b6 [(103, 120000)] t=73 sym=999 003='q14' f40..=48:1
+q-q15                      4207ea34 [(102, 120000)] t=73 sym=999 003='q15' f40..=48:1
+q-q16                      e75556eb [(104, 120000)] t=73 sym=999 003='q16' f40..=48:1
+q-q17                      c11b4b59 [(106, 120000)] t=73 sym=999 003='q17' f40..=48:1
+q-q18                      f5a7b64c [(111, 120000)] t=73 sym=999 003='q18' f40..=48:1
+q-q19                      a7c56294 [(101, 120000)] t=73 sym=999 003='q19' f40..=48:1
+q-q2                       d0bf6788 [(12, 120000)] t=73 sym=999 003='q2' f40..=48:1
+q-q20                      f5a7b64c [(111, 120000)] t=73 sym=999 003='q20' f40..=48:1
+q-q3                       740c5da2 [(1, 120000)] t=73 sym=999 003='q3' f40..=48:1 STOPMSG: Error(25) at line 2:  Only variables are allowed to left of assignment |   k=100+a=5 |          ^
+q-q4                       740c5da2 [(1, 120000)] t=73 sym=999 003='q4' f40..=48:1 STOPMSG: Error(25) at line 2:  Only variables are allowed to left of assignment |   a=5+(b=2) |         ^
+q-q5                       d2d88c13 [(117, 120000)] t=73 sym=999 003='q5' f40..=48:1
+q-q6                       72d5f3c3 [(97, 120000)] t=73 sym=999 003='q6' f40..=48:1
+q-q7                       70a6d744 [(119, 120000)] t=73 sym=999 003='q7' f40..=48:1
+q-q8                       203d6932 [(112, 120000)] t=73 sym=999 003='q8' f40..=48:1
+q-q9                       3c09bcad [(91, 120000)] t=73 sym=999 003='q9' f40..=48:1

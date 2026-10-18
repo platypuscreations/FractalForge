@@ -189,6 +189,59 @@ fn decomp_index(z: Complex, k: u32) -> u8 {
     (sector + u32::from(k < 256)) as u8
 }
 
+/// Colouring for orbits computed elsewhere (formulas): feed it each value
+/// of the colouring variable after every iteration that didn't escape, then
+/// ask for the inside or outside index (frm-semantics.md §1.4: N is the
+/// escape count, Z the variable `z`).
+pub struct Orbit {
+    s: Stats,
+    want_eps: bool,
+    prev: Option<Complex>,
+    k: u32,
+}
+
+impl Orbit {
+    pub fn new(p: &Params) -> Self {
+        Self {
+            s: Stats {
+                min_mag: f64::INFINITY,
+                min_k: 0,
+                last_small: None,
+                path: 0.0,
+                eps: None,
+            },
+            want_eps: p.inside == Inside::EpsCross,
+            prev: None,
+            k: 0,
+        }
+    }
+
+    /// Records the value after an iteration that didn't escape.
+    pub fn record(&mut self, z: Complex) {
+        self.k += 1;
+        let mag = z.norm_sqr();
+        if mag < self.s.min_mag {
+            self.s.min_mag = mag;
+            self.s.min_k = self.k;
+        }
+        consider(&mut self.s, z, self.want_eps);
+        if let Some(prev) = self.prev {
+            self.s.path += (z - prev).norm_sqr().sqrt();
+        }
+        self.prev = Some(z);
+    }
+
+    /// Palette index of an inside pixel whose last value is `z`.
+    pub fn inside(&self, z: Complex, p: &Params) -> u8 {
+        inside_index(z, &self.s, p)
+    }
+
+    /// Palette index of a pixel that escaped with count `n` and value `z`.
+    pub fn outside(&self, n: u32, z: Complex, p: &Params) -> u8 {
+        outside_index(n, z, z, &self.s, p)
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

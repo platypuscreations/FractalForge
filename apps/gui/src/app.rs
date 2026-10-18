@@ -101,6 +101,9 @@ pub struct App {
     drag: Option<Drag>,
     /// A .par file with several entries, waiting for the user to pick one.
     par_choice: Option<(PathBuf, Vec<String>)>,
+    /// A Fractint formula GIF waiting for its .frm file: the entry name and
+    /// the image's parameters (the formula's file isn't stored in GIFs).
+    pending_formula: Option<(String, Params)>,
     /// "Save parameters" dialog: file, entry name, comment.
     par_save: Option<(PathBuf, String, String)>,
     /// Test hook: `FRACTALFORGE_SCREENSHOT=out.ppm` saves a screenshot of
@@ -149,6 +152,7 @@ impl App {
             title: String::new(),
             drag: None,
             par_choice: None,
+            pending_formula: None,
             par_save: None,
             screenshot: std::env::var_os("FRACTALFORGE_SCREENSHOT")
                 .map(|p| (PathBuf::from(p), false)),
@@ -315,7 +319,7 @@ impl App {
 
     fn open_dialog(&mut self, ctx: &egui::Context) {
         if let Some(path) = rfd::FileDialog::new()
-            .add_filter("Fractal files", &["gif", "par", "map"])
+            .add_filter("Fractal files", &["gif", "par", "frm", "map"])
             .pick_file()
         {
             self.open(&path, ctx);
@@ -325,7 +329,7 @@ impl App {
     pub fn open(&mut self, path: &Path, ctx: &egui::Context) {
         let ext = path.extension().map(|e| e.to_string_lossy().to_lowercase());
         match ext.as_deref() {
-            Some("par") => return self.open_par(path, ctx),
+            Some("par" | "frm") => return self.open_par(path, ctx),
             Some("map") => return self.open_map(path),
             _ => {}
         }
@@ -364,13 +368,48 @@ impl App {
                         .iter()
                         .map(|w| format!("{}: {w}", path.display())),
                 );
-                let Some(params) = info.params else {
+                let Some(mut params) = info.params else {
                     self.messages.push(format!(
                         "{}: this Fractint type isn't supported yet",
                         path.display()
                     ));
                     return;
                 };
+                if params.fractal.needs_program {
+                    // Formula GIFs name the formula but not its file: look
+                    // next to the GIF, else ask for the .frm file.
+                    let name = info.formula_name.clone().unwrap_or_default();
+                    let found = path
+                        .parent()
+                        .and_then(|d| fractalforge_formula::find_in_dir(d, &name))
+                        .map(|(_, text)| fractalforge_formula::load(&text, &name));
+                    for (c, p) in self.palette.0.iter_mut().zip(&loaded.image.palette) {
+                        *c = *p;
+                    }
+                    self.recolor = true;
+                    self.size_mode = SizeMode::Fixed(size.0, size.1);
+                    self.render_size = size;
+                    self.pass_mode = info.pass_mode;
+                    match found {
+                        Some(Ok((program, warnings))) => {
+                            self.messages.extend(warnings);
+                            params.program = Some(program);
+                        }
+                        Some(Err(e)) => {
+                            self.messages.push(e);
+                            return;
+                        }
+                        None => {
+                            self.messages.push(format!(
+                                "{}: needs the formula '{name}'. Open the .frm file that has it.",
+                                path.display()
+                            ));
+                            self.pending_formula = Some((name, params));
+                            self.file = Some(path.to_owned());
+                            return;
+                        }
+                    }
+                }
                 let partial = if info.finished {
                     None
                 } else {
@@ -421,12 +460,40 @@ impl App {
         self.record_history();
     }
 
+    /// Opens a .par or .frm file: its only entry directly, otherwise
+    /// through the entry picker.
     fn open_par(&mut self, path: &Path, ctx: &egui::Context) {
-        let text = match std::fs::read_to_string(path) {
+        let text = match fractalforge_formula::read_text(path) {
             Ok(t) => t,
             Err(e) => return self.messages.push(format!("{}: {e}", path.display())),
         };
-        let names: Vec<String> = par::entries(&text).into_iter().map(|e| e.name).collect();
+        let is_frm = path
+            .extension()
+            .is_some_and(|e| e.eq_ignore_ascii_case("frm"));
+        if is_frm && let Some((name, _)) = &self.pending_formula {
+            // The formula a GIF was waiting for.
+            let name = name.clone();
+            if fractalforge_formula::parser::find(
+                &fractalforge_formula::parser::entries(&text),
+                &name,
+            )
+            .is_some()
+            {
+                return self.load_par_entry(path, &name, ctx);
+            }
+        }
+        let names: Vec<String> = if is_frm {
+            fractalforge_formula::parser::entries(&text)
+                .into_iter()
+                .map(|e| e.name)
+                .collect()
+        } else {
+            par::entries(&text)
+                .into_iter()
+                .map(|e| e.name)
+                .filter(|n| !n.get(..4).is_some_and(|p| p.eq_ignore_ascii_case("frm:")))
+                .collect()
+        };
         match names.as_slice() {
             [] => self
                 .messages
@@ -440,12 +507,18 @@ impl App {
     }
 
     fn load_par_entry(&mut self, path: &Path, name: &str, ctx: &egui::Context) {
-        let text = std::fs::read_to_string(path).unwrap_or_default();
+        let text = fractalforge_formula::read_text(path).unwrap_or_default();
+        if path
+            .extension()
+            .is_some_and(|e| e.eq_ignore_ascii_case("frm"))
+        {
+            return self.load_formula(&text, name, ctx);
+        }
         let all = par::entries(&text);
         let Some(raw) = par::find(&all, name) else {
             return;
         };
-        match par::load(raw, path.parent()) {
+        match par::load(raw, path.parent(), Some(&text)) {
             Ok(l) => {
                 self.messages
                     .extend(l.warnings.iter().map(|w| format!("{name}: {w}")));
@@ -463,6 +536,30 @@ impl App {
             }
             Err(e) => self.messages.push(e.to_string()),
         }
+    }
+
+    /// Uses formula `name`: for a GIF waiting for it, with that image's
+    /// parameters; otherwise as a new formula image.
+    fn load_formula(&mut self, text: &str, name: &str, ctx: &egui::Context) {
+        let (program, warnings) = match fractalforge_formula::load(text, name) {
+            Ok(r) => r,
+            Err(e) => return self.messages.push(e),
+        };
+        self.messages.extend(warnings);
+        match self.pending_formula.take() {
+            Some((_, mut params)) => {
+                params.program = Some(program);
+                self.params = params;
+            }
+            None => {
+                let mut params = Params::new(&types::FORMULA);
+                params.window = view::fit_aspect(&params.window, self.aspect());
+                params.program = Some(program);
+                self.params = params;
+            }
+        }
+        self.record_history();
+        self.restart(ctx);
     }
 
     fn open_map(&mut self, path: &Path) {
@@ -559,7 +656,9 @@ impl App {
                 });
             if save {
                 let pal = self.palette.rotated(self.cycle_offset as i32);
-                let result = par::write_entry(
+                let existing = std::fs::read_to_string(&path).unwrap_or_default();
+                let result = par::save_entry(
+                    &existing,
                     &name,
                     Some(&comment),
                     &self.params,
@@ -567,10 +666,8 @@ impl App {
                     Some(&pal),
                 )
                 .map_err(|e| e.to_string())
-                .and_then(|entry| {
-                    let existing = std::fs::read_to_string(&path).unwrap_or_default();
-                    std::fs::write(&path, par::upsert(&existing, &name, &entry))
-                        .map_err(|e| format!("{}: {e}", path.display()))
+                .and_then(|text| {
+                    std::fs::write(&path, text).map_err(|e| format!("{}: {e}", path.display()))
                 });
                 match result {
                     Ok(()) => self
@@ -839,9 +936,13 @@ impl App {
         egui::ScrollArea::vertical().show(ui, |ui| {
             ui.heading("Fractal");
             egui::ComboBox::from_label("Type")
-                .selected_text(self.params.fractal.name)
+                .selected_text(match &self.params.program {
+                    Some(p) => format!("formula: {}", p.0.name()),
+                    None => self.params.fractal.name.to_owned(),
+                })
                 .show_ui(ui, |ui| {
-                    for t in types::all() {
+                    // Formula types need a loaded .frm entry, not a menu pick.
+                    for t in types::all().iter().filter(|t| !t.needs_program) {
                         if ui
                             .selectable_label(self.params.fractal == *t, t.name)
                             .on_hover_text(t.description)
@@ -854,7 +955,14 @@ impl App {
                         }
                     }
                 });
+            // For formulas, only the p1–p5 pairs the formula uses.
+            let program = self.params.program.clone();
             for (i, name) in self.params.fractal.param_names.iter().enumerate() {
+                if let Some(prog) = &program
+                    && !prog.0.mentions(&format!("p{}", i / 2 + 1))
+                {
+                    continue;
+                }
                 ui.label(*name);
                 changed |= ui
                     .add(

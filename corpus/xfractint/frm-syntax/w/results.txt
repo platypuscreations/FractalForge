@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# python3 -I tools/blackbox/frm-syntax/summarise.py on round w (cases-w.txt)
+w-w1                       f42ad54a [(150, 120000)] t=73 sym=999 003='w1' f40..=48:1
+w-w10                      c2fe6c03 [(110, 120000)] t=73 sym=999 003='w10' f40..=48:1
+w-w2                       324bc44e [(137, 120000)] t=73 sym=999 003='w2' f40..=48:1
+w-w3                       740c5da2 [(1, 120000)] t=73 sym=999 003='w3' f40..=48:1 STOPMSG: Error(33) at line 2:  Variable or constant exceeds 32 character limit |   abcdefghijklmnopqrstuvwxyzabcdefg=5 |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ | Error(33) at line 2:  Variable or constant exceeds 32 character limit |   k=100+abcdefghijklmnopqrstuvwxyzabcdefg |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+w-w4                       740c5da2 [(1, 120000)] t=73 sym=999 003='w4' f40..=48:1 STOPMSG: Error(33) at line 2:  Variable or constant exceeds 32 character limit |   k=100+000000000000000000000000000000001 |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+w-w5                       740c5da2 [(1, 120000)] t=73 sym=999 003='w5' f40..=48:1 STOPMSG: Error(33) at line 2:  Variable or constant exceeds 32 character limit |   k=100+0000000000000000000000000000000001 |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+w-w6                       d2d88c13 [(117, 120000)] t=73 sym=999 003='w6' f40..=48:1
+w-w7                       4207ea34 [(102, 120000)] t=73 sym=999 003='w7' f40..=48:1
+w-w8                       740c5da2 [(1, 120000)] t=73 sym=999 003='w8' f40..=48:1 STOPMSG: Error(33) at line 2:  Variable or constant exceeds 32 character limit |   k=100+1.0000000000000000000000000000000 |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+w-w9                       740c5da2 [(1, 120000)] t=73 sym=999 003='w9' f40..=48:1 STOPMSG: Error(0) at line 2:  Should be an Argument |   k=100+||2|-1| |         ^^

@@ -15,7 +15,8 @@ Fractint source code and is not affiliated with the Stone Soup Group.
 
 ## Status
 
-**v0.1** (macOS). FractalForge has a desktop app and a command-line renderer.
+**v0.1** (macOS), with Phase 3 (formulas) on `main`. FractalForge has a
+desktop app and a command-line renderer.
 
 - 17 escape-time types (mandel, julia, lambda, mandellambda, mandel4, julia4,
   manowar, manowarj, barnsleym1, barnsleyj1, spider, magnet1m, magnet1j,
@@ -27,6 +28,10 @@ Fractint source code and is not affiliated with the Stone Soup Group.
   results. Partial renders also move both ways between FractalForge and
   XFractint.
 - Reads and writes Fractint-format PAR, MAP and GIF files.
+- Fractint-format formulas (`.frm`): the formula language with the same
+  pixels as XFractint, including symmetry qualifiers, `fn1`–`fn4` and
+  formulas embedded in PAR files. GIFs FractalForge saves carry the formula
+  text, so they open without the `.frm` file.
 
 From the command line:
 
@@ -35,12 +40,14 @@ cargo run --release -p fractalforge-cli -- render -o big.gif --size 3840x2160 --
 cargo run --release -p fractalforge-cli -- render big.gif --resume -o big-done.gif
 cargo run --release -p fractalforge-cli -- render saved-by-fractint.gif -o again.gif
 cargo run --release -p fractalforge-cli -- render my.par --entry myentry -o out.png
+cargo run --release -p fractalforge-cli -- render --formula my.frm --formula-name myformula -o f.gif
+cargo run --release -p fractalforge-cli -- entries my.frm
 ```
 
 Ctrl-C during a render also saves a resumable GIF.
 
-Not in v0.1 yet: formula (`.frm`), L-system, IFS and other Fractint types;
-rotated views; screen-reader support; notarized macOS builds.
+Not yet: L-system, IFS and other Fractint types; rotated views; Fractint's
+`rand` sequence in formulas; screen-reader support; notarized macOS builds.
 
 Roadmap:
 

@@ -1,0 +1,124 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# python3 -I tools/blackbox/frm-syntax/summarise.py on round s (cases-s.txt)
+s-brace-c3                 740c5da2 [(1, 120000)] t=73 sym=999 003='c3' f40..=48:1 STOPMSG: 'c3' file entry item not found | Could not open file where formula located
+s-brace-c3b                e44914e0 [(32, 120000)] t=73 sym=999 003='c3b' f40..=48:1
+s-brace-c3c                740c5da2 [(1, 120000)] t=73 sym=999 003='c3c' f40..=48:1 STOPMSG: 'c3c' file entry item not found | Could not open file where formula located
+s-brace-c3d                28932dea [(34, 120000)] t=73 sym=999 003='c3d' f40..=48:1
+s-brace-in-c15             5f91397a [(151, 120000)] t=73 sym=999 003='c15' f40..=48:1
+s-brace-in-c15b            f55581ac [(152, 120000)] t=73 sym=999 003='c15b' f40..=48:1
+s-brace-in-c15c            740c5da2 [(1, 120000)] t=73 sym=999 003='c15c' f40..=48:1 STOPMSG: 'c15c' file entry item not found | Could not open file where formula located
+s-case-dupU                a35fc2ce [(71, 120000)] t=73 sym=999 003='DUP' f40..=48:1
+s-case-mixed               a3337df6 [(73, 120000)] t=73 sym=999 003='mixed' f40..=48:1
+s-case-upper               e00b063a [(74, 120000)] t=73 sym=999 003='upper' f40..=48:1
+s-case-upper2              e00b063a [(74, 120000)] t=73 sym=999 003='UPPER' f40..=48:1
+s-char0                    3c09bcad [(91, 120000)] t=73 sym=999 003='a-b' f40..=48:1
+s-char1                    294916d2 [(92, 120000)] t=73 sym=999 003='a_b' f40..=48:1
+s-char2                    e79391b9 [(93, 120000)] t=73 sym=999 003='a.b' f40..=48:1
+s-char3                    b453cdb4 [(94, 120000)] t=73 sym=999 003='1ab' f40..=48:1
+s-char4                    5cdedf51 [(95, 120000)] t=73 sym=999 003='a#b' f40..=48:1
+s-char5                    957bd47f [(96, 120000)] t=73 sym=999 003='a!b' f40..=48:1
+s-char6                    72d5f3c3 [(97, 120000)] t=73 sym=999 003='a+b' f40..=48:1
+s-char7                    b5b4f6e1 [(98, 120000)] t=73 sym=999 003='a@b' f40..=48:1
+s-char8                    61fd4f36 [(99, 120000)] t=73 sym=999 003='a/b' f40..=48:1
+s-char9                    0e51cd2b [(100, 120000)] t=73 sym=999 003='a$b' f40..=48:1
+s-cmt-ap                   740c5da2 [(1, 120000)] t=73 sym=999 003='ccap' f40..=48:1 STOPMSG: Error(28) at line 2:  This character not supported by parser |   'apostrophe |   ^
+s-cmt-bang                 740c5da2 [(1, 120000)] t=73 sym=999 003='ccbang' f40..=48:1 STOPMSG: Error(4) at line 2:  Undefined Operator |   !bang |   ^
+s-cmt-h                    740c5da2 [(1, 120000)] t=73 sym=999 003='cch' f40..=48:1 STOPMSG: Error(28) at line 2:  This character not supported by parser |   #hash |   ^
+s-cmt-rem                  f179a026 [(214, 120000)] t=73 sym=999 003='ccrem' f40..=48:1
+s-cmt-sl                   740c5da2 [(1, 120000)] t=73 sym=999 003='ccsl' f40..=48:1 STOPMSG: Error(0) at line 2:  Should be an Argument |   //slashes |   ^
+s-comments                 7d289d89 [(11, 120000)] t=73 sym=999 003='c1' f40..=48:1
+s-crlf                     382ce746 [(61, 120000)] t=73 sym=999 003='c6' f40..=48:1
+s-crlf2                    f36fadf8 [(62, 120000)] t=73 sym=999 003='c6b' f40..=48:1
+s-dup                      a35fc2ce [(71, 120000)] t=73 sym=999 003='dup' f40..=48:1
+s-empty-c17                9d0c89e8 [(171, 120000)] t=73 sym=999 003='c17' f40..=48:1
+s-empty-c17b               47913245 [(172, 120000)] t=73 sym=999 003='c17b' f40..=48:1
+s-empty-c17c               80181e66 [(173, 120000)] t=73 sym=999 003='c17c' f40..=48:1
+s-hdr-c4a                  0a56cfaf [(41, 120000)] t=73 sym=999 003='c4a' f40..=48:1
+s-hdr-c4b                  cc99c8cf [(42, 120000)] t=73 sym=999 003='c4b' f40..=48:1
+s-hdr-c4c                  3bcce3cc [(43, 120000)] t=73 sym=999 003='c4c' f40..=48:1
+s-hdr-c4d                  fd2a604b [(44, 120000)] t=73 sym=999 003='c4d' f40..=48:1
+s-hdr-c4e                  ce9be07f [(45, 120000)] t=73 sym=999 003='c4e' f40..=48:1
+s-hdr-c4f                  bef5e171 [(46, 120000)] t=73 sym=999 003='c4f' f40..=48:1
+s-hdr-c4g                  7ea7b82c [(47, 120000)] t=73 sym=999 003='c4g' f40..=48:1
+s-hdr-c4h                  35c8a8ab [(48, 120000)] t=73 sym=999 003='c4h' f40..=48:1
+s-hdr-c4i                  13f01e70 [(49, 120000)] t=73 sym=999 003='c4i' f40..=48:1
+s-hdr-c4j                  2c555efd [(50, 120000)] t=73 sym=999 003='c4j' f40..=48:1
+s-hdr-c4k                  95fcf5b3 [(51, 120000)] t=73 sym=999 003='c4k' f40..=48:1
+s-hdr-c4l                  db740045 [(52, 120000)] t=73 sym=999 003='c4l' f40..=48:1
+s-hdr-c4m                  8e2c46f7 [(53, 120000)] t=73 sym=999 003='c4m' f40..=48:1
+s-hdr-c4n                  740c5da2 [(1, 120000)] t=73 sym=999 003='c4n' f40..=48:1 STOPMSG: Didn't find matching ')' in symmetry declaration
+s-hdr-c4o                  342cb4ba [(55, 120000)] t=73 sym=999 003='c4o' f40..=48:1
+s-hdr-c4p                  51ea158d [(56, 120000)] t=73 sym=999 003='c4p' f40..=48:1
+s-hdr-c4q                  04ae5f42 [(57, 120000)] t=73 sym=999 003='c4q' f40..=48:1
+s-hdr-c4r                  5ca480f8 [(58, 120000)] t=73 sym=999 003='c4r' f40..=48:1
+s-hdr-c4s                  b6d839e2 [(59, 120000)] t=73 sym=999 003='c4s' f40..=48:1
+s-hdr-c4t                  e6b453f4 [(60, 120000)] t=73 sym=999 003='c4t' f40..=48:1
+s-hdr-c4u                  382ce746 [(61, 120000)] t=73 sym=999 003='c4u' f40..=48:1
+s-hdr-c4v                  f36fadf8 [(62, 120000)] t=73 sym=999 003='c4v' f40..=48:1
+s-hdr2-c28                 d9906ae8 [(203, 120000)] t=73 sym=999 003='c28' f40..=48:1
+s-hdr2-c28b                740c5da2 [(1, 120000)] t=73 sym=999 003='c28b' f40..=48:1 STOPMSG: Formula has no executable instructions
+s-hdr2-c28c                740c5da2 [(1, 120000)] t=73 sym=999 003='c28c' f40..=48:1 STOPMSG: 'c28c' file entry item not found | Could not open file where formula located
+s-hdr2-c28d                b7e50c64 [(204, 120000)] t=73 sym=999 003='c28d' f40..=48:1
+s-hdr2-my                  a7245789 [(201, 120000)] t=73 sym=999 003='my' f40..=48:1
+s-hdr2-myname              740c5da2 [(1, 120000)] t=73 sym=999 003='my name' f40..=48:1 STOPMSG: 'my name' file entry item not found | Could not open file where formula located
+s-len15                    517c756d [(81, 120000)] t=73 sym=999 003='n15abcdefghijkl' f40..=48:1
+s-len16                    42cbbdd6 [(82, 120000)] t=73 sym=999 003='n16abcdefghijklm' f40..=48:1
+s-len16-cut15              740c5da2 [(1, 120000)] t=73 sym=999 003='n16abcdefghijkl' f40..=48:1 STOPMSG: 'n16abcdefghijkl' file entry item not found | Could not open file where formula located
+s-len17                    c5c0755d [(83, 120000)] t=73 sym=999 003='n17abcdefghijklmn' f40..=48:1
+s-len17-cut15              740c5da2 [(1, 120000)] t=73 sym=999 003='n17abcdefghijkl' f40..=48:1 STOPMSG: 'n17abcdefghijkl' file entry item not found | Could not open file where formula located
+s-len18                    11632e41 [(84, 120000)] t=73 sym=999 003='n18abcdefghijklmno' f40..=48:1
+s-len18-cut15              740c5da2 [(1, 120000)] t=73 sym=999 003='n18abcdefghijkl' f40..=48:1 STOPMSG: 'n18abcdefghijkl' file entry item not found | Could not open file where formula located
+s-len20                    NOIMAGE STOPMSG: Oops. I couldn't understand the argument: |   formulaname=n20abcdefghijklmnopq |  | (see the Startup Help screens or documentation for a complete |  argument list with descriptions) LOG: Oops. I couldn't understand the argument: formulaname=n20abcdefghijklmnopq (see the Startup Help screens or documentation for a complete argument list with descriptions) (exit status 1)
+s-len20-cut15              740c5da2 [(1, 120000)] t=73 sym=999 003='n20abcdefghijkl' f40..=48:1 STOPMSG: 'n20abcdefghijkl' file entry item not found | Could not open file where formula located
+s-len32                    NOIMAGE STOPMSG: Oops. I couldn't understand the argument: |   formulaname=n32abcdefghijklmnopqrstuvwxyzabc |  | (see the Startup Help screens or documentation for a complete |  argument list with descriptions) LOG: Oops. I couldn't understand the argument: formulaname=n32abcdefghijklmnopqrstuvwxyzabc (see the Startup Help screens or documentation for a complete argument list with descriptions) (exit status 1)
+s-len32-cut15              740c5da2 [(1, 120000)] t=73 sym=999 003='n32abcdefghijkl' f40..=48:1 STOPMSG: 'n32abcdefghijkl' file entry item not found | Could not open file where formula located
+s-len40                    NOIMAGE STOPMSG: Oops. I couldn't understand the argument: |   formulaname=n40abcdefghijklmnopqrstuvwxyzabcdefghijk |  | (see the Startup Help screens or documentation for a complete |  argument list with descriptions) LOG: Oops. I couldn't understand the argument: formulaname=n40abcdefghijklmnopqrstuvwxyzabcdefghijk (see the Startup Help screens or documentation for a complete argument list with descriptions) (exit status 1)
+s-len40-cut15              740c5da2 [(1, 120000)] t=73 sym=999 003='n40abcdefghijkl' f40..=48:1 STOPMSG: 'n40abcdefghijkl' file entry item not found | Could not open file where formula located
+s-len47                    NOIMAGE STOPMSG: Oops. I couldn't understand the argument: |   formulaname=n47abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqr |  | (see the Startup Help screens or documentation for a complete |  argument list with descriptions) LOG: Oops. I couldn't understand the argument: formulaname=n47abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqr (see the Startup Help screens or documentation for a complete argument list with descriptions) (exit status 1)
+s-len47-cut15              740c5da2 [(1, 120000)] t=73 sym=999 003='n47abcdefghijkl' f40..=48:1 STOPMSG: 'n47abcdefghijkl' file entry item not found | Could not open file where formula located
+s-len48                    NOIMAGE STOPMSG: Oops. I couldn't understand the argument: |   formulaname=n48abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrs |  | (see the Startup Help screens or documentation for a complete |  argument list with descriptions) LOG: Oops. I couldn't understand the argument: formulaname=n48abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrs (see the Startup Help screens or documentation for a complete argument list with descriptions) (exit status 1)
+s-len48-cut15              740c5da2 [(1, 120000)] t=73 sym=999 003='n48abcdefghijkl' f40..=48:1 STOPMSG: 'n48abcdefghijkl' file entry item not found | Could not open file where formula located
+s-len49                    NOIMAGE STOPMSG: Oops. I couldn't understand the argument: |   formulaname=n49abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrst |  | (see the Startup Help screens or documentation for a complete |  argument list with descriptions) LOG: Oops. I couldn't understand the argument: formulaname=n49abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrst (see the Startup Help screens or documentation for a complete argument list with descriptions) (exit status 1)
+s-len49-cut15              740c5da2 [(1, 120000)] t=73 sym=999 003='n49abcdefghijkl' f40..=48:1 STOPMSG: 'n49abcdefghijkl' file entry item not found | Could not open file where formula located
+s-len60                    NOIMAGE STOPMSG: Oops. I couldn't understand the argument: |   formulaname=n60abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabc |  | (see the Startup Help screens or documentation for a complete |  argument list with descriptions) LOG: Oops. I couldn't understand the argument: formulaname=n60abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabc (see the Startup Help screens or documentation for a complete argument list with descriptions) (exit status 1)
+s-len60-cut15              740c5da2 [(1, 120000)] t=73 sym=999 003='n60abcdefghijkl' f40..=48:1 STOPMSG: 'n60abcdefghijkl' file entry item not found | Could not open file where formula located
+s-line-c5                  95fcf5b3 [(51, 120000)] t=73 sym=999 003='c5' f40..=48:1
+s-line-c5b                 db740045 [(52, 120000)] t=73 sym=999 003='c5b' f40..=48:1
+s-line-c5c                 8e2c46f7 [(53, 120000)] t=73 sym=999 003='c5c' f40..=48:1
+s-line-c5d                 dd9f4e35 [(54, 120000)] t=73 sym=999 003='c5d' f40..=48:1
+s-line-c5e                 342cb4ba [(55, 120000)] t=73 sym=999 003='c5e' f40..=48:1
+s-lineno-err               740c5da2 [(1, 120000)] t=73 sym=999 003='err' f40..=48:1 STOPMSG: Error(0) at line 5:  Should be an Argument |   z=z+*1 |       ^
+s-lineno-err2              740c5da2 [(1, 120000)] t=73 sym=999 003='err2' f40..=48:1 STOPMSG: Error(0) at line 1:  Should be an Argument |   z=z+*1 |       ^
+s-lineno-err3              740c5da2 [(1, 120000)] t=73 sym=999 003='err3' f40..=48:1 STOPMSG: Error(0) at line 2:  Should be an Argument |   k=1+*2 |       ^ | Error(0) at line 3:  Should be an Argument |   z=z+*1 |       ^ | Error(0) at line 4:  Should be an Argument |   real(z)<=real(k)+* |                    ^
+s-long-l200                c723afdb [(21, 120000)] t=73 sym=999 003='l200' f40..=48:1
+s-long-l2000               NOIMAGE LOG: qemu: uncaught target signal 11 (Segmentation fault) - core dumped /usr/local/bin/run-batch: line 23:    18 Segmentation fault      /usr/bin/xfractint batch=yes "$@" (exit status 139)
+s-long-l600                629f60dd [(22, 120000)] t=73 sym=999 003='l600' f40..=48:1
+s-long-m2000               740c5da2 [(1, 120000)] t=73 sym=999 003='m2000' f40..=48:1
+s-long-m300                NOIMAGE LOG: qemu: uncaught target signal 11 (Segmentation fault) - core dumped /usr/local/bin/run-batch: line 23:    21 Segmentation fault      /usr/bin/xfractint batch=yes "$@" (exit status 139)
+s-noclose-a                740c5da2 [(1, 120000)] t=73 sym=999 003='c13a' f40..=48:1 STOPMSG: 'c13a' file entry item not found | Could not open file where formula located
+s-noclose-b                d9e35c0c [(132, 120000)] t=73 sym=999 003='c13b' f40..=48:1
+s-noclose-c                21c2a11f [(133, 120000)] t=73 sym=999 003='c13c' f40..=48:1
+s-noclose-eof              740c5da2 [(1, 120000)] t=73 sym=999 003='c12' f40..=48:1 STOPMSG: 'c12' file entry item not found | Could not open file where formula located
+s-noclose-eof-first        6d7d7c44 [(121, 120000)] t=73 sym=999 003='c12a' f40..=48:1
+s-sep-asg                  69eb943f [(0, 120000)] t=73 sym=999 003='asg' f40..=48:1
+s-sep-asg0                 740c5da2 [(1, 120000)] t=73 sym=999 003='asg0' f40..=48:1
+s-sep-asgk                 7c58f5cb [(10, 120000)] t=73 sym=999 003='asgk' f40..=48:1
+s-sep-colon2               740c5da2 [(1, 120000)] t=73 sym=999 003='colon2' f40..=48:1 STOPMSG: Error(34) at line 3:  Only one ":" permitted in a formula |   z=z+1: |        ^
+s-sep-empty                740c5da2 [(1, 120000)] t=73 sym=999 003='empty' f40..=48:1 STOPMSG: Formula has no executable instructions
+s-sep-emptyin              4c12ba0f [(1, 119999), (9, 1)] t=73 sym=999 003='emptyin' f40..=48:1
+s-sep-emptyit              69eb943f [(0, 120000)] t=73 sym=999 003='emptyit' f40..=48:1
+s-sep-mid                  69eb943f [(0, 120000)] t=73 sym=999 003='mid' f40..=48:1
+s-sep-mid2                 57b5c0fa [(185, 120000)] t=73 sym=999 003='mid2' f40..=48:1
+s-sep-none                 ba744eb9 [(1, 119999), (10, 1)] t=73 sym=999 003='none' f40..=48:1
+s-sep-none2                8d476ca6 [(1, 119999), (8, 1)] t=73 sym=999 003='none2' f40..=48:1
+s-sep-onlytest             69eb943f [(0, 120000)] t=73 sym=999 003='onlytest' f40..=48:1
+s-sep-sameln               22eae325 [(189, 120000)] t=73 sym=999 003='sameln' f40..=48:1
+s-sep-space                740c5da2 [(1, 120000)] t=73 sym=999 003='space' f40..=48:1 STOPMSG: Error(27) at line 2:  Invalid constant expression |   z=0k=189 |     ^^
+s-sep-testinit             55ebcfc2 [(191, 120000)] t=73 sym=999 003='testinit' f40..=48:1
+s-sep-two                  740c5da2 [(1, 120000)] t=73 sym=999 003='two' f40..=48:1 STOPMSG: Error(34) at line 3:  Only one ":" permitted in a formula |   k=181: |        ^
+s-split-c10                4207ea34 [(102, 120000)] t=73 sym=999 003='c10' f40..=48:1
+s-split-c10b               740c5da2 [(1, 120000)] t=73 sym=999 003='c10b' f40..=48:1 STOPMSG: Error(0) at line 2:  Should be an Argument |   k=100+ |         ^
+s-split-c10c               e75556eb [(104, 120000)] t=73 sym=999 003='c10c' f40..=48:1
+s-split-c10d               740c5da2 [(1, 120000)] t=73 sym=999 003='c10d' f40..=48:1 STOPMSG: Error(3) at line 2:  Need more ')' |   k=(100 |         ^ | Error(0) at line 3:  Should be an Argument |   +4) |   ^
+s-text-before              c723afdb [(21, 120000)] t=73 sym=999 003='c2' f40..=48:1
+s-text-between             629f60dd [(22, 120000)] t=73 sym=999 003='c2b' f40..=48:1

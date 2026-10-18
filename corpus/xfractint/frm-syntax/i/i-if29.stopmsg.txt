@@ -1,0 +1,5 @@
+
+Error(5) at line 3:  Undefined Function
+  while(1)
+  ^^^^^
+

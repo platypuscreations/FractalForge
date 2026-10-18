@@ -1,0 +1,17 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# python3 -I tools/blackbox/frm-syntax/summarise.py on round r4 (cases-r4.txt)
+r4-it-ie1                  740c5da2 [(1, 120000)] t=73 sym=999 003='ie1' f40..=48:1 STOPMSG: Error(21) at line 5:  "if()" has no matching "endif" |   real(z)<=real(k) |                   ^
+r4-it-ie2                  740c5da2 [(1, 120000)] t=73 sym=999 003='ie2' f40..=48:1 STOPMSG: Error(18) at line 4:  "endif" has no matching "if" |   endif |   ^^^^^
+r4-it-ie3                  740c5da2 [(1, 120000)] t=73 sym=999 003='ie3' f40..=48:1 STOPMSG: Error(17) at line 6:  Next jump after "else" must be "endif" |   elseif(1) |   ^^^^^^
+r4-it-ie4                  740c5da2 [(1, 120000)] t=73 sym=999 003='ie4' f40..=48:1 STOPMSG: Error(0) at line 3:  Should be an Argument |   z=z+*0 |       ^ | Error(0) at line 4:  Should be an Argument |   z=z+*1 |       ^ | Error(0) at line 5:  Should be an Argument |   z=z+*2 |       ^
+r4-it-ie5                  740c5da2 [(1, 120000)] t=73 sym=999 003='ie5' f40..=48:1
+r4-it-ie6                  0db21189 [(7, 120000)] t=73 sym=999 003='ie6' f40..=48:1
+r4-par-img10               ce9be07f [(45, 120000)] t=73 sym=999 003='quad' f40..=48:1
+r4-par-img10f              ff3d8c5d [(1, 72792), (2, 20990), (3, 8664), (4, 4762)] t=73 sym=999 003='quad' f40..=48:1
+r4-par-img4                740c5da2 [(1, 120000)] t=73 sym=999 003='pr' f40..=48:1 STOPMSG: 'pr' file entry item not found | Could not open file where formula located
+r4-par-img5                740c5da2 [(1, 120000)] t=73 sym=999 003='c1' f40..=48:1 STOPMSG: 'c1' file entry item not found | Could not open file where formula located
+r4-par-img5f               7d289d89 [(11, 120000)] t=73 sym=999 003='c1' f40..=48:1
+r4-par-img6                3bcce3cc [(43, 120000)] t=73 sym=999 003='later' f40..=48:1
+r4-par-img7                NOIMAGE STOPMSG: Oops. I couldn't understand the argument: |   formulaname=n20abcdefghijklmnopq |  | (see the Startup Help screens or documentation for a complete |  argument list with descriptions) LOG: Oops. I couldn't understand the argument: formulaname=n20abcdefghijklmnopq (see the Startup Help screens or documentation for a complete argument list with descriptions) (exit status 1)
+r4-par-img8                0a56cfaf [(41, 120000)] t=73 sym=999 003='PQ' f40..=48:1
+r4-par-img9                fd2a604b [(44, 120000)] t=73 sym=999 003='upper' f40..=48:1

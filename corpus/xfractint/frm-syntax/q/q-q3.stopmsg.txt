@@ -1,0 +1,5 @@
+
+Error(25) at line 2:  Only variables are allowed to left of assignment
+  k=100+a=5
+         ^
+

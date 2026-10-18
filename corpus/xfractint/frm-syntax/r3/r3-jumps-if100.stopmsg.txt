@@ -1,0 +1,5 @@
+
+Error(23) at line 305:  Formula has too many jump commands
+  real(z)<=real(k)
+                  ^
+

@@ -1,0 +1,374 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+# Formula-semantics cases: <name> <xfractint parameters...>
+# render.sh adds in front: type=formula formulafile=sem.frm passes=1
+#   periodicity=0 viewwindows=2 map=uniq.map   and savename=ff.gif at the end.
+# Views used below (see docs/specs/frm-semantics.md section 0):
+#   corners=-200/199/-298/300          integer x, even y, exact 0 row and column
+#   corners=-1.5625/1.5546875/-2.328125/2.34375   steps 1/128 x 1/64, exact 0s
+#   corners=-3.125/3.109375/-4.65625/4.6875       steps 1/64 x 1/32, exact 0s
+# Note: corners=-200/199/-150/149 (first-batch tz/tre/... cases) is close
+# enough to 4:3 that XFractint stored x as -199.83..198.83 (exact 4:3); the stored
+# corners are the ones that apply.
+quad        formulaname=quad
+startt      formulaname=startt
+count       formulaname=count corners=0/399/-1/1 maxiter=300
+tz          formulaname=tz corners=-200/199/-150/149
+tre         formulaname=tre corners=-200/199/-150/149
+tim         formulaname=tim corners=-200/199/-150/149
+clt         formulaname=clt corners=-200/199/-150/149
+cle         formulaname=cle corners=-200/199/-150/149
+cgt         formulaname=cgt corners=-200/199/-150/149
+cge         formulaname=cge corners=-200/199/-150/149
+ceq         formulaname=ceq corners=-200/199/-150/149
+cne         formulaname=cne corners=-200/199/-150/149
+land        formulaname=land corners=-200/199/-150/149
+lor         formulaname=lor corners=-200/199/-150/149
+lnot        formulaname=lnot corners=-200/199/-150/149
+modb        formulaname=modb corners=-5/5/-5/5
+zun         formulaname=zun
+bogus       formulaname=bogus
+# --- batch 2 ---
+tz-g formulaname=tz corners=-200/199/-298/300
+tre-g formulaname=tre corners=-200/199/-298/300
+tim-g formulaname=tim corners=-200/199/-298/300
+clt-g formulaname=clt corners=-200/199/-298/300
+cle-g formulaname=cle corners=-200/199/-298/300
+cgt-g formulaname=cgt corners=-200/199/-298/300
+cge-g formulaname=cge corners=-200/199/-298/300
+ceq-g formulaname=ceq corners=-200/199/-298/300
+cne-g formulaname=cne corners=-200/199/-298/300
+mz formulaname=mz corners=-8/8/-6/6
+mp1 formulaname=mp1 corners=-8/8/-6/6
+mp2 formulaname=mp2 corners=-8/8/-6/6
+mp3 formulaname=mp3 corners=-8/8/-6/6
+mp4 formulaname=mp4 corners=-8/8/-6/6
+mp5 formulaname=mp5 corners=-8/8/-6/6
+mpi formulaname=mpi corners=-8/8/-6/6
+me formulaname=me corners=-8/8/-6/6
+mmaxit formulaname=mmaxit corners=-8/8/-6/6
+mscrnmax formulaname=mscrnmax corners=-8/8/-6/6
+mscrnpix formulaname=mscrnpix corners=-8/8/-6/6
+mwhitesq formulaname=mwhitesq corners=-8/8/-6/6
+mismand formulaname=mismand corners=-8/8/-6/6
+mcenter formulaname=mcenter corners=-8/8/-6/6
+mmagxmag formulaname=mmagxmag corners=-8/8/-6/6
+mrotskew formulaname=mrotskew corners=-8/8/-6/6
+mlastsqr formulaname=mlastsqr corners=-8/8/-6/6
+mrand formulaname=mrand corners=-8/8/-6/6
+mlit formulaname=mlit corners=-8/8/-6/6
+mtrue formulaname=mtrue corners=-8/8/-6/6
+mfalse formulaname=mfalse corners=-8/8/-6/6
+mand formulaname=mand corners=-8/8/-6/6
+mor formulaname=mor corners=-8/8/-6/6
+mdiv0 formulaname=mdiv0 corners=-8/8/-6/6
+mpow00 formulaname=mpow00 corners=-8/8/-6/6
+mpow0n formulaname=mpow0n corners=-8/8/-6/6
+mpowneg formulaname=mpowneg corners=-8/8/-6/6
+mpowneg2 formulaname=mpowneg2 corners=-8/8/-6/6
+mcmplt formulaname=mcmplt corners=-8/8/-6/6
+mmod formulaname=mmod corners=-8/8/-6/6
+mxpow formulaname=mxpow corners=-8/8/-6/6
+mfn1 formulaname=mfn1 corners=-8/8/-6/6
+zv formulaname=zv corners=-8/8/-6/6
+mp-params formulaname=mp1 corners=-8/8/-6/6 params=0.3/0.7/-0.4/0.9/1.1/-1.3/0.2/0.6/-0.5/-0.1
+mp2-params formulaname=mp2 corners=-8/8/-6/6 params=0.3/0.7/-0.4/0.9/1.1/-1.3/0.2/0.6/-0.5/-0.1
+mp3-params formulaname=mp3 corners=-8/8/-6/6 params=0.3/0.7/-0.4/0.9/1.1/-1.3/0.2/0.6/-0.5/-0.1
+mp4-params formulaname=mp4 corners=-8/8/-6/6 params=0.3/0.7/-0.4/0.9/1.1/-1.3/0.2/0.6/-0.5/-0.1
+mp5-params formulaname=mp5 corners=-8/8/-6/6 params=0.3/0.7/-0.4/0.9/1.1/-1.3/0.2/0.6/-0.5/-0.1
+mmaxit-500 formulaname=mmaxit corners=-800/800/-600/600 maxiter=500
+mscrn-big formulaname=mscrnmax corners=-800/800/-600/600
+mscrnpix-big formulaname=mscrnpix corners=-800/800/-600/600
+mcenter-v formulaname=mcenter corners=-1/3/-2/1
+mmagxmag-v formulaname=mmagxmag corners=-1/3/-2/1
+zzv-in-zmag formulaname=zzv inside=zmag
+zzv-out-real formulaname=zzv outside=real
+zzv-out-imag formulaname=zzv outside=imag
+quad-out-real formulaname=quad outside=real
+quad-out-summ formulaname=quad outside=summ
+quad-in-zmag formulaname=quad inside=zmag
+quad-in-maxiter formulaname=quad inside=maxiter
+quad-in-bof60 formulaname=quad inside=bof60
+quad-bo100 formulaname=quad bailout=100
+quad-per1 formulaname=quad periodicity=1
+quad-mi1000 formulaname=quad maxiter=1000 corners=-0.80/-0.70/0.05/0.15
+symq-off formulaname=symq corners=-2.2/1.8/-1.3/1.7
+symq-offn formulaname=symq corners=-2.2/1.8/-1.3/1.7 symmetry=none
+sq-XAXIS formulaname=sq_XAXIS corners=-2.2/1.8/-1.3/1.7
+sq-YAXIS formulaname=sq_YAXIS corners=-2.2/1.8/-1.3/1.7
+sq-XYAXIS formulaname=sq_XYAXIS corners=-2.2/1.8/-1.3/1.7
+sq-ORIGIN formulaname=sq_ORIGIN corners=-2.2/1.8/-1.3/1.7
+sq-PI_SYM formulaname=sq_PI_SYM corners=-2.2/1.8/-1.3/1.7
+sq-XAXIS_NOPARM formulaname=sq_XAXIS_NOPARM corners=-2.2/1.8/-1.3/1.7
+sq-XAXIS_NOREAL formulaname=sq_XAXIS_NOREAL corners=-2.2/1.8/-1.3/1.7
+sq-XAXIS_NOIMAG formulaname=sq_XAXIS_NOIMAG corners=-2.2/1.8/-1.3/1.7
+sq-XYAXIS_NOPARM formulaname=sq_XYAXIS_NOPARM corners=-2.2/1.8/-1.3/1.7
+sq-YAXIS_NOPARM formulaname=sq_YAXIS_NOPARM corners=-2.2/1.8/-1.3/1.7
+sq-ORIGIN_NOPARM formulaname=sq_ORIGIN_NOPARM corners=-2.2/1.8/-1.3/1.7
+sq-PI_SYM_NOPARM formulaname=sq_PI_SYM_NOPARM corners=-2.2/1.8/-1.3/1.7
+sq-NOSYM formulaname=sq_NOSYM corners=-2.2/1.8/-1.3/1.7
+sq-FOO formulaname=sq_FOO corners=-2.2/1.8/-1.3/1.7
+f-sin formulaname=f_sin corners=-1.5625/1.5546875/-2.328125/2.34375
+f-cos formulaname=f_cos corners=-1.5625/1.5546875/-2.328125/2.34375
+f-cosxx formulaname=f_cosxx corners=-1.5625/1.5546875/-2.328125/2.34375
+f-tan formulaname=f_tan corners=-1.5625/1.5546875/-2.328125/2.34375
+f-cotan formulaname=f_cotan corners=-1.5625/1.5546875/-2.328125/2.34375
+f-cot formulaname=f_cot corners=-1.5625/1.5546875/-2.328125/2.34375
+f-sinh formulaname=f_sinh corners=-1.5625/1.5546875/-2.328125/2.34375
+f-cosh formulaname=f_cosh corners=-1.5625/1.5546875/-2.328125/2.34375
+f-tanh formulaname=f_tanh corners=-1.5625/1.5546875/-2.328125/2.34375
+f-cotanh formulaname=f_cotanh corners=-1.5625/1.5546875/-2.328125/2.34375
+f-coth formulaname=f_coth corners=-1.5625/1.5546875/-2.328125/2.34375
+f-asin formulaname=f_asin corners=-1.5625/1.5546875/-2.328125/2.34375
+f-acos formulaname=f_acos corners=-1.5625/1.5546875/-2.328125/2.34375
+f-atan formulaname=f_atan corners=-1.5625/1.5546875/-2.328125/2.34375
+f-asinh formulaname=f_asinh corners=-1.5625/1.5546875/-2.328125/2.34375
+f-acosh formulaname=f_acosh corners=-1.5625/1.5546875/-2.328125/2.34375
+f-atanh formulaname=f_atanh corners=-1.5625/1.5546875/-2.328125/2.34375
+f-exp formulaname=f_exp corners=-1.5625/1.5546875/-2.328125/2.34375
+f-log formulaname=f_log corners=-1.5625/1.5546875/-2.328125/2.34375
+f-sqr formulaname=f_sqr corners=-1.5625/1.5546875/-2.328125/2.34375
+f-sqrt formulaname=f_sqrt corners=-1.5625/1.5546875/-2.328125/2.34375
+f-abs formulaname=f_abs corners=-1.5625/1.5546875/-2.328125/2.34375
+f-cabs formulaname=f_cabs corners=-1.5625/1.5546875/-2.328125/2.34375
+f-conj formulaname=f_conj corners=-1.5625/1.5546875/-2.328125/2.34375
+f-real formulaname=f_real corners=-1.5625/1.5546875/-2.328125/2.34375
+f-imag formulaname=f_imag corners=-1.5625/1.5546875/-2.328125/2.34375
+f-flip formulaname=f_flip corners=-1.5625/1.5546875/-2.328125/2.34375
+f-ident formulaname=f_ident corners=-1.5625/1.5546875/-2.328125/2.34375
+f-zero formulaname=f_zero corners=-1.5625/1.5546875/-2.328125/2.34375
+f-one formulaname=f_one corners=-1.5625/1.5546875/-2.328125/2.34375
+f-recip formulaname=f_recip corners=-1.5625/1.5546875/-2.328125/2.34375
+f-floor formulaname=f_floor corners=-1.5625/1.5546875/-2.328125/2.34375
+f-ceil formulaname=f_ceil corners=-1.5625/1.5546875/-2.328125/2.34375
+f-trunc formulaname=f_trunc corners=-1.5625/1.5546875/-2.328125/2.34375
+f-round formulaname=f_round corners=-1.5625/1.5546875/-2.328125/2.34375
+f-srand formulaname=f_srand corners=-1.5625/1.5546875/-2.328125/2.34375
+f-fn1 formulaname=f_fn1 corners=-1.5625/1.5546875/-2.328125/2.34375
+f-fn2 formulaname=f_fn2 corners=-1.5625/1.5546875/-2.328125/2.34375
+f-fn3 formulaname=f_fn3 corners=-1.5625/1.5546875/-2.328125/2.34375
+f-fn4 formulaname=f_fn4 corners=-1.5625/1.5546875/-2.328125/2.34375
+f-fn1-cos formulaname=f_fn1 corners=-1.5625/1.5546875/-2.328125/2.34375 function=cos/exp/log/tan
+f-fn2-exp formulaname=f_fn2 corners=-1.5625/1.5546875/-2.328125/2.34375 function=cos/exp/log/tan
+f-fn3-log formulaname=f_fn3 corners=-1.5625/1.5546875/-2.328125/2.34375 function=cos/exp/log/tan
+f-fn4-tan formulaname=f_fn4 corners=-1.5625/1.5546875/-2.328125/2.34375 function=cos/exp/log/tan
+o-neg formulaname=o_neg corners=-1.5625/1.5546875/-2.328125/2.34375
+o-div formulaname=o_div corners=-1.5625/1.5546875/-2.328125/2.34375
+o-divm formulaname=o_divm corners=-1.5625/1.5546875/-2.328125/2.34375
+o-sub formulaname=o_sub corners=-1.5625/1.5546875/-2.328125/2.34375
+o-pw2 formulaname=o_pw2 corners=-1.5625/1.5546875/-2.328125/2.34375
+o-pw3 formulaname=o_pw3 corners=-1.5625/1.5546875/-2.328125/2.34375
+o-pwm1 formulaname=o_pwm1 corners=-1.5625/1.5546875/-2.328125/2.34375
+o-pwh formulaname=o_pwh corners=-1.5625/1.5546875/-2.328125/2.34375
+o-pw25 formulaname=o_pw25 corners=-1.5625/1.5546875/-2.328125/2.34375
+o-pwc formulaname=o_pwc corners=-1.5625/1.5546875/-2.328125/2.34375
+o-pwcb formulaname=o_pwcb corners=-1.5625/1.5546875/-2.328125/2.34375
+o-pwpp formulaname=o_pwpp corners=-1.5625/1.5546875/-2.328125/2.34375
+o-pw0 formulaname=o_pw0 corners=-1.5625/1.5546875/-2.328125/2.34375
+# --- batch 3 ---
+carry formulaname=carry corners=0/399/-1/1 maxiter=300
+carry-m200 formulaname=carry corners=0/399/-1/1 maxiter=250
+k_div0 formulaname=k_div0 maxiter=300
+k_div00 formulaname=k_div00 maxiter=300
+k_pow02 formulaname=k_pow02 maxiter=300
+k_pow00 formulaname=k_pow00 maxiter=300
+k_pow0c formulaname=k_pow0c maxiter=300
+k_log0 formulaname=k_log0 maxiter=300
+k_atanh1 formulaname=k_atanh1 maxiter=300
+k_atani formulaname=k_atani maxiter=300
+k_rand formulaname=k_rand maxiter=300
+k_srand formulaname=k_srand maxiter=300
+k_huge formulaname=k_huge maxiter=300
+k_one formulaname=k_one maxiter=300
+k_zero formulaname=k_zero maxiter=300
+k_sqrtm1 formulaname=k_sqrtm1 maxiter=300
+k_recip0 formulaname=k_recip0 maxiter=300
+k_cotan0 formulaname=k_cotan0 maxiter=300
+k_tan formulaname=k_tan maxiter=300
+k_flog formulaname=k_flog maxiter=300
+tnan formulaname=tnan
+tnan2 formulaname=tnan2
+tnan3 formulaname=tnan3
+tnan4 formulaname=tnan4
+lsq1 formulaname=lsq1 corners=-4/4/-3/3
+lsq2 formulaname=lsq2 corners=-4/4/-3/3
+lsq3 formulaname=lsq3 corners=-4/4/-3/3
+lsq4 formulaname=lsq4 corners=-4/4/-3/3
+lsq5 formulaname=lsq5 corners=-4/4/-3/3
+ifz formulaname=ifz corners=-200/199/-298/300
+ifim formulaname=ifim corners=-200/199/-298/300
+ifel formulaname=ifel corners=-200/199/-298/300
+apix formulaname=apix
+apix2 formulaname=apix2 corners=0/1/-1/1
+ap1 formulaname=ap1
+api formulaname=api corners=2/4/-1/1
+ae formulaname=ae corners=1/3/-1/1
+apx2 formulaname=apx2 corners=0/4/-1/1
+rnd1 formulaname=rnd1 corners=-40000/40000/-30000/30000
+rnd2 formulaname=rnd2 corners=-40000/40000/-30000/30000
+rnd1-s1 formulaname=rnd1 corners=-40000/40000/-30000/30000 rseed=1
+rnd1-s1b formulaname=rnd1 corners=-40000/40000/-30000/30000 rseed=1
+rnd1-s2 formulaname=rnd1 corners=-40000/40000/-30000/30000 rseed=2
+fnx formulaname=fnx
+fnx-fn formulaname=fnx function=cosxx/exp
+quad-float formulaname=quad float=yes
+quad-floatno formulaname=quad float=no
+quad-off formulaname=quad corners=-2.2/1.8/-1.3/1.7
+quad-off-symx formulaname=quad corners=-2.2/1.8/-1.3/1.7 symmetry=xaxis
+sqx-symnone formulaname=sq_XAXIS corners=-2.2/1.8/-1.3/1.7 symmetry=none
+sqx-symy formulaname=sq_XAXIS corners=-2.2/1.8/-1.3/1.7 symmetry=yaxis
+g_acos formulaname=g_acos corners=-3.125/3.109375/-4.65625/4.6875
+g_acosh formulaname=g_acosh corners=-3.125/3.109375/-4.65625/4.6875
+g_asin formulaname=g_asin corners=-3.125/3.109375/-4.65625/4.6875
+g_asinh formulaname=g_asinh corners=-3.125/3.109375/-4.65625/4.6875
+g_atan formulaname=g_atan corners=-3.125/3.109375/-4.65625/4.6875
+g_atanh formulaname=g_atanh corners=-3.125/3.109375/-4.65625/4.6875
+g_log formulaname=g_log corners=-3.125/3.109375/-4.65625/4.6875
+g_sqrt formulaname=g_sqrt corners=-3.125/3.109375/-4.65625/4.6875
+g_tan formulaname=g_tan corners=-3.125/3.109375/-4.65625/4.6875
+g_cotan formulaname=g_cotan corners=-3.125/3.109375/-4.65625/4.6875
+g_cotanh formulaname=g_cotanh corners=-3.125/3.109375/-4.65625/4.6875
+g_tanh formulaname=g_tanh corners=-3.125/3.109375/-4.65625/4.6875
+g_exp formulaname=g_exp corners=-3.125/3.109375/-4.65625/4.6875
+g_cosxx formulaname=g_cosxx corners=-3.125/3.109375/-4.65625/4.6875
+g_round formulaname=g_round corners=-3.125/3.109375/-4.65625/4.6875
+g_floor formulaname=g_floor corners=-3.125/3.109375/-4.65625/4.6875
+g_ceil formulaname=g_ceil corners=-3.125/3.109375/-4.65625/4.6875
+g_trunc formulaname=g_trunc corners=-3.125/3.109375/-4.65625/4.6875
+g_cabs formulaname=g_cabs corners=-3.125/3.109375/-4.65625/4.6875
+g_abs formulaname=g_abs corners=-3.125/3.109375/-4.65625/4.6875
+g_flip formulaname=g_flip corners=-3.125/3.109375/-4.65625/4.6875
+g_imag formulaname=g_imag corners=-3.125/3.109375/-4.65625/4.6875
+g_real formulaname=g_real corners=-3.125/3.109375/-4.65625/4.6875
+g_conj formulaname=g_conj corners=-3.125/3.109375/-4.65625/4.6875
+sp-XAXIS_NOPARM-00 formulaname=sp_XAXIS_NOPARM corners=-2.2/1.8/-1.3/1.7
+sp-XAXIS_NOPARM-r formulaname=sp_XAXIS_NOPARM corners=-2.2/1.8/-1.3/1.7 params=0.1/0
+sp-XAXIS_NOPARM-i formulaname=sp_XAXIS_NOPARM corners=-2.2/1.8/-1.3/1.7 params=0/0.1
+sp-XAXIS_NOPARM-p2 formulaname=sp_XAXIS_NOPARM corners=-2.2/1.8/-1.3/1.7 params=0/0/0.1/0
+sp-XAXIS_NOREAL-00 formulaname=sp_XAXIS_NOREAL corners=-2.2/1.8/-1.3/1.7
+sp-XAXIS_NOREAL-r formulaname=sp_XAXIS_NOREAL corners=-2.2/1.8/-1.3/1.7 params=0.1/0
+sp-XAXIS_NOREAL-i formulaname=sp_XAXIS_NOREAL corners=-2.2/1.8/-1.3/1.7 params=0/0.1
+sp-XAXIS_NOREAL-p2 formulaname=sp_XAXIS_NOREAL corners=-2.2/1.8/-1.3/1.7 params=0/0/0.1/0
+sp-XAXIS_NOIMAG-00 formulaname=sp_XAXIS_NOIMAG corners=-2.2/1.8/-1.3/1.7
+sp-XAXIS_NOIMAG-r formulaname=sp_XAXIS_NOIMAG corners=-2.2/1.8/-1.3/1.7 params=0.1/0
+sp-XAXIS_NOIMAG-i formulaname=sp_XAXIS_NOIMAG corners=-2.2/1.8/-1.3/1.7 params=0/0.1
+sp-XAXIS_NOIMAG-p2 formulaname=sp_XAXIS_NOIMAG corners=-2.2/1.8/-1.3/1.7 params=0/0/0.1/0
+sp-XYAXIS_NOPARM-00 formulaname=sp_XYAXIS_NOPARM corners=-2.2/1.8/-1.3/1.7
+sp-XYAXIS_NOPARM-r formulaname=sp_XYAXIS_NOPARM corners=-2.2/1.8/-1.3/1.7 params=0.1/0
+sp-XYAXIS_NOPARM-i formulaname=sp_XYAXIS_NOPARM corners=-2.2/1.8/-1.3/1.7 params=0/0.1
+sp-XYAXIS_NOPARM-p2 formulaname=sp_XYAXIS_NOPARM corners=-2.2/1.8/-1.3/1.7 params=0/0/0.1/0
+sp-YAXIS_NOPARM-00 formulaname=sp_YAXIS_NOPARM corners=-2.2/1.8/-1.3/1.7
+sp-YAXIS_NOPARM-r formulaname=sp_YAXIS_NOPARM corners=-2.2/1.8/-1.3/1.7 params=0.1/0
+sp-YAXIS_NOPARM-i formulaname=sp_YAXIS_NOPARM corners=-2.2/1.8/-1.3/1.7 params=0/0.1
+sp-YAXIS_NOPARM-p2 formulaname=sp_YAXIS_NOPARM corners=-2.2/1.8/-1.3/1.7 params=0/0/0.1/0
+sp-ORIGIN_NOPARM-00 formulaname=sp_ORIGIN_NOPARM corners=-2.2/1.8/-1.3/1.7
+sp-ORIGIN_NOPARM-r formulaname=sp_ORIGIN_NOPARM corners=-2.2/1.8/-1.3/1.7 params=0.1/0
+sp-ORIGIN_NOPARM-i formulaname=sp_ORIGIN_NOPARM corners=-2.2/1.8/-1.3/1.7 params=0/0.1
+sp-ORIGIN_NOPARM-p2 formulaname=sp_ORIGIN_NOPARM corners=-2.2/1.8/-1.3/1.7 params=0/0/0.1/0
+sp-PI_SYM_NOPARM-00 formulaname=sp_PI_SYM_NOPARM corners=-2.2/1.8/-1.3/1.7
+sp-PI_SYM_NOPARM-r formulaname=sp_PI_SYM_NOPARM corners=-2.2/1.8/-1.3/1.7 params=0.1/0
+sp-PI_SYM_NOPARM-i formulaname=sp_PI_SYM_NOPARM corners=-2.2/1.8/-1.3/1.7 params=0/0.1
+sp-PI_SYM_NOPARM-p2 formulaname=sp_PI_SYM_NOPARM corners=-2.2/1.8/-1.3/1.7 params=0/0/0.1/0
+sp-XAXIS-00 formulaname=sp_XAXIS corners=-2.2/1.8/-1.3/1.7
+sp-XAXIS-r formulaname=sp_XAXIS corners=-2.2/1.8/-1.3/1.7 params=0.1/0
+sp-XAXIS-i formulaname=sp_XAXIS corners=-2.2/1.8/-1.3/1.7 params=0/0.1
+sp-XAXIS-p2 formulaname=sp_XAXIS corners=-2.2/1.8/-1.3/1.7 params=0/0/0.1/0
+sp-ORIGIN-00 formulaname=sp_ORIGIN corners=-2.2/1.8/-1.3/1.7
+sp-ORIGIN-r formulaname=sp_ORIGIN corners=-2.2/1.8/-1.3/1.7 params=0.1/0
+sp-ORIGIN-i formulaname=sp_ORIGIN corners=-2.2/1.8/-1.3/1.7 params=0/0.1
+sp-ORIGIN-p2 formulaname=sp_ORIGIN corners=-2.2/1.8/-1.3/1.7 params=0/0/0.1/0
+symq-r formulaname=symq corners=-2.2/1.8/-1.3/1.7 params=0.1/0
+sp-NONE-00 formulaname=sp_NONE corners=-2.2/1.8/-1.3/1.7
+sp-NONE-r formulaname=sp_NONE corners=-2.2/1.8/-1.3/1.7 params=0.1/0
+sp-NONE-i formulaname=sp_NONE corners=-2.2/1.8/-1.3/1.7 params=0/0.1
+sp-NONE-p2 formulaname=sp_NONE corners=-2.2/1.8/-1.3/1.7 params=0/0/0.1/0
+# --- batch 4 ---
+n_atanh1-a formulaname=n_atanh1 corners=-400/400/-300/300
+n_atanh1-b formulaname=n_atanh1 corners=-4/4/-3/3
+n_atanhm1-a formulaname=n_atanhm1 corners=-400/400/-300/300
+n_atanhm1-b formulaname=n_atanhm1 corners=-4/4/-3/3
+n_atani-a formulaname=n_atani corners=-400/400/-300/300
+n_atani-b formulaname=n_atani corners=-4/4/-3/3
+n_atanmi-a formulaname=n_atanmi corners=-400/400/-300/300
+n_atanmi-b formulaname=n_atanmi corners=-4/4/-3/3
+n_lrand-a formulaname=n_lrand corners=-400/400/-300/300
+n_lrand-b formulaname=n_lrand corners=-4/4/-3/3
+n_srand-a formulaname=n_srand corners=-400/400/-300/300
+n_srand-b formulaname=n_srand corners=-4/4/-3/3
+n_and2-a formulaname=n_and2 corners=-400/400/-300/300
+n_and2-b formulaname=n_and2 corners=-4/4/-3/3
+n_or2-a formulaname=n_or2 corners=-400/400/-300/300
+n_or2-b formulaname=n_or2 corners=-4/4/-3/3
+n_and3-a formulaname=n_and3 corners=-400/400/-300/300
+n_and3-b formulaname=n_and3 corners=-4/4/-3/3
+n_pi formulaname=n_pi corners=3.1415926/3.1415927/-1/1
+n_e formulaname=n_e corners=2.7182818/2.7182819/-1/1
+q_sqrtm1 formulaname=q_sqrtm1 maxiter=300
+q_sqrtm4 formulaname=q_sqrtm4 maxiter=300
+q_powh formulaname=q_powh maxiter=300
+q_pm22 formulaname=q_pm22 maxiter=300
+q_pm23 formulaname=q_pm23 maxiter=300
+q_pi2 formulaname=q_pi2 maxiter=300
+q_ii formulaname=q_ii maxiter=300
+q_sqri formulaname=q_sqri maxiter=300
+q_p2h formulaname=q_p2h maxiter=300
+q_p22 formulaname=q_p22 maxiter=300
+q_pm2c formulaname=q_pm2c maxiter=300
+q_div formulaname=q_div maxiter=300
+q_logm1 formulaname=q_logm1 maxiter=300
+q_expipi formulaname=q_expipi maxiter=300
+c_rotr formulaname=c_rotr maxiter=1000 center-mag=0.25/-0.5/0.5/1.5/30/10
+c_roti formulaname=c_roti maxiter=1000 center-mag=0.25/-0.5/0.5/1.5/30/10
+c_magr formulaname=c_magr maxiter=1000 center-mag=0.25/-0.5/0.5/1.5/30/10
+c_magi formulaname=c_magi maxiter=1000 center-mag=0.25/-0.5/0.5/1.5/30/10
+c_cenr formulaname=c_cenr maxiter=1000 center-mag=0.25/-0.5/0.5/1.5/30/10
+c_ceni formulaname=c_ceni maxiter=1000 center-mag=0.25/-0.5/0.5/1.5/30/10
+c_scrr formulaname=c_scrr maxiter=1000
+c_scri formulaname=c_scri maxiter=1000
+c_maxit formulaname=c_maxit maxiter=1000
+c_pixr formulaname=c_pixr maxiter=1000
+nc1 formulaname=nc1
+nc2 formulaname=nc2
+nc4 formulaname=nc4
+nc5 formulaname=nc5
+# --- batch 5 ---
+hsh-NONE-w formulaname=hsh_NONE corners=-5/7/-3/6 maxiter=1000
+hsh-PI_SYM-w formulaname=hsh_PI_SYM corners=-5/7/-3/6 maxiter=1000
+hsh-ORIGIN-w formulaname=hsh_ORIGIN corners=-5/7/-3/6 maxiter=1000
+hsh-XYAXIS-w formulaname=hsh_XYAXIS corners=-5/7/-3/6 maxiter=1000
+hsh-NONE-o formulaname=hsh_NONE corners=-2.2/1.8/-1.3/1.7 maxiter=1000
+hsh-PI_SYM-o formulaname=hsh_PI_SYM corners=-2.2/1.8/-1.3/1.7 maxiter=1000
+hsh-ORIGIN-o formulaname=hsh_ORIGIN corners=-2.2/1.8/-1.3/1.7 maxiter=1000
+hsh-XYAXIS-o formulaname=hsh_XYAXIS corners=-2.2/1.8/-1.3/1.7 maxiter=1000
+hsh-NONE-n formulaname=hsh_NONE corners=-1/1.5/-0.5/1.375 maxiter=1000
+hsh-PI_SYM-n formulaname=hsh_PI_SYM corners=-1/1.5/-0.5/1.375 maxiter=1000
+hsh-ORIGIN-n formulaname=hsh_ORIGIN corners=-1/1.5/-0.5/1.375 maxiter=1000
+hsh-XYAXIS-n formulaname=hsh_XYAXIS corners=-1/1.5/-0.5/1.375 maxiter=1000
+hsh-NONE-v formulaname=hsh_NONE corners=-7/3/-2/5.5 maxiter=1000
+hsh-PI_SYM-v formulaname=hsh_PI_SYM corners=-7/3/-2/5.5 maxiter=1000
+hsh-ORIGIN-v formulaname=hsh_ORIGIN corners=-7/3/-2/5.5 maxiter=1000
+hsh-XYAXIS-v formulaname=hsh_XYAXIS corners=-7/3/-2/5.5 maxiter=1000
+hsh-NONE-c formulaname=hsh_NONE corners=-2/2/-1.5/1.5 maxiter=1000
+hsh-PI_SYM-c formulaname=hsh_PI_SYM corners=-2/2/-1.5/1.5 maxiter=1000
+hsh-ORIGIN-c formulaname=hsh_ORIGIN corners=-2/2/-1.5/1.5 maxiter=1000
+hsh-XYAXIS-c formulaname=hsh_XYAXIS corners=-2/2/-1.5/1.5 maxiter=1000
+er1 formulaname=er1
+er2 formulaname=er2
+er3 formulaname=er3
+er4 formulaname=er4
+er8 formulaname=er8
+er5 formulaname=er5 maxiter=300
+er6 formulaname=er6 maxiter=300
+er7 formulaname=er7
+er8-g formulaname=er8 corners=-200/199/-298/300
+er9 formulaname=er9
+# --- batch 6 ---
+f-fn1-ident formulaname=f_fn1 corners=-1.5625/1.5546875/-2.328125/2.34375 function=ident/zero/one/recip
+f-fn2-zero formulaname=f_fn2 corners=-1.5625/1.5546875/-2.328125/2.34375 function=ident/zero/one/recip
+f-fn3-one formulaname=f_fn3 corners=-1.5625/1.5546875/-2.328125/2.34375 function=ident/zero/one/recip
+f-fn4-recip formulaname=f_fn4 corners=-1.5625/1.5546875/-2.328125/2.34375 function=ident/zero/one/recip
+f-fn1-cotan formulaname=f_fn1 corners=-1.5625/1.5546875/-2.328125/2.34375 function=cotan/cotanh/sqrt/acos
+f-fn4-acos formulaname=f_fn4 corners=-1.5625/1.5546875/-2.328125/2.34375 function=cotan/cotanh/sqrt/acos
+rnd1-s1c formulaname=rnd1 corners=-40000/40000/-30000/30000 rseed=1
+mrand-s5 formulaname=mrand corners=-8/8/-6/6 rseed=5
+mrand-s5b formulaname=mrand corners=-8/8/-6/6 rseed=5

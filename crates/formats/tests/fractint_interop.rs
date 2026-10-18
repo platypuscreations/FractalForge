@@ -121,7 +121,7 @@ fn writes_the_same_main_block_as_xfractint() {
 #[test]
 fn round_trips_through_a_gif() {
     let mut p = Params::for_type("julia").unwrap();
-    p.params = [-0.4, 0.6, 0.0, 0.0];
+    p.params[..2].copy_from_slice(&[-0.4, 0.6]);
     p.max_iter = 40_000;
     p.bailout = 16.0;
     p.inside = Inside::MaxIter;

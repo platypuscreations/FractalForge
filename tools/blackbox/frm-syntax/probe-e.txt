@@ -1,0 +1,39 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Error-class probes: name<TAB>init<TAB>extra args (most are meant to fail).
+er1	= 5
+er2	3 = k
+er3	k =
+er4	k = (1,2
+er5	k = |3
+er6	k = 3|
+er7	k = (1,2,3)
+er8	k = sin(1
+er9	k = 5 = 6
+er10	k = fn9(1)
+er11	k = 1 + + 2
+er12	k = )
+er13	k = (
+er14	k = 1 +* 2 +* 3 +* 4 +* 5 +* 6 +* 7 +* 8 +* 9 +* 10 +* 11 +* 12
+er15	k = ~1
+er16	k = ?1
+er17	k = [1]
+er18	k = `1
+er19	k = "1"
+er20	k = @1
+er21	k = 1 ^ ^ 2
+er22	k = 100 + 1e999 - 1e999
+er23	k = sin
+er24	k = 1 < < 2
+er25	k = 1 >> 2
+er26	k = (1 , 2) , j = 1
+er27	k = 2 ^ (-1) ^ 2
+er28	k = 100 + -2 ^ -(1)
+er29	k = 100 + 2 ^ -(1) * 10
+er30	k = 100, if (1), k = 101, elseif (1), k = 102, else, k = 103, elseif (1), endif
+er31	k = sqr(1)(2)
+er32	k = (1)(2)
+er33	k = 1 (2)
+er34	k = pi(1)
+er35	k = |-3|
+er36	k = 100 + |(-3,4)| - 20
+er37	k = 100 + 2 ^ - 1

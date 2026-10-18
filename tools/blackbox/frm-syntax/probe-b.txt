@@ -1,0 +1,186 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Built-in name probes: rN = read NAME (params=1/2/3/4/5/6/7/8/9/10), aN = assign 3 to NAME, fN = call NAME(0.5).
+rpixel	k = 100 + 10 * real(pixel)	params=1/2/3/4/5/6/7/8/9/10
+ripixel	k = 100 + 10 * imag(pixel)	params=1/2/3/4/5/6/7/8/9/10
+apixel	pixel = 3, k = 100 + 10 * real(pixel)
+rz	k = 100 + 10 * real(z)	params=1/2/3/4/5/6/7/8/9/10
+riz	k = 100 + 10 * imag(z)	params=1/2/3/4/5/6/7/8/9/10
+az	z = 3, k = 100 + 10 * real(z)
+rc	k = 100 + 10 * real(c)	params=1/2/3/4/5/6/7/8/9/10
+ric	k = 100 + 10 * imag(c)	params=1/2/3/4/5/6/7/8/9/10
+ac	c = 3, k = 100 + 10 * real(c)
+rp1	k = 100 + 10 * real(p1)	params=1/2/3/4/5/6/7/8/9/10
+rip1	k = 100 + 10 * imag(p1)	params=1/2/3/4/5/6/7/8/9/10
+ap1	p1 = 3, k = 100 + 10 * real(p1)
+rp2	k = 100 + 10 * real(p2)	params=1/2/3/4/5/6/7/8/9/10
+rip2	k = 100 + 10 * imag(p2)	params=1/2/3/4/5/6/7/8/9/10
+ap2	p2 = 3, k = 100 + 10 * real(p2)
+rp3	k = 100 + 10 * real(p3)	params=1/2/3/4/5/6/7/8/9/10
+rip3	k = 100 + 10 * imag(p3)	params=1/2/3/4/5/6/7/8/9/10
+ap3	p3 = 3, k = 100 + 10 * real(p3)
+rp4	k = 100 + 10 * real(p4)	params=1/2/3/4/5/6/7/8/9/10
+rip4	k = 100 + 10 * imag(p4)	params=1/2/3/4/5/6/7/8/9/10
+ap4	p4 = 3, k = 100 + 10 * real(p4)
+rp5	k = 100 + 10 * real(p5)	params=1/2/3/4/5/6/7/8/9/10
+rip5	k = 100 + 10 * imag(p5)	params=1/2/3/4/5/6/7/8/9/10
+ap5	p5 = 3, k = 100 + 10 * real(p5)
+rp6	k = 100 + 10 * real(p6)	params=1/2/3/4/5/6/7/8/9/10
+rip6	k = 100 + 10 * imag(p6)	params=1/2/3/4/5/6/7/8/9/10
+ap6	p6 = 3, k = 100 + 10 * real(p6)
+rpi	k = 100 + 10 * real(pi)	params=1/2/3/4/5/6/7/8/9/10
+ripi	k = 100 + 10 * imag(pi)	params=1/2/3/4/5/6/7/8/9/10
+api	pi = 3, k = 100 + 10 * real(pi)
+re	k = 100 + 10 * real(e)	params=1/2/3/4/5/6/7/8/9/10
+rie	k = 100 + 10 * imag(e)	params=1/2/3/4/5/6/7/8/9/10
+ae	e = 3, k = 100 + 10 * real(e)
+rrand	k = 100 + 10 * real(rand)	params=1/2/3/4/5/6/7/8/9/10
+rirand	k = 100 + 10 * imag(rand)	params=1/2/3/4/5/6/7/8/9/10
+arand	rand = 3, k = 100 + 10 * real(rand)
+rlastsqr	k = 100 + 10 * real(lastsqr)	params=1/2/3/4/5/6/7/8/9/10
+rilastsqr	k = 100 + 10 * imag(lastsqr)	params=1/2/3/4/5/6/7/8/9/10
+alastsqr	lastsqr = 3, k = 100 + 10 * real(lastsqr)
+rwhitesq	k = 100 + 10 * real(whitesq)	params=1/2/3/4/5/6/7/8/9/10
+riwhitesq	k = 100 + 10 * imag(whitesq)	params=1/2/3/4/5/6/7/8/9/10
+awhitesq	whitesq = 3, k = 100 + 10 * real(whitesq)
+rscrnpix	k = 100 + 10 * real(scrnpix)	params=1/2/3/4/5/6/7/8/9/10
+riscrnpix	k = 100 + 10 * imag(scrnpix)	params=1/2/3/4/5/6/7/8/9/10
+ascrnpix	scrnpix = 3, k = 100 + 10 * real(scrnpix)
+rscrnmax	k = 100 + 10 * real(scrnmax)	params=1/2/3/4/5/6/7/8/9/10
+riscrnmax	k = 100 + 10 * imag(scrnmax)	params=1/2/3/4/5/6/7/8/9/10
+ascrnmax	scrnmax = 3, k = 100 + 10 * real(scrnmax)
+rmaxit	k = 100 + 10 * real(maxit)	params=1/2/3/4/5/6/7/8/9/10
+rimaxit	k = 100 + 10 * imag(maxit)	params=1/2/3/4/5/6/7/8/9/10
+amaxit	maxit = 3, k = 100 + 10 * real(maxit)
+rismand	k = 100 + 10 * real(ismand)	params=1/2/3/4/5/6/7/8/9/10
+riismand	k = 100 + 10 * imag(ismand)	params=1/2/3/4/5/6/7/8/9/10
+aismand	ismand = 3, k = 100 + 10 * real(ismand)
+rcenter	k = 100 + 10 * real(center)	params=1/2/3/4/5/6/7/8/9/10
+ricenter	k = 100 + 10 * imag(center)	params=1/2/3/4/5/6/7/8/9/10
+acenter	center = 3, k = 100 + 10 * real(center)
+rmagxmag	k = 100 + 10 * real(magxmag)	params=1/2/3/4/5/6/7/8/9/10
+rimagxmag	k = 100 + 10 * imag(magxmag)	params=1/2/3/4/5/6/7/8/9/10
+amagxmag	magxmag = 3, k = 100 + 10 * real(magxmag)
+rrotskew	k = 100 + 10 * real(rotskew)	params=1/2/3/4/5/6/7/8/9/10
+rirotskew	k = 100 + 10 * imag(rotskew)	params=1/2/3/4/5/6/7/8/9/10
+arotskew	rotskew = 3, k = 100 + 10 * real(rotskew)
+rx	k = 100 + 10 * real(x)	params=1/2/3/4/5/6/7/8/9/10
+rix	k = 100 + 10 * imag(x)	params=1/2/3/4/5/6/7/8/9/10
+ax	x = 3, k = 100 + 10 * real(x)
+ry	k = 100 + 10 * real(y)	params=1/2/3/4/5/6/7/8/9/10
+riy	k = 100 + 10 * imag(y)	params=1/2/3/4/5/6/7/8/9/10
+ay	y = 3, k = 100 + 10 * real(y)
+ri	k = 100 + 10 * real(i)	params=1/2/3/4/5/6/7/8/9/10
+rii	k = 100 + 10 * imag(i)	params=1/2/3/4/5/6/7/8/9/10
+ai	i = 3, k = 100 + 10 * real(i)
+rj	k = 100 + 10 * real(j)	params=1/2/3/4/5/6/7/8/9/10
+rij	k = 100 + 10 * imag(j)	params=1/2/3/4/5/6/7/8/9/10
+aj	j = 3, k = 100 + 10 * real(j)
+rt	k = 100 + 10 * real(t)	params=1/2/3/4/5/6/7/8/9/10
+rit	k = 100 + 10 * imag(t)	params=1/2/3/4/5/6/7/8/9/10
+at	t = 3, k = 100 + 10 * real(t)
+rw	k = 100 + 10 * real(w)	params=1/2/3/4/5/6/7/8/9/10
+riw	k = 100 + 10 * imag(w)	params=1/2/3/4/5/6/7/8/9/10
+aw	w = 3, k = 100 + 10 * real(w)
+rq	k = 100 + 10 * real(q)	params=1/2/3/4/5/6/7/8/9/10
+riq	k = 100 + 10 * imag(q)	params=1/2/3/4/5/6/7/8/9/10
+aq	q = 3, k = 100 + 10 * real(q)
+rzero	k = 100 + 10 * real(zero)	params=1/2/3/4/5/6/7/8/9/10
+rizero	k = 100 + 10 * imag(zero)	params=1/2/3/4/5/6/7/8/9/10
+azero	zero = 3, k = 100 + 10 * real(zero)
+rone	k = 100 + 10 * real(one)	params=1/2/3/4/5/6/7/8/9/10
+rione	k = 100 + 10 * imag(one)	params=1/2/3/4/5/6/7/8/9/10
+aone	one = 3, k = 100 + 10 * real(one)
+rfn1	k = 100 + 10 * real(fn1)	params=1/2/3/4/5/6/7/8/9/10
+rifn1	k = 100 + 10 * imag(fn1)	params=1/2/3/4/5/6/7/8/9/10
+afn1	fn1 = 3, k = 100 + 10 * real(fn1)
+rsin	k = 100 + 10 * real(sin)	params=1/2/3/4/5/6/7/8/9/10
+risin	k = 100 + 10 * imag(sin)	params=1/2/3/4/5/6/7/8/9/10
+asin	sin = 3, k = 100 + 10 * real(sin)
+rif	k = 100 + 10 * real(if)	params=1/2/3/4/5/6/7/8/9/10
+riif	k = 100 + 10 * imag(if)	params=1/2/3/4/5/6/7/8/9/10
+aif	if = 3, k = 100 + 10 * real(if)
+rendif	k = 100 + 10 * real(endif)	params=1/2/3/4/5/6/7/8/9/10
+riendif	k = 100 + 10 * imag(endif)	params=1/2/3/4/5/6/7/8/9/10
+aendif	endif = 3, k = 100 + 10 * real(endif)
+relse	k = 100 + 10 * real(else)	params=1/2/3/4/5/6/7/8/9/10
+rielse	k = 100 + 10 * imag(else)	params=1/2/3/4/5/6/7/8/9/10
+aelse	else = 3, k = 100 + 10 * real(else)
+relseif	k = 100 + 10 * real(elseif)	params=1/2/3/4/5/6/7/8/9/10
+rielseif	k = 100 + 10 * imag(elseif)	params=1/2/3/4/5/6/7/8/9/10
+aelseif	elseif = 3, k = 100 + 10 * real(elseif)
+rreal	k = 100 + 10 * real(real)	params=1/2/3/4/5/6/7/8/9/10
+rireal	k = 100 + 10 * imag(real)	params=1/2/3/4/5/6/7/8/9/10
+areal	real = 3, k = 100 + 10 * real(real)
+fsin	k = 100 + 10 * real(sin(0.5))
+fcos	k = 100 + 10 * real(cos(0.5))
+ftan	k = 100 + 10 * real(tan(0.5))
+fcot	k = 100 + 10 * real(cot(0.5))
+fsec	k = 100 + 10 * real(sec(0.5))
+fcsc	k = 100 + 10 * real(csc(0.5))
+fsinh	k = 100 + 10 * real(sinh(0.5))
+fcosh	k = 100 + 10 * real(cosh(0.5))
+ftanh	k = 100 + 10 * real(tanh(0.5))
+fcoth	k = 100 + 10 * real(coth(0.5))
+fsech	k = 100 + 10 * real(sech(0.5))
+fcsch	k = 100 + 10 * real(csch(0.5))
+fasin	k = 100 + 10 * real(asin(0.5))
+facos	k = 100 + 10 * real(acos(0.5))
+fatan	k = 100 + 10 * real(atan(0.5))
+facot	k = 100 + 10 * real(acot(0.5))
+fasinh	k = 100 + 10 * real(asinh(0.5))
+facosh	k = 100 + 10 * real(acosh(0.5))
+fatanh	k = 100 + 10 * real(atanh(0.5))
+fsqrt	k = 100 + 10 * real(sqrt(0.5))
+fsqr	k = 100 + 10 * real(sqr(0.5))
+fcube	k = 100 + 10 * real(cube(0.5))
+fexp	k = 100 + 10 * real(exp(0.5))
+flog	k = 100 + 10 * real(log(0.5))
+fln	k = 100 + 10 * real(ln(0.5))
+flog10	k = 100 + 10 * real(log10(0.5))
+fabs	k = 100 + 10 * real(abs(0.5))
+fcabs	k = 100 + 10 * real(cabs(0.5))
+fconj	k = 100 + 10 * real(conj(0.5))
+fflip	k = 100 + 10 * real(flip(0.5))
+freal	k = 100 + 10 * real(real(0.5))
+fimag	k = 100 + 10 * real(imag(0.5))
+fident	k = 100 + 10 * real(ident(0.5))
+fzero	k = 100 + 10 * real(zero(0.5))
+fone	k = 100 + 10 * real(one(0.5))
+ffloor	k = 100 + 10 * real(floor(0.5))
+fceil	k = 100 + 10 * real(ceil(0.5))
+ftrunc	k = 100 + 10 * real(trunc(0.5))
+fround	k = 100 + 10 * real(round(0.5))
+frecip	k = 100 + 10 * real(recip(0.5))
+fneg	k = 100 + 10 * real(neg(0.5))
+farg	k = 100 + 10 * real(arg(0.5))
+fmod	k = 100 + 10 * real(mod(0.5))
+fnorm	k = 100 + 10 * real(norm(0.5))
+ffn1	k = 100 + 10 * real(fn1(0.5))
+ffn2	k = 100 + 10 * real(fn2(0.5))
+ffn3	k = 100 + 10 * real(fn3(0.5))
+ffn4	k = 100 + 10 * real(fn4(0.5))
+ffn5	k = 100 + 10 * real(fn5(0.5))
+ffn0	k = 100 + 10 * real(fn0(0.5))
+frand	k = 100 + 10 * real(rand(0.5))
+fsrand	k = 100 + 10 * real(srand(0.5))
+fpow	k = 100 + 10 * real(pow(0.5))
+fmax	k = 100 + 10 * real(max(0.5))
+fmin	k = 100 + 10 * real(min(0.5))
+fcosxx	k = 100 + 10 * real(cosxx(0.5))
+fsign	k = 100 + 10 * real(sign(0.5))
+fpixel	k = 100 + 10 * real(pixel(0.5))
+fz	k = 100 + 10 * real(z(0.5))
+fp1	k = 100 + 10 * real(p1(0.5))
+fpi	k = 100 + 10 * real(pi(0.5))
+zz1	z = 5, k = 100 + real(z)
+zz2	w = 5, k = 100 + real(w)
+zz3	Z = 5, k = 100 + Z
+zz4	z = 5, k = 100 + z
+zz5	z = 5, w = z, k = 100 + real(w)
+call1	k = 100 + 10 * real(sin())
+call2	k = 100 + 10 * real(sqr(1, 2))
+call3	k = 100 + real(sqr((1, 2)))
+call4	k = 100 + real(sqr 3)
+call5	k = 100 + real(sqr(sqr(2)))
+call6	k = 100 + real(SQR(3))
+call7	k = 100 + real(sqr(3)(1))

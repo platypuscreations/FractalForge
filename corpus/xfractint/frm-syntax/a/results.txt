@@ -1,0 +1,9 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# python3 -I tools/blackbox/frm-syntax/summarise.py on round a (cases-a.txt)
+a-bad1                     740c5da2 [(1, 120000)] t=73 sym=999 003='bad1' f40..=48:1 STOPMSG: Error(0) at line 3:  Should be an Argument |   z=z*+pixel |       ^
+a-missing                  740c5da2 [(1, 120000)] t=73 sym=999 003='nosuch' f40..=48:1 STOPMSG: 'nosuch' file entry item not found | Could not open file where formula located
+a-nofile                   740b35d2 [(1, 57778), (2, 20990), (0, 15226), (3, 8664)] t=73 sym=999 003='quad' f40..=48:1
+a-noinit                   740c5da2 [(1, 120000)] t=73 sym=999 003='noinit' f40..=48:1
+a-quad                     740b35d2 [(1, 57778), (2, 20990), (0, 15226), (3, 8664)] t=73 sym=999 003='quad' f40..=48:1
+a-undef                    74e2a9c5 [(1, 57528), (0, 31240), (2, 18308), (3, 7020)] t=73 sym=999 003='undef' f40..=48:1
+a-unkfn                    740c5da2 [(1, 120000)] t=73 sym=999 003='unkfn' f40..=48:1 STOPMSG: Error(5) at line 3:  Undefined Function |   z=foo(z)+pixel |     ^^^

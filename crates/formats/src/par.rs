@@ -9,8 +9,14 @@
 
 use std::path::Path;
 
-use fractalforge_core::{FractalType, Inside, Outside, Palette, Params, Window, types};
+use fractalforge_core::{
+    FractalType, Inside, Outside, PARAM_COUNT, Palette, Params, Symmetry, Window, types,
+};
 use fractalforge_render::PassMode;
+
+use fractalforge_core::Program;
+use fractalforge_formula::funcs::FN_TABLE;
+use fractalforge_formula::parser as formula_parser;
 
 use crate::Error;
 use crate::gif::fractint_blocks::{inside_from_code, outside_from_code};
@@ -171,7 +177,7 @@ pub struct Loaded {
 struct State {
     fractal: Option<&'static FractalType>,
     window: Option<Window>,
-    params: Option<[f64; 4]>,
+    params: Option<[f64; PARAM_COUNT]>,
     max_iter: Option<u32>,
     bailout: Option<f64>,
     inside: Option<Inside>,
@@ -179,13 +185,23 @@ struct State {
     decomp: Option<u32>,
     biomorph: Option<Option<u32>>,
     use_symmetry: Option<bool>,
+    formula_file: Option<String>,
+    formula_name: Option<String>,
+    functions: Option<[u8; 4]>,
+    forced_symmetry: Option<Symmetry>,
     pass_mode: Option<PassMode>,
     reset: bool,
 }
 
 /// Applies an entry on top of FractalForge's defaults. `dir` is where
 /// `map=` and `colors=@` files are looked up (the `.par` file's folder).
-pub fn load(entry: &RawEntry, dir: Option<&Path>) -> Result<Loaded, Error> {
+/// `file_text` is the whole `.par` file, for formulas embedded as
+/// `frm:NAME` entries (frm-syntax.md §8.2).
+pub fn load(
+    entry: &RawEntry,
+    dir: Option<&Path>,
+    file_text: Option<&str>,
+) -> Result<Loaded, Error> {
     let mut st = State::default();
     let mut palette: Option<Palette> = None;
     let mut map_reference = false;
@@ -270,10 +286,7 @@ pub fn load(entry: &RawEntry, dir: Option<&Path>) -> Result<Loaded, Error> {
                     if p.len() > 10 {
                         return Err("params takes at most 10 values".into());
                     }
-                    if p.iter().skip(4).any(|&x| x != 0.0) {
-                        warnings.push("parameters 5-10 are ignored".into());
-                    }
-                    let mut out = [0.0; 4];
+                    let mut out = [0.0; PARAM_COUNT];
                     for (o, x) in out.iter_mut().zip(&p) {
                         *o = *x;
                     }
@@ -316,6 +329,10 @@ pub fn load(entry: &RawEntry, dir: Option<&Path>) -> Result<Loaded, Error> {
                 }
                 "symmetry" => match v.to_lowercase().as_str() {
                     "none" => st.use_symmetry = Some(false),
+                    "xaxis" => st.forced_symmetry = Some(Symmetry::XAxis),
+                    "yaxis" => st.forced_symmetry = Some(Symmetry::YAxis),
+                    "xyaxis" => st.forced_symmetry = Some(Symmetry::XY),
+                    "origin" => st.forced_symmetry = Some(Symmetry::Origin),
                     other => {
                         warnings.push(format!("symmetry={other} isn't supported; using automatic"))
                     }
@@ -335,8 +352,21 @@ pub fn load(entry: &RawEntry, dir: Option<&Path>) -> Result<Loaded, Error> {
                 }
                 // Settings with no effect in FractalForge.
                 "float" | "periodicity" | "rseed" | "cyclerange" | "viewwindows" | "fillcolor" => {}
-                "logmap" | "potential" | "invert" | "distest" | "finattract" | "function"
-                | "formulafile" | "formulaname" | "olddemmcolors" | "nobof" => {
+                "formulafile" => st.formula_file = Some(v.to_owned()),
+                "formulaname" => st.formula_name = Some(v.to_owned()),
+                "function" => {
+                    let mut f = [0, 6, 2, 3];
+                    for (slot, name) in f.iter_mut().zip(v.split('/')) {
+                        *slot = FN_TABLE
+                            .iter()
+                            .position(|n| n.eq_ignore_ascii_case(name))
+                            .ok_or_else(|| format!("unknown function '{name}'"))?
+                            as u8;
+                    }
+                    st.functions = Some(f);
+                }
+                "logmap" | "potential" | "invert" | "distest" | "finattract" | "olddemmcolors"
+                | "nobof" => {
                     if !matches!(v.to_lowercase().as_str(), "" | "0" | "no" | "n" | "-1") {
                         warnings.push(format!("{key_l} isn't supported yet and was ignored"));
                     }
@@ -362,6 +392,21 @@ pub fn load(entry: &RawEntry, dir: Option<&Path>) -> Result<Loaded, Error> {
     }
     let fractal = st.fractal.unwrap_or(&types::MANDEL);
     let mut p = Params::new(fractal);
+    if let Some(f) = st.functions {
+        p.functions = f;
+    }
+    if fractal.needs_program {
+        let name = st.formula_name.clone().ok_or_else(|| {
+            Error::Invalid(format!(
+                "entry {}: type=formula needs formulaname=",
+                entry.name
+            ))
+        })?;
+        let (program, w) = resolve_formula(&name, file_text, st.formula_file.as_deref(), dir)
+            .map_err(|e| Error::Invalid(format!("entry {}: {e}", entry.name)))?;
+        warnings.extend(w);
+        p.program = Some(program);
+    }
     if let Some(w) = st.window {
         p.window = w;
     }
@@ -381,6 +426,7 @@ pub fn load(entry: &RawEntry, dir: Option<&Path>) -> Result<Loaded, Error> {
     p.decomp = st.decomp.unwrap_or(0);
     p.biomorph = st.biomorph.flatten();
     p.use_symmetry = st.use_symmetry.unwrap_or(true);
+    p.forced_symmetry = st.forced_symmetry;
     p.bailout = st.bailout.unwrap_or_else(|| p.default_bailout());
     if p.needs_orbit_coloring() && !p.fractal.orbit_coloring {
         warnings.push(format!(
@@ -449,6 +495,43 @@ fn parse_outside(v: &str) -> Result<Outside, String> {
         return outside_from_code(n as i16).ok_or_else(|| format!("outside={v} isn't supported"));
     }
     Outside::parse(&v.to_lowercase()).ok_or_else(|| format!("outside={v} isn't supported"))
+}
+
+/// Finds and compiles formula `name` for a `.par` entry, trying an
+/// embedded `frm:name` entry, then `formulafile=` (next to the `.par`),
+/// then the `.frm` files of the `.par` file's folder.
+fn resolve_formula(
+    name: &str,
+    file_text: Option<&str>,
+    formula_file: Option<&str>,
+    dir: Option<&Path>,
+) -> Result<(Program, Vec<String>), String> {
+    let embedded = format!("frm:{name}");
+    if let Some(text) = file_text
+        && formula_parser::find(&formula_parser::entries(text), &embedded).is_some()
+    {
+        return fractalforge_formula::load(text, &embedded);
+    }
+    if let Some(file) = formula_file {
+        let mut candidates = Vec::new();
+        if let Some(d) = dir {
+            candidates.push(d.join(Path::new(file).file_name().unwrap_or_default()));
+        }
+        candidates.push(Path::new(file).to_owned());
+        for path in candidates {
+            if let Ok(text) = fractalforge_formula::read_text(&path)
+                && formula_parser::find(&formula_parser::entries(&text), name).is_some()
+            {
+                return fractalforge_formula::load(&text, name);
+            }
+        }
+    }
+    if let Some(d) = dir
+        && let Some((_, text)) = fractalforge_formula::find_in_dir(d, name)
+    {
+        return fractalforge_formula::load(&text, name);
+    }
+    Err(format!("can't find formula {name}"))
 }
 
 /// `center-mag` without rotation or skew (§5.2): half height 1/mag, half
@@ -587,6 +670,14 @@ pub fn write_entry(
         )));
     }
     let mut tokens = vec!["reset=2004".to_owned(), format!("type={}", p.fractal.name)];
+    if let Some(prog) = &p.program {
+        // The formula itself is written as an `frm:` entry (save_entry).
+        tokens.push(format!("formulaname={}", prog.0.name()));
+        if p.functions != [0, 6, 2, 3] {
+            let names: Vec<&str> = p.functions.iter().map(|&i| FN_TABLE[i as usize]).collect();
+            tokens.push(format!("function={}", names.join("/")));
+        }
+    }
     match pass_mode {
         PassMode::Guess => {}
         PassMode::One => tokens.push("passes=1".into()),
@@ -600,12 +691,18 @@ pub fn write_entry(
         num(w.y_min),
         num(w.y_max)
     ));
-    let used = p.fractal.param_names.len().max(
-        p.params
-            .iter()
-            .rposition(|&x| x != 0.0)
-            .map_or(0, |i| i + 1),
-    );
+    // Every parameter the type uses, and any non-zero ones after them.
+    // Formulas list p1–p5 as parameters but write only what's set.
+    let last_set = p
+        .params
+        .iter()
+        .rposition(|&x| x != 0.0)
+        .map_or(0, |i| i + 1);
+    let used = if p.fractal.needs_program {
+        last_set
+    } else {
+        p.fractal.param_names.len().max(last_set)
+    };
     if used > 0 {
         let list: Vec<String> = p.params[..used].iter().map(|&x| num(x)).collect();
         tokens.push(format!("params={}", list.join("/")));
@@ -634,8 +731,19 @@ pub fn write_entry(
     if let Some(b) = p.biomorph {
         tokens.push(format!("biomorph={b}"));
     }
-    if !p.use_symmetry {
-        tokens.push("symmetry=none".into());
+    match (p.use_symmetry, p.forced_symmetry) {
+        (false, _) | (true, Some(Symmetry::None)) => tokens.push("symmetry=none".into()),
+        (true, Some(s)) => tokens.push(format!(
+            "symmetry={}",
+            match s {
+                Symmetry::XAxis => "xaxis",
+                Symmetry::YAxis => "yaxis",
+                Symmetry::XY => "xyaxis",
+                Symmetry::Pi => "pi",
+                _ => "origin",
+            }
+        )),
+        (true, None) => {}
     }
 
     let mut out = format!("{name:<19}{{");
@@ -666,6 +774,28 @@ pub fn write_entry(
         }
     }
     out.push_str("  }\n\n");
+    Ok(out)
+}
+
+/// Adds a parameter entry to a `.par` file's text, with the formula (if the
+/// type has one) embedded as an `frm:NAME` entry so the file is
+/// self-contained (frm-syntax.md §8.2). Entries of the same names are
+/// replaced in place.
+pub fn save_entry(
+    file_text: &str,
+    name: &str,
+    comment: Option<&str>,
+    p: &Params,
+    pass_mode: PassMode,
+    palette: Option<&Palette>,
+) -> Result<String, Error> {
+    let entry = write_entry(name, comment, p, pass_mode, palette)?;
+    let mut out = upsert(file_text, name, &entry);
+    if let Some(prog) = &p.program {
+        let frm_name = format!("frm:{}", prog.0.name());
+        let text = format!("frm:{}\n\n", prog.0.source());
+        out = upsert(&out, &frm_name, &text);
+    }
     Ok(out)
 }
 
@@ -715,14 +845,14 @@ Second { reset type=mandel maxiter=77;maxiter=998\n\
         );
         assert_eq!(all[0].comment.as_deref(), Some("a description"));
         assert_eq!((all[0].first_line, all[0].last_line), (1, 5));
-        let l = load(find(&all, "FIRST").unwrap(), None).unwrap();
+        let l = load(find(&all, "FIRST").unwrap(), None, None).unwrap();
         assert!(l.warnings.is_empty(), "{:?}", l.warnings);
         assert_eq!(l.params.fractal.name, "julia");
         assert_eq!(l.params.params[..2], [-0.8, 0.156]);
         assert_eq!(l.params.max_iter, 200);
         assert_eq!(l.params.window, Window::new(-1.5, 1.5, -1.125, 1.125));
         assert_eq!(l.params.inside, Inside::Color(0));
-        let s = load(find(&all, "second").unwrap(), None).unwrap();
+        let s = load(find(&all, "second").unwrap(), None, None).unwrap();
         assert_eq!(s.params.max_iter, 77);
         // After reset, inside defaults to 1.
         assert_eq!(s.params.inside, Inside::Color(1));
@@ -731,11 +861,11 @@ Second { reset type=mandel maxiter=77;maxiter=998\n\
     #[test]
     fn tolerant_of_what_xfractint_refuses() {
         let all = entries("e { type=julia frobnicate=7 maxiter=abc MaxIter=9 }");
-        let l = load(&all[0], None).unwrap();
+        let l = load(&all[0], None, None).unwrap();
         assert!(l.xfractint_refuses);
         assert_eq!(l.warnings.len(), 3, "{:?}", l.warnings);
         assert_eq!(l.params.max_iter, 9);
-        assert!(load(&entries("e { type=nosuch }")[0], None).is_err());
+        assert!(load(&entries("e { type=nosuch }")[0], None, None).is_err());
     }
 
     #[test]
@@ -759,7 +889,7 @@ Second { reset type=mandel maxiter=77;maxiter=998\n\
     #[test]
     fn write_then_read() {
         let mut p = Params::for_type("julia").unwrap();
-        p.params = [-0.8, 0.156, 0.0, 0.0];
+        p.params[..2].copy_from_slice(&[-0.8, 0.156]);
         p.window = Window::new(-1.5, 1.5, -1.0e-20, 1.25);
         p.max_iter = 1000;
         p.outside = Outside::Real;
@@ -771,7 +901,7 @@ Second { reset type=mandel maxiter=77;maxiter=998\n\
         assert!(text.starts_with("wjulia             { ; from tests\n  reset=2004 type=julia"));
         assert!(text.lines().all(|l| l.len() <= 75), "{text}");
         let all = entries(&text);
-        let l = load(&all[0], None).unwrap();
+        let l = load(&all[0], None, None).unwrap();
         assert!(!l.xfractint_refuses, "{:?}", l.warnings);
         assert_eq!(l.params, p);
         assert_eq!(l.pass_mode, Some(PassMode::One));

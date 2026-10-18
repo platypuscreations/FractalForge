@@ -1,0 +1,8 @@
+
+Error(26) at line 2:  Illegal variable name
+  a.b=5
+  ^^
+Error(26) at line 2:  Illegal variable name
+  k=100+a.b
+        ^^
+

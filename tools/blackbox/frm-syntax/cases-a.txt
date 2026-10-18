@@ -1,0 +1,9 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Round 1: basic errors
+a-quad formulafile=a.frm formulaname=quad
+a-bad1 formulafile=a.frm formulaname=bad1
+a-unkfn formulafile=a.frm formulaname=unkfn
+a-noinit formulafile=a.frm formulaname=noinit
+a-undef formulafile=a.frm formulaname=undef
+a-missing formulafile=a.frm formulaname=nosuch
+a-nofile formulafile=zz.frm formulaname=quad

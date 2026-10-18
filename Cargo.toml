@@ -2,7 +2,7 @@
 
 [workspace]
 resolver = "3"
-members = ["crates/core", "crates/render", "crates/formats", "apps/cli", "apps/gui"]
+members = ["crates/core", "crates/render", "crates/formats", "crates/formula", "apps/cli", "apps/gui"]
 
 [workspace.package]
 version = "0.1.0"
@@ -16,6 +16,7 @@ publish = false
 fractalforge-core = { path = "crates/core" }
 fractalforge-render = { path = "crates/render" }
 fractalforge-formats = { path = "crates/formats" }
+fractalforge-formula = { path = "crates/formula" }
 rayon = "1.10"
 weezl = "0.1.8"
 miniz_oxide = "0.8"

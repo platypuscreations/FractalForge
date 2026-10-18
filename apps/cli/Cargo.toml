@@ -14,6 +14,7 @@ publish.workspace = true
 fractalforge-core.workspace = true
 fractalforge-render.workspace = true
 fractalforge-formats.workspace = true
+fractalforge-formula.workspace = true
 clap.workspace = true
 ctrlc.workspace = true
 

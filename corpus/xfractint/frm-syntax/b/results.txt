@@ -1,0 +1,186 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# python3 -I tools/blackbox/frm-syntax/summarise.py on round b (cases-b.txt)
+b-ac                       490179e0 [(131, 120000)] t=73 sym=999 003='ac' f40..=48:1
+b-acenter                  490179e0 [(131, 120000)] t=73 sym=999 003='acenter' f40..=48:1
+b-ae                       490179e0 [(131, 120000)] t=73 sym=999 003='ae' f40..=48:1
+b-aelse                    740c5da2 [(1, 120000)] t=73 sym=999 003='aelse' f40..=48:1 STOPMSG: Error(15) at line 2:  No characters may follow this jump instruction |   else=3 |   ^^^^ | Error(15) at line 2:  No characters may follow this jump instruction |   k=100+10*real(else) |                 ^^^^
+b-aelseif                  740c5da2 [(1, 120000)] t=73 sym=999 003='aelseif' f40..=48:1 STOPMSG: Error(16) at line 2:  Jump instruction missing required (boolean argument) |   elseif=3 |   ^^^^^^ | Error(16) at line 2:  Jump instruction missing required (boolean argument) |   k=100+10*real(elseif) |                 ^^^^^^
+b-aendif                   740c5da2 [(1, 120000)] t=73 sym=999 003='aendif' f40..=48:1 STOPMSG: Error(15) at line 2:  No characters may follow this jump instruction |   endif=3 |   ^^^^^ | Error(15) at line 2:  No characters may follow this jump instruction |   k=100+10*real(endif) |                 ^^^^^
+b-afn1                     740c5da2 [(1, 120000)] t=73 sym=999 003='afn1' f40..=48:1 STOPMSG: Error(31) at line 2:  Can't use function name as variable |   fn1=3 |   ^^^ | Error(31) at line 2:  Can't use function name as variable |   k=100+10*real(fn1) |                 ^^^
+b-ai                       490179e0 [(131, 120000)] t=73 sym=999 003='ai' f40..=48:1
+b-aif                      740c5da2 [(1, 120000)] t=73 sym=999 003='aif' f40..=48:1 STOPMSG: Error(16) at line 2:  Jump instruction missing required (boolean argument) |   if=3 |   ^^ | Error(16) at line 2:  Jump instruction missing required (boolean argument) |   k=100+10*real(if) |                 ^^
+b-aismand                  490179e0 [(131, 120000)] t=73 sym=999 003='aismand' f40..=46:1,48:1
+b-aj                       490179e0 [(131, 120000)] t=73 sym=999 003='aj' f40..=48:1
+b-alastsqr                 490179e0 [(131, 120000)] t=73 sym=999 003='alastsqr' f40..=48:1
+b-amagxmag                 490179e0 [(131, 120000)] t=73 sym=999 003='amagxmag' f40..=48:1
+b-amaxit                   490179e0 [(131, 120000)] t=73 sym=999 003='amaxit' f40..=48:1
+b-aone                     490179e0 [(131, 120000)] t=73 sym=999 003='aone' f40..=48:1
+b-ap1                      490179e0 [(131, 120000)] t=73 sym=999 003='ap1' f40..=40:1,48:1
+b-ap2                      490179e0 [(131, 120000)] t=73 sym=999 003='ap2' f40..=42:1,48:1
+b-ap3                      490179e0 [(131, 120000)] t=73 sym=999 003='ap3' f40..=44:1,48:1
+b-ap4                      490179e0 [(131, 120000)] t=73 sym=999 003='ap4' f40..=48:1,50:1
+b-ap5                      490179e0 [(131, 120000)] t=73 sym=999 003='ap5' f40..=48:1,52:1
+b-ap6                      490179e0 [(131, 120000)] t=73 sym=999 003='ap6' f40..=48:1
+b-api                      490179e0 [(131, 120000)] t=73 sym=999 003='api' f40..=48:1
+b-apixel                   490179e0 [(131, 120000)] t=73 sym=999 003='apixel' f40..=48:1
+b-aq                       490179e0 [(131, 120000)] t=73 sym=999 003='aq' f40..=48:1
+b-arand                    490179e0 [(131, 120000)] t=73 sym=999 003='arand' f40..=48:1
+b-areal                    740c5da2 [(1, 120000)] t=73 sym=999 003='areal' f40..=48:1 STOPMSG: Error(31) at line 2:  Can't use function name as variable |   real=3 |   ^^^^ | Error(31) at line 2:  Can't use function name as variable |   k=100+10*real(real) |                 ^^^^
+b-arotskew                 490179e0 [(131, 120000)] t=73 sym=999 003='arotskew' f40..=48:1
+b-ascrnmax                 490179e0 [(131, 120000)] t=73 sym=999 003='ascrnmax' f40..=48:1
+b-ascrnpix                 490179e0 [(131, 120000)] t=73 sym=999 003='ascrnpix' f40..=48:1
+b-asin                     740c5da2 [(1, 120000)] t=73 sym=999 003='asin' f40..=48:1 STOPMSG: Error(31) at line 2:  Can't use function name as variable |   sin=3 |   ^^^ | Error(31) at line 2:  Can't use function name as variable |   k=100+10*real(sin) |                 ^^^
+b-at                       490179e0 [(131, 120000)] t=73 sym=999 003='at' f40..=48:1
+b-aw                       490179e0 [(131, 120000)] t=73 sym=999 003='aw' f40..=48:1
+b-awhitesq                 490179e0 [(131, 120000)] t=73 sym=999 003='awhitesq' f40..=48:1
+b-ax                       490179e0 [(131, 120000)] t=73 sym=999 003='ax' f40..=48:1
+b-ay                       490179e0 [(131, 120000)] t=73 sym=999 003='ay' f40..=48:1
+b-az                       751805ec [(128, 120000)] t=73 sym=999 003='az' f40..=48:1
+b-azero                    490179e0 [(131, 120000)] t=73 sym=999 003='azero' f40..=48:1
+b-call1                    740c5da2 [(1, 120000)] t=73 sym=999 003='call1' f40..=48:1 STOPMSG: Error(0) at line 2:  Should be an Argument |   k=100+10*real(sin()) |                     ^
+b-call2                    a35fc2ce [(71, 120000)] t=73 sym=999 003='call2' f40..=48:1
+b-call3                    b5b4f6e1 [(98, 120000)] t=73 sym=999 003='call3' f40..=48:1
+b-call4                    a7c56294 [(101, 120000)] t=73 sym=999 003='call4' f40..=48:1
+b-call5                    d2d88c13 [(117, 120000)] t=73 sym=999 003='call5' f40..=48:1
+b-call6                    c2fe6c03 [(110, 120000)] t=73 sym=999 003='call6' f40..=48:1
+b-call7                    740c5da2 [(1, 120000)] t=73 sym=999 003='call7' f40..=48:1 STOPMSG: Error(1) at line 2:  Should be an Operator |   k=100+real(sqr(3)(1)) |                    ^
+b-fabs                     c11b4b59 [(106, 120000)] t=73 sym=999 003='fabs' f40..=48:1
+b-facos                    f5a7b64c [(111, 120000)] t=73 sym=999 003='facos' f40..=48:1
+b-facosh                   a7c56294 [(101, 120000)] t=73 sym=999 003='facosh' f40..=48:1
+b-facot                    740c5da2 [(1, 120000)] t=73 sym=999 003='facot' f40..=48:1 STOPMSG: Error(5) at line 2:  Undefined Function |   k=100+10*real(acot(0.5)) |                 ^^^^
+b-farg                     740c5da2 [(1, 120000)] t=73 sym=999 003='farg' f40..=48:1 STOPMSG: Error(5) at line 2:  Undefined Function |   k=100+10*real(arg(0.5)) |                 ^^^
+b-fasin                    c11b4b59 [(106, 120000)] t=73 sym=999 003='fasin' f40..=48:1
+b-fasinh                   6e70fbb3 [(105, 120000)] t=73 sym=999 003='fasinh' f40..=48:1
+b-fatan                    6e70fbb3 [(105, 120000)] t=73 sym=999 003='fatan' f40..=48:1
+b-fatanh                   c11b4b59 [(106, 120000)] t=73 sym=999 003='fatanh' f40..=48:1
+b-fcabs                    c11b4b59 [(106, 120000)] t=73 sym=999 003='fcabs' f40..=48:1
+b-fceil                    f5a7b64c [(111, 120000)] t=73 sym=999 003='fceil' f40..=48:1
+b-fconj                    c11b4b59 [(106, 120000)] t=73 sym=999 003='fconj' f40..=48:1
+b-fcos                     97c9c3aa [(109, 120000)] t=73 sym=999 003='fcos' f40..=48:1
+b-fcosh                    203d6932 [(112, 120000)] t=73 sym=999 003='fcosh' f40..=48:1
+b-fcosxx                   97c9c3aa [(109, 120000)] t=73 sym=999 003='fcosxx' f40..=48:1
+b-fcot                     740c5da2 [(1, 120000)] t=73 sym=999 003='fcot' f40..=48:1 STOPMSG: Error(5) at line 2:  Undefined Function |   k=100+10*real(cot(0.5)) |                 ^^^
+b-fcoth                    740c5da2 [(1, 120000)] t=73 sym=999 003='fcoth' f40..=48:1 STOPMSG: Error(5) at line 2:  Undefined Function |   k=100+10*real(coth(0.5)) |                 ^^^^
+b-fcsc                     740c5da2 [(1, 120000)] t=73 sym=999 003='fcsc' f40..=48:1 STOPMSG: Error(5) at line 2:  Undefined Function |   k=100+10*real(csc(0.5)) |                 ^^^
+b-fcsch                    740c5da2 [(1, 120000)] t=73 sym=999 003='fcsch' f40..=48:1 STOPMSG: Error(5) at line 2:  Undefined Function |   k=100+10*real(csch(0.5)) |                 ^^^^
+b-fcube                    740c5da2 [(1, 120000)] t=73 sym=999 003='fcube' f40..=48:1 STOPMSG: Error(5) at line 2:  Undefined Function |   k=100+10*real(cube(0.5)) |                 ^^^^
+b-fexp                     d2d88c13 [(117, 120000)] t=73 sym=999 003='fexp' f40..=48:1
+b-fflip                    a7c56294 [(101, 120000)] t=73 sym=999 003='fflip' f40..=48:1
+b-ffloor                   a7c56294 [(101, 120000)] t=73 sym=999 003='ffloor' f40..=48:1
+b-ffn0                     740c5da2 [(1, 120000)] t=73 sym=999 003='ffn0' f40..=48:1 STOPMSG: Error(5) at line 2:  Undefined Function |   k=100+10*real(fn0(0.5)) |                 ^^^
+b-ffn1                     6e70fbb3 [(105, 120000)] t=73 sym=999 003='ffn1' f40..=48:1
+b-ffn2                     5b75a5b6 [(103, 120000)] t=73 sym=999 003='ffn2' f40..=48:1
+b-ffn3                     c11b4b59 [(106, 120000)] t=73 sym=999 003='ffn3' f40..=48:1
+b-ffn4                     203d6932 [(112, 120000)] t=73 sym=999 003='ffn4' f40..=48:1
+b-ffn5                     740c5da2 [(1, 120000)] t=73 sym=999 003='ffn5' f40..=48:1 STOPMSG: Error(5) at line 2:  Undefined Function |   k=100+10*real(fn5(0.5)) |                 ^^^
+b-fident                   740c5da2 [(1, 120000)] t=73 sym=999 003='fident' f40..=48:1 STOPMSG: Error(5) at line 2:  Undefined Function |   k=100+10*real(ident(0.5)) |                 ^^^^^
+b-fimag                    a7c56294 [(101, 120000)] t=73 sym=999 003='fimag' f40..=48:1
+b-fln                      740c5da2 [(1, 120000)] t=73 sym=999 003='fln' f40..=48:1 STOPMSG: Error(5) at line 2:  Undefined Function |   k=100+10*real(ln(0.5)) |                 ^^
+b-flog                     b453cdb4 [(94, 120000)] t=73 sym=999 003='flog' f40..=48:1
+b-flog10                   740c5da2 [(1, 120000)] t=73 sym=999 003='flog10' f40..=48:1 STOPMSG: Error(5) at line 2:  Undefined Function |   k=100+10*real(log10(0.5)) |                 ^^^^^
+b-fmax                     740c5da2 [(1, 120000)] t=73 sym=999 003='fmax' f40..=48:1 STOPMSG: Error(5) at line 2:  Undefined Function |   k=100+10*real(max(0.5)) |                 ^^^
+b-fmin                     740c5da2 [(1, 120000)] t=73 sym=999 003='fmin' f40..=48:1 STOPMSG: Error(5) at line 2:  Undefined Function |   k=100+10*real(min(0.5)) |                 ^^^
+b-fmod                     740c5da2 [(1, 120000)] t=73 sym=999 003='fmod' f40..=48:1 STOPMSG: Error(5) at line 2:  Undefined Function |   k=100+10*real(mod(0.5)) |                 ^^^
+b-fneg                     740c5da2 [(1, 120000)] t=73 sym=999 003='fneg' f40..=48:1 STOPMSG: Error(5) at line 2:  Undefined Function |   k=100+10*real(neg(0.5)) |                 ^^^
+b-fnorm                    740c5da2 [(1, 120000)] t=73 sym=999 003='fnorm' f40..=48:1 STOPMSG: Error(5) at line 2:  Undefined Function |   k=100+10*real(norm(0.5)) |                 ^^^^
+b-fone                     740c5da2 [(1, 120000)] t=73 sym=999 003='fone' f40..=48:1 STOPMSG: Error(5) at line 2:  Undefined Function |   k=100+10*real(one(0.5)) |                 ^^^
+b-fp1                      740c5da2 [(1, 120000)] t=73 sym=999 003='fp1' f40..=48:1 STOPMSG: Error(5) at line 2:  Undefined Function |   k=100+10*real(p1(0.5)) |                 ^^
+b-fpi                      740c5da2 [(1, 120000)] t=73 sym=999 003='fpi' f40..=48:1 STOPMSG: Error(5) at line 2:  Undefined Function |   k=100+10*real(pi(0.5)) |                 ^^
+b-fpixel                   740c5da2 [(1, 120000)] t=73 sym=999 003='fpixel' f40..=48:1 STOPMSG: Error(5) at line 2:  Undefined Function |   k=100+10*real(pixel(0.5)) |                 ^^^^^
+b-fpow                     740c5da2 [(1, 120000)] t=73 sym=999 003='fpow' f40..=48:1 STOPMSG: Error(5) at line 2:  Undefined Function |   k=100+10*real(pow(0.5)) |                 ^^^
+b-frand                    740c5da2 [(1, 120000)] t=73 sym=999 003='frand' f40..=48:1 STOPMSG: Error(5) at line 2:  Undefined Function |   k=100+10*real(rand(0.5)) |                 ^^^^
+b-freal                    c11b4b59 [(106, 120000)] t=73 sym=999 003='freal' f40..=48:1
+b-frecip                   740c5da2 [(1, 120000)] t=73 sym=999 003='frecip' f40..=48:1 STOPMSG: Error(5) at line 2:  Undefined Function |   k=100+10*real(recip(0.5)) |                 ^^^^^
+b-fround                   f5a7b64c [(111, 120000)] t=73 sym=999 003='fround' f40..=48:1
+b-fsec                     740c5da2 [(1, 120000)] t=73 sym=999 003='fsec' f40..=48:1 STOPMSG: Error(5) at line 2:  Undefined Function |   k=100+10*real(sec(0.5)) |                 ^^^
+b-fsech                    740c5da2 [(1, 120000)] t=73 sym=999 003='fsech' f40..=48:1 STOPMSG: Error(5) at line 2:  Undefined Function |   k=100+10*real(sech(0.5)) |                 ^^^^
+b-fsign                    740c5da2 [(1, 120000)] t=73 sym=999 003='fsign' f40..=48:1 STOPMSG: Error(5) at line 2:  Undefined Function |   k=100+10*real(sign(0.5)) |                 ^^^^
+b-fsin                     6e70fbb3 [(105, 120000)] t=73 sym=999 003='fsin' f40..=48:1
+b-fsinh                    c11b4b59 [(106, 120000)] t=73 sym=999 003='fsinh' f40..=48:1
+b-fsqr                     5b75a5b6 [(103, 120000)] t=73 sym=999 003='fsqr' f40..=48:1
+b-fsqrt                    958db946 [(108, 120000)] t=73 sym=999 003='fsqrt' f40..=48:1
+b-fsrand                   69eb943f [(0, 120000)] t=73 sym=999 003='fsrand' f40..=48:1
+b-ftan                     c11b4b59 [(106, 120000)] t=73 sym=999 003='ftan' f40..=48:1
+b-ftanh                    6e70fbb3 [(105, 120000)] t=73 sym=999 003='ftanh' f40..=48:1
+b-ftrunc                   a7c56294 [(101, 120000)] t=73 sym=999 003='ftrunc' f40..=48:1
+b-fz                       740c5da2 [(1, 120000)] t=73 sym=999 003='fz' f40..=48:1 STOPMSG: Error(5) at line 2:  Undefined Function |   k=100+10*real(z(0.5)) |                 ^
+b-fzero                    740c5da2 [(1, 120000)] t=73 sym=999 003='fzero' f40..=48:1 STOPMSG: Error(5) at line 2:  Undefined Function |   k=100+10*real(zero(0.5)) |                 ^^^^
+b-rc                       a7c56294 [(101, 120000)] t=73 sym=999 003='rc' f40..=48:1
+b-rcenter                  a7c56294 [(101, 120000)] t=73 sym=999 003='rcenter' f40..=48:1
+b-re                       751805ec [(128, 120000)] t=73 sym=999 003='re' f40..=48:1
+b-relse                    740c5da2 [(1, 120000)] t=73 sym=999 003='relse' f40..=48:1 STOPMSG: Error(15) at line 2:  No characters may follow this jump instruction |   k=100+10*real(else) |                 ^^^^
+b-relseif                  740c5da2 [(1, 120000)] t=73 sym=999 003='relseif' f40..=48:1 STOPMSG: Error(16) at line 2:  Jump instruction missing required (boolean argument) |   k=100+10*real(elseif) |                 ^^^^^^
+b-rendif                   740c5da2 [(1, 120000)] t=73 sym=999 003='rendif' f40..=48:1 STOPMSG: Error(15) at line 2:  No characters may follow this jump instruction |   k=100+10*real(endif) |                 ^^^^^
+b-rfn1                     740c5da2 [(1, 120000)] t=73 sym=999 003='rfn1' f40..=48:1 STOPMSG: Error(31) at line 2:  Can't use function name as variable |   k=100+10*real(fn1) |                 ^^^
+b-ri                       a7c56294 [(101, 120000)] t=73 sym=999 003='ri' f40..=48:1
+b-ric                      a7c56294 [(101, 120000)] t=73 sym=999 003='ric' f40..=48:1
+b-ricenter                 a7c56294 [(101, 120000)] t=73 sym=999 003='ricenter' f40..=48:1
+b-rie                      a7c56294 [(101, 120000)] t=73 sym=999 003='rie' f40..=48:1
+b-rielse                   740c5da2 [(1, 120000)] t=73 sym=999 003='rielse' f40..=48:1 STOPMSG: Error(15) at line 2:  No characters may follow this jump instruction |   k=100+10*imag(else) |                 ^^^^
+b-rielseif                 740c5da2 [(1, 120000)] t=73 sym=999 003='rielseif' f40..=48:1 STOPMSG: Error(16) at line 2:  Jump instruction missing required (boolean argument) |   k=100+10*imag(elseif) |                 ^^^^^^
+b-riendif                  740c5da2 [(1, 120000)] t=73 sym=999 003='riendif' f40..=48:1 STOPMSG: Error(15) at line 2:  No characters may follow this jump instruction |   k=100+10*imag(endif) |                 ^^^^^
+b-rif                      740c5da2 [(1, 120000)] t=73 sym=999 003='rif' f40..=48:1 STOPMSG: Error(16) at line 2:  Jump instruction missing required (boolean argument) |   k=100+10*real(if) |                 ^^
+b-rifn1                    740c5da2 [(1, 120000)] t=73 sym=999 003='rifn1' f40..=48:1 STOPMSG: Error(31) at line 2:  Can't use function name as variable |   k=100+10*imag(fn1) |                 ^^^
+b-rii                      a7c56294 [(101, 120000)] t=73 sym=999 003='rii' f40..=48:1
+b-riif                     740c5da2 [(1, 120000)] t=73 sym=999 003='riif' f40..=48:1 STOPMSG: Error(16) at line 2:  Jump instruction missing required (boolean argument) |   k=100+10*imag(if) |                 ^^
+b-riismand                 a7c56294 [(101, 120000)] t=73 sym=999 003='riismand' f40..=46:1,48:1
+b-rij                      a7c56294 [(101, 120000)] t=73 sym=999 003='rij' f40..=48:1
+b-rilastsqr                a7c56294 [(101, 120000)] t=73 sym=999 003='rilastsqr' f40..=48:1
+b-rimagxmag                f5a7b64c [(111, 120000)] t=73 sym=999 003='rimagxmag' f40..=48:1
+b-rimaxit                  a7c56294 [(101, 120000)] t=73 sym=999 003='rimaxit' f40..=48:1
+b-rione                    a7c56294 [(101, 120000)] t=73 sym=999 003='rione' f40..=48:1
+b-rip1                     6d7d7c44 [(121, 120000)] t=73 sym=999 003='rip1' f40..=40:1,48:1
+b-rip2                     1101bfbc [(141, 120000)] t=73 sym=999 003='rip2' f40..=42:1,48:1
+b-rip3                     366b890d [(161, 120000)] t=73 sym=999 003='rip3' f40..=44:1,48:1
+b-rip4                     1c9c5224 [(181, 120000)] t=73 sym=999 003='rip4' f40..=48:1,50:1
+b-rip5                     a7245789 [(201, 120000)] t=73 sym=999 003='rip5' f40..=48:1,52:1
+b-rip6                     a7c56294 [(101, 120000)] t=73 sym=999 003='rip6' f40..=48:1
+b-ripi                     a7c56294 [(101, 120000)] t=73 sym=999 003='ripi' f40..=48:1
+b-ripixel                  d2cffcfe [(114, 4000), (113, 4000), (112, 4000), (111, 4000)] t=73 sym=999 003='ripixel' f40..=48:1
+b-riq                      a7c56294 [(101, 120000)] t=73 sym=999 003='riq' f40..=48:1
+b-rirand                   NOIMAGE LOG: Fatal X IO error on display @ (exit status 137)
+b-rireal                   740c5da2 [(1, 120000)] t=73 sym=999 003='rireal' f40..=48:1 STOPMSG: Error(31) at line 2:  Can't use function name as variable |   k=100+10*imag(real) |                 ^^^^
+b-rirotskew                a7c56294 [(101, 120000)] t=73 sym=999 003='rirotskew' f40..=48:1
+b-riscrnmax                69eb943f [(0, 120000)] t=73 sym=999 003='riscrnmax' f40..=48:1
+b-riscrnpix                a33c64ef [(0, 84000), (101, 800), (111, 800), (121, 800)] t=73 sym=999 003='riscrnpix' f40..=48:1
+b-risin                    740c5da2 [(1, 120000)] t=73 sym=999 003='risin' f40..=48:1 STOPMSG: Error(31) at line 2:  Can't use function name as variable |   k=100+10*imag(sin) |                 ^^^
+b-rismand                  f5a7b64c [(111, 120000)] t=73 sym=999 003='rismand' f40..=46:1,48:1
+b-rit                      a7c56294 [(101, 120000)] t=73 sym=999 003='rit' f40..=48:1
+b-riw                      a7c56294 [(101, 120000)] t=73 sym=999 003='riw' f40..=48:1
+b-riwhitesq                a7c56294 [(101, 120000)] t=73 sym=999 003='riwhitesq' f40..=48:1
+b-rix                      a7c56294 [(101, 120000)] t=73 sym=999 003='rix' f40..=48:1
+b-riy                      a7c56294 [(101, 120000)] t=73 sym=999 003='riy' f40..=48:1
+b-riz                      a7c56294 [(101, 120000)] t=73 sym=999 003='riz' f40..=48:1
+b-rizero                   a7c56294 [(101, 120000)] t=73 sym=999 003='rizero' f40..=48:1
+b-rj                       a7c56294 [(101, 120000)] t=73 sym=999 003='rj' f40..=48:1
+b-rlastsqr                 a7c56294 [(101, 120000)] t=73 sym=999 003='rlastsqr' f40..=48:1
+b-rmagxmag                 2baf7a8d [(107, 120000)] t=73 sym=999 003='rmagxmag' f40..=48:1
+b-rmaxit                   69eb943f [(0, 120000)] t=73 sym=999 003='rmaxit' f40..=48:1
+b-rone                     a7c56294 [(101, 120000)] t=73 sym=999 003='rone' f40..=48:1
+b-rp1                      f5a7b64c [(111, 120000)] t=73 sym=999 003='rp1' f40..=40:1,48:1
+b-rp2                      490179e0 [(131, 120000)] t=73 sym=999 003='rp2' f40..=42:1,48:1
+b-rp3                      5f91397a [(151, 120000)] t=73 sym=999 003='rp3' f40..=44:1,48:1
+b-rp4                      9d0c89e8 [(171, 120000)] t=73 sym=999 003='rp4' f40..=48:1,50:1
+b-rp5                      55ebcfc2 [(191, 120000)] t=73 sym=999 003='rp5' f40..=48:1,52:1
+b-rp6                      a7c56294 [(101, 120000)] t=73 sym=999 003='rp6' f40..=48:1
+b-rpi                      d9e35c0c [(132, 120000)] t=73 sym=999 003='rpi' f40..=48:1
+b-rpixel                   749d154b [(81, 3000), (82, 3000), (83, 3000), (84, 3000)] t=73 sym=999 003='rpixel' f40..=48:1
+b-rq                       a7c56294 [(101, 120000)] t=73 sym=999 003='rq' f40..=48:1
+b-rrand                    NOIMAGE LOG: Fatal X IO error on display @ (exit status 137)
+b-rreal                    740c5da2 [(1, 120000)] t=73 sym=999 003='rreal' f40..=48:1 STOPMSG: Error(31) at line 2:  Can't use function name as variable |   k=100+10*real(real) |                 ^^^^
+b-rrotskew                 a7c56294 [(101, 120000)] t=73 sym=999 003='rrotskew' f40..=48:1
+b-rscrnmax                 69eb943f [(0, 120000)] t=73 sym=999 003='rscrnmax' f40..=48:1
+b-rscrnpix                 e159027f [(0, 93000), (101, 600), (111, 600), (121, 600)] t=73 sym=999 003='rscrnpix' f40..=48:1
+b-rsin                     740c5da2 [(1, 120000)] t=73 sym=999 003='rsin' f40..=48:1 STOPMSG: Error(31) at line 2:  Can't use function name as variable |   k=100+10*real(sin) |                 ^^^
+b-rt                       a7c56294 [(101, 120000)] t=73 sym=999 003='rt' f40..=48:1
+b-rw                       a7c56294 [(101, 120000)] t=73 sym=999 003='rw' f40..=48:1
+b-rwhitesq                 e4aba33e [(101, 60000), (111, 60000)] t=73 sym=999 003='rwhitesq' f40..=48:1
+b-rx                       a7c56294 [(101, 120000)] t=73 sym=999 003='rx' f40..=48:1
+b-ry                       a7c56294 [(101, 120000)] t=73 sym=999 003='ry' f40..=48:1
+b-rz                       a7c56294 [(101, 120000)] t=73 sym=999 003='rz' f40..=48:1
+b-rzero                    a7c56294 [(101, 120000)] t=73 sym=999 003='rzero' f40..=48:1
+b-zz1                      a7c56294 [(101, 120000)] t=73 sym=999 003='zz1' f40..=48:1
+b-zz2                      c11b4b59 [(106, 120000)] t=73 sym=999 003='zz2' f40..=48:1
+b-zz3                      a7c56294 [(101, 120000)] t=73 sym=999 003='zz3' f40..=48:1
+b-zz4                      a7c56294 [(101, 120000)] t=73 sym=999 003='zz4' f40..=48:1
+b-zz5                      a7c56294 [(101, 120000)] t=73 sym=999 003='zz5' f40..=48:1
