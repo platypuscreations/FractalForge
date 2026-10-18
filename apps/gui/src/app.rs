@@ -515,7 +515,7 @@ impl App {
             par::entries(&text)
                 .into_iter()
                 .map(|e| e.name)
-                .filter(|n| !n.get(..4).is_some_and(|p| p.eq_ignore_ascii_case("frm:")))
+                .filter(|n| !fractalforge_formats::programs::is_embedded(n))
                 .collect()
         };
         match names.as_slice() {
@@ -1056,6 +1056,25 @@ impl App {
                             .max_decimals(15),
                     )
                     .changed();
+            }
+            if self.params.uses_view3d() {
+                let v = &mut self.params.view3d;
+                ui.horizontal(|ui| {
+                    ui.label("Rotation x/y/z");
+                    for r in &mut v.rotation {
+                        changed |= ui
+                            .add(egui::DragValue::new(r).range(-360..=360).suffix("°"))
+                            .changed();
+                    }
+                });
+                ui.horizontal(|ui| {
+                    ui.label("Shift right/up");
+                    for s in &mut v.xyshift {
+                        changed |= ui
+                            .add(egui::DragValue::new(s).range(-100..=100).suffix("%"))
+                            .changed();
+                    }
+                });
             }
             ui.horizontal(|ui| {
                 ui.label("Max iterations");

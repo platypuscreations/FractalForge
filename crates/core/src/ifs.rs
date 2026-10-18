@@ -129,17 +129,36 @@ pub fn parse(e: &Entry) -> Result<Ifs, String> {
     })
 }
 
+/// Prefix of IFS entries embedded in `.par` files (ifs.md §10.2).
+pub const PAR_PREFIX: &str = "ifs:";
+
 /// Loads the entry `name` from a file's text as a program for the `ifs`
-/// type.
+/// type. An entry embedded in a `.par` file (`ifs:NAME`) is stored without
+/// its prefix, as Fractint does.
 pub fn load(text: &str, name: &str) -> Result<crate::Program, String> {
     let all = entries(text);
     let e = find(&all, name).ok_or_else(|| format!("'{name}' file entry item not found"))?;
     let ifs = parse(e)?;
-    Ok(crate::Program::new(IfsProgram {
-        name: e.name.clone(),
-        source: e.text.clone(),
-        ifs,
-    }))
+    let prefixed = e
+        .name
+        .get(..PAR_PREFIX.len())
+        .is_some_and(|p| p.eq_ignore_ascii_case(PAR_PREFIX));
+    let (name, source) = if prefixed {
+        let at = e.text.find(&e.name).unwrap_or(0);
+        let mut source = e.text.clone();
+        source.replace_range(at..at + PAR_PREFIX.len(), "");
+        (e.name[PAR_PREFIX.len()..].to_owned(), source)
+    } else {
+        (e.name.clone(), e.text.clone())
+    };
+    Ok(crate::Program::new(IfsProgram { name, source, ifs }))
+}
+
+/// Whether a program is a 3D IFS entry.
+pub fn is_3d(program: &crate::Program) -> bool {
+    entries(program.0.source())
+        .first()
+        .is_some_and(|e| e.three_d)
 }
 
 /// An IFS entry attached to [`crate::Params::program`].
@@ -455,6 +474,15 @@ mod tests {
             parse(&all[0]).unwrap().transforms,
             [vec![0., 0., 0., 0., 1., 2., 1.]]
         );
+    }
+
+    #[test]
+    fn embedded_entries_lose_their_prefix() {
+        let text = "img { type=ifs ifs=t }\nIFS:t (3D) {\n 1 0 0 0 1 0 0 0 1 0 0 0 1\n}\n";
+        let p = load(text, "ifs:T").unwrap();
+        assert_eq!(p.0.name(), "t");
+        assert!(p.0.source().starts_with("t (3D) {"));
+        assert!(is_3d(&load(p.0.source(), "t").unwrap()));
     }
 
     #[test]

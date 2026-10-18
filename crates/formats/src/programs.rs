@@ -46,6 +46,22 @@ impl Kind {
         }
     }
 
+    /// The `.par` keys naming the file and the entry.
+    pub fn par_keys(self) -> (&'static str, &'static str) {
+        match self {
+            Kind::Formula => ("formulafile", "formulaname"),
+            Kind::Ifs => ("ifsfile", "ifs"),
+        }
+    }
+
+    /// Prefix of entries embedded in `.par` files.
+    pub fn par_prefix(self) -> &'static str {
+        match self {
+            Kind::Formula => "frm:",
+            Kind::Ifs => ifs::PAR_PREFIX,
+        }
+    }
+
     /// What one entry is called in messages.
     pub fn noun(self) -> &'static str {
         match self {
@@ -90,6 +106,15 @@ impl Kind {
                 .then_some((p, text))
         })
     }
+}
+
+/// Whether a `.par` entry name is an embedded formula or IFS entry rather
+/// than an image.
+pub fn is_embedded(name: &str) -> bool {
+    Kind::ALL.iter().any(|k| {
+        name.get(..k.par_prefix().len())
+            .is_some_and(|p| p.eq_ignore_ascii_case(k.par_prefix()))
+    })
 }
 
 /// Loads entry `name` (or the file's first entry) from a `.frm` or `.ifs`

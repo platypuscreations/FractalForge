@@ -140,3 +140,81 @@ fn unfinished_save_matches_xfractint_blocks() {
         .data();
     assert_eq!(ours, theirs);
 }
+
+/// Entries of a `.par` file with embedded `ifs:` bodies render as
+/// XFractint's (ifs.md §10.2).
+#[test]
+fn embedded_par_entries_match_xfractint() {
+    use fractalforge_formats::par;
+    let dir = root().join("tools/blackbox/ifs/par");
+    let text = std::fs::read_to_string(dir.join("ip.par")).unwrap();
+    let all = par::entries(&text);
+    for (case, entry) in [
+        ("par-enoname", "enoname"),
+        ("par-eself", "eself"),
+        ("par-eupper", "eupper"),
+        ("par-e3d", "e3d"),
+    ] {
+        let loaded = par::load(par::find(&all, entry).unwrap(), Some(&dir), Some(&text)).unwrap();
+        let p = loaded.params;
+        let img = GifImage::read(
+            &std::fs::read(root().join(format!("corpus/xfractint/ifs/{case}.gif"))).unwrap(),
+        )
+        .unwrap();
+        let mut r = Render::new(
+            p.clone(),
+            img.width.into(),
+            img.height.into(),
+            PassMode::One,
+        )
+        .unwrap();
+        r.run(&Control::default());
+        let canon: Vec<u8> = (0..256usize)
+            .map(|i| {
+                let c = img.palette.get(i);
+                img.palette.iter().position(|x| Some(x) == c).unwrap_or(i) as u8
+            })
+            .collect();
+        let differ = r
+            .buffer()
+            .data()
+            .iter()
+            .zip(&img.pixels)
+            .filter(|&(&v, &px)| canon[color_index(v, &p) as usize] != canon[px as usize])
+            .count();
+        assert_eq!(differ, 0, "{case}");
+    }
+}
+
+/// Saved parameters embed the entry and load back to the same image
+/// settings, 3D view included.
+#[test]
+fn par_round_trip() {
+    use fractalforge_formats::par;
+    let text =
+        std::fs::read_to_string(root().join("tools/blackbox/ifs/inputs/ffleaf.ifs")).unwrap();
+    for name in ["ffleaf", "ffspiral"] {
+        let mut p = fractalforge_core::Params::for_type("ifs").unwrap();
+        p.program = Some(ifs::load(&text, name).unwrap());
+        p.params[0] = 1.0;
+        p.view3d.rotation = [10, -20, 30];
+        p.view3d.xyshift = [3, 4];
+        let out = par::save_entry("", "img", None, &p, PassMode::One, None).unwrap();
+        assert!(out.contains(&format!("ifs={name}")) && out.contains(&format!("ifs:{name}")));
+        assert_eq!(
+            out.contains("rotation=10/-20/30"),
+            name == "ffspiral",
+            "{out}"
+        );
+        let all = par::entries(&out);
+        let back = par::load(par::find(&all, "img").unwrap(), None, Some(&out))
+            .unwrap()
+            .params;
+        let mut want = p.clone();
+        if name == "ffleaf" {
+            // 2D entries don't save the 3D view.
+            want.view3d = back.view3d;
+        }
+        assert_eq!(back, want, "{out}");
+    }
+}

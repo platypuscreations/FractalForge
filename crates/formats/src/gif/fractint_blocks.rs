@@ -505,12 +505,11 @@ pub fn write(
         put(&mut m, off, &x.to_le_bytes());
     }
     // A drawn 3D IFS entry (ifs.md §2.3).
-    if params.fractal.plot.is_some()
-        && params.program.as_ref().is_some_and(|p| {
-            let all = fractalforge_core::ifs::entries(p.0.source());
-            all.first().is_some_and(|e| e.three_d)
-        })
-        && *params.fractal == types::IFS
+    if *params.fractal == types::IFS
+        && params
+            .program
+            .as_ref()
+            .is_some_and(fractalforge_core::ifs::is_3d)
     {
         put(&mut m, 252, &(-1i16).to_le_bytes());
     }

@@ -380,13 +380,10 @@ fn list_entries(path: &Path) -> Result<(), String> {
         return Ok(());
     }
     for e in par::entries(&text) {
-        if e.name
-            .get(..4)
-            .is_some_and(|p| p.eq_ignore_ascii_case("frm:"))
-        {
+        if programs::is_embedded(&e.name) {
             println!(
-                "{:<19} {:<12} formula used by this file's entries",
-                e.name, "(formula)"
+                "{:<19} {:<12} used by this file's entries",
+                e.name, "(embedded)"
             );
             continue;
         }

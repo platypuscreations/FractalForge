@@ -304,6 +304,11 @@ impl Params {
         Some(points)
     }
 
+    /// Whether the image depends on [`Params::view3d`] (3D IFS entries).
+    pub fn uses_view3d(&self) -> bool {
+        self.fractal == &types::IFS && self.program.as_ref().is_some_and(crate::ifs::is_3d)
+    }
+
     /// Whether any colouring option needs per-orbit statistics.
     pub fn needs_orbit_coloring(&self) -> bool {
         !matches!(self.inside, Inside::Color(_) | Inside::MaxIter)
