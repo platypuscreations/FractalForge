@@ -316,6 +316,12 @@ is an upper bound: the longest name we tried was 6 characters.
 
 ### 2.4 `fractint005`: arbitrary-precision coordinates
 
+> **Superseded in part:** [deep-zoom.md](deep-zoom.md) specifies this block
+> fully (slot encoding, the choice of N, what XFractint reads) and corrects
+> two points here: −1 is stored with exponent −1, and it is the math
+> tolerance at offset 482, not 474, that forces deep mode on load
+> (deep-zoom.md §11).
+
 Present when the view is too small for doubles. We saw it at magnification
 1e13 and above, but not at 1e12 (`mandel-deep-mag1e12` vs `-mag1e13`). It
 also appears on load when the math tolerance fields are 0. With
