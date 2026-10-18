@@ -1,0 +1,6 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# 800x600 batch renders (no viewwindows=), run directly:
+#   docker run --rm -v DIR:/work fractalforge-blackbox ARGS savename=ff.gif
+henon-mi10-800    type=henon maxiter=10
+kamtorus-800      type=kamtorus
+dynamic-mi10-800  type=dynamic maxiter=10

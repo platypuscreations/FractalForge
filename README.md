@@ -6,7 +6,7 @@ FractalForge is a fast, modern fractal explorer written in Rust. It aims to give
 long-time Fractint and XFractint users a familiar workflow on macOS, then Linux
 and Windows.
 
-It reads and writes Fractint-format PAR, MAP, FRM and GIF files, including the
+It reads and writes Fractint-format PAR, MAP, FRM, IFS, L and GIF files, including the
 parameters and resume data stored inside GIFs. That means a long render can be
 saved partway through and finished later, in FractalForge or in Fractint.
 
@@ -15,13 +15,23 @@ Fractint source code and is not affiliated with the Stone Soup Group.
 
 ## Status
 
-**v0.1** (macOS), with Phase 3 (formulas) on `main`. FractalForge has a
+**v0.1** (macOS), with Phase 3 (formulas) on `main` and Phase 4 in progress.
+FractalForge has a
 desktop app and a command-line renderer.
 
-- 17 escape-time types (mandel, julia, lambda, mandellambda, mandel4, julia4,
+- 18 escape-time types (mandel, julia, lambda, mandellambda, mandel4, julia4,
   manowar, manowarj, barnsleym1, barnsleyj1, spider, magnet1m, magnet1j,
-  newton, newtbasin, phoenix, mandphoenix), rendered with the same pixels as
-  Fractint-format renderers.
+  newton, newtbasin, phoenix, mandphoenix, popcornjul), rendered with the
+  same pixels as Fractint-format renderers.
+- L-systems (`.l`) and iterated function systems (`.ifs`), with
+  XFractint's pixels, entries embedded in PAR files and stored in GIFs.
+- Orbit-plotting types: henon, hopalong, martin, gingerbreadman, chip,
+  quadruptwo, threeply, icons, latoocarfian, kamtorus, popcorn, dynamic,
+  mandelcloud and julia_inverse, and the strange attractors lorenz,
+  lorenz3d, rossler3d, pickover, lorenz3d1, lorenz3d3, lorenz3d4 and
+  kamtorus3d, with 3D rotation, shift and perspective.
+- An orbit window (press O) that draws the orbit of the point under the
+  pointer, and a Mandelbrot/Julia toggle (Space) for the types that pair up.
 - Inside/outside colouring modes, decomposition and biomorph (mandel and
   julia), colour cycling and a palette editor.
 - Stop a render, save it as a GIF and resume it later with identical
@@ -41,13 +51,43 @@ cargo run --release -p fractalforge-cli -- render big.gif --resume -o big-done.g
 cargo run --release -p fractalforge-cli -- render saved-by-fractint.gif -o again.gif
 cargo run --release -p fractalforge-cli -- render my.par --entry myentry -o out.png
 cargo run --release -p fractalforge-cli -- render --formula my.frm --formula-name myformula -o f.gif
+cargo run --release -p fractalforge-cli -- render --lsystem plants.l --lsystem-name fern --params 5 -o fern.gif
+cargo run --release -p fractalforge-cli -- render --ifs ferns.ifs -o fern.png
+cargo run --release -p fractalforge-cli -- render --type lorenz3d -o lorenz.png
 cargo run --release -p fractalforge-cli -- entries my.frm
 ```
 
 Ctrl-C during a render also saves a resumable GIF.
 
-Not yet: L-system, IFS and other Fractint types; rotated views; Fractint's
-`rand` sequence in formulas; screen-reader support; notarized macOS builds.
+Not yet: other Fractint types (such as bifurcation, lyapunov, plasma and
+icons3d); rotated views; Fractint's `rand` sequence in formulas; resuming
+unfinished orbit-plotting images (they are recalculated, as Fractint does
+for most of them); screen-reader support; notarized macOS builds.
+
+### How exact is it?
+
+Most types reproduce XFractint's images pixel for pixel, and the test suite
+checks this against hundreds of reference images saved by XFractint. Not
+everything is bit-exact, though:
+
+- **Chaotic orbit types** (martin, chip, quadruptwo, threeply, latoocarfian,
+  pickover, and the long orbits of lorenz3d1, lorenz3d3 and lorenz3d4) draw
+  the same attractors as XFractint, but the pixels differ. In a chaotic
+  system a difference in the last bit of one number grows until the orbit
+  goes somewhere else entirely, usually within a few hundred to a few
+  thousand points. XFractint's results for `sin`, `cos`, `log` and `atan`
+  come from the C library (glibc on Linux) or, for latoocarfian's function
+  slots, from the x87 processor's own `fsin`, and neither is always
+  correctly rounded. FractalForge uses its own portable math, so its images
+  are the same on every platform, but it can't follow those last-bit
+  choices without copying them.
+- **popcorn and popcornjul with `tan`** differ in a few pixels near the
+  poles of the tangent, where tiny rounding differences become large.
+- **IFS** images can differ in a few pixels where a point falls almost
+  exactly on the boundary between two pixels.
+- **mandelcloud, julia_inverse, kamtorus3d** and the three- and four-lobe
+  Lorenz systems follow our best black-box models, which match 96–99.9% of
+  pixels.
 
 Roadmap:
 

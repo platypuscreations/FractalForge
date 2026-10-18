@@ -1,0 +1,1 @@
+s10 kr s3 tin.gif s1 kReturn s70 ks | type=mandel maxiter=10 viewwindows=2 lfile=sem.l

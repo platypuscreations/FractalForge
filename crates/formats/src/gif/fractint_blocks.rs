@@ -180,6 +180,13 @@ fn read_params(b: &Bytes, modern: bool, p: &mut Params, warnings: &mut Vec<Strin
     if !modern {
         return;
     }
+    // 3D viewing (gif-fractint-blocks.md §2.1).
+    let i = |off| b.i16(off).unwrap_or(0);
+    p.view3d = fractalforge_core::View3d {
+        rotation: [i(128), i(130), i(132)],
+        perspective: i(144),
+        xyshift: [i(146), i(148)],
+    };
     // fn1–fn4 bindings (gif-fractint-blocks.md §6.2).
     for (i, f) in p.functions.iter_mut().enumerate() {
         if let Some(v) = b.u8(218 + i) {
@@ -276,6 +283,11 @@ fn read_params(b: &Bytes, modern: bool, p: &mut Params, warnings: &mut Vec<Strin
 /// those pixels' colour indices, with every other pixel unknown; `None` when
 /// the image is finished or carries no usable resume data.
 pub fn partial_buffer(image: &GifImage, fractal: &FractalType) -> Option<IterBuffer> {
+    // Plotted types save their own orbit state instead of a work list
+    // (orbit-maps.md §11); FractalForge calculates them again.
+    if fractal.plot.is_some() {
+        return None;
+    }
     let main = image.extension(IDENTIFIER, MAIN_AUTH)?.data();
     let resume = image.extension(IDENTIFIER, RESUME_AUTH)?.data();
     let b = Bytes(&main);
@@ -486,6 +498,26 @@ pub fn write(
         put(&mut m, off, &v.to_le_bytes());
     }
     put(&mut m, 218, &params.functions);
+    let v = &params.view3d;
+    for (off, x) in [
+        (128, v.rotation[0]),
+        (130, v.rotation[1]),
+        (132, v.rotation[2]),
+        (144, v.perspective),
+        (146, v.xyshift[0]),
+        (148, v.xyshift[1]),
+    ] {
+        put(&mut m, off, &x.to_le_bytes());
+    }
+    // A drawn 3D IFS entry (ifs.md §2.3).
+    if *params.fractal == types::IFS
+        && params
+            .program
+            .as_ref()
+            .is_some_and(fractalforge_core::ifs::is_3d)
+    {
+        put(&mut m, 252, &(-1i16).to_le_bytes());
+    }
 
     let max_iter = params.max_iter.min(i32::MAX as u32) as i32;
     put(&mut m, 408, &max_iter.to_le_bytes());
@@ -537,7 +569,12 @@ pub fn write(
     put(&mut m, 214, &time.to_le_bytes());
 
     let mut blocks = Vec::new();
-    let pass = if resume_at.is_none() {
+    let pass = if resume_at.is_some() && params.fractal.plot.is_some() {
+        // Plotted types: interrupted, with no resume data (ifs.md §5).
+        put(&mut m, 202, &3i16.to_le_bytes());
+        notes.push("Fractint recalculates this unfinished image from the start".into());
+        b'g'
+    } else if resume_at.is_none() {
         put(&mut m, 202, &4i16.to_le_bytes());
         match pass_mode {
             PassMode::One => b'1',
@@ -579,7 +616,11 @@ pub fn write(
     m[200] = pass;
 
     if let Some(prog) = &params.program {
-        blocks.push(name_block(prog));
+        blocks.push(if *params.fractal == types::FORMULA {
+            name_block(prog)
+        } else {
+            entry_name_block(prog)
+        });
     }
     blocks.push(AppExtension::new(
         *IDENTIFIER,
@@ -616,6 +657,16 @@ fn name_block(prog: &fractalforge_core::Program) -> AppExtension {
         put(&mut d, off, &i16::from(prog.0.mentions(var)).to_le_bytes());
     }
     put(&mut d, 48, &1i16.to_le_bytes());
+    AppExtension::new(*IDENTIFIER, *NAME_AUTH, &d, Placement::AfterImage)
+}
+
+/// The `fractint003` block of an IFS or L-system image: just the entry
+/// name, NUL-padded (ifs.md §2.3).
+fn entry_name_block(prog: &fractalforge_core::Program) -> AppExtension {
+    let mut d = [0u8; 66];
+    let name = prog.0.name().as_bytes();
+    let n = name.len().min(47);
+    d[..n].copy_from_slice(&name[..n]);
     AppExtension::new(*IDENTIFIER, *NAME_AUTH, &d, Placement::AfterImage)
 }
 

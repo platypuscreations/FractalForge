@@ -13,7 +13,7 @@ use std::fmt;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::time::Instant;
 
-use fractalforge_core::{Carry, IterBuffer, Params};
+use fractalforge_core::{Carry, IterBuffer, Params, Plotter};
 use rayon::prelude::*;
 
 pub use checkpoint::{PassMode, RenderState};
@@ -21,6 +21,9 @@ use plan::Plan;
 
 /// Rows processed between checkpoint opportunities.
 const BATCH_ROWS: u32 = 32;
+
+/// Work units (points, segments) a plotted type does per step.
+const PLOT_BATCH: u64 = 1 << 18;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum ResumeError {
@@ -65,6 +68,9 @@ pub struct Render {
     plan: Plan,
     /// State carried from pixel to pixel by order-dependent programs.
     carry: Option<Carry>,
+    /// The drawing of a plotted type (see [`fractalforge_core::plot`]),
+    /// while it runs. Its progress is stage 0 until done, then stage 1.
+    plotter: Option<Box<dyn Plotter>>,
 }
 
 impl Render {
@@ -135,6 +141,9 @@ impl Render {
                 state.coarsest_step, state.pass_mode
             )));
         }
+        if let Some(plot) = params.fractal.plot {
+            return Self::resume_plot(params, state, buffer, plot);
+        }
         let plan = Plan::new(&params, width, height, &state);
         let stage = state.stage as usize;
         let in_range = stage < plan.stages.len() && state.row < plan.stage_rows(stage)
@@ -166,7 +175,44 @@ impl Render {
             buffer,
             plan,
             carry,
+            plotter: None,
         })
+    }
+
+    /// Plotted types start from scratch or are finished: their drawing
+    /// state isn't part of a checkpoint (Fractint doesn't resume them
+    /// either, ifs.md §5).
+    fn resume_plot(
+        params: Params,
+        mut state: RenderState,
+        mut buffer: IterBuffer,
+        plot: fractalforge_core::PlotFn,
+    ) -> Result<Self, ResumeError> {
+        let (width, height) = (buffer.width(), buffer.height());
+        let plotter = match (state.stage, state.row) {
+            (0, 0) if state.elapsed_us == 0 => {
+                buffer = IterBuffer::from_data(width, height, vec![0; (width * height) as usize])
+                    .unwrap();
+                Some(plot(&params, width, height).map_err(ResumeError::BadParams)?)
+            }
+            (1, 0) => None,
+            _ => return Err(ResumeError::NotResumable(params.fractal.name)),
+        };
+        state.pass_mode = PassMode::One;
+        state.coarsest_step = 1;
+        let plan = Plan::empty();
+        Ok(Self {
+            params,
+            state,
+            buffer,
+            plan,
+            carry: None,
+            plotter,
+        })
+    }
+
+    fn is_plot(&self) -> bool {
+        self.params.fractal.plot.is_some()
     }
 
     pub fn params(&self) -> &Params {
@@ -187,11 +233,20 @@ impl Render {
     }
 
     pub fn is_complete(&self) -> bool {
+        if self.is_plot() {
+            return self.state.stage == 1;
+        }
         self.state.stage as usize == self.plan.stages.len()
     }
 
     /// Fraction of the work done, 0..=1.
     pub fn progress(&self) -> f64 {
+        if let Some(p) = &self.plotter {
+            return p.progress();
+        }
+        if self.is_plot() {
+            return self.state.stage as f64;
+        }
         let total = self.plan.total_rows();
         if total == 0 {
             1.0
@@ -212,6 +267,18 @@ impl Render {
             return true;
         }
         let started = Instant::now();
+        if let Some(plotter) = &mut self.plotter {
+            if cancel.load(Ordering::Relaxed) {
+                return false;
+            }
+            plotter.run(&mut self.buffer, PLOT_BATCH);
+            if plotter.is_done() {
+                self.plotter = None;
+                self.state.stage = 1;
+            }
+            self.state.elapsed_us += started.elapsed().as_micros() as u64;
+            return true;
+        }
         let stage = self.state.stage as usize;
         let rows = self.plan.stage_rows(stage);
         let end = (self.state.row + BATCH_ROWS).min(rows);
@@ -325,7 +392,9 @@ mod tests {
 
     #[test]
     fn all_types_fill_every_pixel_and_resume_identically() {
-        for base in all_types() {
+        // Plotted types can't resume from a checkpoint (see
+        // plotted_renders_continue_in_memory_only).
+        for base in all_types().into_iter().filter(|p| p.fractal.resumable) {
             for params in [base.clone(), off_centre(base)] {
                 for mode in [PassMode::One, PassMode::Guess] {
                     let expected = full(&params, 61, 47, mode);
@@ -511,6 +580,35 @@ mod tests {
         assert_eq!(r.run(&control), Outcome::Stopped);
         assert_eq!(r.buffer().unknown_count(), 2500);
         assert!(r.buffer().data().iter().all(|&v| v == UNKNOWN));
+    }
+
+    fn ifs() -> Params {
+        let text = "t {\n0.5 0 0 0.5 0 0 0.33\n0.5 0 0 0.5 4 0 0.33\n0.5 0 0 0.5 2 4 0.34\n}";
+        let mut p = Params::for_type("ifs").unwrap();
+        p.program = Some(fractalforge_core::ifs::load(text, "t").unwrap());
+        p.max_iter = 600;
+        p
+    }
+
+    /// A plotted render stopped and continued in memory equals an
+    /// uninterrupted one; from a saved checkpoint it can't be resumed.
+    #[test]
+    fn plotted_renders_continue_in_memory_only() {
+        let full = full(&ifs(), 120, 90, PassMode::Guess);
+        assert!(full.data().iter().any(|&v| v != 0));
+        let mut r = Render::new(ifs(), 120, 90, PassMode::Guess).unwrap();
+        r.step();
+        assert!(!r.is_complete() && r.progress() > 0.0);
+        let (params, state, buffer) = (r.params().clone(), r.checkpoint(), r.buffer().clone());
+        assert_eq!(
+            Render::resume(params, state, buffer).err(),
+            Some(ResumeError::NotResumable("ifs"))
+        );
+        r.run(&Control::default());
+        assert_eq!(r.buffer(), &full);
+        // A finished checkpoint loads as finished.
+        let (params, state, buffer) = r.into_parts();
+        assert!(Render::resume(params, state, buffer).unwrap().is_complete());
     }
 
     #[test]

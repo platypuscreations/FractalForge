@@ -80,8 +80,8 @@ fn reports_what_it_cannot_use() {
         "{:?}",
         i.warnings
     );
-    let i = info("complete/popcorn-base.gif");
-    assert_eq!(i.type_number, 61);
+    let i = info("complete/julibrot-base.gif");
+    assert_eq!(i.type_number, 143);
     assert!(i.params.is_none());
     let i = info("interrupted/int-pass1-early.gif");
     assert!(!i.finished);

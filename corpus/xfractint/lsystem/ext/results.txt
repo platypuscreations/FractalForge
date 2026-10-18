@@ -1,0 +1,51 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# python3 -I tools/blackbox/lsystem/summarise.py on round ext (cases-ext.txt)
+x-arrow-o5             400x300 69eb943f bbox=- n=0 col=[] t=107 p1=5 corners=-1,1,-1,1 st=4 003='arrow' blocks=003,001
+x-arrow-o6             400x300 69eb943f bbox=- n=0 col=[] t=107 p1=6 corners=-1,1,-1,1 st=4 003='arrow' blocks=003,001
+x-arrowf-o5            400x300 45c6fea5 bbox=(43,2,367,287) n=1294 col=[(15, 1294)] t=107 p1=5 corners=-1,1,-1,1 st=4 003='arrowf' blocks=003,001
+x-bush-o3              400x300 47fc8161 bbox=(116,2,283,297) n=4236 col=[(15, 4236)] t=107 p1=3 corners=-1,1,-1,1 st=4 003='bush' blocks=003,001
+x-colcyc-o4            400x300 c134b887 bbox=(4,93,395,206) n=1133 col=[(100, 19), (61, 18), (58, 18), (57, 18), (62, 18), (64, 18)] t=107 p1=4 corners=-1,1,-1,1 st=4 003='colcyc' blocks=003,001
+x-degmix-o3            400x300 cc218a5e bbox=(4,101,395,198) n=759 col=[(15, 759)] t=107 p1=3 corners=-1,1,-1,1 st=4 003='degmix' blocks=003,001
+x-degmix-o3-1000x200   800x600 320a09cb bbox=(4,200,795,399) n=1546 col=[(15, 1546)] t=107 p1=3 corners=-1,1,-1,1 st=4 003='degmix' blocks=003,001 STOPMSG: View window too large; using full screen.
+x-degmix-o3-1024x768   800x600 320a09cb bbox=(4,200,795,399) n=1546 col=[(15, 1546)] t=107 p1=3 corners=-1,1,-1,1 st=4 003='degmix' blocks=003,001 STOPMSG: View window too large; using full screen.
+x-degmix-o3-12x9       12x9 4ee49345 bbox=(4,4,7,4) n=4 col=[(15, 4)] t=107 p1=3 corners=-1,1,-1,1 st=4 003='degmix' blocks=003,001
+x-degmix-o3-160x900    800x600 320a09cb bbox=(4,200,795,399) n=1546 col=[(15, 1546)] t=107 p1=3 corners=-1,1,-1,1 st=4 003='degmix' blocks=003,001 STOPMSG: View window too large; using full screen.
+x-degmix-o3-20x20      20x20 8eaf1fbd bbox=(5,8,14,11) n=19 col=[(15, 19)] t=107 p1=3 corners=-1,1,-1,1 st=4 003='degmix' blocks=003,001
+x-degmix-o3-50x50      50x50 a5cd8547 bbox=(5,18,44,31) n=78 col=[(15, 78)] t=107 p1=3 corners=-1,1,-1,1 st=4 003='degmix' blocks=003,001
+x-degmix-o3-777x555    777x555 6d0fb8a6 bbox=(4,185,772,369) n=1482 col=[(15, 1482)] t=107 p1=3 corners=-1,1,-1,1 st=4 003='degmix' blocks=003,001
+x-degmix-o3-799x601    800x600 320a09cb bbox=(4,200,795,399) n=1546 col=[(15, 1546)] t=107 p1=3 corners=-1,1,-1,1 st=4 003='degmix' blocks=003,001 STOPMSG: View window too large; using full screen.
+x-degmix-o3-8x8        8x8 ad9ae6b1 bbox=(3,3,4,4) n=4 col=[(15, 4)] t=107 p1=3 corners=-1,1,-1,1 st=4 003='degmix' blocks=003,001
+x-dragon-o10           400x300 c69db292 bbox=(103,3,296,296) n=6058 col=[(15, 6058)] t=107 p1=10 corners=-1,1,-1,1 st=4 003='dragon' blocks=003,001
+x-dragon-o6            400x300 a819b09f bbox=(106,3,293,296) n=1694 col=[(15, 1694)] t=107 p1=6 corners=-1,1,-1,1 st=4 003='dragon' blocks=003,001
+x-dragon-o6-1000x200   800x600 28fce943 bbox=(211,2,588,597) n=3446 col=[(15, 3446)] t=107 p1=6 corners=-1,1,-1,1 st=4 003='dragon' blocks=003,001 STOPMSG: View window too large; using full screen.
+x-dragon-o6-1024x768   800x600 28fce943 bbox=(211,2,588,597) n=3446 col=[(15, 3446)] t=107 p1=6 corners=-1,1,-1,1 st=4 003='dragon' blocks=003,001 STOPMSG: View window too large; using full screen.
+x-dragon-o6-12x9       12x9 76de72e0 bbox=(5,2,6,6) n=9 col=[(15, 9)] t=107 p1=6 corners=-1,1,-1,1 st=4 003='dragon' blocks=003,001
+x-dragon-o6-160x900    800x600 28fce943 bbox=(211,2,588,597) n=3446 col=[(15, 3446)] t=107 p1=6 corners=-1,1,-1,1 st=4 003='dragon' blocks=003,001 STOPMSG: View window too large; using full screen.
+x-dragon-o6-20x20      20x20 9c72013b bbox=(6,3,13,16) n=64 col=[(15, 64)] t=107 p1=6 corners=-1,1,-1,1 st=4 003='dragon' blocks=003,001
+x-dragon-o6-50x50      50x50 6aa14747 bbox=(14,2,35,47) n=215 col=[(15, 215)] t=107 p1=6 corners=-1,1,-1,1 st=4 003='dragon' blocks=003,001
+x-dragon-o6-777x555    777x555 07a80592 bbox=(205,2,571,552) n=3266 col=[(15, 3266)] t=107 p1=6 corners=-1,1,-1,1 st=4 003='dragon' blocks=003,001
+x-dragon-o6-799x601    800x600 28fce943 bbox=(211,2,588,597) n=3446 col=[(15, 3446)] t=107 p1=6 corners=-1,1,-1,1 st=4 003='dragon' blocks=003,001 STOPMSG: View window too large; using full screen.
+x-dragon-o6-8x8        8x8 b18679fc bbox=(2,1,5,6) n=15 col=[(15, 15)] t=107 p1=6 corners=-1,1,-1,1 st=4 003='dragon' blocks=003,001
+x-levy-o8              400x300 c81e74f4 bbox=(5,32,394,267) n=3021 col=[(15, 3021)] t=107 p1=8 corners=-1,1,-1,1 st=4 003='levy' blocks=003,001
+x-plant-o3             400x300 5cd90310 bbox=(4,36,395,263) n=5530 col=[(3, 2132), (4, 1881), (2, 1517)] t=107 p1=3 corners=-1,1,-1,1 st=4 003='plant' blocks=003,001
+x-plant-o3-1000x200    800x600 2050f6f1 bbox=(5,69,794,530) n=11362 col=[(3, 4369), (4, 3878), (2, 3115)] t=107 p1=3 corners=-1,1,-1,1 st=4 003='plant' blocks=003,001 STOPMSG: View window too large; using full screen.
+x-plant-o3-1024x768    800x600 2050f6f1 bbox=(5,69,794,530) n=11362 col=[(3, 4369), (4, 3878), (2, 3115)] t=107 p1=3 corners=-1,1,-1,1 st=4 003='plant' blocks=003,001 STOPMSG: View window too large; using full screen.
+x-plant-o3-12x9        12x9 628c01a2 bbox=(4,3,7,5) n=7 col=[(4, 3), (2, 2), (3, 2)] t=107 p1=3 corners=-1,1,-1,1 st=4 003='plant' blocks=003,001
+x-plant-o3-160x900     800x600 2050f6f1 bbox=(5,69,794,530) n=11362 col=[(3, 4369), (4, 3878), (2, 3115)] t=107 p1=3 corners=-1,1,-1,1 st=4 003='plant' blocks=003,001 STOPMSG: View window too large; using full screen.
+x-plant-o3-20x20       20x20 9190ed83 bbox=(5,6,14,13) n=55 col=[(2, 22), (4, 17), (3, 16)] t=107 p1=3 corners=-1,1,-1,1 st=4 003='plant' blocks=003,001
+x-plant-o3-50x50       50x50 fa68c8d7 bbox=(5,9,44,40) n=486 col=[(3, 195), (4, 153), (2, 138)] t=107 p1=3 corners=-1,1,-1,1 st=4 003='plant' blocks=003,001
+x-plant-o3-777x555     777x555 8dd68b4c bbox=(5,64,771,490) n=10894 col=[(3, 4175), (4, 3713), (2, 3006)] t=107 p1=3 corners=-1,1,-1,1 st=4 003='plant' blocks=003,001
+x-plant-o3-799x601     800x600 2050f6f1 bbox=(5,69,794,530) n=11362 col=[(3, 4369), (4, 3878), (2, 3115)] t=107 p1=3 corners=-1,1,-1,1 st=4 003='plant' blocks=003,001 STOPMSG: View window too large; using full screen.
+x-plant-o3-8x8         8x8 5573253f bbox=(2,3,5,4) n=6 col=[(4, 3), (2, 3)] t=107 p1=3 corners=-1,1,-1,1 st=4 003='plant' blocks=003,001
+x-plant-o3-defall      800x600 2050f6f1 bbox=(5,69,794,530) n=11362 col=[(3, 4369), (4, 3878), (2, 3115)] t=107 p1=3 corners=-1,1,-1,1 st=4 003='plant' blocks=003,001
+x-plant-o3-defmap      400x300 5cd90310 bbox=(4,36,395,263) n=5530 col=[(3, 2132), (4, 1881), (2, 1517)] t=107 p1=3 corners=-1,1,-1,1 st=4 003='plant' blocks=003,001
+x-plant-o3-defsize     800x600 2050f6f1 bbox=(5,69,794,530) n=11362 col=[(3, 4369), (4, 3878), (2, 3115)] t=107 p1=3 corners=-1,1,-1,1 st=4 003='plant' blocks=003,001
+x-plant-o4             400x300 4b436d24 bbox=(5,27,394,272) n=17412 col=[(3, 6748), (4, 5777), (2, 4887)] t=107 p1=4 corners=-1,1,-1,1 st=4 003='plant' blocks=003,001
+x-prot1                400x300 96a3b8cb bbox=(5,150,265,150) n=261 col=[(12, 131), (15, 130)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='prot1' blocks=003,001
+x-prot2                400x300 6debbb00 bbox=(5,150,265,150) n=261 col=[(27, 131), (15, 130)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='prot2' blocks=003,001
+x-prot3                400x300 754ed627 bbox=(52,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='prot3' blocks=003,001
+x-prot4                400x300 c8d34940 bbox=(5,20,395,280) n=651 col=[(15, 651)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='prot4' blocks=003,001
+x-prot5                400x300 c8d34940 bbox=(5,20,395,280) n=651 col=[(15, 651)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='prot5' blocks=003,001
+x-prot6                400x300 4e2c658c bbox=(5,101,200,198) n=293 col=[(1, 196), (15, 97)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='prot6' blocks=003,001
+x-ruled                400x300 80a65065 bbox=(5,150,395,150) n=391 col=[(15, 391)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='ruled' blocks=003,001
+x-rulem                400x300 8fe98e3f bbox=(5,85,394,215) n=262 col=[(15, 262)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='rulem' blocks=003,001

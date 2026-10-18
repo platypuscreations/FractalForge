@@ -1,0 +1,16 @@
+; SPDX-License-Identifier: GPL-3.0-or-later
+; Black-box test entries for XFractint's IFS type (FractalForge, own file).
+nospace{
+  0 0 0 0 1 2 1
+}
+nextline
+{
+  0 0 0 0 1 2 1
+}
+  indented {
+  0 0 0 0 1 2 1
+}
+sp3d   (3D)   {
+  0 0 0 0 0 0 0 0 0  1 0 0  0.5
+  0 0 0 0 0 0 0 0 0  0 0 0  0.5
+}

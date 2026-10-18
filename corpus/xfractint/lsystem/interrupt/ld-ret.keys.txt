@@ -1,0 +1,1 @@
+s10 kReturn s70 ks | filename=in.gif lfile=sem.l

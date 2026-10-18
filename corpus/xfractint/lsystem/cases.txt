@@ -1,0 +1,1295 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Every case: <name> [only=FILES] <arguments>. tools/blackbox/lsystem/run-case.sh runs
+#   xfractint batch=yes <arguments> savename=ff.gif
+# in a fresh directory holding the listed files of tools/blackbox/lsystem/inputs/
+# (all of them when there is no only=).
+# --- cases-chars.txt -> chars/
+c033 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c033 params=0 viewwindows=2 map=uniq.map
+d033 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d033 params=0 viewwindows=2 map=uniq.map
+c034 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c034 params=0 viewwindows=2 map=uniq.map
+d034 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d034 params=0 viewwindows=2 map=uniq.map
+c035 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c035 params=0 viewwindows=2 map=uniq.map
+d035 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d035 params=0 viewwindows=2 map=uniq.map
+c036 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c036 params=0 viewwindows=2 map=uniq.map
+d036 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d036 params=0 viewwindows=2 map=uniq.map
+c037 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c037 params=0 viewwindows=2 map=uniq.map
+d037 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d037 params=0 viewwindows=2 map=uniq.map
+c038 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c038 params=0 viewwindows=2 map=uniq.map
+d038 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d038 params=0 viewwindows=2 map=uniq.map
+c039 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c039 params=0 viewwindows=2 map=uniq.map
+d039 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d039 params=0 viewwindows=2 map=uniq.map
+c040 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c040 params=0 viewwindows=2 map=uniq.map
+d040 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d040 params=0 viewwindows=2 map=uniq.map
+c041 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c041 params=0 viewwindows=2 map=uniq.map
+d041 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d041 params=0 viewwindows=2 map=uniq.map
+c042 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c042 params=0 viewwindows=2 map=uniq.map
+d042 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d042 params=0 viewwindows=2 map=uniq.map
+c043 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c043 params=0 viewwindows=2 map=uniq.map
+d043 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d043 params=0 viewwindows=2 map=uniq.map
+c044 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c044 params=0 viewwindows=2 map=uniq.map
+d044 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d044 params=0 viewwindows=2 map=uniq.map
+c045 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c045 params=0 viewwindows=2 map=uniq.map
+d045 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d045 params=0 viewwindows=2 map=uniq.map
+c046 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c046 params=0 viewwindows=2 map=uniq.map
+d046 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d046 params=0 viewwindows=2 map=uniq.map
+c047 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c047 params=0 viewwindows=2 map=uniq.map
+d047 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d047 params=0 viewwindows=2 map=uniq.map
+c048 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c048 params=0 viewwindows=2 map=uniq.map
+d048 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d048 params=0 viewwindows=2 map=uniq.map
+c049 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c049 params=0 viewwindows=2 map=uniq.map
+d049 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d049 params=0 viewwindows=2 map=uniq.map
+c050 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c050 params=0 viewwindows=2 map=uniq.map
+d050 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d050 params=0 viewwindows=2 map=uniq.map
+c051 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c051 params=0 viewwindows=2 map=uniq.map
+d051 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d051 params=0 viewwindows=2 map=uniq.map
+c052 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c052 params=0 viewwindows=2 map=uniq.map
+d052 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d052 params=0 viewwindows=2 map=uniq.map
+c053 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c053 params=0 viewwindows=2 map=uniq.map
+d053 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d053 params=0 viewwindows=2 map=uniq.map
+c054 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c054 params=0 viewwindows=2 map=uniq.map
+d054 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d054 params=0 viewwindows=2 map=uniq.map
+c055 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c055 params=0 viewwindows=2 map=uniq.map
+d055 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d055 params=0 viewwindows=2 map=uniq.map
+c056 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c056 params=0 viewwindows=2 map=uniq.map
+d056 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d056 params=0 viewwindows=2 map=uniq.map
+c057 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c057 params=0 viewwindows=2 map=uniq.map
+d057 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d057 params=0 viewwindows=2 map=uniq.map
+c058 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c058 params=0 viewwindows=2 map=uniq.map
+d058 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d058 params=0 viewwindows=2 map=uniq.map
+c059 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c059 params=0 viewwindows=2 map=uniq.map
+d059 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d059 params=0 viewwindows=2 map=uniq.map
+c060 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c060 params=0 viewwindows=2 map=uniq.map
+d060 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d060 params=0 viewwindows=2 map=uniq.map
+c061 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c061 params=0 viewwindows=2 map=uniq.map
+d061 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d061 params=0 viewwindows=2 map=uniq.map
+c062 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c062 params=0 viewwindows=2 map=uniq.map
+d062 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d062 params=0 viewwindows=2 map=uniq.map
+c063 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c063 params=0 viewwindows=2 map=uniq.map
+d063 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d063 params=0 viewwindows=2 map=uniq.map
+c064 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c064 params=0 viewwindows=2 map=uniq.map
+d064 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d064 params=0 viewwindows=2 map=uniq.map
+c065 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c065 params=0 viewwindows=2 map=uniq.map
+d065 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d065 params=0 viewwindows=2 map=uniq.map
+c066 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c066 params=0 viewwindows=2 map=uniq.map
+d066 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d066 params=0 viewwindows=2 map=uniq.map
+c067 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c067 params=0 viewwindows=2 map=uniq.map
+d067 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d067 params=0 viewwindows=2 map=uniq.map
+c068 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c068 params=0 viewwindows=2 map=uniq.map
+d068 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d068 params=0 viewwindows=2 map=uniq.map
+c069 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c069 params=0 viewwindows=2 map=uniq.map
+d069 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d069 params=0 viewwindows=2 map=uniq.map
+c070 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c070 params=0 viewwindows=2 map=uniq.map
+d070 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d070 params=0 viewwindows=2 map=uniq.map
+c071 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c071 params=0 viewwindows=2 map=uniq.map
+d071 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d071 params=0 viewwindows=2 map=uniq.map
+c072 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c072 params=0 viewwindows=2 map=uniq.map
+d072 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d072 params=0 viewwindows=2 map=uniq.map
+c073 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c073 params=0 viewwindows=2 map=uniq.map
+d073 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d073 params=0 viewwindows=2 map=uniq.map
+c074 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c074 params=0 viewwindows=2 map=uniq.map
+d074 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d074 params=0 viewwindows=2 map=uniq.map
+c075 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c075 params=0 viewwindows=2 map=uniq.map
+d075 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d075 params=0 viewwindows=2 map=uniq.map
+c076 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c076 params=0 viewwindows=2 map=uniq.map
+d076 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d076 params=0 viewwindows=2 map=uniq.map
+c077 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c077 params=0 viewwindows=2 map=uniq.map
+d077 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d077 params=0 viewwindows=2 map=uniq.map
+c078 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c078 params=0 viewwindows=2 map=uniq.map
+d078 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d078 params=0 viewwindows=2 map=uniq.map
+c079 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c079 params=0 viewwindows=2 map=uniq.map
+d079 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d079 params=0 viewwindows=2 map=uniq.map
+c080 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c080 params=0 viewwindows=2 map=uniq.map
+d080 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d080 params=0 viewwindows=2 map=uniq.map
+c081 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c081 params=0 viewwindows=2 map=uniq.map
+d081 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d081 params=0 viewwindows=2 map=uniq.map
+c082 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c082 params=0 viewwindows=2 map=uniq.map
+d082 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d082 params=0 viewwindows=2 map=uniq.map
+c083 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c083 params=0 viewwindows=2 map=uniq.map
+d083 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d083 params=0 viewwindows=2 map=uniq.map
+c084 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c084 params=0 viewwindows=2 map=uniq.map
+d084 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d084 params=0 viewwindows=2 map=uniq.map
+c085 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c085 params=0 viewwindows=2 map=uniq.map
+d085 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d085 params=0 viewwindows=2 map=uniq.map
+c086 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c086 params=0 viewwindows=2 map=uniq.map
+d086 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d086 params=0 viewwindows=2 map=uniq.map
+c087 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c087 params=0 viewwindows=2 map=uniq.map
+d087 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d087 params=0 viewwindows=2 map=uniq.map
+c088 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c088 params=0 viewwindows=2 map=uniq.map
+d088 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d088 params=0 viewwindows=2 map=uniq.map
+c089 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c089 params=0 viewwindows=2 map=uniq.map
+d089 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d089 params=0 viewwindows=2 map=uniq.map
+c090 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c090 params=0 viewwindows=2 map=uniq.map
+d090 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d090 params=0 viewwindows=2 map=uniq.map
+c091 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c091 params=0 viewwindows=2 map=uniq.map
+d091 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d091 params=0 viewwindows=2 map=uniq.map
+c092 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c092 params=0 viewwindows=2 map=uniq.map
+d092 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d092 params=0 viewwindows=2 map=uniq.map
+c093 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c093 params=0 viewwindows=2 map=uniq.map
+d093 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d093 params=0 viewwindows=2 map=uniq.map
+c094 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c094 params=0 viewwindows=2 map=uniq.map
+d094 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d094 params=0 viewwindows=2 map=uniq.map
+c095 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c095 params=0 viewwindows=2 map=uniq.map
+d095 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d095 params=0 viewwindows=2 map=uniq.map
+c096 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c096 params=0 viewwindows=2 map=uniq.map
+d096 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d096 params=0 viewwindows=2 map=uniq.map
+c097 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c097 params=0 viewwindows=2 map=uniq.map
+d097 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d097 params=0 viewwindows=2 map=uniq.map
+c098 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c098 params=0 viewwindows=2 map=uniq.map
+d098 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d098 params=0 viewwindows=2 map=uniq.map
+c099 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c099 params=0 viewwindows=2 map=uniq.map
+d099 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d099 params=0 viewwindows=2 map=uniq.map
+c100 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c100 params=0 viewwindows=2 map=uniq.map
+d100 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d100 params=0 viewwindows=2 map=uniq.map
+c101 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c101 params=0 viewwindows=2 map=uniq.map
+d101 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d101 params=0 viewwindows=2 map=uniq.map
+c102 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c102 params=0 viewwindows=2 map=uniq.map
+d102 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d102 params=0 viewwindows=2 map=uniq.map
+c103 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c103 params=0 viewwindows=2 map=uniq.map
+d103 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d103 params=0 viewwindows=2 map=uniq.map
+c104 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c104 params=0 viewwindows=2 map=uniq.map
+d104 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d104 params=0 viewwindows=2 map=uniq.map
+c105 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c105 params=0 viewwindows=2 map=uniq.map
+d105 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d105 params=0 viewwindows=2 map=uniq.map
+c106 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c106 params=0 viewwindows=2 map=uniq.map
+d106 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d106 params=0 viewwindows=2 map=uniq.map
+c107 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c107 params=0 viewwindows=2 map=uniq.map
+d107 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d107 params=0 viewwindows=2 map=uniq.map
+c108 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c108 params=0 viewwindows=2 map=uniq.map
+d108 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d108 params=0 viewwindows=2 map=uniq.map
+c109 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c109 params=0 viewwindows=2 map=uniq.map
+d109 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d109 params=0 viewwindows=2 map=uniq.map
+c110 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c110 params=0 viewwindows=2 map=uniq.map
+d110 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d110 params=0 viewwindows=2 map=uniq.map
+c111 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c111 params=0 viewwindows=2 map=uniq.map
+d111 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d111 params=0 viewwindows=2 map=uniq.map
+c112 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c112 params=0 viewwindows=2 map=uniq.map
+d112 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d112 params=0 viewwindows=2 map=uniq.map
+c113 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c113 params=0 viewwindows=2 map=uniq.map
+d113 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d113 params=0 viewwindows=2 map=uniq.map
+c114 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c114 params=0 viewwindows=2 map=uniq.map
+d114 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d114 params=0 viewwindows=2 map=uniq.map
+c115 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c115 params=0 viewwindows=2 map=uniq.map
+d115 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d115 params=0 viewwindows=2 map=uniq.map
+c116 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c116 params=0 viewwindows=2 map=uniq.map
+d116 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d116 params=0 viewwindows=2 map=uniq.map
+c117 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c117 params=0 viewwindows=2 map=uniq.map
+d117 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d117 params=0 viewwindows=2 map=uniq.map
+c118 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c118 params=0 viewwindows=2 map=uniq.map
+d118 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d118 params=0 viewwindows=2 map=uniq.map
+c119 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c119 params=0 viewwindows=2 map=uniq.map
+d119 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d119 params=0 viewwindows=2 map=uniq.map
+c120 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c120 params=0 viewwindows=2 map=uniq.map
+d120 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d120 params=0 viewwindows=2 map=uniq.map
+c121 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c121 params=0 viewwindows=2 map=uniq.map
+d121 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d121 params=0 viewwindows=2 map=uniq.map
+c122 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c122 params=0 viewwindows=2 map=uniq.map
+d122 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d122 params=0 viewwindows=2 map=uniq.map
+c123 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c123 params=0 viewwindows=2 map=uniq.map
+d123 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d123 params=0 viewwindows=2 map=uniq.map
+c124 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c124 params=0 viewwindows=2 map=uniq.map
+d124 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d124 params=0 viewwindows=2 map=uniq.map
+c125 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c125 params=0 viewwindows=2 map=uniq.map
+d125 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d125 params=0 viewwindows=2 map=uniq.map
+c126 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=c126 params=0 viewwindows=2 map=uniq.map
+d126 only=chars.l,uniq.map type=lsystem lfile=chars.l lname=d126 params=0 viewwindows=2 map=uniq.map
+# --- cases-args.txt -> args/
+a-at2 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-at2 params=0 viewwindows=2 map=uniq.map
+a-at05 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-at05 params=0 viewwindows=2 map=uniq.map
+a-atp5 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-atp5 params=0 viewwindows=2 map=uniq.map
+a-at15 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-at15 params=0 viewwindows=2 map=uniq.map
+a-atm1 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-atm1 params=0 viewwindows=2 map=uniq.map
+a-ati2 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-ati2 params=0 viewwindows=2 map=uniq.map
+a-atq4 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-atq4 params=0 viewwindows=2 map=uniq.map
+a-atiq4 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-atiq4 params=0 viewwindows=2 map=uniq.map
+a-atqi4 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-atqi4 params=0 viewwindows=2 map=uniq.map
+a-atlq4 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-atlq4 params=0 viewwindows=2 map=uniq.map
+a-atli2 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-atli2 params=0 viewwindows=2 map=uniq.map
+a-at10 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-at10 params=0 viewwindows=2 map=uniq.map
+a-ate1 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-ate1 params=0 viewwindows=2 map=uniq.map
+a-atsp only=args.l,uniq.map type=lsystem lfile=args.l lname=a-atsp params=0 viewwindows=2 map=uniq.map
+a-at2at2 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-at2at2 params=0 viewwindows=2 map=uniq.map
+a-ref2 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-ref2 params=0 viewwindows=2 map=uniq.map
+a-ref4 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-ref4 params=0 viewwindows=2 map=uniq.map
+a-c0 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-c0 params=0 viewwindows=2 map=uniq.map
+a-c1 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-c1 params=0 viewwindows=2 map=uniq.map
+a-c10 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-c10 params=0 viewwindows=2 map=uniq.map
+a-c255 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-c255 params=0 viewwindows=2 map=uniq.map
+a-c256 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-c256 params=0 viewwindows=2 map=uniq.map
+a-c300 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-c300 params=0 viewwindows=2 map=uniq.map
+a-cm1 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-cm1 params=0 viewwindows=2 map=uniq.map
+a-c25 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-c25 params=0 viewwindows=2 map=uniq.map
+a-c1000 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-c1000 params=0 viewwindows=2 map=uniq.map
+a-c65536 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-c65536 params=0 viewwindows=2 map=uniq.map
+a-lt0 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-lt0 params=0 viewwindows=2 map=uniq.map
+a-lt10 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-lt10 params=0 viewwindows=2 map=uniq.map
+a-lt300 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-lt300 params=0 viewwindows=2 map=uniq.map
+a-lt240 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-lt240 params=0 viewwindows=2 map=uniq.map
+a-lt241 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-lt241 params=0 viewwindows=2 map=uniq.map
+a-gt20 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-gt20 params=0 viewwindows=2 map=uniq.map
+a-gt15 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-gt15 params=0 viewwindows=2 map=uniq.map
+a-gt14 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-gt14 params=0 viewwindows=2 map=uniq.map
+a-gt14b only=args.l,uniq.map type=lsystem lfile=args.l lname=a-gt14b params=0 viewwindows=2 map=uniq.map
+a-lt15 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-lt15 params=0 viewwindows=2 map=uniq.map
+a-ltlt only=args.l,uniq.map type=lsystem lfile=args.l lname=a-ltlt params=0 viewwindows=2 map=uniq.map
+a-sl45 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-sl45 params=0 viewwindows=2 map=uniq.map
+a-bs45 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-bs45 params=0 viewwindows=2 map=uniq.map
+a-sl90 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-sl90 params=0 viewwindows=2 map=uniq.map
+a-bs90 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-bs90 params=0 viewwindows=2 map=uniq.map
+a-sl305 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-sl305 params=0 viewwindows=2 map=uniq.map
+a-slm45 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-slm45 params=0 viewwindows=2 map=uniq.map
+a-sl30 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-sl30 params=0 viewwindows=2 map=uniq.map
+a-bs30 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-bs30 params=0 viewwindows=2 map=uniq.map
+a-push1 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-push1 params=0 viewwindows=2 map=uniq.map
+a-push2 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-push2 params=0 viewwindows=2 map=uniq.map
+a-push3 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-push3 params=0 viewwindows=2 map=uniq.map
+a-pop1 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-pop1 params=0 viewwindows=2 map=uniq.map
+a-pop2 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-pop2 params=0 viewwindows=2 map=uniq.map
+a-pushend only=args.l,uniq.map type=lsystem lfile=args.l lname=a-pushend params=0 viewwindows=2 map=uniq.map
+a-push-c only=args.l,uniq.map type=lsystem lfile=args.l lname=a-push-c params=0 viewwindows=2 map=uniq.map
+a-push-at only=args.l,uniq.map type=lsystem lfile=args.l lname=a-push-at params=0 viewwindows=2 map=uniq.map
+a-push-bang only=args.l,uniq.map type=lsystem lfile=args.l lname=a-push-bang params=0 viewwindows=2 map=uniq.map
+a-push-ang only=args.l,uniq.map type=lsystem lfile=args.l lname=a-push-ang params=0 viewwindows=2 map=uniq.map
+a-plus2 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-plus2 params=0 viewwindows=2 map=uniq.map
+a-pipe only=args.l,uniq.map type=lsystem lfile=args.l lname=a-pipe params=0 viewwindows=2 map=uniq.map
+a-pipe5 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-pipe5 params=0 viewwindows=2 map=uniq.map
+a-plus8 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-plus8 params=0 viewwindows=2 map=uniq.map
+a-bang only=args.l,uniq.map type=lsystem lfile=args.l lname=a-bang params=0 viewwindows=2 map=uniq.map
+a-bang2 only=args.l,uniq.map type=lsystem lfile=args.l lname=a-bang2 params=0 viewwindows=2 map=uniq.map
+# --- cases-fmt.txt -> fmt/
+f-base only=fm001.l,uniq.map type=lsystem lfile=fm001.l lname=e params=0 viewwindows=2 map=uniq.map
+f-lname-upper only=fm002.l,uniq.map type=lsystem lfile=fm002.l lname=E params=0 viewwindows=2 map=uniq.map
+f-name-upper only=fm003.l,uniq.map type=lsystem lfile=fm003.l lname=eex params=0 viewwindows=2 map=uniq.map
+f-kw-upper only=fm004.l,uniq.map type=lsystem lfile=fm004.l lname=e params=0 viewwindows=2 map=uniq.map
+f-kw-mixed only=fm005.l,uniq.map type=lsystem lfile=fm005.l lname=e params=0 viewwindows=2 map=uniq.map
+f-nospace-brace only=fm006.l,uniq.map type=lsystem lfile=fm006.l lname=e params=0 viewwindows=2 map=uniq.map
+f-brace-nextline only=fm007.l,uniq.map type=lsystem lfile=fm007.l lname=e params=0 viewwindows=2 map=uniq.map
+f-close-sameline only=fm008.l,uniq.map type=lsystem lfile=fm008.l lname=e params=0 viewwindows=2 map=uniq.map
+f-close-sameline2 only=fm009.l,uniq.map type=lsystem lfile=fm009.l lname=e params=0 viewwindows=2 map=uniq.map
+f-one-line only=fm010.l,uniq.map type=lsystem lfile=fm010.l lname=e params=0 viewwindows=2 map=uniq.map
+f-after-open only=fm011.l,uniq.map type=lsystem lfile=fm011.l lname=e params=0 viewwindows=2 map=uniq.map
+f-after-open2 only=fm012.l,uniq.map type=lsystem lfile=fm012.l lname=e params=0 viewwindows=2 map=uniq.map
+f-after-close only=fm013.l,uniq.map type=lsystem lfile=fm013.l lname=e params=0 viewwindows=2 map=uniq.map
+f-noclose only=fm014.l,uniq.map type=lsystem lfile=fm014.l lname=e params=0 viewwindows=2 map=uniq.map
+f-noclose2 only=fm015.l,uniq.map type=lsystem lfile=fm015.l lname=e params=0 viewwindows=2 map=uniq.map
+f-second only=fm016.l,uniq.map type=lsystem lfile=fm016.l lname=e params=0 viewwindows=2 map=uniq.map
+f-second-noblank only=fm017.l,uniq.map type=lsystem lfile=fm017.l lname=e params=0 viewwindows=2 map=uniq.map
+f-dupname only=fm018.l,uniq.map type=lsystem lfile=fm018.l lname=e params=0 viewwindows=2 map=uniq.map
+f-prefix only=fm019.l,uniq.map type=lsystem lfile=fm019.l lname=e params=0 viewwindows=2 map=uniq.map
+f-nolname only=fm020.l,uniq.map type=lsystem lfile=fm020.l params=0 viewwindows=2 map=uniq.map
+f-missing only=fm021.l,uniq.map type=lsystem lfile=fm021.l lname=zz params=0 viewwindows=2 map=uniq.map
+f-tab only=fm022.l,uniq.map type=lsystem lfile=fm022.l lname=e params=0 viewwindows=2 map=uniq.map
+f-crlf only=fm023.l,uniq.map type=lsystem lfile=fm023.l lname=e params=0 viewwindows=2 map=uniq.map
+f-indent0 only=fm024.l,uniq.map type=lsystem lfile=fm024.l lname=e params=0 viewwindows=2 map=uniq.map
+f-blank only=fm025.l,uniq.map type=lsystem lfile=fm025.l lname=e params=0 viewwindows=2 map=uniq.map
+f-spaces-many only=fm026.l,uniq.map type=lsystem lfile=fm026.l lname=e params=0 viewwindows=2 map=uniq.map
+f-cmt-top only=fm027.l,uniq.map type=lsystem lfile=fm027.l lname=e params=0 viewwindows=2 map=uniq.map
+f-cmt-name only=fm028.l,uniq.map type=lsystem lfile=fm028.l lname=e params=0 viewwindows=2 map=uniq.map
+f-cmt-line only=fm029.l,uniq.map type=lsystem lfile=fm029.l lname=e params=0 viewwindows=2 map=uniq.map
+f-cmt-angle only=fm030.l,uniq.map type=lsystem lfile=fm030.l lname=e params=0 viewwindows=2 map=uniq.map
+f-cmt-axiom only=fm031.l,uniq.map type=lsystem lfile=fm031.l lname=e params=0 viewwindows=2 map=uniq.map
+f-cmt-rule only=fm032.l,uniq.map type=lsystem lfile=fm032.l lname=e params=1 viewwindows=2 map=uniq.map
+f-cmt-close only=fm033.l,uniq.map type=lsystem lfile=fm033.l lname=e params=0 viewwindows=2 map=uniq.map
+f-cmt-brace only=fm034.l,uniq.map type=lsystem lfile=fm034.l lname=e params=0 viewwindows=2 map=uniq.map
+f-cmt-hash only=fm035.l,uniq.map type=lsystem lfile=fm035.l lname=e params=0 viewwindows=2 map=uniq.map
+f-cmt-name2 only=fm036.l,uniq.map type=lsystem lfile=fm036.l lname=e params=0 viewwindows=2 map=uniq.map
+f-noangle only=fm037.l,uniq.map type=lsystem lfile=fm037.l lname=e params=0 viewwindows=2 map=uniq.map
+f-noaxiom only=fm038.l,uniq.map type=lsystem lfile=fm038.l lname=e params=0 viewwindows=2 map=uniq.map
+f-empty only=fm039.l,uniq.map type=lsystem lfile=fm039.l lname=e params=0 viewwindows=2 map=uniq.map
+f-angle-twice only=fm040.l,uniq.map type=lsystem lfile=fm040.l lname=e params=0 viewwindows=2 map=uniq.map
+f-axiom-twice only=fm041.l,uniq.map type=lsystem lfile=fm041.l lname=e params=0 viewwindows=2 map=uniq.map
+f-axiom-first only=fm042.l,uniq.map type=lsystem lfile=fm042.l lname=e params=0 viewwindows=2 map=uniq.map
+f-angle0 only=fm043.l,uniq.map type=lsystem lfile=fm043.l lname=e params=0 viewwindows=2 map=uniq.map
+f-angle1 only=fm044.l,uniq.map type=lsystem lfile=fm044.l lname=e params=0 viewwindows=2 map=uniq.map
+f-angle2 only=fm045.l,uniq.map type=lsystem lfile=fm045.l lname=e params=0 viewwindows=2 map=uniq.map
+f-angle3 only=fm046.l,uniq.map type=lsystem lfile=fm046.l lname=e params=0 viewwindows=2 map=uniq.map
+f-angle45 only=fm047.l,uniq.map type=lsystem lfile=fm047.l lname=e params=0 viewwindows=2 map=uniq.map
+f-anglem4 only=fm048.l,uniq.map type=lsystem lfile=fm048.l lname=e params=0 viewwindows=2 map=uniq.map
+f-angle50 only=fm049.l,uniq.map type=lsystem lfile=fm049.l lname=e params=0 viewwindows=2 map=uniq.map
+f-angle51 only=fm050.l,uniq.map type=lsystem lfile=fm050.l lname=e params=0 viewwindows=2 map=uniq.map
+f-angle360 only=fm051.l,uniq.map type=lsystem lfile=fm051.l lname=e params=0 viewwindows=2 map=uniq.map
+f-angle1000 only=fm052.l,uniq.map type=lsystem lfile=fm052.l lname=e params=0 viewwindows=2 map=uniq.map
+f-angle-noval only=fm053.l,uniq.map type=lsystem lfile=fm053.l lname=e params=0 viewwindows=2 map=uniq.map
+f-angle-text only=fm054.l,uniq.map type=lsystem lfile=fm054.l lname=e params=0 viewwindows=2 map=uniq.map
+f-angle-extra only=fm055.l,uniq.map type=lsystem lfile=fm055.l lname=e params=0 viewwindows=2 map=uniq.map
+f-axiom-noval only=fm056.l,uniq.map type=lsystem lfile=fm056.l lname=e params=0 viewwindows=2 map=uniq.map
+f-axiom-space only=fm057.l,uniq.map type=lsystem lfile=fm057.l lname=e params=0 viewwindows=2 map=uniq.map
+f-unknown-kw only=fm058.l,uniq.map type=lsystem lfile=fm058.l lname=e params=0 viewwindows=2 map=uniq.map
+f-unknown-word only=fm059.l,uniq.map type=lsystem lfile=fm059.l lname=e params=0 viewwindows=2 map=uniq.map
+f-kw-abbrev only=fm060.l,uniq.map type=lsystem lfile=fm060.l lname=e params=0 viewwindows=2 map=uniq.map
+f-kw-nospace only=fm061.l,uniq.map type=lsystem lfile=fm061.l lname=e params=0 viewwindows=2 map=uniq.map
+f-rule only=fm062.l,uniq.map type=lsystem lfile=fm062.l lname=e params=1 viewwindows=2 map=uniq.map
+f-rule-sp only=fm063.l,uniq.map type=lsystem lfile=fm063.l lname=e params=1 viewwindows=2 map=uniq.map
+f-rule-sp2 only=fm064.l,uniq.map type=lsystem lfile=fm064.l lname=e params=1 viewwindows=2 map=uniq.map
+f-rule-sp3 only=fm065.l,uniq.map type=lsystem lfile=fm065.l lname=e params=1 viewwindows=2 map=uniq.map
+f-rule-sp4 only=fm066.l,uniq.map type=lsystem lfile=fm066.l lname=e params=1 viewwindows=2 map=uniq.map
+f-rule-lower only=fm067.l,uniq.map type=lsystem lfile=fm067.l lname=e params=1 viewwindows=2 map=uniq.map
+f-rule-lower2 only=fm068.l,uniq.map type=lsystem lfile=fm068.l lname=e params=1 viewwindows=2 map=uniq.map
+f-rule-twice only=fm069.l,uniq.map type=lsystem lfile=fm069.l lname=e params=1 viewwindows=2 map=uniq.map
+f-rule-empty only=fm070.l,uniq.map type=lsystem lfile=fm070.l lname=e params=1 viewwindows=2 map=uniq.map
+f-rule-multi only=fm071.l,uniq.map type=lsystem lfile=fm071.l lname=e params=1 viewwindows=2 map=uniq.map
+f-rule-plus only=fm072.l,uniq.map type=lsystem lfile=fm072.l lname=e params=1 viewwindows=2 map=uniq.map
+f-rule-bracket only=fm073.l,uniq.map type=lsystem lfile=fm073.l lname=e params=1 viewwindows=2 map=uniq.map
+f-rule-nolhs only=fm074.l,uniq.map type=lsystem lfile=fm074.l lname=e params=1 viewwindows=2 map=uniq.map
+f-rule-first only=fm075.l,uniq.map type=lsystem lfile=fm075.l lname=e params=1 viewwindows=2 map=uniq.map
+f-rule-x only=fm076.l,uniq.map type=lsystem lfile=fm076.l lname=e params=1 viewwindows=2 map=uniq.map
+f-rule-x0 only=fm077.l,uniq.map type=lsystem lfile=fm077.l lname=e params=0 viewwindows=2 map=uniq.map
+f-rule-angle only=fm078.l,uniq.map type=lsystem lfile=fm078.l lname=e params=1 viewwindows=2 map=uniq.map
+f-rule-axiom only=fm079.l,uniq.map type=lsystem lfile=fm079.l lname=e params=1 viewwindows=2 map=uniq.map
+f-rule-a only=fm080.l,uniq.map type=lsystem lfile=fm080.l lname=e params=1 viewwindows=2 map=uniq.map
+f-rule-digit only=fm081.l,uniq.map type=lsystem lfile=fm081.l lname=e params=1 viewwindows=2 map=uniq.map
+f-rule-c only=fm082.l,uniq.map type=lsystem lfile=fm082.l lname=e params=1 viewwindows=2 map=uniq.map
+f-rule-at only=fm083.l,uniq.map type=lsystem lfile=fm083.l lname=e params=1 viewwindows=2 map=uniq.map
+f-rule-space-in only=fm084.l,uniq.map type=lsystem lfile=fm084.l lname=e params=1 viewwindows=2 map=uniq.map
+f-simul only=fm085.l,uniq.map type=lsystem lfile=fm085.l lname=e params=1 viewwindows=2 map=uniq.map
+f-simul2 only=fm086.l,uniq.map type=lsystem lfile=fm086.l lname=e params=2 viewwindows=2 map=uniq.map
+# --- cases-fmt2.txt -> fmt2/
+f-rule-nosep only=fn001.l,uniq.map type=lsystem lfile=fn001.l lname=e params=1 viewwindows=2 map=uniq.map
+f-rule-hash only=fn002.l,uniq.map type=lsystem lfile=fn002.l lname=e params=1 viewwindows=2 map=uniq.map
+f-rule-hash0 only=fn003.l,uniq.map type=lsystem lfile=fn003.l lname=e params=0 viewwindows=2 map=uniq.map
+f-rule-nosep2 only=fn004.l,uniq.map type=lsystem lfile=fn004.l lname=e params=1 viewwindows=2 map=uniq.map
+f-nolname-solo only=fn005.l,uniq.map type=lsystem lfile=fn005.l params=0 viewwindows=2 map=uniq.map
+f-missing-solo only=fn006.l,uniq.map type=lsystem lfile=fn006.l lname=zz params=0 viewwindows=2 map=uniq.map
+f-nofile-solo only=,uniq.map type=lsystem lfile=nosuch.l lname=e params=0 viewwindows=2 map=uniq.map
+f-noext only=fn008.l,uniq.map type=lsystem lfile=fn008 lname=e params=0 viewwindows=2 map=uniq.map
+f-upperfile only=fn009.l,uniq.map type=lsystem lfile=FN009.L lname=e params=0 viewwindows=2 map=uniq.map
+f-nolfile only=,uniq.map type=lsystem lname=e params=0 viewwindows=2 map=uniq.map
+f-name16 only=fn011.l,uniq.map type=lsystem lfile=fn011.l lname=abcdefghijklmnop params=0 viewwindows=2 map=uniq.map
+f-name17 only=fn012.l,uniq.map type=lsystem lfile=fn012.l lname=abcdefghijklmnopq params=0 viewwindows=2 map=uniq.map
+f-name24 only=fn013.l,uniq.map type=lsystem lfile=fn013.l lname=abcdefghijklmnopqrstuvwx params=0 viewwindows=2 map=uniq.map
+f-name31 only=fn014.l,uniq.map type=lsystem lfile=fn014.l lname=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa params=0 viewwindows=2 map=uniq.map
+f-name40 only=fn015.l,uniq.map type=lsystem lfile=fn015.l lname=bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb params=0 viewwindows=2 map=uniq.map
+f-name47 only=fn016.l,uniq.map type=lsystem lfile=fn016.l lname=ccccccccccccccccccccccccccccccccccccccccccccccc params=0 viewwindows=2 map=uniq.map
+f-name48 only=fn017.l,uniq.map type=lsystem lfile=fn017.l lname=dddddddddddddddddddddddddddddddddddddddddddddddd params=0 viewwindows=2 map=uniq.map
+f-name60 only=fn018.l,uniq.map type=lsystem lfile=fn018.l lname=gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg params=0 viewwindows=2 map=uniq.map
+f-name60-short only=fn019.l,uniq.map type=lsystem lfile=fn019.l lname=gggggggggggggggggggg params=0 viewwindows=2 map=uniq.map
+f-name-punct only=fn020.l,uniq.map type=lsystem lfile=fn020.l lname=a-b.c_d(1) params=0 viewwindows=2 map=uniq.map
+f-name-twowords only=fn021.l,uniq.map type=lsystem lfile=fn021.l lname=e params=0 viewwindows=2 map=uniq.map
+f-name-indent only=fn022.l,uniq.map type=lsystem lfile=fn022.l lname=e params=0 viewwindows=2 map=uniq.map
+f-noclose3 only=fn023.l,uniq.map type=lsystem lfile=fn023.l lname=e params=0 viewwindows=2 map=uniq.map
+f-noclose4 only=fn024.l,uniq.map type=lsystem lfile=fn024.l lname=e params=0 viewwindows=2 map=uniq.map
+f-close-first only=fn025.l,uniq.map type=lsystem lfile=fn025.l lname=e params=0 viewwindows=2 map=uniq.map
+f-angle69 only=fn026.l,uniq.map type=lsystem lfile=fn026.l lname=e params=0 viewwindows=2 map=uniq.map
+f-angle06 only=fn027.l,uniq.map type=lsystem lfile=fn027.l lname=e params=0 viewwindows=2 map=uniq.map
+f-anglep6 only=fn028.l,uniq.map type=lsystem lfile=fn028.l lname=e params=0 viewwindows=2 map=uniq.map
+f-angle6x only=fn029.l,uniq.map type=lsystem lfile=fn029.l lname=e params=0 viewwindows=2 map=uniq.map
+f-angle-hex only=fn030.l,uniq.map type=lsystem lfile=fn030.l lname=e params=0 viewwindows=2 map=uniq.map
+f-angle6 only=fn031.l,uniq.map type=lsystem lfile=fn031.l lname=e params=0 viewwindows=2 map=uniq.map
+f-axlen100 only=fn032.l,uniq.map type=lsystem lfile=fn032.l lname=e params=0 viewwindows=2 map=uniq.map
+f-axlen127 only=fn033.l,uniq.map type=lsystem lfile=fn033.l lname=e params=0 viewwindows=2 map=uniq.map
+f-axlen128 only=fn034.l,uniq.map type=lsystem lfile=fn034.l lname=e params=0 viewwindows=2 map=uniq.map
+f-axlen160 only=fn035.l,uniq.map type=lsystem lfile=fn035.l lname=e params=0 viewwindows=2 map=uniq.map
+f-axlen200 only=fn036.l,uniq.map type=lsystem lfile=fn036.l lname=e params=0 viewwindows=2 map=uniq.map
+f-axlen255 only=fn037.l,uniq.map type=lsystem lfile=fn037.l lname=e params=0 viewwindows=2 map=uniq.map
+f-axlen256 only=fn038.l,uniq.map type=lsystem lfile=fn038.l lname=e params=0 viewwindows=2 map=uniq.map
+f-axlen300 only=fn039.l,uniq.map type=lsystem lfile=fn039.l lname=e params=0 viewwindows=2 map=uniq.map
+f-axlen500 only=fn040.l,uniq.map type=lsystem lfile=fn040.l lname=e params=0 viewwindows=2 map=uniq.map
+f-axlen1000 only=fn041.l,uniq.map type=lsystem lfile=fn041.l lname=e params=0 viewwindows=2 map=uniq.map
+f-axlen2000 only=fn042.l,uniq.map type=lsystem lfile=fn042.l lname=e params=0 viewwindows=2 map=uniq.map
+f-rulelen100 only=fn043.l,uniq.map type=lsystem lfile=fn043.l lname=e params=1 viewwindows=2 map=uniq.map
+f-rulelen160 only=fn044.l,uniq.map type=lsystem lfile=fn044.l lname=e params=1 viewwindows=2 map=uniq.map
+f-rulelen200 only=fn045.l,uniq.map type=lsystem lfile=fn045.l lname=e params=1 viewwindows=2 map=uniq.map
+f-rulelen255 only=fn046.l,uniq.map type=lsystem lfile=fn046.l lname=e params=1 viewwindows=2 map=uniq.map
+f-rulelen256 only=fn047.l,uniq.map type=lsystem lfile=fn047.l lname=e params=1 viewwindows=2 map=uniq.map
+f-rulelen300 only=fn048.l,uniq.map type=lsystem lfile=fn048.l lname=e params=1 viewwindows=2 map=uniq.map
+f-rulelen500 only=fn049.l,uniq.map type=lsystem lfile=fn049.l lname=e params=1 viewwindows=2 map=uniq.map
+f-rulelen1000 only=fn050.l,uniq.map type=lsystem lfile=fn050.l lname=e params=1 viewwindows=2 map=uniq.map
+f-rulelen2000 only=fn051.l,uniq.map type=lsystem lfile=fn051.l lname=e params=1 viewwindows=2 map=uniq.map
+f-nrules20 only=fn052.l,uniq.map type=lsystem lfile=fn052.l lname=e params=1 viewwindows=2 map=uniq.map
+f-nrules49 only=fn053.l,uniq.map type=lsystem lfile=fn053.l lname=e params=1 viewwindows=2 map=uniq.map
+f-nrules50 only=fn054.l,uniq.map type=lsystem lfile=fn054.l lname=e params=1 viewwindows=2 map=uniq.map
+f-nrules51 only=fn055.l,uniq.map type=lsystem lfile=fn055.l lname=e params=1 viewwindows=2 map=uniq.map
+f-nrules64 only=fn056.l,uniq.map type=lsystem lfile=fn056.l lname=e params=1 viewwindows=2 map=uniq.map
+f-nrules100 only=fn057.l,uniq.map type=lsystem lfile=fn057.l lname=e params=1 viewwindows=2 map=uniq.map
+f-nrules128 only=fn058.l,uniq.map type=lsystem lfile=fn058.l lname=e params=1 viewwindows=2 map=uniq.map
+f-nrules200 only=fn059.l,uniq.map type=lsystem lfile=fn059.l lname=e params=1 viewwindows=2 map=uniq.map
+f-nrules256 only=fn060.l,uniq.map type=lsystem lfile=fn060.l lname=e params=1 viewwindows=2 map=uniq.map
+f-nrules300 only=fn061.l,uniq.map type=lsystem lfile=fn061.l lname=e params=1 viewwindows=2 map=uniq.map
+f-nlines20 only=fn062.l,uniq.map type=lsystem lfile=fn062.l lname=e params=0 viewwindows=2 map=uniq.map
+f-nlines50 only=fn063.l,uniq.map type=lsystem lfile=fn063.l lname=e params=0 viewwindows=2 map=uniq.map
+f-nlines64 only=fn064.l,uniq.map type=lsystem lfile=fn064.l lname=e params=0 viewwindows=2 map=uniq.map
+f-nlines100 only=fn065.l,uniq.map type=lsystem lfile=fn065.l lname=e params=0 viewwindows=2 map=uniq.map
+f-nlines200 only=fn066.l,uniq.map type=lsystem lfile=fn066.l lname=e params=0 viewwindows=2 map=uniq.map
+f-nlines300 only=fn067.l,uniq.map type=lsystem lfile=fn067.l lname=e params=0 viewwindows=2 map=uniq.map
+f-nlines1000 only=fn068.l,uniq.map type=lsystem lfile=fn068.l lname=e params=0 viewwindows=2 map=uniq.map
+# --- cases-fmt3.txt -> fmt3/
+f-lk-noentry only=lka.l,lkb.l,uniq.map type=lsystem lfile=lka.l lname=e params=0 viewwindows=2 map=uniq.map
+f-lk-own-b only=lkb.l,lkc.l,uniq.map type=lsystem lfile=lkb.l lname=e params=0 viewwindows=2 map=uniq.map
+f-lk-own-c only=lkb.l,lkc.l,uniq.map type=lsystem lfile=lkc.l lname=e params=0 viewwindows=2 map=uniq.map
+f-lk-noext-b only=lkb.l,lkc.l,uniq.map type=lsystem lfile=lkb lname=e params=0 viewwindows=2 map=uniq.map
+f-lk-noext-c only=lkb.l,lkc.l,uniq.map type=lsystem lfile=lkc lname=e params=0 viewwindows=2 map=uniq.map
+f-lk-upper-b only=lkb.l,lkc.l,uniq.map type=lsystem lfile=LKB.L lname=e params=0 viewwindows=2 map=uniq.map
+f-lk-upper-c only=lkb.l,lkc.l,uniq.map type=lsystem lfile=LKC.L lname=e params=0 viewwindows=2 map=uniq.map
+f-lk-nofile-bc only=lkb.l,lkc.l,uniq.map type=lsystem lfile=nosuch.l lname=e params=0 viewwindows=2 map=uniq.map
+f-lk-nofile-cz only=lkc.l,lkz.l,uniq.map type=lsystem lfile=nosuch.l lname=e params=0 viewwindows=2 map=uniq.map
+f-lk-nofile-ab only=lka.l,lkb.l,uniq.map type=lsystem lfile=nosuch.l lname=e params=0 viewwindows=2 map=uniq.map
+f-lk-nofile-a only=lka.l,uniq.map type=lsystem lfile=nosuch.l lname=e params=0 viewwindows=2 map=uniq.map
+f-lk-long-b only=lkb.l,uniq.map type=lsystem lfile=lkbxxxxxxx.l lname=e params=0 viewwindows=2 map=uniq.map
+f-brace-nextline only=fp001.l,uniq.map type=lsystem lfile=fp001.l lname=e params=0 viewwindows=2 map=uniq.map
+f-brace-nextline-empty only=fp002.l,uniq.map type=lsystem lfile=fp002.l params=0 viewwindows=2 map=uniq.map
+f-second-noblank only=fp003.l,uniq.map type=lsystem lfile=fp003.l lname=e params=0 viewwindows=2 map=uniq.map
+f-name-upper only=fp004.l,uniq.map type=lsystem lfile=fp004.l lname=eex params=0 viewwindows=2 map=uniq.map
+f-lname18 only=fp005.l,uniq.map type=lsystem lfile=fp005.l lname=kkkkkkkkkkkkkkkkkk params=0 viewwindows=2 map=uniq.map
+f-lname19 only=fp006.l,uniq.map type=lsystem lfile=fp006.l lname=kkkkkkkkkkkkkkkkkkk params=0 viewwindows=2 map=uniq.map
+f-lname20 only=fp007.l,uniq.map type=lsystem lfile=fp007.l lname=kkkkkkkkkkkkkkkkkkkk params=0 viewwindows=2 map=uniq.map
+f-name18-file24 only=fp008.l,uniq.map type=lsystem lfile=fp008.l lname=kkkkkkkkkkkkkkkkkk params=0 viewwindows=2 map=uniq.map
+f-name-dash only=fp009.l,uniq.map type=lsystem lfile=fp009.l lname=a-b params=0 viewwindows=2 map=uniq.map
+f-name-dot only=fp010.l,uniq.map type=lsystem lfile=fp010.l lname=a.b params=0 viewwindows=2 map=uniq.map
+f-name-under only=fp011.l,uniq.map type=lsystem lfile=fp011.l lname=a_b params=0 viewwindows=2 map=uniq.map
+f-name-paren only=fp012.l,uniq.map type=lsystem lfile=fp012.l lname=a(b) params=0 viewwindows=2 map=uniq.map
+f-name-bang only=fp013.l,uniq.map type=lsystem lfile=fp013.l lname=a!b params=0 viewwindows=2 map=uniq.map
+f-name-digit only=fp014.l,uniq.map type=lsystem lfile=fp014.l lname=1abc params=0 viewwindows=2 map=uniq.map
+f-name-slash only=fp015.l,uniq.map type=lsystem lfile=fp015.l lname=a/b params=0 viewwindows=2 map=uniq.map
+f-name-eq only=fp016.l,uniq.map type=lsystem lfile=fp016.l lname=a=b params=0 viewwindows=2 map=uniq.map
+f-name-brack only=fp017.l,uniq.map type=lsystem lfile=fp017.l lname=a[b params=0 viewwindows=2 map=uniq.map
+f-name-glued only=fp018.l,uniq.map type=lsystem lfile=fp018.l lname=e params=0 viewwindows=2 map=uniq.map
+f-last-wins only=fp019.l,uniq.map type=lsystem lfile=fp019.l lname=e params=0 viewwindows=2 map=uniq.map
+f-last-wins-col0 only=fp020.l,uniq.map type=lsystem lfile=fp020.l lname=e params=0 viewwindows=2 map=uniq.map
+f-after-open-entry only=fp021.l,uniq.map type=lsystem lfile=fp021.l lname=e params=0 viewwindows=2 map=uniq.map
+f-noclose-indented only=fp022.l,uniq.map type=lsystem lfile=fp022.l lname=e params=0 viewwindows=2 map=uniq.map
+f-noclose-col0 only=fp023.l,uniq.map type=lsystem lfile=fp023.l lname=e params=0 viewwindows=2 map=uniq.map
+f-noclose-col0-close only=fp024.l,uniq.map type=lsystem lfile=fp024.l lname=e params=0 viewwindows=2 map=uniq.map
+f-rule-brace only=fp025.l,uniq.map type=lsystem lfile=fp025.l lname=e params=1 viewwindows=2 map=uniq.map
+f-rule-close only=fp026.l,uniq.map type=lsystem lfile=fp026.l lname=e params=1 viewwindows=2 map=uniq.map
+f-axiom-close only=fp027.l,uniq.map type=lsystem lfile=fp027.l lname=e params=0 viewwindows=2 map=uniq.map
+f-axiom-open only=fp028.l,uniq.map type=lsystem lfile=fp028.l lname=e params=0 viewwindows=2 map=uniq.map
+f-comment-in-name only=fp029.l,uniq.map type=lsystem lfile=fp029.l lname=e params=0 viewwindows=2 map=uniq.map
+f-name-paren-a only=fp012.l,uniq.map type=lsystem lfile=fp012.l lname=a params=0 viewwindows=2 map=uniq.map
+f-name-brack-a only=fp017.l,uniq.map type=lsystem lfile=fp017.l lname=a params=0 viewwindows=2 map=uniq.map
+# --- cases-lhs.txt -> lhs/
+h033 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h033 params=1 viewwindows=2 map=uniq.map
+h034 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h034 params=1 viewwindows=2 map=uniq.map
+h035 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h035 params=1 viewwindows=2 map=uniq.map
+h036 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h036 params=1 viewwindows=2 map=uniq.map
+h037 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h037 params=1 viewwindows=2 map=uniq.map
+h038 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h038 params=1 viewwindows=2 map=uniq.map
+h039 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h039 params=1 viewwindows=2 map=uniq.map
+h040 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h040 params=1 viewwindows=2 map=uniq.map
+h041 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h041 params=1 viewwindows=2 map=uniq.map
+h042 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h042 params=1 viewwindows=2 map=uniq.map
+h043 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h043 params=1 viewwindows=2 map=uniq.map
+h044 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h044 params=1 viewwindows=2 map=uniq.map
+h045 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h045 params=1 viewwindows=2 map=uniq.map
+h046 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h046 params=1 viewwindows=2 map=uniq.map
+h047 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h047 params=1 viewwindows=2 map=uniq.map
+h048 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h048 params=1 viewwindows=2 map=uniq.map
+h049 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h049 params=1 viewwindows=2 map=uniq.map
+h050 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h050 params=1 viewwindows=2 map=uniq.map
+h051 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h051 params=1 viewwindows=2 map=uniq.map
+h052 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h052 params=1 viewwindows=2 map=uniq.map
+h053 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h053 params=1 viewwindows=2 map=uniq.map
+h054 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h054 params=1 viewwindows=2 map=uniq.map
+h055 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h055 params=1 viewwindows=2 map=uniq.map
+h056 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h056 params=1 viewwindows=2 map=uniq.map
+h057 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h057 params=1 viewwindows=2 map=uniq.map
+h058 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h058 params=1 viewwindows=2 map=uniq.map
+h060 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h060 params=1 viewwindows=2 map=uniq.map
+h062 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h062 params=1 viewwindows=2 map=uniq.map
+h063 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h063 params=1 viewwindows=2 map=uniq.map
+h064 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h064 params=1 viewwindows=2 map=uniq.map
+h065 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h065 params=1 viewwindows=2 map=uniq.map
+h066 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h066 params=1 viewwindows=2 map=uniq.map
+h067 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h067 params=1 viewwindows=2 map=uniq.map
+h068 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h068 params=1 viewwindows=2 map=uniq.map
+h069 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h069 params=1 viewwindows=2 map=uniq.map
+h070 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h070 params=1 viewwindows=2 map=uniq.map
+h071 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h071 params=1 viewwindows=2 map=uniq.map
+h072 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h072 params=1 viewwindows=2 map=uniq.map
+h073 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h073 params=1 viewwindows=2 map=uniq.map
+h074 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h074 params=1 viewwindows=2 map=uniq.map
+h075 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h075 params=1 viewwindows=2 map=uniq.map
+h076 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h076 params=1 viewwindows=2 map=uniq.map
+h077 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h077 params=1 viewwindows=2 map=uniq.map
+h078 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h078 params=1 viewwindows=2 map=uniq.map
+h079 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h079 params=1 viewwindows=2 map=uniq.map
+h080 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h080 params=1 viewwindows=2 map=uniq.map
+h081 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h081 params=1 viewwindows=2 map=uniq.map
+h082 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h082 params=1 viewwindows=2 map=uniq.map
+h083 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h083 params=1 viewwindows=2 map=uniq.map
+h084 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h084 params=1 viewwindows=2 map=uniq.map
+h085 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h085 params=1 viewwindows=2 map=uniq.map
+h086 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h086 params=1 viewwindows=2 map=uniq.map
+h087 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h087 params=1 viewwindows=2 map=uniq.map
+h088 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h088 params=1 viewwindows=2 map=uniq.map
+h089 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h089 params=1 viewwindows=2 map=uniq.map
+h090 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h090 params=1 viewwindows=2 map=uniq.map
+h091 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h091 params=1 viewwindows=2 map=uniq.map
+h092 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h092 params=1 viewwindows=2 map=uniq.map
+h093 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h093 params=1 viewwindows=2 map=uniq.map
+h094 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h094 params=1 viewwindows=2 map=uniq.map
+h095 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h095 params=1 viewwindows=2 map=uniq.map
+h096 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h096 params=1 viewwindows=2 map=uniq.map
+h097 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h097 params=1 viewwindows=2 map=uniq.map
+h098 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h098 params=1 viewwindows=2 map=uniq.map
+h099 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h099 params=1 viewwindows=2 map=uniq.map
+h100 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h100 params=1 viewwindows=2 map=uniq.map
+h101 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h101 params=1 viewwindows=2 map=uniq.map
+h102 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h102 params=1 viewwindows=2 map=uniq.map
+h103 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h103 params=1 viewwindows=2 map=uniq.map
+h104 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h104 params=1 viewwindows=2 map=uniq.map
+h105 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h105 params=1 viewwindows=2 map=uniq.map
+h106 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h106 params=1 viewwindows=2 map=uniq.map
+h107 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h107 params=1 viewwindows=2 map=uniq.map
+h108 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h108 params=1 viewwindows=2 map=uniq.map
+h109 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h109 params=1 viewwindows=2 map=uniq.map
+h110 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h110 params=1 viewwindows=2 map=uniq.map
+h111 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h111 params=1 viewwindows=2 map=uniq.map
+h112 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h112 params=1 viewwindows=2 map=uniq.map
+h113 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h113 params=1 viewwindows=2 map=uniq.map
+h114 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h114 params=1 viewwindows=2 map=uniq.map
+h115 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h115 params=1 viewwindows=2 map=uniq.map
+h116 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h116 params=1 viewwindows=2 map=uniq.map
+h117 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h117 params=1 viewwindows=2 map=uniq.map
+h118 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h118 params=1 viewwindows=2 map=uniq.map
+h119 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h119 params=1 viewwindows=2 map=uniq.map
+h120 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h120 params=1 viewwindows=2 map=uniq.map
+h121 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h121 params=1 viewwindows=2 map=uniq.map
+h122 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h122 params=1 viewwindows=2 map=uniq.map
+h124 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h124 params=1 viewwindows=2 map=uniq.map
+h126 only=lh.l,uniq.map type=lsystem lfile=lh.l lname=h126 params=1 viewwindows=2 map=uniq.map
+gl1 only=gl1.l,uniq.map type=lsystem lfile=gl1.l lname=e params=0 viewwindows=2 map=uniq.map
+gl2 only=gl2.l,uniq.map type=lsystem lfile=gl2.l lname=e params=0 viewwindows=2 map=uniq.map
+# --- cases-seg.txt -> seg/
+seg-400x300-h only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g1 viewwindows=2 map=uniq.map
+seg-400x300-sq only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g5 viewwindows=2 map=uniq.map
+seg-400x300-p3 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p3 viewwindows=2 map=uniq.map
+seg-400x300-q3 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q3 viewwindows=2 map=uniq.map
+seg-400x300-p4 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p4 viewwindows=2 map=uniq.map
+seg-400x300-q4 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q4 viewwindows=2 map=uniq.map
+seg-400x300-p5 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p5 viewwindows=2 map=uniq.map
+seg-400x300-q5 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q5 viewwindows=2 map=uniq.map
+seg-400x300-p6 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p6 viewwindows=2 map=uniq.map
+seg-400x300-q6 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q6 viewwindows=2 map=uniq.map
+seg-400x300-p7 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p7 viewwindows=2 map=uniq.map
+seg-400x300-q7 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q7 viewwindows=2 map=uniq.map
+seg-400x300-p8 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p8 viewwindows=2 map=uniq.map
+seg-400x300-q8 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q8 viewwindows=2 map=uniq.map
+seg-400x300-p9 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p9 viewwindows=2 map=uniq.map
+seg-400x300-q9 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q9 viewwindows=2 map=uniq.map
+seg-400x300-p10 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p10 viewwindows=2 map=uniq.map
+seg-400x300-q10 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q10 viewwindows=2 map=uniq.map
+seg-400x300-p11 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p11 viewwindows=2 map=uniq.map
+seg-400x300-q11 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q11 viewwindows=2 map=uniq.map
+seg-400x300-p12 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p12 viewwindows=2 map=uniq.map
+seg-400x300-q12 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q12 viewwindows=2 map=uniq.map
+seg-400x300-p13 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p13 viewwindows=2 map=uniq.map
+seg-400x300-q13 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q13 viewwindows=2 map=uniq.map
+seg-400x300-p16 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p16 viewwindows=2 map=uniq.map
+seg-400x300-q16 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q16 viewwindows=2 map=uniq.map
+seg-400x300-p17 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p17 viewwindows=2 map=uniq.map
+seg-400x300-q17 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q17 viewwindows=2 map=uniq.map
+seg-400x300-p24 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p24 viewwindows=2 map=uniq.map
+seg-400x300-q24 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q24 viewwindows=2 map=uniq.map
+seg-400x300-p50 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p50 viewwindows=2 map=uniq.map
+seg-400x300-q50 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q50 viewwindows=2 map=uniq.map
+seg-800x600-h only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g1 viewwindows=1/0.75/no/800/600 map=uniq.map
+seg-800x600-sq only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g5 viewwindows=1/0.75/no/800/600 map=uniq.map
+seg-800x600-p3 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p3 viewwindows=1/0.75/no/800/600 map=uniq.map
+seg-800x600-q3 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q3 viewwindows=1/0.75/no/800/600 map=uniq.map
+seg-800x600-p4 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p4 viewwindows=1/0.75/no/800/600 map=uniq.map
+seg-800x600-q4 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q4 viewwindows=1/0.75/no/800/600 map=uniq.map
+seg-800x600-p5 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p5 viewwindows=1/0.75/no/800/600 map=uniq.map
+seg-800x600-q5 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q5 viewwindows=1/0.75/no/800/600 map=uniq.map
+seg-800x600-p6 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p6 viewwindows=1/0.75/no/800/600 map=uniq.map
+seg-800x600-q6 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q6 viewwindows=1/0.75/no/800/600 map=uniq.map
+seg-800x600-p7 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p7 viewwindows=1/0.75/no/800/600 map=uniq.map
+seg-800x600-q7 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q7 viewwindows=1/0.75/no/800/600 map=uniq.map
+seg-800x600-p8 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p8 viewwindows=1/0.75/no/800/600 map=uniq.map
+seg-800x600-q8 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q8 viewwindows=1/0.75/no/800/600 map=uniq.map
+seg-800x600-p9 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p9 viewwindows=1/0.75/no/800/600 map=uniq.map
+seg-800x600-q9 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q9 viewwindows=1/0.75/no/800/600 map=uniq.map
+seg-800x600-p10 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p10 viewwindows=1/0.75/no/800/600 map=uniq.map
+seg-800x600-q10 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q10 viewwindows=1/0.75/no/800/600 map=uniq.map
+seg-800x600-p11 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p11 viewwindows=1/0.75/no/800/600 map=uniq.map
+seg-800x600-q11 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q11 viewwindows=1/0.75/no/800/600 map=uniq.map
+seg-800x600-p12 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p12 viewwindows=1/0.75/no/800/600 map=uniq.map
+seg-800x600-q12 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q12 viewwindows=1/0.75/no/800/600 map=uniq.map
+seg-800x600-p13 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p13 viewwindows=1/0.75/no/800/600 map=uniq.map
+seg-800x600-q13 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q13 viewwindows=1/0.75/no/800/600 map=uniq.map
+seg-800x600-p16 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p16 viewwindows=1/0.75/no/800/600 map=uniq.map
+seg-800x600-q16 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q16 viewwindows=1/0.75/no/800/600 map=uniq.map
+seg-800x600-p17 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p17 viewwindows=1/0.75/no/800/600 map=uniq.map
+seg-800x600-q17 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q17 viewwindows=1/0.75/no/800/600 map=uniq.map
+seg-800x600-p24 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p24 viewwindows=1/0.75/no/800/600 map=uniq.map
+seg-800x600-q24 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q24 viewwindows=1/0.75/no/800/600 map=uniq.map
+seg-800x600-p50 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p50 viewwindows=1/0.75/no/800/600 map=uniq.map
+seg-800x600-q50 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q50 viewwindows=1/0.75/no/800/600 map=uniq.map
+seg-640x480-h only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g1 viewwindows=1/0.75/no/640/480 map=uniq.map
+seg-640x480-sq only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g5 viewwindows=1/0.75/no/640/480 map=uniq.map
+seg-640x480-p3 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p3 viewwindows=1/0.75/no/640/480 map=uniq.map
+seg-640x480-q3 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q3 viewwindows=1/0.75/no/640/480 map=uniq.map
+seg-640x480-p4 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p4 viewwindows=1/0.75/no/640/480 map=uniq.map
+seg-640x480-q4 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q4 viewwindows=1/0.75/no/640/480 map=uniq.map
+seg-640x480-p5 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p5 viewwindows=1/0.75/no/640/480 map=uniq.map
+seg-640x480-q5 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q5 viewwindows=1/0.75/no/640/480 map=uniq.map
+seg-640x480-p6 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p6 viewwindows=1/0.75/no/640/480 map=uniq.map
+seg-640x480-q6 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q6 viewwindows=1/0.75/no/640/480 map=uniq.map
+seg-640x480-p7 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p7 viewwindows=1/0.75/no/640/480 map=uniq.map
+seg-640x480-q7 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q7 viewwindows=1/0.75/no/640/480 map=uniq.map
+seg-640x480-p8 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p8 viewwindows=1/0.75/no/640/480 map=uniq.map
+seg-640x480-q8 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q8 viewwindows=1/0.75/no/640/480 map=uniq.map
+seg-640x480-p9 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p9 viewwindows=1/0.75/no/640/480 map=uniq.map
+seg-640x480-q9 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q9 viewwindows=1/0.75/no/640/480 map=uniq.map
+seg-640x480-p10 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p10 viewwindows=1/0.75/no/640/480 map=uniq.map
+seg-640x480-q10 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q10 viewwindows=1/0.75/no/640/480 map=uniq.map
+seg-640x480-p11 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p11 viewwindows=1/0.75/no/640/480 map=uniq.map
+seg-640x480-q11 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q11 viewwindows=1/0.75/no/640/480 map=uniq.map
+seg-640x480-p12 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p12 viewwindows=1/0.75/no/640/480 map=uniq.map
+seg-640x480-q12 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q12 viewwindows=1/0.75/no/640/480 map=uniq.map
+seg-640x480-p13 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p13 viewwindows=1/0.75/no/640/480 map=uniq.map
+seg-640x480-q13 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q13 viewwindows=1/0.75/no/640/480 map=uniq.map
+seg-640x480-p16 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p16 viewwindows=1/0.75/no/640/480 map=uniq.map
+seg-640x480-q16 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q16 viewwindows=1/0.75/no/640/480 map=uniq.map
+seg-640x480-p17 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p17 viewwindows=1/0.75/no/640/480 map=uniq.map
+seg-640x480-q17 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q17 viewwindows=1/0.75/no/640/480 map=uniq.map
+seg-640x480-p24 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p24 viewwindows=1/0.75/no/640/480 map=uniq.map
+seg-640x480-q24 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q24 viewwindows=1/0.75/no/640/480 map=uniq.map
+seg-640x480-p50 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p50 viewwindows=1/0.75/no/640/480 map=uniq.map
+seg-640x480-q50 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q50 viewwindows=1/0.75/no/640/480 map=uniq.map
+seg-333x211-h only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g1 viewwindows=1/0.75/no/333/211 map=uniq.map
+seg-333x211-sq only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g5 viewwindows=1/0.75/no/333/211 map=uniq.map
+seg-333x211-p3 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p3 viewwindows=1/0.75/no/333/211 map=uniq.map
+seg-333x211-q3 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q3 viewwindows=1/0.75/no/333/211 map=uniq.map
+seg-333x211-p4 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p4 viewwindows=1/0.75/no/333/211 map=uniq.map
+seg-333x211-q4 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q4 viewwindows=1/0.75/no/333/211 map=uniq.map
+seg-333x211-p5 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p5 viewwindows=1/0.75/no/333/211 map=uniq.map
+seg-333x211-q5 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q5 viewwindows=1/0.75/no/333/211 map=uniq.map
+seg-333x211-p6 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p6 viewwindows=1/0.75/no/333/211 map=uniq.map
+seg-333x211-q6 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q6 viewwindows=1/0.75/no/333/211 map=uniq.map
+seg-333x211-p7 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p7 viewwindows=1/0.75/no/333/211 map=uniq.map
+seg-333x211-q7 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q7 viewwindows=1/0.75/no/333/211 map=uniq.map
+seg-333x211-p8 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p8 viewwindows=1/0.75/no/333/211 map=uniq.map
+seg-333x211-q8 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q8 viewwindows=1/0.75/no/333/211 map=uniq.map
+seg-333x211-p9 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p9 viewwindows=1/0.75/no/333/211 map=uniq.map
+seg-333x211-q9 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q9 viewwindows=1/0.75/no/333/211 map=uniq.map
+seg-333x211-p10 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p10 viewwindows=1/0.75/no/333/211 map=uniq.map
+seg-333x211-q10 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q10 viewwindows=1/0.75/no/333/211 map=uniq.map
+seg-333x211-p11 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p11 viewwindows=1/0.75/no/333/211 map=uniq.map
+seg-333x211-q11 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q11 viewwindows=1/0.75/no/333/211 map=uniq.map
+seg-333x211-p12 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p12 viewwindows=1/0.75/no/333/211 map=uniq.map
+seg-333x211-q12 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q12 viewwindows=1/0.75/no/333/211 map=uniq.map
+seg-333x211-p13 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p13 viewwindows=1/0.75/no/333/211 map=uniq.map
+seg-333x211-q13 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q13 viewwindows=1/0.75/no/333/211 map=uniq.map
+seg-333x211-p16 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p16 viewwindows=1/0.75/no/333/211 map=uniq.map
+seg-333x211-q16 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q16 viewwindows=1/0.75/no/333/211 map=uniq.map
+seg-333x211-p17 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p17 viewwindows=1/0.75/no/333/211 map=uniq.map
+seg-333x211-q17 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q17 viewwindows=1/0.75/no/333/211 map=uniq.map
+seg-333x211-p24 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p24 viewwindows=1/0.75/no/333/211 map=uniq.map
+seg-333x211-q24 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q24 viewwindows=1/0.75/no/333/211 map=uniq.map
+seg-333x211-p50 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p50 viewwindows=1/0.75/no/333/211 map=uniq.map
+seg-333x211-q50 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q50 viewwindows=1/0.75/no/333/211 map=uniq.map
+seg-301x301-h only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g1 viewwindows=1/0.75/no/301/301 map=uniq.map
+seg-301x301-sq only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g5 viewwindows=1/0.75/no/301/301 map=uniq.map
+seg-301x301-p3 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p3 viewwindows=1/0.75/no/301/301 map=uniq.map
+seg-301x301-q3 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q3 viewwindows=1/0.75/no/301/301 map=uniq.map
+seg-301x301-p4 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p4 viewwindows=1/0.75/no/301/301 map=uniq.map
+seg-301x301-q4 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q4 viewwindows=1/0.75/no/301/301 map=uniq.map
+seg-301x301-p5 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p5 viewwindows=1/0.75/no/301/301 map=uniq.map
+seg-301x301-q5 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q5 viewwindows=1/0.75/no/301/301 map=uniq.map
+seg-301x301-p6 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p6 viewwindows=1/0.75/no/301/301 map=uniq.map
+seg-301x301-q6 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q6 viewwindows=1/0.75/no/301/301 map=uniq.map
+seg-301x301-p7 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p7 viewwindows=1/0.75/no/301/301 map=uniq.map
+seg-301x301-q7 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q7 viewwindows=1/0.75/no/301/301 map=uniq.map
+seg-301x301-p8 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p8 viewwindows=1/0.75/no/301/301 map=uniq.map
+seg-301x301-q8 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q8 viewwindows=1/0.75/no/301/301 map=uniq.map
+seg-301x301-p9 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p9 viewwindows=1/0.75/no/301/301 map=uniq.map
+seg-301x301-q9 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q9 viewwindows=1/0.75/no/301/301 map=uniq.map
+seg-301x301-p10 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p10 viewwindows=1/0.75/no/301/301 map=uniq.map
+seg-301x301-q10 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q10 viewwindows=1/0.75/no/301/301 map=uniq.map
+seg-301x301-p11 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p11 viewwindows=1/0.75/no/301/301 map=uniq.map
+seg-301x301-q11 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q11 viewwindows=1/0.75/no/301/301 map=uniq.map
+seg-301x301-p12 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p12 viewwindows=1/0.75/no/301/301 map=uniq.map
+seg-301x301-q12 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q12 viewwindows=1/0.75/no/301/301 map=uniq.map
+seg-301x301-p13 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p13 viewwindows=1/0.75/no/301/301 map=uniq.map
+seg-301x301-q13 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q13 viewwindows=1/0.75/no/301/301 map=uniq.map
+seg-301x301-p16 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p16 viewwindows=1/0.75/no/301/301 map=uniq.map
+seg-301x301-q16 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q16 viewwindows=1/0.75/no/301/301 map=uniq.map
+seg-301x301-p17 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p17 viewwindows=1/0.75/no/301/301 map=uniq.map
+seg-301x301-q17 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q17 viewwindows=1/0.75/no/301/301 map=uniq.map
+seg-301x301-p24 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p24 viewwindows=1/0.75/no/301/301 map=uniq.map
+seg-301x301-q24 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q24 viewwindows=1/0.75/no/301/301 map=uniq.map
+seg-301x301-p50 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p50 viewwindows=1/0.75/no/301/301 map=uniq.map
+seg-301x301-q50 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q50 viewwindows=1/0.75/no/301/301 map=uniq.map
+seg-200x400-h only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g1 viewwindows=1/0.75/no/200/400 map=uniq.map
+seg-200x400-sq only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g5 viewwindows=1/0.75/no/200/400 map=uniq.map
+seg-200x400-p3 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p3 viewwindows=1/0.75/no/200/400 map=uniq.map
+seg-200x400-q3 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q3 viewwindows=1/0.75/no/200/400 map=uniq.map
+seg-200x400-p4 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p4 viewwindows=1/0.75/no/200/400 map=uniq.map
+seg-200x400-q4 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q4 viewwindows=1/0.75/no/200/400 map=uniq.map
+seg-200x400-p5 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p5 viewwindows=1/0.75/no/200/400 map=uniq.map
+seg-200x400-q5 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q5 viewwindows=1/0.75/no/200/400 map=uniq.map
+seg-200x400-p6 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p6 viewwindows=1/0.75/no/200/400 map=uniq.map
+seg-200x400-q6 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q6 viewwindows=1/0.75/no/200/400 map=uniq.map
+seg-200x400-p7 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p7 viewwindows=1/0.75/no/200/400 map=uniq.map
+seg-200x400-q7 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q7 viewwindows=1/0.75/no/200/400 map=uniq.map
+seg-200x400-p8 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p8 viewwindows=1/0.75/no/200/400 map=uniq.map
+seg-200x400-q8 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q8 viewwindows=1/0.75/no/200/400 map=uniq.map
+seg-200x400-p9 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p9 viewwindows=1/0.75/no/200/400 map=uniq.map
+seg-200x400-q9 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q9 viewwindows=1/0.75/no/200/400 map=uniq.map
+seg-200x400-p10 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p10 viewwindows=1/0.75/no/200/400 map=uniq.map
+seg-200x400-q10 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q10 viewwindows=1/0.75/no/200/400 map=uniq.map
+seg-200x400-p11 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p11 viewwindows=1/0.75/no/200/400 map=uniq.map
+seg-200x400-q11 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q11 viewwindows=1/0.75/no/200/400 map=uniq.map
+seg-200x400-p12 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p12 viewwindows=1/0.75/no/200/400 map=uniq.map
+seg-200x400-q12 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q12 viewwindows=1/0.75/no/200/400 map=uniq.map
+seg-200x400-p13 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p13 viewwindows=1/0.75/no/200/400 map=uniq.map
+seg-200x400-q13 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q13 viewwindows=1/0.75/no/200/400 map=uniq.map
+seg-200x400-p16 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p16 viewwindows=1/0.75/no/200/400 map=uniq.map
+seg-200x400-q16 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q16 viewwindows=1/0.75/no/200/400 map=uniq.map
+seg-200x400-p17 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p17 viewwindows=1/0.75/no/200/400 map=uniq.map
+seg-200x400-q17 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q17 viewwindows=1/0.75/no/200/400 map=uniq.map
+seg-200x400-p24 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p24 viewwindows=1/0.75/no/200/400 map=uniq.map
+seg-200x400-q24 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q24 viewwindows=1/0.75/no/200/400 map=uniq.map
+seg-200x400-p50 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p50 viewwindows=1/0.75/no/200/400 map=uniq.map
+seg-200x400-q50 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q50 viewwindows=1/0.75/no/200/400 map=uniq.map
+# --- cases-rich.txt -> rich/
+rich-400x300-r1-o1 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r1 params=1 viewwindows=2 map=uniq.map
+rich-400x300-r1-o3 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r1 params=3 viewwindows=2 map=uniq.map
+rich-400x300-r2-o1 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r2 params=1 viewwindows=2 map=uniq.map
+rich-400x300-r2-o3 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r2 params=3 viewwindows=2 map=uniq.map
+rich-400x300-r3-o2 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r3 params=2 viewwindows=2 map=uniq.map
+rich-400x300-r3-o3 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r3 params=3 viewwindows=2 map=uniq.map
+rich-400x300-r4-o2 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r4 params=2 viewwindows=2 map=uniq.map
+rich-400x300-r4-o3 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r4 params=3 viewwindows=2 map=uniq.map
+rich-400x300-r5-o2 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r5 params=2 viewwindows=2 map=uniq.map
+rich-400x300-r5-o3 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r5 params=3 viewwindows=2 map=uniq.map
+rich-400x300-r6-o2 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r6 params=2 viewwindows=2 map=uniq.map
+rich-400x300-r6-o4 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r6 params=4 viewwindows=2 map=uniq.map
+rich-400x300-r7-o2 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r7 params=2 viewwindows=2 map=uniq.map
+rich-400x300-r7-o4 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r7 params=4 viewwindows=2 map=uniq.map
+rich-400x300-r8-o4 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r8 params=4 viewwindows=2 map=uniq.map
+rich-400x300-r8-o8 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r8 params=8 viewwindows=2 map=uniq.map
+rich-400x300-r9-o2 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r9 params=2 viewwindows=2 map=uniq.map
+rich-400x300-r9-o3 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r9 params=3 viewwindows=2 map=uniq.map
+rich-800x600-r1-o1 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r1 params=1 viewwindows=1/0.75/no/800/600 map=uniq.map
+rich-800x600-r1-o3 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r1 params=3 viewwindows=1/0.75/no/800/600 map=uniq.map
+rich-800x600-r2-o1 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r2 params=1 viewwindows=1/0.75/no/800/600 map=uniq.map
+rich-800x600-r2-o3 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r2 params=3 viewwindows=1/0.75/no/800/600 map=uniq.map
+rich-800x600-r3-o2 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r3 params=2 viewwindows=1/0.75/no/800/600 map=uniq.map
+rich-800x600-r3-o3 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r3 params=3 viewwindows=1/0.75/no/800/600 map=uniq.map
+rich-800x600-r4-o2 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r4 params=2 viewwindows=1/0.75/no/800/600 map=uniq.map
+rich-800x600-r4-o3 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r4 params=3 viewwindows=1/0.75/no/800/600 map=uniq.map
+rich-800x600-r5-o2 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r5 params=2 viewwindows=1/0.75/no/800/600 map=uniq.map
+rich-800x600-r5-o3 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r5 params=3 viewwindows=1/0.75/no/800/600 map=uniq.map
+rich-800x600-r6-o2 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r6 params=2 viewwindows=1/0.75/no/800/600 map=uniq.map
+rich-800x600-r6-o4 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r6 params=4 viewwindows=1/0.75/no/800/600 map=uniq.map
+rich-800x600-r7-o2 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r7 params=2 viewwindows=1/0.75/no/800/600 map=uniq.map
+rich-800x600-r7-o4 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r7 params=4 viewwindows=1/0.75/no/800/600 map=uniq.map
+rich-800x600-r8-o4 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r8 params=4 viewwindows=1/0.75/no/800/600 map=uniq.map
+rich-800x600-r8-o8 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r8 params=8 viewwindows=1/0.75/no/800/600 map=uniq.map
+rich-800x600-r9-o2 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r9 params=2 viewwindows=1/0.75/no/800/600 map=uniq.map
+rich-800x600-r9-o3 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r9 params=3 viewwindows=1/0.75/no/800/600 map=uniq.map
+rich-401x301-r1-o1 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r1 params=1 viewwindows=1/0.75/no/401/301 map=uniq.map
+rich-401x301-r1-o3 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r1 params=3 viewwindows=1/0.75/no/401/301 map=uniq.map
+rich-401x301-r2-o1 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r2 params=1 viewwindows=1/0.75/no/401/301 map=uniq.map
+rich-401x301-r2-o3 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r2 params=3 viewwindows=1/0.75/no/401/301 map=uniq.map
+rich-401x301-r3-o2 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r3 params=2 viewwindows=1/0.75/no/401/301 map=uniq.map
+rich-401x301-r3-o3 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r3 params=3 viewwindows=1/0.75/no/401/301 map=uniq.map
+rich-401x301-r4-o2 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r4 params=2 viewwindows=1/0.75/no/401/301 map=uniq.map
+rich-401x301-r4-o3 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r4 params=3 viewwindows=1/0.75/no/401/301 map=uniq.map
+rich-401x301-r5-o2 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r5 params=2 viewwindows=1/0.75/no/401/301 map=uniq.map
+rich-401x301-r5-o3 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r5 params=3 viewwindows=1/0.75/no/401/301 map=uniq.map
+rich-401x301-r6-o2 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r6 params=2 viewwindows=1/0.75/no/401/301 map=uniq.map
+rich-401x301-r6-o4 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r6 params=4 viewwindows=1/0.75/no/401/301 map=uniq.map
+rich-401x301-r7-o2 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r7 params=2 viewwindows=1/0.75/no/401/301 map=uniq.map
+rich-401x301-r7-o4 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r7 params=4 viewwindows=1/0.75/no/401/301 map=uniq.map
+rich-401x301-r8-o4 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r8 params=4 viewwindows=1/0.75/no/401/301 map=uniq.map
+rich-401x301-r8-o8 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r8 params=8 viewwindows=1/0.75/no/401/301 map=uniq.map
+rich-401x301-r9-o2 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r9 params=2 viewwindows=1/0.75/no/401/301 map=uniq.map
+rich-401x301-r9-o3 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r9 params=3 viewwindows=1/0.75/no/401/301 map=uniq.map
+rich-640x480-r1-o1 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r1 params=1 viewwindows=1/0.75/no/640/480 map=uniq.map
+rich-640x480-r1-o3 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r1 params=3 viewwindows=1/0.75/no/640/480 map=uniq.map
+rich-640x480-r2-o1 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r2 params=1 viewwindows=1/0.75/no/640/480 map=uniq.map
+rich-640x480-r2-o3 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r2 params=3 viewwindows=1/0.75/no/640/480 map=uniq.map
+rich-640x480-r3-o2 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r3 params=2 viewwindows=1/0.75/no/640/480 map=uniq.map
+rich-640x480-r3-o3 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r3 params=3 viewwindows=1/0.75/no/640/480 map=uniq.map
+rich-640x480-r4-o2 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r4 params=2 viewwindows=1/0.75/no/640/480 map=uniq.map
+rich-640x480-r4-o3 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r4 params=3 viewwindows=1/0.75/no/640/480 map=uniq.map
+rich-640x480-r5-o2 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r5 params=2 viewwindows=1/0.75/no/640/480 map=uniq.map
+rich-640x480-r5-o3 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r5 params=3 viewwindows=1/0.75/no/640/480 map=uniq.map
+rich-640x480-r6-o2 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r6 params=2 viewwindows=1/0.75/no/640/480 map=uniq.map
+rich-640x480-r6-o4 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r6 params=4 viewwindows=1/0.75/no/640/480 map=uniq.map
+rich-640x480-r7-o2 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r7 params=2 viewwindows=1/0.75/no/640/480 map=uniq.map
+rich-640x480-r7-o4 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r7 params=4 viewwindows=1/0.75/no/640/480 map=uniq.map
+rich-640x480-r8-o4 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r8 params=4 viewwindows=1/0.75/no/640/480 map=uniq.map
+rich-640x480-r8-o8 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r8 params=8 viewwindows=1/0.75/no/640/480 map=uniq.map
+rich-640x480-r9-o2 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r9 params=2 viewwindows=1/0.75/no/640/480 map=uniq.map
+rich-640x480-r9-o3 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r9 params=3 viewwindows=1/0.75/no/640/480 map=uniq.map
+# --- cases-prec.txt -> prec/
+prec-t300_3em1 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t300_3em1 params=0 viewwindows=2 map=uniq.map
+prec-t300_m3em1 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t300_m3em1 params=0 viewwindows=2 map=uniq.map
+prec-t300_1em2 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t300_1em2 params=0 viewwindows=2 map=uniq.map
+prec-t300_m1em2 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t300_m1em2 params=0 viewwindows=2 map=uniq.map
+prec-t300_1em3 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t300_1em3 params=0 viewwindows=2 map=uniq.map
+prec-t300_m1em3 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t300_m1em3 params=0 viewwindows=2 map=uniq.map
+prec-t300_1em4 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t300_1em4 params=0 viewwindows=2 map=uniq.map
+prec-t300_m1em4 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t300_m1em4 params=0 viewwindows=2 map=uniq.map
+prec-t300_1em5 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t300_1em5 params=0 viewwindows=2 map=uniq.map
+prec-t300_m1em5 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t300_m1em5 params=0 viewwindows=2 map=uniq.map
+prec-t300_3em6 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t300_3em6 params=0 viewwindows=2 map=uniq.map
+prec-t300_m3em6 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t300_m3em6 params=0 viewwindows=2 map=uniq.map
+prec-t300_1em6 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t300_1em6 params=0 viewwindows=2 map=uniq.map
+prec-t300_m1em6 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t300_m1em6 params=0 viewwindows=2 map=uniq.map
+prec-t300_3em7 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t300_3em7 params=0 viewwindows=2 map=uniq.map
+prec-t300_m3em7 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t300_m3em7 params=0 viewwindows=2 map=uniq.map
+prec-t300_1em7 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t300_1em7 params=0 viewwindows=2 map=uniq.map
+prec-t300_m1em7 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t300_m1em7 params=0 viewwindows=2 map=uniq.map
+prec-t300_1em8 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t300_1em8 params=0 viewwindows=2 map=uniq.map
+prec-t300_m1em8 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t300_m1em8 params=0 viewwindows=2 map=uniq.map
+prec-t300_1em10 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t300_1em10 params=0 viewwindows=2 map=uniq.map
+prec-t300_m1em10 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t300_m1em10 params=0 viewwindows=2 map=uniq.map
+prec-t150_3em1 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t150_3em1 params=0 viewwindows=2 map=uniq.map
+prec-t150_m3em1 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t150_m3em1 params=0 viewwindows=2 map=uniq.map
+prec-t150_1em2 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t150_1em2 params=0 viewwindows=2 map=uniq.map
+prec-t150_m1em2 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t150_m1em2 params=0 viewwindows=2 map=uniq.map
+prec-t150_1em3 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t150_1em3 params=0 viewwindows=2 map=uniq.map
+prec-t150_m1em3 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t150_m1em3 params=0 viewwindows=2 map=uniq.map
+prec-t150_1em4 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t150_1em4 params=0 viewwindows=2 map=uniq.map
+prec-t150_m1em4 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t150_m1em4 params=0 viewwindows=2 map=uniq.map
+prec-t150_1em5 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t150_1em5 params=0 viewwindows=2 map=uniq.map
+prec-t150_m1em5 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t150_m1em5 params=0 viewwindows=2 map=uniq.map
+prec-t150_3em6 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t150_3em6 params=0 viewwindows=2 map=uniq.map
+prec-t150_m3em6 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t150_m3em6 params=0 viewwindows=2 map=uniq.map
+prec-t150_1em6 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t150_1em6 params=0 viewwindows=2 map=uniq.map
+prec-t150_m1em6 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t150_m1em6 params=0 viewwindows=2 map=uniq.map
+prec-t150_3em7 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t150_3em7 params=0 viewwindows=2 map=uniq.map
+prec-t150_m3em7 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t150_m3em7 params=0 viewwindows=2 map=uniq.map
+prec-t150_1em7 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t150_1em7 params=0 viewwindows=2 map=uniq.map
+prec-t150_m1em7 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t150_m1em7 params=0 viewwindows=2 map=uniq.map
+prec-t150_1em8 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t150_1em8 params=0 viewwindows=2 map=uniq.map
+prec-t150_m1em8 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t150_m1em8 params=0 viewwindows=2 map=uniq.map
+prec-t150_1em10 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t150_1em10 params=0 viewwindows=2 map=uniq.map
+prec-t150_m1em10 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t150_m1em10 params=0 viewwindows=2 map=uniq.map
+prec-t60_3em1 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t60_3em1 params=0 viewwindows=2 map=uniq.map
+prec-t60_m3em1 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t60_m3em1 params=0 viewwindows=2 map=uniq.map
+prec-t60_1em2 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t60_1em2 params=0 viewwindows=2 map=uniq.map
+prec-t60_m1em2 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t60_m1em2 params=0 viewwindows=2 map=uniq.map
+prec-t60_1em3 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t60_1em3 params=0 viewwindows=2 map=uniq.map
+prec-t60_m1em3 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t60_m1em3 params=0 viewwindows=2 map=uniq.map
+prec-t60_1em4 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t60_1em4 params=0 viewwindows=2 map=uniq.map
+prec-t60_m1em4 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t60_m1em4 params=0 viewwindows=2 map=uniq.map
+prec-t60_1em5 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t60_1em5 params=0 viewwindows=2 map=uniq.map
+prec-t60_m1em5 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t60_m1em5 params=0 viewwindows=2 map=uniq.map
+prec-t60_3em6 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t60_3em6 params=0 viewwindows=2 map=uniq.map
+prec-t60_m3em6 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t60_m3em6 params=0 viewwindows=2 map=uniq.map
+prec-t60_1em6 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t60_1em6 params=0 viewwindows=2 map=uniq.map
+prec-t60_m1em6 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t60_m1em6 params=0 viewwindows=2 map=uniq.map
+prec-t60_3em7 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t60_3em7 params=0 viewwindows=2 map=uniq.map
+prec-t60_m3em7 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t60_m3em7 params=0 viewwindows=2 map=uniq.map
+prec-t60_1em7 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t60_1em7 params=0 viewwindows=2 map=uniq.map
+prec-t60_m1em7 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t60_m1em7 params=0 viewwindows=2 map=uniq.map
+prec-t60_1em8 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t60_1em8 params=0 viewwindows=2 map=uniq.map
+prec-t60_m1em8 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t60_m1em8 params=0 viewwindows=2 map=uniq.map
+prec-t60_1em10 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t60_1em10 params=0 viewwindows=2 map=uniq.map
+prec-t60_m1em10 only=prec.l,uniq.map type=lsystem lfile=prec.l lname=t60_m1em10 params=0 viewwindows=2 map=uniq.map
+# --- cases-sem.txt -> sem/
+s-ko-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=ko params=0 viewwindows=2 map=uniq.map
+s-ko-1 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=ko params=1 viewwindows=2 map=uniq.map
+s-ko-2 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=ko params=2 viewwindows=2 map=uniq.map
+s-ko-3 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=ko params=3 viewwindows=2 map=uniq.map
+s-ko-4 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=ko params=4 viewwindows=2 map=uniq.map
+s-ko-5 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=ko params=5 viewwindows=2 map=uniq.map
+s-ko-6 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=ko params=6 viewwindows=2 map=uniq.map
+s-ko-7 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=ko params=7 viewwindows=2 map=uniq.map
+s-ko-8 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=ko params=8 viewwindows=2 map=uniq.map
+s-ko-def only=sem.l,uniq.map type=lsystem lfile=sem.l lname=ko viewwindows=2 map=uniq.map
+s-ko-m1 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=ko params=-1 viewwindows=2 map=uniq.map
+s-ko-2p5 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=ko params=2.5 viewwindows=2 map=uniq.map
+s-ko-2p9 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=ko params=2.9 viewwindows=2 map=uniq.map
+s-ko-0p5 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=ko params=0.5 viewwindows=2 map=uniq.map
+s-ko-m0p5 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=ko params=-0.5 viewwindows=2 map=uniq.map
+s-ko-1e1 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=ko params=1e1 viewwindows=2 map=uniq.map
+s-kobig-9 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=kobig params=9 viewwindows=2 map=uniq.map
+s-kobig-10 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=kobig params=10 viewwindows=2 map=uniq.map
+s-kobig-12 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=kobig params=12 viewwindows=2 map=uniq.map
+s-kobig-16 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=kobig params=16 viewwindows=2 map=uniq.map
+s-kobig-30 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=kobig params=30 viewwindows=2 map=uniq.map
+s-kobig-100 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=kobig params=100 viewwindows=2 map=uniq.map
+s-kobig-1000 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=kobig params=1000 viewwindows=2 map=uniq.map
+s-kobig-40000 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=kobig params=40000 viewwindows=2 map=uniq.map
+s-dbl-10 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=dbl params=10 viewwindows=2 map=uniq.map
+s-dbl-14 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=dbl params=14 viewwindows=2 map=uniq.map
+s-dbl-15 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=dbl params=15 viewwindows=2 map=uniq.map
+s-dbl-16 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=dbl params=16 viewwindows=2 map=uniq.map
+s-dbl-17 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=dbl params=17 viewwindows=2 map=uniq.map
+s-dbl-18 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=dbl params=18 viewwindows=2 map=uniq.map
+s-dbl-20 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=dbl params=20 viewwindows=2 map=uniq.map
+s-dbl-24 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=dbl params=24 viewwindows=2 map=uniq.map
+s-lt497-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=lt497 params=0 viewwindows=2 map=uniq.map
+s-lt482-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=lt482 params=0 viewwindows=2 map=uniq.map
+s-lt1000-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=lt1000 params=0 viewwindows=2 map=uniq.map
+s-gt1000-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=gt1000 params=0 viewwindows=2 map=uniq.map
+s-gt271-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=gt271 params=0 viewwindows=2 map=uniq.map
+s-gt255-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=gt255 params=0 viewwindows=2 map=uniq.map
+s-c0lt1-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=c0lt1 params=0 viewwindows=2 map=uniq.map
+s-c0gt1-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=c0gt1 params=0 viewwindows=2 map=uniq.map
+s-c255lt1-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=c255lt1 params=0 viewwindows=2 map=uniq.map
+s-c1gt1-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=c1gt1 params=0 viewwindows=2 map=uniq.map
+s-c0lt0-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=c0lt0 params=0 viewwindows=2 map=uniq.map
+s-c0gt0-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=c0gt0 params=0 viewwindows=2 map=uniq.map
+s-cplus-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=cplus params=0 viewwindows=2 map=uniq.map
+s-c007-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=c007 params=0 viewwindows=2 map=uniq.map
+s-erase-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=erase params=0 viewwindows=2 map=uniq.map
+s-erase2-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=erase2 params=0 viewwindows=2 map=uniq.map
+s-overw-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=overw params=0 viewwindows=2 map=uniq.map
+s-zero1-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=zero1 params=0 viewwindows=2 map=uniq.map
+s-zero2-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=zero2 params=0 viewwindows=2 map=uniq.map
+s-zero3-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=zero3 params=0 viewwindows=2 map=uniq.map
+s-zero4-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=zero4 params=0 viewwindows=2 map=uniq.map
+s-zero5-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=zero5 params=0 viewwindows=2 map=uniq.map
+s-zero6-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=zero6 params=0 viewwindows=2 map=uniq.map
+s-zero7-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=zero7 params=0 viewwindows=2 map=uniq.map
+s-zero8-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=zero8 params=0 viewwindows=2 map=uniq.map
+s-pop0-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=pop0 params=0 viewwindows=2 map=uniq.map
+s-pop1-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=pop1 params=0 viewwindows=2 map=uniq.map
+s-pop2-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=pop2 params=0 viewwindows=2 map=uniq.map
+s-pop3-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=pop3 params=0 viewwindows=2 map=uniq.map
+s-pop4-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=pop4 params=0 viewwindows=2 map=uniq.map
+s-push1-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=push1 params=0 viewwindows=2 map=uniq.map
+s-push2-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=push2 params=0 viewwindows=2 map=uniq.map
+s-push3-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=push3 params=0 viewwindows=2 map=uniq.map
+s-nest50-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=nest50 params=0 viewwindows=2 map=uniq.map
+s-nest100-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=nest100 params=0 viewwindows=2 map=uniq.map
+s-nestrule-10 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=nestrule params=10 viewwindows=2 map=uniq.map
+s-nestrule-40 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=nestrule params=40 viewwindows=2 map=uniq.map
+s-nestrule-100 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=nestrule params=100 viewwindows=2 map=uniq.map
+s-nestrule-200 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=nestrule params=200 viewwindows=2 map=uniq.map
+s-pipe3-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=pipe3 params=0 viewwindows=2 map=uniq.map
+s-pipe5-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=pipe5 params=0 viewwindows=2 map=uniq.map
+s-pipe7-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=pipe7 params=0 viewwindows=2 map=uniq.map
+s-pipe9-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=pipe9 params=0 viewwindows=2 map=uniq.map
+s-bangpipe-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=bangpipe params=0 viewwindows=2 map=uniq.map
+s-bangrule-3 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=bangrule params=3 viewwindows=2 map=uniq.map
+s-atq2-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=atq2 params=0 viewwindows=2 map=uniq.map
+s-ati0-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=ati0 params=0 viewwindows=2 map=uniq.map
+s-ati-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=ati params=0 viewwindows=2 map=uniq.map
+s-atq-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=atq params=0 viewwindows=2 map=uniq.map
+s-atqq16-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=atqq16 params=0 viewwindows=2 map=uniq.map
+s-atii2-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=atii2 params=0 viewwindows=2 map=uniq.map
+s-at255-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=at255 params=0 viewwindows=2 map=uniq.map
+s-atmix-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=atmix params=0 viewwindows=2 map=uniq.map
+s-atbig-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=atbig params=0 viewwindows=2 map=uniq.map
+s-attiny-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=attiny params=0 viewwindows=2 map=uniq.map
+s-atiq3-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=atiq3 params=0 viewwindows=2 map=uniq.map
+s-dm-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=dm params=0 viewwindows=2 map=uniq.map
+s-gm-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=gm params=0 viewwindows=2 map=uniq.map
+s-lower-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=lower params=0 viewwindows=2 map=uniq.map
+s-bbmove-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=bbmove params=0 viewwindows=2 map=uniq.map
+s-bbbranch-0 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=bbbranch params=0 viewwindows=2 map=uniq.map
+# --- cases-ext.txt -> ext/
+x-prot1 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=prot1 params=1 viewwindows=2 map=uniq.map
+x-prot2 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=prot2 params=1 viewwindows=2 map=uniq.map
+x-prot3 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=prot3 params=1 viewwindows=2 map=uniq.map
+x-prot4 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=prot4 params=1 viewwindows=2 map=uniq.map
+x-prot5 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=prot5 params=1 viewwindows=2 map=uniq.map
+x-prot6 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=prot6 params=1 viewwindows=2 map=uniq.map
+x-ruled only=ext.l,uniq.map type=lsystem lfile=ext.l lname=ruled params=1 viewwindows=2 map=uniq.map
+x-rulem only=ext.l,uniq.map type=lsystem lfile=ext.l lname=rulem params=1 viewwindows=2 map=uniq.map
+x-plant-o3 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=plant params=3 viewwindows=2 map=uniq.map
+x-plant-o4 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=plant params=4 viewwindows=2 map=uniq.map
+x-arrow-o5 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=arrow params=5 viewwindows=2 map=uniq.map
+x-arrow-o6 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=arrow params=6 viewwindows=2 map=uniq.map
+x-arrowf-o5 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=arrowf params=5 viewwindows=2 map=uniq.map
+x-dragon-o6 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=dragon params=6 viewwindows=2 map=uniq.map
+x-dragon-o10 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=dragon params=10 viewwindows=2 map=uniq.map
+x-levy-o8 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=levy params=8 viewwindows=2 map=uniq.map
+x-bush-o3 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=bush params=3 viewwindows=2 map=uniq.map
+x-degmix-o3 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=degmix params=3 viewwindows=2 map=uniq.map
+x-colcyc-o4 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=colcyc params=4 viewwindows=2 map=uniq.map
+x-plant-o3-1000x200 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=plant params=3 viewwindows=1/0.75/no/1000/200 map=uniq.map
+x-dragon-o6-1000x200 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=dragon params=6 viewwindows=1/0.75/no/1000/200 map=uniq.map
+x-degmix-o3-1000x200 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=degmix params=3 viewwindows=1/0.75/no/1000/200 map=uniq.map
+x-plant-o3-160x900 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=plant params=3 viewwindows=1/0.75/no/160/900 map=uniq.map
+x-dragon-o6-160x900 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=dragon params=6 viewwindows=1/0.75/no/160/900 map=uniq.map
+x-degmix-o3-160x900 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=degmix params=3 viewwindows=1/0.75/no/160/900 map=uniq.map
+x-plant-o3-777x555 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=plant params=3 viewwindows=1/0.75/no/777/555 map=uniq.map
+x-dragon-o6-777x555 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=dragon params=6 viewwindows=1/0.75/no/777/555 map=uniq.map
+x-degmix-o3-777x555 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=degmix params=3 viewwindows=1/0.75/no/777/555 map=uniq.map
+x-plant-o3-1024x768 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=plant params=3 viewwindows=1/0.75/no/1024/768 map=uniq.map
+x-dragon-o6-1024x768 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=dragon params=6 viewwindows=1/0.75/no/1024/768 map=uniq.map
+x-degmix-o3-1024x768 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=degmix params=3 viewwindows=1/0.75/no/1024/768 map=uniq.map
+x-plant-o3-50x50 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=plant params=3 viewwindows=1/0.75/no/50/50 map=uniq.map
+x-dragon-o6-50x50 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=dragon params=6 viewwindows=1/0.75/no/50/50 map=uniq.map
+x-degmix-o3-50x50 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=degmix params=3 viewwindows=1/0.75/no/50/50 map=uniq.map
+x-plant-o3-20x20 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=plant params=3 viewwindows=1/0.75/no/20/20 map=uniq.map
+x-dragon-o6-20x20 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=dragon params=6 viewwindows=1/0.75/no/20/20 map=uniq.map
+x-degmix-o3-20x20 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=degmix params=3 viewwindows=1/0.75/no/20/20 map=uniq.map
+x-plant-o3-12x9 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=plant params=3 viewwindows=1/0.75/no/12/9 map=uniq.map
+x-dragon-o6-12x9 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=dragon params=6 viewwindows=1/0.75/no/12/9 map=uniq.map
+x-degmix-o3-12x9 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=degmix params=3 viewwindows=1/0.75/no/12/9 map=uniq.map
+x-plant-o3-8x8 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=plant params=3 viewwindows=1/0.75/no/8/8 map=uniq.map
+x-dragon-o6-8x8 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=dragon params=6 viewwindows=1/0.75/no/8/8 map=uniq.map
+x-degmix-o3-8x8 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=degmix params=3 viewwindows=1/0.75/no/8/8 map=uniq.map
+x-plant-o3-799x601 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=plant params=3 viewwindows=1/0.75/no/799/601 map=uniq.map
+x-dragon-o6-799x601 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=dragon params=6 viewwindows=1/0.75/no/799/601 map=uniq.map
+x-degmix-o3-799x601 only=ext.l,uniq.map type=lsystem lfile=ext.l lname=degmix params=3 viewwindows=1/0.75/no/799/601 map=uniq.map
+x-plant-o3-defmap only=ext.l,uniq.map type=lsystem lfile=ext.l lname=plant params=3 viewwindows=2
+x-plant-o3-defsize only=ext.l,uniq.map type=lsystem lfile=ext.l lname=plant params=3 map=uniq.map
+x-plant-o3-defall only=ext.l,uniq.map type=lsystem lfile=ext.l lname=plant params=3
+# --- cases-mv.txt -> mv/
+mv-m00 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m00 params=0 viewwindows=2 map=uniq.map
+mv-m01 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m01 params=0 viewwindows=2 map=uniq.map
+mv-m02 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m02 params=0 viewwindows=2 map=uniq.map
+mv-m03 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m03 params=0 viewwindows=2 map=uniq.map
+mv-m04 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m04 params=0 viewwindows=2 map=uniq.map
+mv-m05 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m05 params=0 viewwindows=2 map=uniq.map
+mv-m06 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m06 params=0 viewwindows=2 map=uniq.map
+mv-m07 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m07 params=0 viewwindows=2 map=uniq.map
+mv-m08 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m08 params=0 viewwindows=2 map=uniq.map
+mv-m09 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m09 params=0 viewwindows=2 map=uniq.map
+mv-m10 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m10 params=0 viewwindows=2 map=uniq.map
+mv-m11 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m11 params=0 viewwindows=2 map=uniq.map
+mv-m12 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m12 params=0 viewwindows=2 map=uniq.map
+mv-m13 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m13 params=0 viewwindows=2 map=uniq.map
+mv-m14 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m14 params=0 viewwindows=2 map=uniq.map
+mv-m15 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m15 params=0 viewwindows=2 map=uniq.map
+mv-m16 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m16 params=0 viewwindows=2 map=uniq.map
+mv-m17 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m17 params=0 viewwindows=2 map=uniq.map
+mv-m18 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m18 params=0 viewwindows=2 map=uniq.map
+mv-m19 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m19 params=0 viewwindows=2 map=uniq.map
+mv-m20 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m20 params=0 viewwindows=2 map=uniq.map
+mv-m21 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m21 params=0 viewwindows=2 map=uniq.map
+mv-m22 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m22 params=0 viewwindows=2 map=uniq.map
+mv-m23 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m23 params=0 viewwindows=2 map=uniq.map
+mv-m24 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m24 params=0 viewwindows=2 map=uniq.map
+mv-m25 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m25 params=0 viewwindows=2 map=uniq.map
+mv-m26 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m26 params=0 viewwindows=2 map=uniq.map
+mv-m27 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m27 params=0 viewwindows=2 map=uniq.map
+mv-m28 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m28 params=0 viewwindows=2 map=uniq.map
+mv-m29 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m29 params=0 viewwindows=2 map=uniq.map
+mv-m30 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m30 params=0 viewwindows=2 map=uniq.map
+mv-m31 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m31 params=0 viewwindows=2 map=uniq.map
+mv-m32 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m32 params=0 viewwindows=2 map=uniq.map
+mv-m33 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m33 params=0 viewwindows=2 map=uniq.map
+mv-m34 only=mv.l,uniq.map type=lsystem lfile=mv.l lname=m34 params=0 viewwindows=2 map=uniq.map
+# --- cases-deg.txt -> deg/
+deg-d00a4 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d00a4 params=0 viewwindows=2 map=uniq.map
+deg-d00a7 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d00a7 params=0 viewwindows=2 map=uniq.map
+deg-d01a4 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d01a4 params=0 viewwindows=2 map=uniq.map
+deg-d01a7 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d01a7 params=0 viewwindows=2 map=uniq.map
+deg-d02a4 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d02a4 params=0 viewwindows=2 map=uniq.map
+deg-d02a7 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d02a7 params=0 viewwindows=2 map=uniq.map
+deg-d03a4 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d03a4 params=0 viewwindows=2 map=uniq.map
+deg-d03a7 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d03a7 params=0 viewwindows=2 map=uniq.map
+deg-d04a4 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d04a4 params=0 viewwindows=2 map=uniq.map
+deg-d04a7 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d04a7 params=0 viewwindows=2 map=uniq.map
+deg-d05a4 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d05a4 params=0 viewwindows=2 map=uniq.map
+deg-d05a7 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d05a7 params=0 viewwindows=2 map=uniq.map
+deg-d06a4 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d06a4 params=0 viewwindows=2 map=uniq.map
+deg-d06a7 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d06a7 params=0 viewwindows=2 map=uniq.map
+deg-d07a4 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d07a4 params=0 viewwindows=2 map=uniq.map
+deg-d07a7 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d07a7 params=0 viewwindows=2 map=uniq.map
+deg-d08a4 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d08a4 params=0 viewwindows=2 map=uniq.map
+deg-d08a7 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d08a7 params=0 viewwindows=2 map=uniq.map
+deg-d09a4 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d09a4 params=0 viewwindows=2 map=uniq.map
+deg-d09a7 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d09a7 params=0 viewwindows=2 map=uniq.map
+deg-d10a4 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d10a4 params=0 viewwindows=2 map=uniq.map
+deg-d10a7 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d10a7 params=0 viewwindows=2 map=uniq.map
+deg-d11a4 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d11a4 params=0 viewwindows=2 map=uniq.map
+deg-d11a7 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d11a7 params=0 viewwindows=2 map=uniq.map
+deg-d12a4 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d12a4 params=0 viewwindows=2 map=uniq.map
+deg-d12a7 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d12a7 params=0 viewwindows=2 map=uniq.map
+deg-d13a4 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d13a4 params=0 viewwindows=2 map=uniq.map
+deg-d13a7 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d13a7 params=0 viewwindows=2 map=uniq.map
+deg-d14a4 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d14a4 params=0 viewwindows=2 map=uniq.map
+deg-d14a7 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d14a7 params=0 viewwindows=2 map=uniq.map
+deg-d15a4 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d15a4 params=0 viewwindows=2 map=uniq.map
+deg-d15a7 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d15a7 params=0 viewwindows=2 map=uniq.map
+deg-d16a4 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d16a4 params=0 viewwindows=2 map=uniq.map
+deg-d16a7 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d16a7 params=0 viewwindows=2 map=uniq.map
+deg-d17a4 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d17a4 params=0 viewwindows=2 map=uniq.map
+deg-d17a7 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d17a7 params=0 viewwindows=2 map=uniq.map
+deg-d18a4 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d18a4 params=0 viewwindows=2 map=uniq.map
+deg-d18a7 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d18a7 params=0 viewwindows=2 map=uniq.map
+deg-d19a4 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d19a4 params=0 viewwindows=2 map=uniq.map
+deg-d19a7 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d19a7 params=0 viewwindows=2 map=uniq.map
+deg-d20a4 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d20a4 params=0 viewwindows=2 map=uniq.map
+deg-d20a7 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d20a7 params=0 viewwindows=2 map=uniq.map
+deg-d21a4 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d21a4 params=0 viewwindows=2 map=uniq.map
+deg-d21a7 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d21a7 params=0 viewwindows=2 map=uniq.map
+deg-d22a4 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d22a4 params=0 viewwindows=2 map=uniq.map
+deg-d22a7 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d22a7 params=0 viewwindows=2 map=uniq.map
+deg-d23a4 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d23a4 params=0 viewwindows=2 map=uniq.map
+deg-d23a7 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d23a7 params=0 viewwindows=2 map=uniq.map
+deg-d24a4 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d24a4 params=0 viewwindows=2 map=uniq.map
+deg-d24a7 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d24a7 params=0 viewwindows=2 map=uniq.map
+deg-d25a4 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d25a4 params=0 viewwindows=2 map=uniq.map
+deg-d25a7 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d25a7 params=0 viewwindows=2 map=uniq.map
+deg-d26a4 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d26a4 params=0 viewwindows=2 map=uniq.map
+deg-d26a7 only=deg.l,uniq.map type=lsystem lfile=deg.l lname=d26a7 params=0 viewwindows=2 map=uniq.map
+# --- cases-deg2.txt -> deg2/
+deg2-e00 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e00 params=0 viewwindows=2 map=uniq.map
+deg2-e01 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e01 params=0 viewwindows=2 map=uniq.map
+deg2-e02 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e02 params=0 viewwindows=2 map=uniq.map
+deg2-e03 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e03 params=0 viewwindows=2 map=uniq.map
+deg2-e04 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e04 params=0 viewwindows=2 map=uniq.map
+deg2-e05 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e05 params=0 viewwindows=2 map=uniq.map
+deg2-e06 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e06 params=0 viewwindows=2 map=uniq.map
+deg2-e07 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e07 params=0 viewwindows=2 map=uniq.map
+deg2-e08 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e08 params=0 viewwindows=2 map=uniq.map
+deg2-e09 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e09 params=0 viewwindows=2 map=uniq.map
+deg2-e10 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e10 params=0 viewwindows=2 map=uniq.map
+deg2-e11 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e11 params=0 viewwindows=2 map=uniq.map
+deg2-e12 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e12 params=0 viewwindows=2 map=uniq.map
+deg2-e13 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e13 params=0 viewwindows=2 map=uniq.map
+deg2-e14 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e14 params=0 viewwindows=2 map=uniq.map
+deg2-e15 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e15 params=0 viewwindows=2 map=uniq.map
+deg2-e16 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e16 params=0 viewwindows=2 map=uniq.map
+deg2-e17 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e17 params=0 viewwindows=2 map=uniq.map
+deg2-e18 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e18 params=0 viewwindows=2 map=uniq.map
+deg2-e19 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e19 params=0 viewwindows=2 map=uniq.map
+deg2-e20 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e20 params=0 viewwindows=2 map=uniq.map
+deg2-e21 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e21 params=0 viewwindows=2 map=uniq.map
+deg2-e22 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e22 params=0 viewwindows=2 map=uniq.map
+deg2-e23 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e23 params=0 viewwindows=2 map=uniq.map
+deg2-e24 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e24 params=0 viewwindows=2 map=uniq.map
+deg2-e25 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e25 params=0 viewwindows=2 map=uniq.map
+deg2-e26 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e26 params=0 viewwindows=2 map=uniq.map
+deg2-e27 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e27 params=0 viewwindows=2 map=uniq.map
+deg2-e28 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e28 params=0 viewwindows=2 map=uniq.map
+deg2-e29 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e29 params=0 viewwindows=2 map=uniq.map
+deg2-e30 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e30 params=0 viewwindows=2 map=uniq.map
+deg2-e31 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e31 params=0 viewwindows=2 map=uniq.map
+deg2-e32 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e32 params=0 viewwindows=2 map=uniq.map
+deg2-e33 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e33 params=0 viewwindows=2 map=uniq.map
+deg2-e34 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e34 params=0 viewwindows=2 map=uniq.map
+deg2-e35 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e35 params=0 viewwindows=2 map=uniq.map
+deg2-e36 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e36 params=0 viewwindows=2 map=uniq.map
+deg2-e37 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e37 params=0 viewwindows=2 map=uniq.map
+deg2-e38 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e38 params=0 viewwindows=2 map=uniq.map
+deg2-e39 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e39 params=0 viewwindows=2 map=uniq.map
+deg2-e40 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e40 params=0 viewwindows=2 map=uniq.map
+deg2-e41 only=deg2.l,uniq.map type=lsystem lfile=deg2.l lname=e41 params=0 viewwindows=2 map=uniq.map
+# --- cases-arr.txt -> arr/
+arr-a1-o3-400x300 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a1 params=3 viewwindows=2 map=uniq.map
+arr-a1-o3-640x480 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a1 params=3 viewwindows=1/0.75/no/640/480 map=uniq.map
+arr-a1-o3-555x333 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a1 params=3 viewwindows=1/0.75/no/555/333 map=uniq.map
+arr-a1-o4-400x300 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a1 params=4 viewwindows=2 map=uniq.map
+arr-a1-o4-640x480 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a1 params=4 viewwindows=1/0.75/no/640/480 map=uniq.map
+arr-a1-o4-555x333 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a1 params=4 viewwindows=1/0.75/no/555/333 map=uniq.map
+arr-a1-o5-400x300 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a1 params=5 viewwindows=2 map=uniq.map
+arr-a1-o5-640x480 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a1 params=5 viewwindows=1/0.75/no/640/480 map=uniq.map
+arr-a1-o5-555x333 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a1 params=5 viewwindows=1/0.75/no/555/333 map=uniq.map
+arr-a1-o6-400x300 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a1 params=6 viewwindows=2 map=uniq.map
+arr-a1-o6-640x480 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a1 params=6 viewwindows=1/0.75/no/640/480 map=uniq.map
+arr-a1-o6-555x333 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a1 params=6 viewwindows=1/0.75/no/555/333 map=uniq.map
+arr-a1-o7-400x300 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a1 params=7 viewwindows=2 map=uniq.map
+arr-a1-o7-640x480 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a1 params=7 viewwindows=1/0.75/no/640/480 map=uniq.map
+arr-a1-o7-555x333 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a1 params=7 viewwindows=1/0.75/no/555/333 map=uniq.map
+arr-a2-o3-400x300 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a2 params=3 viewwindows=2 map=uniq.map
+arr-a2-o3-640x480 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a2 params=3 viewwindows=1/0.75/no/640/480 map=uniq.map
+arr-a2-o3-555x333 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a2 params=3 viewwindows=1/0.75/no/555/333 map=uniq.map
+arr-a2-o4-400x300 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a2 params=4 viewwindows=2 map=uniq.map
+arr-a2-o4-640x480 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a2 params=4 viewwindows=1/0.75/no/640/480 map=uniq.map
+arr-a2-o4-555x333 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a2 params=4 viewwindows=1/0.75/no/555/333 map=uniq.map
+arr-a2-o5-400x300 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a2 params=5 viewwindows=2 map=uniq.map
+arr-a2-o5-640x480 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a2 params=5 viewwindows=1/0.75/no/640/480 map=uniq.map
+arr-a2-o5-555x333 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a2 params=5 viewwindows=1/0.75/no/555/333 map=uniq.map
+arr-a2-o6-400x300 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a2 params=6 viewwindows=2 map=uniq.map
+arr-a2-o6-640x480 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a2 params=6 viewwindows=1/0.75/no/640/480 map=uniq.map
+arr-a2-o6-555x333 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a2 params=6 viewwindows=1/0.75/no/555/333 map=uniq.map
+arr-a3-o3-400x300 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a3 params=3 viewwindows=2 map=uniq.map
+arr-a3-o3-640x480 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a3 params=3 viewwindows=1/0.75/no/640/480 map=uniq.map
+arr-a3-o3-555x333 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a3 params=3 viewwindows=1/0.75/no/555/333 map=uniq.map
+arr-a3-o4-400x300 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a3 params=4 viewwindows=2 map=uniq.map
+arr-a3-o4-640x480 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a3 params=4 viewwindows=1/0.75/no/640/480 map=uniq.map
+arr-a3-o4-555x333 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a3 params=4 viewwindows=1/0.75/no/555/333 map=uniq.map
+arr-a3-o5-400x300 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a3 params=5 viewwindows=2 map=uniq.map
+arr-a3-o5-640x480 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a3 params=5 viewwindows=1/0.75/no/640/480 map=uniq.map
+arr-a3-o5-555x333 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a3 params=5 viewwindows=1/0.75/no/555/333 map=uniq.map
+arr-a3-o6-400x300 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a3 params=6 viewwindows=2 map=uniq.map
+arr-a3-o6-640x480 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a3 params=6 viewwindows=1/0.75/no/640/480 map=uniq.map
+arr-a3-o6-555x333 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a3 params=6 viewwindows=1/0.75/no/555/333 map=uniq.map
+arr-a4-o3-400x300 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a4 params=3 viewwindows=2 map=uniq.map
+arr-a4-o3-640x480 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a4 params=3 viewwindows=1/0.75/no/640/480 map=uniq.map
+arr-a4-o3-555x333 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a4 params=3 viewwindows=1/0.75/no/555/333 map=uniq.map
+arr-a4-o4-400x300 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a4 params=4 viewwindows=2 map=uniq.map
+arr-a4-o4-640x480 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a4 params=4 viewwindows=1/0.75/no/640/480 map=uniq.map
+arr-a4-o4-555x333 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a4 params=4 viewwindows=1/0.75/no/555/333 map=uniq.map
+arr-a4-o5-400x300 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a4 params=5 viewwindows=2 map=uniq.map
+arr-a4-o5-640x480 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a4 params=5 viewwindows=1/0.75/no/640/480 map=uniq.map
+arr-a4-o5-555x333 only=arr.l,uniq.map type=lsystem lfile=arr.l lname=a4 params=5 viewwindows=1/0.75/no/555/333 map=uniq.map
+# --- cases-misc.txt -> misc/
+geo-g1 only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g1 viewwindows=2 map=uniq.map
+geo-g1-fl only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g1 viewwindows=2 float=yes map=uniq.map
+geo-g2 only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g2 viewwindows=2 map=uniq.map
+geo-g2-fl only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g2 viewwindows=2 float=yes map=uniq.map
+geo-g3 only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g3 viewwindows=2 map=uniq.map
+geo-g3-fl only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g3 viewwindows=2 float=yes map=uniq.map
+geo-g4 only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g4 viewwindows=2 map=uniq.map
+geo-g4-fl only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g4 viewwindows=2 float=yes map=uniq.map
+geo-g5 only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g5 viewwindows=2 map=uniq.map
+geo-g5-fl only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g5 viewwindows=2 float=yes map=uniq.map
+geo-g6 only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g6 viewwindows=2 map=uniq.map
+geo-g6-fl only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g6 viewwindows=2 float=yes map=uniq.map
+geo-g7 only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g7 viewwindows=2 map=uniq.map
+geo-g7-fl only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g7 viewwindows=2 float=yes map=uniq.map
+geo-g8 only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g8 viewwindows=2 map=uniq.map
+geo-g8-fl only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g8 viewwindows=2 float=yes map=uniq.map
+geo-g9 only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g9 viewwindows=2 map=uniq.map
+geo-g9-fl only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g9 viewwindows=2 float=yes map=uniq.map
+fl-r1-o3 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r1 params=3 viewwindows=2 float=yes map=uniq.map
+fl-r1-o3-no only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r1 params=3 viewwindows=2 float=no map=uniq.map
+fl-r5-o3 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r5 params=3 viewwindows=2 float=yes map=uniq.map
+fl-r5-o3-no only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r5 params=3 viewwindows=2 float=no map=uniq.map
+fl-r6-o4 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r6 params=4 viewwindows=2 float=yes map=uniq.map
+fl-r6-o4-no only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r6 params=4 viewwindows=2 float=no map=uniq.map
+fl-r7-o4 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r7 params=4 viewwindows=2 float=yes map=uniq.map
+fl-r7-o4-no only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r7 params=4 viewwindows=2 float=no map=uniq.map
+fl-r8-o8 only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r8 params=8 viewwindows=2 float=yes map=uniq.map
+fl-r8-o8-no only=rich.l,uniq.map type=lsystem lfile=rich.l lname=r8 params=8 viewwindows=2 float=no map=uniq.map
+dup-r1-p1 only=dup.l,uniq.map type=lsystem lfile=dup.l lname=r1 params=1 viewwindows=2 map=uniq.map
+dup-r1-p2 only=dup.l,uniq.map type=lsystem lfile=dup.l lname=r1 params=2 viewwindows=2 map=uniq.map
+dup-r2-p1 only=dup.l,uniq.map type=lsystem lfile=dup.l lname=r2 params=1 viewwindows=2 map=uniq.map
+dup-r2-p2 only=dup.l,uniq.map type=lsystem lfile=dup.l lname=r2 params=2 viewwindows=2 map=uniq.map
+dup-r3-p1 only=dup.l,uniq.map type=lsystem lfile=dup.l lname=r3 params=1 viewwindows=2 map=uniq.map
+dup-r3-p2 only=dup.l,uniq.map type=lsystem lfile=dup.l lname=r3 params=2 viewwindows=2 map=uniq.map
+dup-r4-p1 only=dup.l,uniq.map type=lsystem lfile=dup.l lname=r4 params=1 viewwindows=2 map=uniq.map
+dup-r4-p2 only=dup.l,uniq.map type=lsystem lfile=dup.l lname=r4 params=2 viewwindows=2 map=uniq.map
+dup-r5-p1 only=dup.l,uniq.map type=lsystem lfile=dup.l lname=r5 params=1 viewwindows=2 map=uniq.map
+dup-r5-p2 only=dup.l,uniq.map type=lsystem lfile=dup.l lname=r5 params=2 viewwindows=2 map=uniq.map
+dup-r6-p1 only=dup.l,uniq.map type=lsystem lfile=dup.l lname=r6 params=1 viewwindows=2 map=uniq.map
+dup-r6-p2 only=dup.l,uniq.map type=lsystem lfile=dup.l lname=r6 params=2 viewwindows=2 map=uniq.map
+sl-s1 only=sl.l,uniq.map type=lsystem lfile=sl.l lname=s1 params=0 viewwindows=2 map=uniq.map
+sl-s2 only=sl.l,uniq.map type=lsystem lfile=sl.l lname=s2 params=0 viewwindows=2 map=uniq.map
+sl-s3 only=sl.l,uniq.map type=lsystem lfile=sl.l lname=s3 params=0 viewwindows=2 map=uniq.map
+sl-s4 only=sl.l,uniq.map type=lsystem lfile=sl.l lname=s4 params=0 viewwindows=2 map=uniq.map
+sl-s5 only=sl.l,uniq.map type=lsystem lfile=sl.l lname=s5 params=0 viewwindows=2 map=uniq.map
+sl-s6 only=sl.l,uniq.map type=lsystem lfile=sl.l lname=s6 params=0 viewwindows=2 map=uniq.map
+sl-s7 only=sl.l,uniq.map type=lsystem lfile=sl.l lname=s7 params=0 viewwindows=2 map=uniq.map
+sl-s8 only=sl.l,uniq.map type=lsystem lfile=sl.l lname=s8 params=0 viewwindows=2 map=uniq.map
+sl-s9 only=sl.l,uniq.map type=lsystem lfile=sl.l lname=s9 params=0 viewwindows=2 map=uniq.map
+vw1 only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g2 viewwindows=3 map=uniq.map
+vw2 only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g2 viewwindows=4 map=uniq.map
+vw3 only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g2 viewwindows=1.5 map=uniq.map
+vw4 only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g2 viewwindows=2.5 map=uniq.map
+vw5 only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g2 viewwindows=2/1 map=uniq.map
+vw6 only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g2 viewwindows=2/0.5 map=uniq.map
+vw7 only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g2 viewwindows=2/1.5 map=uniq.map
+vw8 only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g2 viewwindows=2/0.75/yes map=uniq.map
+vw9 only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g2 viewwindows=2/0.75/no/300/200 map=uniq.map
+vw10 only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g2 viewwindows=1/0.75/no/640/480 map=uniq.map
+vw11 only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g2 viewwindows=1/1/no/500/250 map=uniq.map
+vw12 only=geo.l,uniq.map type=lsystem lfile=geo.l lname=g2 viewwindows=1/0.75/no/333/211 map=uniq.map
+cor1-q4 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q4 viewwindows=2 corners=-2/2/-1/1 map=uniq.map
+cor1-p8 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p8 viewwindows=2 corners=-2/2/-1/1 map=uniq.map
+cor1-p5 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p5 viewwindows=2 corners=-2/2/-1/1 map=uniq.map
+cor2-q4 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q4 viewwindows=2 corners=0/1/0/3 map=uniq.map
+cor2-p8 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p8 viewwindows=2 corners=0/1/0/3 map=uniq.map
+cor2-p5 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p5 viewwindows=2 corners=0/1/0/3 map=uniq.map
+cor3-q4 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q4 viewwindows=2 corners=-1/1/-0.75/0.75 map=uniq.map
+cor3-p8 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p8 viewwindows=2 corners=-1/1/-0.75/0.75 map=uniq.map
+cor3-p5 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p5 viewwindows=2 corners=-1/1/-0.75/0.75 map=uniq.map
+cor4-q4 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q4 viewwindows=2 corners=-10/10/-1/1 map=uniq.map
+cor4-p8 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p8 viewwindows=2 corners=-10/10/-1/1 map=uniq.map
+cor4-p5 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p5 viewwindows=2 corners=-10/10/-1/1 map=uniq.map
+cor5-q4 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=q4 viewwindows=2 corners=-1/1/-1/1/-0.5/-0.5 map=uniq.map
+cor5-p8 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p8 viewwindows=2 corners=-1/1/-1/1/-0.5/-0.5 map=uniq.map
+cor5-p5 only=seg.l,uniq.map type=lsystem lfile=seg.l lname=p5 viewwindows=2 corners=-1/1/-1/1/-0.5/-0.5 map=uniq.map
+p2-ko-2_1 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=ko params=2/1 viewwindows=2 map=uniq.map
+p2-ko-2_0p5 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=ko params=2/0.5 viewwindows=2 map=uniq.map
+p2-ko-2_7_9 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=ko params=2/7/9 viewwindows=2 map=uniq.map
+p2-ko-3_0_0_5 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=ko params=3/0/0/5 viewwindows=2 map=uniq.map
+mi-ko3-maxiter5 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=ko params=3 viewwindows=2 maxiter=5 map=uniq.map
+mi-ko3-passes1 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=ko params=3 viewwindows=2 passes=1 map=uniq.map
+mi-ko3-symxaxis only=sem.l,uniq.map type=lsystem lfile=sem.l lname=ko params=3 viewwindows=2 symmetry=xaxis map=uniq.map
+mi-ko3-inside5 only=sem.l,uniq.map type=lsystem lfile=sem.l lname=ko params=3 viewwindows=2 inside=5 outside=7 map=uniq.map

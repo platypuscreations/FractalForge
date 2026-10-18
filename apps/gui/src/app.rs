@@ -11,6 +11,7 @@ use eframe::egui::{
 };
 use fractalforge_core::{Inside, Outside, PRESETS, Palette, Params, Window, types};
 use fractalforge_formats::gif::{self, Checkpoint, Content};
+use fractalforge_formats::programs::Kind;
 use fractalforge_formats::{map, par};
 use fractalforge_render::{PassMode, Render};
 use rayon::prelude::*;
@@ -99,6 +100,13 @@ pub struct App {
     title: String,
 
     drag: Option<Drag>,
+    /// Draw the orbit of the point under the pointer over the image.
+    show_orbit: bool,
+    /// The pointer's normalised image position, while over the image.
+    hover: Option<(f64, f64)>,
+    /// Parameter-plane views left with the Julia toggle, most recent last,
+    /// so toggling back returns to them.
+    mandel_views: Vec<(&'static str, Window)>,
     /// A .par file with several entries, waiting for the user to pick one.
     par_choice: Option<(PathBuf, Vec<String>)>,
     /// A Fractint formula GIF waiting for its .frm file: the entry name and
@@ -151,6 +159,9 @@ impl App {
             messages: Vec::new(),
             title: String::new(),
             drag: None,
+            show_orbit: false,
+            hover: None,
+            mandel_views: Vec::new(),
             par_choice: None,
             pending_formula: None,
             par_save: None,
@@ -319,7 +330,7 @@ impl App {
 
     fn open_dialog(&mut self, ctx: &egui::Context) {
         if let Some(path) = rfd::FileDialog::new()
-            .add_filter("Fractal files", &["gif", "par", "frm", "map"])
+            .add_filter("Fractal files", &["gif", "par", "frm", "ifs", "l", "map"])
             .pick_file()
         {
             self.open(&path, ctx);
@@ -329,7 +340,7 @@ impl App {
     pub fn open(&mut self, path: &Path, ctx: &egui::Context) {
         let ext = path.extension().map(|e| e.to_string_lossy().to_lowercase());
         match ext.as_deref() {
-            Some("par" | "frm") => return self.open_par(path, ctx),
+            Some("par" | "frm" | "ifs" | "l") => return self.open_par(path, ctx),
             Some("map") => return self.open_map(path),
             _ => {}
         }
@@ -351,6 +362,7 @@ impl App {
                 self.recolor = true;
                 self.pass_mode = c.state.pass_mode;
                 self.size_mode = SizeMode::Fixed(size.0, size.1);
+                let params = c.params.clone();
                 match Render::resume(c.params, c.state, c.buffer) {
                     Ok(render) => {
                         self.stop_worker();
@@ -358,6 +370,19 @@ impl App {
                         self.image = None;
                         self.backdrop = None;
                         self.start(render, ctx);
+                    }
+                    // Plotted types (IFS) start again, as in Fractint.
+                    Err(fractalforge_render::ResumeError::NotResumable(_))
+                        if params.fractal.plot.is_some() =>
+                    {
+                        self.messages.push(format!(
+                            "{}: {} images can't be resumed; calculating from the start",
+                            path.display(),
+                            params.fractal.name
+                        ));
+                        self.params = params;
+                        self.render_size = size;
+                        self.restart(ctx);
                     }
                     Err(e) => self.messages.push(format!("{}: {e}", path.display())),
                 }
@@ -376,13 +401,14 @@ impl App {
                     return;
                 };
                 if params.fractal.needs_program {
-                    // Formula GIFs name the formula but not its file: look
-                    // next to the GIF, else ask for the .frm file.
+                    // Formula and IFS GIFs name the entry but not its file:
+                    // look next to the GIF, else ask for the file.
                     let name = info.formula_name.clone().unwrap_or_default();
+                    let kind = Kind::of_type(params.fractal).unwrap();
                     let found = path
                         .parent()
-                        .and_then(|d| fractalforge_formula::find_in_dir(d, &name))
-                        .map(|(_, text)| fractalforge_formula::load(&text, &name));
+                        .and_then(|d| kind.find_in_dir(d, &name))
+                        .map(|(_, text)| kind.load(&text, &name));
                     for (c, p) in self.palette.0.iter_mut().zip(&loaded.image.palette) {
                         *c = *p;
                     }
@@ -401,8 +427,10 @@ impl App {
                         }
                         None => {
                             self.messages.push(format!(
-                                "{}: needs the formula '{name}'. Open the .frm file that has it.",
-                                path.display()
+                                "{}: needs the {} '{name}'. Open the .{} file that has it.",
+                                path.display(),
+                                kind.noun(),
+                                kind.extension()
                             ));
                             self.pending_formula = Some((name, params));
                             self.file = Some(path.to_owned());
@@ -460,38 +488,34 @@ impl App {
         self.record_history();
     }
 
-    /// Opens a .par or .frm file: its only entry directly, otherwise
+    /// Opens a .par, .frm or .ifs file: its only entry directly, otherwise
     /// through the entry picker.
     fn open_par(&mut self, path: &Path, ctx: &egui::Context) {
         let text = match fractalforge_formula::read_text(path) {
             Ok(t) => t,
             Err(e) => return self.messages.push(format!("{}: {e}", path.display())),
         };
-        let is_frm = path
-            .extension()
-            .is_some_and(|e| e.eq_ignore_ascii_case("frm"));
-        if is_frm && let Some((name, _)) = &self.pending_formula {
-            // The formula a GIF was waiting for.
+        let kind = entry_file_kind(path);
+        if let (Some(kind), Some((name, params))) = (kind, &self.pending_formula)
+            && Kind::of_type(params.fractal) == Some(kind)
+        {
+            // The entry a GIF was waiting for.
             let name = name.clone();
-            if fractalforge_formula::parser::find(
-                &fractalforge_formula::parser::entries(&text),
-                &name,
-            )
-            .is_some()
+            if kind
+                .entry_names(&text)
+                .iter()
+                .any(|n| n.eq_ignore_ascii_case(&name))
             {
                 return self.load_par_entry(path, &name, ctx);
             }
         }
-        let names: Vec<String> = if is_frm {
-            fractalforge_formula::parser::entries(&text)
-                .into_iter()
-                .map(|e| e.name)
-                .collect()
+        let names: Vec<String> = if let Some(kind) = kind {
+            kind.entry_names(&text)
         } else {
             par::entries(&text)
                 .into_iter()
                 .map(|e| e.name)
-                .filter(|n| !n.get(..4).is_some_and(|p| p.eq_ignore_ascii_case("frm:")))
+                .filter(|n| !fractalforge_formats::programs::is_embedded(n))
                 .collect()
         };
         match names.as_slice() {
@@ -508,11 +532,8 @@ impl App {
 
     fn load_par_entry(&mut self, path: &Path, name: &str, ctx: &egui::Context) {
         let text = fractalforge_formula::read_text(path).unwrap_or_default();
-        if path
-            .extension()
-            .is_some_and(|e| e.eq_ignore_ascii_case("frm"))
-        {
-            return self.load_formula(&text, name, ctx);
+        if let Some(kind) = entry_file_kind(path) {
+            return self.load_formula(kind, &text, name, ctx);
         }
         let all = par::entries(&text);
         let Some(raw) = par::find(&all, name) else {
@@ -538,21 +559,21 @@ impl App {
         }
     }
 
-    /// Uses formula `name`: for a GIF waiting for it, with that image's
-    /// parameters; otherwise as a new formula image.
-    fn load_formula(&mut self, text: &str, name: &str, ctx: &egui::Context) {
-        let (program, warnings) = match fractalforge_formula::load(text, name) {
+    /// Uses formula or IFS entry `name`: for a GIF waiting for it, with
+    /// that image's parameters; otherwise as a new image.
+    fn load_formula(&mut self, kind: Kind, text: &str, name: &str, ctx: &egui::Context) {
+        let (program, warnings) = match kind.load(text, name) {
             Ok(r) => r,
             Err(e) => return self.messages.push(e),
         };
         self.messages.extend(warnings);
         match self.pending_formula.take() {
-            Some((_, mut params)) => {
+            Some((_, mut params)) if params.fractal == kind.fractal() => {
                 params.program = Some(program);
                 self.params = params;
             }
-            None => {
-                let mut params = Params::new(&types::FORMULA);
+            _ => {
+                let mut params = Params::new(kind.fractal());
                 params.window = view::fit_aspect(&params.window, self.aspect());
                 params.program = Some(program);
                 self.params = params;
@@ -812,6 +833,9 @@ impl App {
             if i.key_pressed(Key::C) {
                 self.cycling = !self.cycling;
             }
+            if i.key_pressed(Key::O) {
+                self.show_orbit = !self.show_orbit;
+            }
             if i.key_pressed(Key::Plus) || i.key_pressed(Key::Equals) {
                 self.cycle_speed = (self.cycle_speed * 1.5).min(500.0);
             }
@@ -819,6 +843,9 @@ impl App {
                 self.cycle_speed = (self.cycle_speed / 1.5).max(1.0);
             }
         });
+        if ctx.input(|i| i.key_pressed(Key::Space)) {
+            self.toggle_julia();
+        }
         if ctx.input(|i| i.key_pressed(Key::Escape)) {
             self.pause();
         }
@@ -856,6 +883,47 @@ impl App {
             4.0 / 3.0
         } else {
             w as f64 / h as f64
+        }
+    }
+
+    /// Switches between a parameter-plane type and its Julia sets: to the
+    /// Julia set for the point under the pointer (or the view's centre), or
+    /// back to the parameter-plane view it came from.
+    fn toggle_julia(&mut self) {
+        let w = self.params.window;
+        if types::julia_of(self.params.fractal).is_some() {
+            let (u, v) = self.hover.unwrap_or((0.5, 0.5));
+            let (x, y) = view::point_at(&w, u, v);
+            let Some(mut p) = self.params.to_julia(fractalforge_core::Complex::new(x, y)) else {
+                return;
+            };
+            self.mandel_views.push((self.params.fractal.name, w));
+            p.window = view::fit_aspect(&p.window, self.aspect());
+            self.params = p;
+        } else {
+            let saved = self
+                .mandel_views
+                .pop()
+                .filter(|(name, _)| {
+                    types::mandel_of(self.params.fractal).is_some_and(|m| m.name == *name)
+                })
+                .map(|(_, w)| w);
+            let Some(mut p) = self.params.to_mandel(saved) else {
+                return;
+            };
+            p.window = view::fit_aspect(&p.window, self.aspect());
+            self.params = p;
+        }
+        self.changed();
+    }
+
+    fn julia_toggle_label(&self) -> Option<&'static str> {
+        if types::julia_of(self.params.fractal).is_some() {
+            Some("Julia Set at Pointer")
+        } else if types::mandel_of(self.params.fractal).is_some() {
+            Some("Back to Parameter Plane")
+        } else {
+            None
         }
     }
 
@@ -910,6 +978,22 @@ impl App {
                     self.redo();
                 }
             });
+            ui.menu_button("Fractal", |ui| {
+                let label = self.julia_toggle_label();
+                if ui
+                    .add_enabled(
+                        label.is_some(),
+                        egui::Button::new(label.unwrap_or("Julia Set")).shortcut_text("Space"),
+                    )
+                    .on_hover_text("Uses the view's centre when chosen from this menu")
+                    .clicked()
+                {
+                    self.hover = None;
+                    self.toggle_julia();
+                }
+                ui.checkbox(&mut self.show_orbit, "Show Orbits (O)")
+                    .on_hover_text("Draws the orbit of the point under the pointer");
+            });
             ui.menu_button("Render", |ui| {
                 if ui
                     .add_enabled(self.worker.is_some(), egui::Button::new("Stop"))
@@ -937,7 +1021,7 @@ impl App {
             ui.heading("Fractal");
             egui::ComboBox::from_label("Type")
                 .selected_text(match &self.params.program {
-                    Some(p) => format!("formula: {}", p.0.name()),
+                    Some(p) => format!("{}: {}", self.params.fractal.name, p.0.name()),
                     None => self.params.fractal.name.to_owned(),
                 })
                 .show_ui(ui, |ui| {
@@ -959,6 +1043,7 @@ impl App {
             let program = self.params.program.clone();
             for (i, name) in self.params.fractal.param_names.iter().enumerate() {
                 if let Some(prog) = &program
+                    && self.params.fractal == &types::FORMULA
                     && !prog.0.mentions(&format!("p{}", i / 2 + 1))
                 {
                     continue;
@@ -971,6 +1056,25 @@ impl App {
                             .max_decimals(15),
                     )
                     .changed();
+            }
+            if self.params.uses_view3d() {
+                let v = &mut self.params.view3d;
+                ui.horizontal(|ui| {
+                    ui.label("Rotation x/y/z");
+                    for r in &mut v.rotation {
+                        changed |= ui
+                            .add(egui::DragValue::new(r).range(-360..=360).suffix("°"))
+                            .changed();
+                    }
+                });
+                ui.horizontal(|ui| {
+                    ui.label("Shift right/up");
+                    for s in &mut v.xyshift {
+                        changed |= ui
+                            .add(egui::DragValue::new(s).range(-100..=100).suffix("%"))
+                            .changed();
+                    }
+                });
             }
             ui.horizontal(|ui| {
                 ui.label("Max iterations");
@@ -994,20 +1098,25 @@ impl App {
                         .changed();
                 });
             }
-            changed |= ui
-                .checkbox(&mut self.params.use_symmetry, "Use symmetry")
-                .on_hover_text("Copy mirrored pixels instead of computing them, as Fractint does")
-                .changed();
-            changed |= self.coloring_controls(ui);
-            egui::ComboBox::from_label("Passes")
-                .selected_text(pass_name(self.pass_mode))
-                .show_ui(ui, |ui| {
-                    for m in [PassMode::One, PassMode::Two, PassMode::Guess] {
-                        changed |= ui
-                            .selectable_value(&mut self.pass_mode, m, pass_name(m))
-                            .changed();
-                    }
-                });
+            // Plotted types draw the image: no pixel options.
+            if self.params.fractal.plot.is_none() {
+                changed |= ui
+                    .checkbox(&mut self.params.use_symmetry, "Use symmetry")
+                    .on_hover_text(
+                        "Copy mirrored pixels instead of computing them, as Fractint does",
+                    )
+                    .changed();
+                changed |= self.coloring_controls(ui);
+                egui::ComboBox::from_label("Passes")
+                    .selected_text(pass_name(self.pass_mode))
+                    .show_ui(ui, |ui| {
+                        for m in [PassMode::One, PassMode::Two, PassMode::Guess] {
+                            changed |= ui
+                                .selectable_value(&mut self.pass_mode, m, pass_name(m))
+                                .changed();
+                        }
+                    });
+            }
 
             ui.separator();
             ui.heading("View");
@@ -1248,6 +1357,14 @@ impl App {
             painter.image(shown.texture.id(), r, uv, Color32::WHITE);
         }
 
+        self.hover = response.hover_pos().filter(|p| rect.contains(*p)).map(norm);
+        if self.show_orbit
+            && self.drag.is_none()
+            && let Some((u, v)) = self.hover
+        {
+            self.draw_orbit(&painter, rect, u, v);
+        }
+
         // Zoom with scroll wheel or pinch, about the pointer.
         if let Some(pos) = response.hover_pos() {
             let (zoom, scroll) = ctx.input(|i| (i.zoom_delta(), i.smooth_scroll_delta.y));
@@ -1380,6 +1497,86 @@ impl App {
 }
 
 /// A rectangle from `a` towards `b` with the image's aspect ratio.
+/// The kind of entry file (.frm, .ifs) at `path`, or `None` for others
+/// (.par).
+fn entry_file_kind(path: &Path) -> Option<Kind> {
+    let ext = path.extension()?.to_str()?;
+    Kind::ALL
+        .into_iter()
+        .find(|k| ext.eq_ignore_ascii_case(k.extension()))
+}
+
+/// Most iterates the orbit window draws.
+const ORBIT_POINTS: u32 = 5000;
+
+impl App {
+    /// Draws the orbit of the point at normalised position `(u, v)`, as
+    /// dots joined by faint lines, with its start and length in a label.
+    fn draw_orbit(&self, painter: &egui::Painter, rect: Rect, u: f64, v: f64) {
+        let w = self.params.window;
+        let (x, y) = view::point_at(&w, u, v);
+        let (width, height) = self.render_size;
+        let at = fractalforge_core::PixelContext {
+            pixel: fractalforge_core::Complex::new(x, y),
+            col: (u * width.saturating_sub(1) as f64).round() as u32,
+            row: (v * height.saturating_sub(1) as f64).round() as u32,
+            width,
+            height,
+        };
+        let Some(points) = self.params.orbit(&at, ORBIT_POINTS) else {
+            return;
+        };
+        let to_screen = |z: fractalforge_core::Complex| {
+            let pu = (z.re - w.x_min) / (w.x_max - w.x_min);
+            let pv = (w.y_max - z.im) / (w.y_max - w.y_min);
+            rect.lerp_inside(Vec2::new(pu as f32, pv as f32))
+        };
+        let finite =
+            |p: &Pos2| p.x.is_finite() && p.y.is_finite() && p.x.abs() < 1e6 && p.y.abs() < 1e6;
+        let screen: Vec<Pos2> = std::iter::once(at.pixel)
+            .chain(points.iter().copied())
+            .map(to_screen)
+            .take_while(finite)
+            .collect();
+        let line = Stroke::new(1.0, Color32::from_white_alpha(70));
+        for pair in screen.windows(2) {
+            painter.line_segment([pair[0], pair[1]], line);
+        }
+        for p in &screen[1..] {
+            painter.circle_filled(*p, 1.5, Color32::YELLOW);
+        }
+        painter.circle_stroke(screen[0], 3.0, Stroke::new(1.5, Color32::WHITE));
+        // With the plain colouring, a value tells escaped from inside.
+        let plain = Params {
+            inside: Inside::Color(0),
+            outside: Outside::Iter,
+            decomp: 0,
+            biomorph: None,
+            ..self.params.clone()
+        };
+        let value = match &plain.program {
+            Some(prog) => {
+                let mut carry = prog.0.new_carry(&plain, width, height);
+                prog.0.iterate(&at, &plain, &mut carry)
+            }
+            None => (plain.fractal.iterate)(at.pixel, &plain),
+        };
+        let escaped = value != fractalforge_core::INSIDE;
+        let text = format!(
+            "{x:.6} {y:+.6}i\n{} iterates{}",
+            points.len(),
+            if escaped { "" } else { " (no escape)" }
+        );
+        painter.text(
+            rect.left_top() + Vec2::new(8.0, 8.0),
+            egui::Align2::LEFT_TOP,
+            text,
+            egui::FontId::monospace(12.0),
+            Color32::WHITE,
+        );
+    }
+}
+
 fn aspect_box(a: Pos2, b: Pos2, aspect: f32) -> Rect {
     let d = b - a;
     let w = d.x.abs().max(d.y.abs() * aspect);

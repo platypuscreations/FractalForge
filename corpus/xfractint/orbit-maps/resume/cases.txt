@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Interrupted saves, resumed loads and batch references for docs/specs/orbit-maps.md §10.
+# Scripts: tools/blackbox/orbit-maps/interrupt.sh (run-interrupt: "s" after DELAY s),
+# rload.sh (load with XFractint's "r" command, then "s" after WAIT s; ENTER=1:
+# filename=in.gif + Enter instead). All add viewwindows=2 and savename=ff.gif.
+#
+# int-NAME    interrupt.sh DELAY ARGS
+int-henon    10 type=henon maxiter=8000
+int-icons    10 type=icons maxiter=8000
+int-martin   10 type=martin maxiter=8000
+int-lat      10 type=latoocarfian function=sin/sin/sin/sin maxiter=8000
+int-popcorn  7  type=popcorn
+int-kam      4  type=kamtorus params=1.3/0.005/1.5/3000
+int-dyn      4  type=dynamic params=100/0.1/1/3
+int-jinv     3  type=julia_inverse params=-0.11/0.6557/50/1024
+int-pjul     4  type=popcornjul maxiter=30000
+#
+# rload-NAME  rload.sh int-NAME WAIT      (r command: resumes)
+rload-henon   int-henon   90
+rload-popcorn int-popcorn 90
+rload-kam     int-kam     90
+rload-dyn     int-dyn     90
+rload-pjul    int-pjul    90
+rload-icons   int-icons   420
+rload-lat     int-lat     420
+# enter-NAME  ENTER=1 rload.sh int-NAME 90   (filename= + Enter: recalculates)
+enter-henon   int-henon   90
+enter-popcorn int-popcorn 90
+#
+# ref-NAME    batch render (run-cases.sh), same parameters as int-NAME
+ref-henon   type=henon maxiter=8000
+ref-icons   type=icons maxiter=8000
+ref-lat     type=latoocarfian function=sin/sin/sin/sin maxiter=8000
+ref-popcorn type=popcorn
+ref-kam     type=kamtorus params=1.3/0.005/1.5/3000
+ref-dyn     type=dynamic params=100/0.1/1/3
+ref-pjul    type=popcornjul maxiter=30000

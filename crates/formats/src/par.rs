@@ -16,7 +16,8 @@ use fractalforge_render::PassMode;
 
 use fractalforge_core::Program;
 use fractalforge_formula::funcs::FN_TABLE;
-use fractalforge_formula::parser as formula_parser;
+
+use crate::programs::Kind;
 
 use crate::Error;
 use crate::gif::fractint_blocks::{inside_from_code, outside_from_code};
@@ -185,8 +186,9 @@ struct State {
     decomp: Option<u32>,
     biomorph: Option<Option<u32>>,
     use_symmetry: Option<bool>,
-    formula_file: Option<String>,
-    formula_name: Option<String>,
+    /// File and entry keys per [`Kind`] (formulafile/formulaname, …).
+    entry_keys: [(Option<String>, Option<String>); Kind::ALL.len()],
+    view3d: Option<fractalforge_core::View3d>,
     functions: Option<[u8; 4]>,
     forced_symmetry: Option<Symmetry>,
     pass_mode: Option<PassMode>,
@@ -352,8 +354,44 @@ pub fn load(
                 }
                 // Settings with no effect in FractalForge.
                 "float" | "periodicity" | "rseed" | "cyclerange" | "viewwindows" | "fillcolor" => {}
-                "formulafile" => st.formula_file = Some(v.to_owned()),
-                "formulaname" => st.formula_name = Some(v.to_owned()),
+                k if Kind::ALL
+                    .iter()
+                    .any(|kind| [kind.par_keys().0, kind.par_keys().1].contains(&k)) =>
+                {
+                    let (i, kind) = Kind::ALL
+                        .iter()
+                        .enumerate()
+                        .find(|(_, kind)| [kind.par_keys().0, kind.par_keys().1].contains(&k))
+                        .unwrap();
+                    let slot = &mut st.entry_keys[i];
+                    if k == kind.par_keys().0 {
+                        slot.0 = Some(v.to_owned());
+                    } else {
+                        slot.1 = Some(v.to_owned());
+                    }
+                }
+                "rotation" | "perspective" | "xyshift" => {
+                    let view = st.view3d.get_or_insert_with(Default::default);
+                    let nums = v
+                        .split('/')
+                        .map(|x| {
+                            integer(x).map(|n| n.clamp(i16::MIN as i64, i16::MAX as i64) as i16)
+                        })
+                        .collect::<Result<Vec<i16>, String>>()?;
+                    match key_l.as_str() {
+                        "rotation" => {
+                            for (r, n) in view.rotation.iter_mut().zip(&nums) {
+                                *r = *n;
+                            }
+                        }
+                        "perspective" => view.perspective = nums.first().copied().unwrap_or(0),
+                        _ => {
+                            for (s, n) in view.xyshift.iter_mut().zip(&nums) {
+                                *s = *n;
+                            }
+                        }
+                    }
+                }
                 "function" => {
                     let mut f = [0, 6, 2, 3];
                     for (slot, name) in f.iter_mut().zip(v.split('/')) {
@@ -395,14 +433,21 @@ pub fn load(
     if let Some(f) = st.functions {
         p.functions = f;
     }
-    if fractal.needs_program {
-        let name = st.formula_name.clone().ok_or_else(|| {
+    if let Some(view) = st.view3d {
+        p.view3d = view;
+    }
+    if let Some(kind) = Kind::of_type(fractal) {
+        let i = Kind::ALL.iter().position(|k| *k == kind).unwrap();
+        let (file, name) = st.entry_keys[i].clone();
+        let name = name.ok_or_else(|| {
             Error::Invalid(format!(
-                "entry {}: type=formula needs formulaname=",
-                entry.name
+                "entry {}: type={} needs {}=",
+                entry.name,
+                fractal.name,
+                kind.par_keys().1
             ))
         })?;
-        let (program, w) = resolve_formula(&name, file_text, st.formula_file.as_deref(), dir)
+        let (program, w) = resolve_program(kind, &name, file_text, file.as_deref(), dir)
             .map_err(|e| Error::Invalid(format!("entry {}: {e}", entry.name)))?;
         warnings.extend(w);
         p.program = Some(program);
@@ -497,22 +542,29 @@ fn parse_outside(v: &str) -> Result<Outside, String> {
     Outside::parse(&v.to_lowercase()).ok_or_else(|| format!("outside={v} isn't supported"))
 }
 
-/// Finds and compiles formula `name` for a `.par` entry, trying an
-/// embedded `frm:name` entry, then `formulafile=` (next to the `.par`),
-/// then the `.frm` files of the `.par` file's folder.
-fn resolve_formula(
+/// Finds formula or IFS entry `name` for a `.par` entry, trying an
+/// embedded `frm:name` / `ifs:name` entry, then `formulafile=` /
+/// `ifsfile=` (next to the `.par`), then the files of the `.par` file's
+/// folder (frm-syntax.md §8.2, ifs.md §10.4).
+fn resolve_program(
+    kind: Kind,
     name: &str,
     file_text: Option<&str>,
-    formula_file: Option<&str>,
+    file: Option<&str>,
     dir: Option<&Path>,
 ) -> Result<(Program, Vec<String>), String> {
-    let embedded = format!("frm:{name}");
+    let has = |text: &str, name: &str| {
+        kind.entry_names(text)
+            .iter()
+            .any(|n| n.eq_ignore_ascii_case(name))
+    };
+    let embedded = format!("{}{name}", kind.par_prefix());
     if let Some(text) = file_text
-        && formula_parser::find(&formula_parser::entries(text), &embedded).is_some()
+        && has(text, &embedded)
     {
-        return fractalforge_formula::load(text, &embedded);
+        return kind.load(text, &embedded);
     }
-    if let Some(file) = formula_file {
+    if let Some(file) = file {
         let mut candidates = Vec::new();
         if let Some(d) = dir {
             candidates.push(d.join(Path::new(file).file_name().unwrap_or_default()));
@@ -520,18 +572,18 @@ fn resolve_formula(
         candidates.push(Path::new(file).to_owned());
         for path in candidates {
             if let Ok(text) = fractalforge_formula::read_text(&path)
-                && formula_parser::find(&formula_parser::entries(&text), name).is_some()
+                && has(&text, name)
             {
-                return fractalforge_formula::load(&text, name);
+                return kind.load(&text, name);
             }
         }
     }
     if let Some(d) = dir
-        && let Some((_, text)) = fractalforge_formula::find_in_dir(d, name)
+        && let Some((_, text)) = kind.find_in_dir(d, name)
     {
-        return fractalforge_formula::load(&text, name);
+        return kind.load(&text, name);
     }
-    Err(format!("can't find formula {name}"))
+    Err(format!("can't find {} {name}", kind.noun()))
 }
 
 /// `center-mag` without rotation or skew (§5.2): half height 1/mag, half
@@ -670,9 +722,12 @@ pub fn write_entry(
         )));
     }
     let mut tokens = vec!["reset=2004".to_owned(), format!("type={}", p.fractal.name)];
-    if let Some(prog) = &p.program {
-        // The formula itself is written as an `frm:` entry (save_entry).
-        tokens.push(format!("formulaname={}", prog.0.name()));
+    let kind = Kind::of_type(p.fractal);
+    if let (Some(prog), Some(kind)) = (&p.program, kind) {
+        // The entry itself is embedded as `frm:` / `ifs:` (save_entry).
+        tokens.push(format!("{}={}", kind.par_keys().1, prog.0.name()));
+    }
+    if let (Some(_), Some(Kind::Formula)) = (&p.program, kind) {
         if p.functions != [0, 6, 2, 3] {
             let names: Vec<&str> = p.functions.iter().map(|&i| FN_TABLE[i as usize]).collect();
             tokens.push(format!("function={}", names.join("/")));
@@ -698,7 +753,10 @@ pub fn write_entry(
         .iter()
         .rposition(|&x| x != 0.0)
         .map_or(0, |i| i + 1);
-    let used = if p.fractal.needs_program {
+    let used = if kind == Some(Kind::Ifs) {
+        // XFractint always writes it (ifs.md §10.3).
+        last_set.max(1)
+    } else if p.fractal.needs_program {
         last_set
     } else {
         p.fractal.param_names.len().max(last_set)
@@ -730,6 +788,15 @@ pub fn write_entry(
     }
     if let Some(b) = p.biomorph {
         tokens.push(format!("biomorph={b}"));
+    }
+    if p.uses_view3d() {
+        let v = &p.view3d;
+        tokens.push(format!(
+            "rotation={}/{}/{}",
+            v.rotation[0], v.rotation[1], v.rotation[2]
+        ));
+        tokens.push(format!("perspective={}", v.perspective));
+        tokens.push(format!("xyshift={}/{}", v.xyshift[0], v.xyshift[1]));
     }
     match (p.use_symmetry, p.forced_symmetry) {
         (false, _) | (true, Some(Symmetry::None)) => tokens.push("symmetry=none".into()),
@@ -791,10 +858,11 @@ pub fn save_entry(
 ) -> Result<String, Error> {
     let entry = write_entry(name, comment, p, pass_mode, palette)?;
     let mut out = upsert(file_text, name, &entry);
-    if let Some(prog) = &p.program {
-        let frm_name = format!("frm:{}", prog.0.name());
-        let text = format!("frm:{}\n\n", prog.0.source());
-        out = upsert(&out, &frm_name, &text);
+    if let (Some(prog), Some(kind)) = (&p.program, Kind::of_type(p.fractal)) {
+        let prefix = kind.par_prefix();
+        let embedded = format!("{prefix}{}", prog.0.name());
+        let text = format!("{prefix}{}\n\n", prog.0.source());
+        out = upsert(&out, &embedded, &text);
     }
     Ok(out)
 }

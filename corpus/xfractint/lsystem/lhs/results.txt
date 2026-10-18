@@ -1,0 +1,94 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# python3 -I tools/blackbox/lsystem/summarise.py on round lhs (cases-lhs.txt)
+gl1                    400x300 1601cebc bbox=(52,3,347,297) n=883 col=[(15, 883)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+gl2                    400x300 b5d4a468 bbox=(72,2,327,297) n=466 col=[(15, 466)] t=107 p1=0 corners=-1,1,-1,1 st=4 003='e' blocks=003,001
+h033                   400x300 69eb943f bbox=- n=0 col=[] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h033' blocks=003,001 STOPMSG: Syntax error line 4: Redefined reserved symbol !
+h034                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h034' blocks=003,001
+h035                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h035' blocks=003,001
+h036                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h036' blocks=003,001
+h037                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h037' blocks=003,001
+h038                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h038' blocks=003,001
+h039                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h039' blocks=003,001
+h040                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h040' blocks=003,001
+h041                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h041' blocks=003,001
+h042                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h042' blocks=003,001
+h043                   400x300 69eb943f bbox=- n=0 col=[] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h043' blocks=003,001 STOPMSG: Syntax error line 4: Redefined reserved symbol +
+h044                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h044' blocks=003,001
+h045                   400x300 69eb943f bbox=- n=0 col=[] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h045' blocks=003,001 STOPMSG: Syntax error line 4: Redefined reserved symbol -
+h046                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h046' blocks=003,001
+h047                   400x300 69eb943f bbox=- n=0 col=[] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h047' blocks=003,001 STOPMSG: Syntax error line 4: Redefined reserved symbol /
+h048                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h048' blocks=003,001
+h049                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h049' blocks=003,001
+h050                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h050' blocks=003,001
+h051                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h051' blocks=003,001
+h052                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h052' blocks=003,001
+h053                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h053' blocks=003,001
+h054                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h054' blocks=003,001
+h055                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h055' blocks=003,001
+h056                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h056' blocks=003,001
+h057                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h057' blocks=003,001
+h058                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h058' blocks=003,001
+h060                   400x300 69eb943f bbox=- n=0 col=[] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h060' blocks=003,001 STOPMSG: Syntax error line 4: Redefined reserved symbol <
+h062                   400x300 69eb943f bbox=- n=0 col=[] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h062' blocks=003,001 STOPMSG: Syntax error line 4: Redefined reserved symbol >
+h063                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h063' blocks=003,001
+h064                   400x300 69eb943f bbox=- n=0 col=[] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h064' blocks=003,001 STOPMSG: Syntax error line 4: Redefined reserved symbol @
+h065                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h065' blocks=003,001
+h066                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h066' blocks=003,001
+h067                   400x300 69eb943f bbox=- n=0 col=[] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h067' blocks=003,001 STOPMSG: Syntax error line 4: Redefined reserved symbol c
+h068                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h068' blocks=003,001
+h069                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h069' blocks=003,001
+h070                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h070' blocks=003,001
+h071                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h071' blocks=003,001
+h072                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h072' blocks=003,001
+h073                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h073' blocks=003,001
+h074                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h074' blocks=003,001
+h075                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h075' blocks=003,001
+h076                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h076' blocks=003,001
+h077                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h077' blocks=003,001
+h078                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h078' blocks=003,001
+h079                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h079' blocks=003,001
+h080                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h080' blocks=003,001
+h081                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h081' blocks=003,001
+h082                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h082' blocks=003,001
+h083                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h083' blocks=003,001
+h084                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h084' blocks=003,001
+h085                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h085' blocks=003,001
+h086                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h086' blocks=003,001
+h087                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h087' blocks=003,001
+h088                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h088' blocks=003,001
+h089                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h089' blocks=003,001
+h090                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h090' blocks=003,001
+h091                   400x300 69eb943f bbox=- n=0 col=[] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h091' blocks=003,001 STOPMSG: Syntax error line 4: Redefined reserved symbol [
+h092                   400x300 69eb943f bbox=- n=0 col=[] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h092' blocks=003,001 STOPMSG: Syntax error line 4: Redefined reserved symbol \
+h093                   400x300 69eb943f bbox=- n=0 col=[] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h093' blocks=003,001 STOPMSG: Syntax error line 4: Redefined reserved symbol ]
+h094                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h094' blocks=003,001
+h095                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h095' blocks=003,001
+h096                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h096' blocks=003,001
+h097                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h097' blocks=003,001
+h098                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h098' blocks=003,001
+h099                   400x300 69eb943f bbox=- n=0 col=[] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h099' blocks=003,001 STOPMSG: Syntax error line 4: Redefined reserved symbol c
+h100                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h100' blocks=003,001
+h101                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h101' blocks=003,001
+h102                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h102' blocks=003,001
+h103                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h103' blocks=003,001
+h104                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h104' blocks=003,001
+h105                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h105' blocks=003,001
+h106                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h106' blocks=003,001
+h107                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h107' blocks=003,001
+h108                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h108' blocks=003,001
+h109                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h109' blocks=003,001
+h110                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h110' blocks=003,001
+h111                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h111' blocks=003,001
+h112                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h112' blocks=003,001
+h113                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h113' blocks=003,001
+h114                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h114' blocks=003,001
+h115                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h115' blocks=003,001
+h116                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h116' blocks=003,001
+h117                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h117' blocks=003,001
+h118                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h118' blocks=003,001
+h119                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h119' blocks=003,001
+h120                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h120' blocks=003,001
+h121                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h121' blocks=003,001
+h122                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h122' blocks=003,001
+h124                   400x300 69eb943f bbox=- n=0 col=[] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h124' blocks=003,001 STOPMSG: Syntax error line 4: Redefined reserved symbol |
+h126                   400x300 3ea730df bbox=(53,3,347,297) n=589 col=[(15, 589)] t=107 p1=1 corners=-1,1,-1,1 st=4 003='h126' blocks=003,001

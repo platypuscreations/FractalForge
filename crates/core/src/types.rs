@@ -37,12 +37,16 @@ pub enum Symmetry {
 /// Returns the colour value of one point (see the module docs).
 pub type IterateFn = fn(pixel: Complex, params: &Params) -> u32;
 
+/// Reports the iterates z₁, z₂, … the type's iterate function computes for
+/// one point, in order, up to the point where it stops.
+pub type OrbitFn = fn(pixel: Complex, params: &Params, visit: &mut dyn FnMut(Complex));
+
 pub struct FractalType {
     /// Short identifier used in files and on the command line.
     pub name: &'static str,
     pub description: &'static str,
     pub default_window: Window,
-    pub default_params: [f64; 4],
+    pub default_params: &'static [f64],
     /// Escape when `|z|²` exceeds this unless the user sets a bailout.
     pub default_bailout: f64,
     /// Labels for the meaningful entries of `Params::params`.
@@ -50,6 +54,9 @@ pub struct FractalType {
     pub iterate: IterateFn,
     /// The symmetry these particular parameters have.
     pub symmetry: fn(&Params) -> Symmetry,
+    /// The orbit of a point, for types that iterate one (shown by the
+    /// orbit window).
+    pub orbit: Option<OrbitFn>,
     /// How a colour value changes when copied to its mirror pixel, for
     /// types whose colours aren't symmetric (newtbasin's roots).
     pub mirror_value: Option<fn(u32, &Params) -> u32>,
@@ -64,6 +71,9 @@ pub struct FractalType {
     pub orbit_coloring: bool,
     /// Defined by [`Params::program`] (formulas).
     pub needs_program: bool,
+    /// Draws the whole image instead of computing pixels (see
+    /// [`crate::plot`]); `iterate` and `symmetry` are then unused.
+    pub plot: Option<crate::PlotFn>,
 }
 
 impl fmt::Debug for FractalType {
@@ -143,13 +153,30 @@ fn sym_x_if_p2_zero(p: &Params) -> Symmetry {
     }
 }
 
+// ---- orbits ------------------------------------------------------------
+
+/// Defines a type's iterate function and its orbit function from one
+/// generic loop that reports each iterate to an observer, so the two can't
+/// disagree. The no-op observer compiles away.
+macro_rules! observed {
+    ($run:ident => $iter:ident, $orbit:ident) => {
+        fn $iter(w: Complex, p: &Params) -> u32 {
+            $run(w, p, &mut |_| {})
+        }
+        fn $orbit(w: Complex, p: &Params, f: &mut dyn FnMut(Complex)) {
+            $run(w, p, f);
+        }
+    };
+}
+
 // ---- mandel and julia (gif-fractint-blocks §9) --------------------------
 
 /// Counting from z0 with the start untested: n is the first iterate past
 /// the bailout (1..=max_iter); these two types colour by n − 1, minimum 1.
-fn quadratic(mut z: Complex, c: Complex, p: &Params) -> u32 {
+fn quadratic<F: FnMut(Complex) + ?Sized>(mut z: Complex, c: Complex, p: &Params, f: &mut F) -> u32 {
     for n in 1..=p.max_iter {
         z = z.square() + c;
+        f(z);
         if z.norm_sqr() > p.bailout {
             return (n - 1).max(1);
         }
@@ -157,13 +184,15 @@ fn quadratic(mut z: Complex, c: Complex, p: &Params) -> u32 {
     INSIDE
 }
 
-fn mandel(w: Complex, p: &Params) -> u32 {
-    quadratic(a(p), w, p)
+fn mandel_run<F: FnMut(Complex) + ?Sized>(w: Complex, p: &Params, f: &mut F) -> u32 {
+    quadratic(a(p), w, p, f)
 }
+observed!(mandel_run => mandel, mandel_orbit);
 
-fn julia(w: Complex, p: &Params) -> u32 {
-    quadratic(w, a(p), p)
+fn julia_run<F: FnMut(Complex) + ?Sized>(w: Complex, p: &Params, f: &mut F) -> u32 {
+    quadratic(w, a(p), p, f)
 }
+observed!(julia_run => julia, julia_orbit);
 
 // ---- §3 ----------------------------------------------------------------
 
@@ -171,55 +200,76 @@ fn lambda_step(z: Complex, l: Complex) -> Complex {
     l * z * (Complex::new(1.0, 0.0) - z)
 }
 
-fn lambda(w: Complex, p: &Params) -> u32 {
+fn lambda_run<F: FnMut(Complex) + ?Sized>(w: Complex, p: &Params, f: &mut F) -> u32 {
     let l = a(p);
     escape(w, p.max_iter, |z| {
         *z = lambda_step(*z, l);
+        f(*z);
         z.norm_sqr() > p.bailout
     })
 }
+observed!(lambda_run => lambda, lambda_orbit);
 
-fn mandellambda(w: Complex, p: &Params) -> u32 {
+fn mandellambda_run<F: FnMut(Complex) + ?Sized>(w: Complex, p: &Params, f: &mut F) -> u32 {
     escape(Complex::new(0.5, 0.0) + a(p), p.max_iter, |z| {
         *z = lambda_step(*z, w);
+        f(*z);
         z.norm_sqr() > p.bailout
     })
 }
+observed!(mandellambda_run => mandellambda, mandellambda_orbit);
 
-fn mandel4(w: Complex, p: &Params) -> u32 {
-    escape(w + a(p), p.max_iter, |z| {
-        *z = z.square().square() + w;
-        z.norm_sqr() > p.bailout
-    })
-}
-
-fn julia4(w: Complex, p: &Params) -> u32 {
-    let c = a(p);
-    escape(w, p.max_iter, |z| {
+fn quartic<F: FnMut(Complex) + ?Sized>(z0: Complex, c: Complex, p: &Params, f: &mut F) -> u32 {
+    escape(z0, p.max_iter, |z| {
         *z = z.square().square() + c;
+        f(*z);
         z.norm_sqr() > p.bailout
     })
 }
+
+fn mandel4_run<F: FnMut(Complex) + ?Sized>(w: Complex, p: &Params, f: &mut F) -> u32 {
+    quartic(w + a(p), w, p, f)
+}
+observed!(mandel4_run => mandel4, mandel4_orbit);
+
+fn julia4_run<F: FnMut(Complex) + ?Sized>(w: Complex, p: &Params, f: &mut F) -> u32 {
+    quartic(w, a(p), p, f)
+}
+observed!(julia4_run => julia4, julia4_orbit);
 
 /// z(k+1) = z(k)² + z(k−1) + c, state (z(k), z(k−1)).
-fn manowar_loop(z0: Complex, prev: Complex, c: Complex, p: &Params) -> u32 {
+fn manowar_loop<F: FnMut(Complex) + ?Sized>(
+    z0: Complex,
+    prev: Complex,
+    c: Complex,
+    p: &Params,
+    f: &mut F,
+) -> u32 {
     escape((z0, prev), p.max_iter, |(z, prev)| {
         let next = z.square() + *prev + c;
         *prev = *z;
         *z = next;
+        f(*z);
         z.norm_sqr() > p.bailout
     })
 }
 
-fn manowar(w: Complex, p: &Params) -> u32 {
-    manowar_loop(w + a(p), w, w, p)
+fn manowar_run<F: FnMut(Complex) + ?Sized>(w: Complex, p: &Params, f: &mut F) -> u32 {
+    manowar_loop(w + a(p), w, w, p, f)
 }
+observed!(manowar_run => manowar, manowar_orbit);
 
-fn manowarj(w: Complex, p: &Params) -> u32 {
-    manowar_loop(w, w, a(p), p)
+fn manowarj_run<F: FnMut(Complex) + ?Sized>(w: Complex, p: &Params, f: &mut F) -> u32 {
+    manowar_loop(w, w, a(p), p, f)
 }
+observed!(manowarj_run => manowarj, manowarj_orbit);
 
-fn barnsley_loop(z0: Complex, c: Complex, p: &Params) -> u32 {
+fn barnsley_loop<F: FnMut(Complex) + ?Sized>(
+    z0: Complex,
+    c: Complex,
+    p: &Params,
+    f: &mut F,
+) -> u32 {
     let one = Complex::new(1.0, 0.0);
     escape(z0, p.max_iter, |z| {
         *z = if z.re >= 0.0 {
@@ -227,46 +277,54 @@ fn barnsley_loop(z0: Complex, c: Complex, p: &Params) -> u32 {
         } else {
             (*z + one) * c
         };
+        f(*z);
         z.norm_sqr() > p.bailout
     })
 }
 
-fn barnsleym1(w: Complex, p: &Params) -> u32 {
-    barnsley_loop(w + a(p), w, p)
+fn barnsleym1_run<F: FnMut(Complex) + ?Sized>(w: Complex, p: &Params, f: &mut F) -> u32 {
+    barnsley_loop(w + a(p), w, p, f)
 }
+observed!(barnsleym1_run => barnsleym1, barnsleym1_orbit);
 
-fn barnsleyj1(w: Complex, p: &Params) -> u32 {
-    barnsley_loop(w, a(p), p)
+fn barnsleyj1_run<F: FnMut(Complex) + ?Sized>(w: Complex, p: &Params, f: &mut F) -> u32 {
+    barnsley_loop(w, a(p), p, f)
 }
+observed!(barnsleyj1_run => barnsleyj1, barnsleyj1_orbit);
 
-fn spider(w: Complex, p: &Params) -> u32 {
+fn spider_run<F: FnMut(Complex) + ?Sized>(w: Complex, p: &Params, f: &mut F) -> u32 {
     escape((w + a(p), w), p.max_iter, |(z, c)| {
         *z = z.square() + *c;
         *c = c.scale(0.5) + *z;
+        f(*z);
         z.norm_sqr() > p.bailout
     })
 }
+observed!(spider_run => spider, spider_orbit);
 
 /// Magnet stop threshold for convergence to the fixed point 1: 2⁻¹⁵.
 const MAGNET_CONVERGED: f64 = 1.0 / 32768.0;
 
-fn magnet_loop(z0: Complex, c: Complex, p: &Params) -> u32 {
+fn magnet_loop<F: FnMut(Complex) + ?Sized>(z0: Complex, c: Complex, p: &Params, f: &mut F) -> u32 {
     let one = Complex::new(1.0, 0.0);
     let two = Complex::new(2.0, 0.0);
     escape(z0, p.max_iter, |z| {
         let q = (z.square() + c - one) / (z.scale(2.0) + c - two);
         *z = q.square();
+        f(*z);
         z.norm_sqr() > p.bailout || (*z - one).norm_sqr() < MAGNET_CONVERGED
     })
 }
 
-fn magnet1m(w: Complex, p: &Params) -> u32 {
-    magnet_loop(a(p), w, p)
+fn magnet1m_run<F: FnMut(Complex) + ?Sized>(w: Complex, p: &Params, f: &mut F) -> u32 {
+    magnet_loop(a(p), w, p, f)
 }
+observed!(magnet1m_run => magnet1m, magnet1m_orbit);
 
-fn magnet1j(w: Complex, p: &Params) -> u32 {
-    magnet_loop(w, a(p), p)
+fn magnet1j_run<F: FnMut(Complex) + ?Sized>(w: Complex, p: &Params, f: &mut F) -> u32 {
+    magnet_loop(w, a(p), p, f)
 }
+observed!(magnet1j_run => magnet1j, magnet1j_orbit);
 
 /// Newton convergence constant C (§3.12: anything in (0.9424745, 0.9424869]).
 const NEWTON_C: f64 = 0.942478;
@@ -278,7 +336,11 @@ fn newton_degree(p: &Params) -> i32 {
 /// Newton's method for z^d = 1 from z0 = w. Returns (k, z(k)) for the first
 /// k ≥ 0 that passes the convergence test, or `None` when n = k + 1 would
 /// reach max_iter.
-fn newton_orbit(w: Complex, p: &Params) -> Option<(u32, Complex)> {
+fn newton_orbit_run<F: FnMut(Complex) + ?Sized>(
+    w: Complex,
+    p: &Params,
+    f: &mut F,
+) -> Option<(u32, Complex)> {
     let d = newton_degree(p);
     let limit = NEWTON_C / d as f64;
     let one = Complex::new(1.0, 0.0);
@@ -290,16 +352,21 @@ fn newton_orbit(w: Complex, p: &Params) -> Option<(u32, Complex)> {
             return Some((k, z));
         }
         z = (zd.scale((d - 1) as f64) + one) / zd1.scale(d as f64);
+        f(z);
     }
     None
 }
 
 fn newton(w: Complex, p: &Params) -> u32 {
-    newton_orbit(w, p).map_or(INSIDE, |(k, _)| k + 1)
+    newton_orbit_run(w, p, &mut |_| {}).map_or(INSIDE, |(k, _)| k + 1)
+}
+
+fn newton_orbit(w: Complex, p: &Params, f: &mut dyn FnMut(Complex)) {
+    newton_orbit_run(w, p, f);
 }
 
 fn newtbasin(w: Complex, p: &Params) -> u32 {
-    let Some((k, z)) = newton_orbit(w, p) else {
+    let Some((k, z)) = newton_orbit_run(w, p, &mut |_| {}) else {
         return INSIDE;
     };
     let d = newton_degree(p);
@@ -326,7 +393,13 @@ fn newtbasin_mirror(v: u32, p: &Params) -> u32 {
 }
 
 /// z(k+1) = z^D + p·z^(D−1) + q·z(k−1) (D ≠ 0) or z² + p + q·z(k−1) (D = 0).
-fn phoenix_loop(z0: Complex, pc: f64, qc: f64, p: &Params) -> u32 {
+fn phoenix_loop<F: FnMut(Complex) + ?Sized>(
+    z0: Complex,
+    pc: f64,
+    qc: f64,
+    p: &Params,
+    f: &mut F,
+) -> u32 {
     let degree = p.params[2].trunc() as i32;
     escape((z0, Complex::ZERO), p.max_iter, |(z, prev)| {
         let next = if degree == 0 {
@@ -337,17 +410,20 @@ fn phoenix_loop(z0: Complex, pc: f64, qc: f64, p: &Params) -> u32 {
         };
         *prev = *z;
         *z = next;
+        f(*z);
         z.norm_sqr() > p.bailout
     })
 }
 
-fn phoenix(w: Complex, p: &Params) -> u32 {
-    phoenix_loop(w, p.params[0], p.params[1], p)
+fn phoenix_run<F: FnMut(Complex) + ?Sized>(w: Complex, p: &Params, f: &mut F) -> u32 {
+    phoenix_loop(w, p.params[0], p.params[1], p, f)
 }
+observed!(phoenix_run => phoenix, phoenix_orbit);
 
-fn mandphoenix(w: Complex, p: &Params) -> u32 {
-    phoenix_loop(w + a(p), w.re, w.im, p)
+fn mandphoenix_run<F: FnMut(Complex) + ?Sized>(w: Complex, p: &Params, f: &mut F) -> u32 {
+    phoenix_loop(w + a(p), w.re, w.im, p, f)
 }
+observed!(mandphoenix_run => mandphoenix, mandphoenix_orbit);
 
 // ---- registry ----------------------------------------------------------
 
@@ -364,10 +440,11 @@ const fn std_type(
     number: i16,
     description: &'static str,
     default_window: Window,
-    default_params: [f64; 4],
+    default_params: &'static [f64],
     param_names: &'static [&'static str],
     iterate: IterateFn,
     symmetry: fn(&Params) -> Symmetry,
+    orbit: Option<OrbitFn>,
 ) -> FractalType {
     FractalType {
         name,
@@ -378,12 +455,14 @@ const fn std_type(
         param_names,
         iterate,
         symmetry,
+        orbit,
         mirror_value: None,
         uses_bailout: true,
         resumable: true,
         fractint_number: Some(number),
         orbit_coloring: false,
         needs_program: false,
+        plot: None,
     }
 }
 
@@ -394,10 +473,11 @@ pub static MANDEL: FractalType = FractalType {
         4,
         "Mandelbrot set: z → z² + c, c = pixel",
         MANDEL_WINDOW,
-        [0.0; 4],
+        &[0.0; 4],
         START_OFFSET,
         mandel,
         sym_x_if_a_zero,
+        Some(mandel_orbit),
     )
 };
 pub static JULIA: FractalType = FractalType {
@@ -407,10 +487,11 @@ pub static JULIA: FractalType = FractalType {
         6,
         "Julia set: z → z² + c, z(0) = pixel",
         STD_WINDOW,
-        [0.3, 0.6, 0.0, 0.0],
+        &[0.3, 0.6, 0.0, 0.0],
         CONSTANT,
         julia,
         sym_origin,
+        Some(julia_orbit),
     )
 };
 pub static LAMBDA: FractalType = std_type(
@@ -418,90 +499,99 @@ pub static LAMBDA: FractalType = std_type(
     75,
     "Lambda map: z → λz(1 − z), z(0) = pixel",
     Window::new(-1.5, 2.5, -1.5, 1.5),
-    [0.85, 0.6, 0.0, 0.0],
+    &[0.85, 0.6, 0.0, 0.0],
     &["Real part of λ", "Imaginary part of λ"],
     lambda,
     sym_none,
+    Some(lambda_orbit),
 );
 pub static MANDELLAMBDA: FractalType = std_type(
     "mandellambda",
     82,
     "Lambda map: z → λz(1 − z), λ = pixel, z(0) = ½",
     Window::new(-3.0, 5.0, -3.0, 3.0),
-    [0.0; 4],
+    &[0.0; 4],
     START_OFFSET,
     mandellambda,
     sym_x_if_a_zero,
+    Some(mandellambda_orbit),
 );
 pub static MANDEL4: FractalType = std_type(
     "mandel4",
     155,
     "Quartic Mandelbrot: z → z⁴ + c, c = pixel",
     STD_WINDOW,
-    [0.0; 4],
+    &[0.0; 4],
     START_OFFSET,
     mandel4,
     sym_x_if_a_zero,
+    Some(mandel4_orbit),
 );
 pub static JULIA4: FractalType = std_type(
     "julia4",
     156,
     "Quartic Julia: z → z⁴ + c, z(0) = pixel",
     STD_WINDOW,
-    [0.6, 0.55, 0.0, 0.0],
+    &[0.6, 0.55, 0.0, 0.0],
     CONSTANT,
     julia4,
     sym_origin,
+    Some(julia4_orbit),
 );
 pub static MANOWAR: FractalType = std_type(
     "manowar",
     9,
     "Man-o'-war: z → z² + z(previous) + c, c = pixel",
     MANDEL_WINDOW,
-    [0.0; 4],
+    &[0.0; 4],
     START_OFFSET,
     manowar,
     sym_x_if_a_zero,
+    Some(manowar_orbit),
 );
 pub static MANOWARJ: FractalType = std_type(
     "manowarj",
     108,
     "Man-o'-war Julia: z → z² + z(previous) + c, z(0) = pixel",
     MANDEL_WINDOW,
-    [0.0; 4],
+    &[0.0; 4],
     CONSTANT,
     manowarj,
     sym_none,
+    Some(manowarj_orbit),
 );
 pub static BARNSLEYM1: FractalType = std_type(
     "barnsleym1",
     76,
     "Barnsley M1: z → (z ∓ 1)·c by the sign of Re z, c = pixel",
     STD_WINDOW,
-    [0.0; 4],
+    &[0.0; 4],
     START_OFFSET,
     barnsleym1,
     sym_xy_if_a_zero,
+    Some(barnsleym1_orbit),
 );
 pub static BARNSLEYJ1: FractalType = std_type(
     "barnsleyj1",
     77,
     "Barnsley J1: z → (z ∓ 1)·c by the sign of Re z, z(0) = pixel",
     STD_WINDOW,
-    [0.6, 1.1, 0.0, 0.0],
+    &[0.6, 1.1, 0.0, 0.0],
     CONSTANT,
     barnsleyj1,
     sym_origin,
+    Some(barnsleyj1_orbit),
 );
 pub static SPIDER: FractalType = std_type(
     "spider",
     93,
     "Spider: z → z² + c, then c → c/2 + z, c(0) = pixel",
     MANDEL_WINDOW,
-    [0.0; 4],
+    &[0.0; 4],
     START_OFFSET,
     spider,
     sym_x_if_a_zero,
+    Some(spider_orbit),
 );
 pub static MAGNET1M: FractalType = FractalType {
     default_bailout: 100.0,
@@ -510,10 +600,11 @@ pub static MAGNET1M: FractalType = FractalType {
         96,
         "Magnet model I, parameter plane (c = pixel)",
         Window::new(-4.0, 4.0, -3.0, 3.0),
-        [0.0; 4],
+        &[0.0; 4],
         &["Real part of z(0)", "Imaginary part of z(0)"],
         magnet1m,
         sym_x_if_a_zero,
+        Some(magnet1m_orbit),
     )
 };
 pub static MAGNET1J: FractalType = FractalType {
@@ -523,10 +614,11 @@ pub static MAGNET1J: FractalType = FractalType {
         97,
         "Magnet model I, z(0) = pixel",
         Window::new(-8.0, 8.0, -6.0, 6.0),
-        [0.0; 4],
+        &[0.0; 4],
         CONSTANT,
         magnet1j,
         sym_x_if_p2_zero,
+        Some(magnet1j_orbit),
     )
 };
 pub static NEWTON: FractalType = FractalType {
@@ -536,10 +628,11 @@ pub static NEWTON: FractalType = FractalType {
         5,
         "Newton's method for z^d = 1, coloured by step count",
         STD_WINDOW,
-        [3.0, 0.0, 0.0, 0.0],
+        &[3.0, 0.0, 0.0, 0.0],
         &["Degree d"],
         newton,
         sym_x,
+        Some(newton_orbit),
     )
 };
 pub static NEWTBASIN: FractalType = FractalType {
@@ -550,10 +643,11 @@ pub static NEWTBASIN: FractalType = FractalType {
         2,
         "Newton's method for z^d = 1, coloured by root",
         STD_WINDOW,
-        [3.0, 0.0, 0.0, 0.0],
+        &[3.0, 0.0, 0.0, 0.0],
         &["Degree d", "Stripes (non-zero = on)"],
         newtbasin,
         sym_x,
+        Some(newton_orbit),
     )
 };
 pub static PHOENIX: FractalType = std_type(
@@ -561,17 +655,18 @@ pub static PHOENIX: FractalType = std_type(
     148,
     "Phoenix: z → z² + p + q·z(previous), z(0) = pixel",
     STD_WINDOW,
-    [0.56667, -0.5, 0.0, 0.0],
+    &[0.56667, -0.5, 0.0, 0.0],
     &["p", "q", "Degree (0 = classic)"],
     phoenix,
     sym_x,
+    Some(phoenix_orbit),
 );
 pub static MANDPHOENIX: FractalType = std_type(
     "mandphoenix",
     150,
     "Phoenix parameter plane: p + iq = pixel",
     MANDEL_WINDOW,
-    [0.0; 4],
+    &[0.0; 4],
     &[
         "Real offset of z(0)",
         "Imaginary offset of z(0)",
@@ -579,6 +674,7 @@ pub static MANDPHOENIX: FractalType = std_type(
     ],
     mandphoenix,
     sym_none,
+    Some(mandphoenix_orbit),
 );
 
 /// Programs are called through [`crate::color::program_value`], which
@@ -605,7 +701,7 @@ pub static FORMULA: FractalType = FractalType {
         73,
         "A formula from a .frm file",
         STD_WINDOW,
-        [0.0; 4],
+        &[0.0; 4],
         &[
             "p1 (real)",
             "p1 (imaginary)",
@@ -620,10 +716,320 @@ pub static FORMULA: FractalType = FractalType {
         ],
         program_iterate,
         program_symmetry,
+        None,
     )
 };
 
-static ALL: [&FractalType; 18] = [
+fn program_plot(p: &Params, width: u32, height: u32) -> Result<Box<dyn crate::Plotter>, String> {
+    p.program
+        .as_ref()
+        .and_then(|prog| prog.0.plotter(p, width, height))
+        .ok_or_else(|| format!("type {} needs a drawing program", p.fractal.name))
+}
+
+/// An iterated function system from a `.ifs` file (docs/specs/ifs.md).
+pub static IFS: FractalType = FractalType {
+    needs_program: true,
+    uses_bailout: false,
+    resumable: false,
+    plot: Some(program_plot),
+    ..std_type(
+        "ifs",
+        26,
+        "An iterated function system from a .ifs file",
+        Window::new(-8.0, 8.0, -1.0, 11.0),
+        &[0.0; 4],
+        &["Colour by transform (1 = on)"],
+        program_iterate,
+        sym_none,
+        None,
+    )
+};
+
+/// An L-system from a `.l` file (docs/specs/lsystem.md).
+pub static LSYSTEM: FractalType = FractalType {
+    needs_program: true,
+    uses_bailout: false,
+    resumable: false,
+    plot: Some(program_plot),
+    ..std_type(
+        "lsystem",
+        107,
+        "An L-system from a .l file",
+        Window::new(-1.0, 1.0, -1.0, 1.0),
+        &[2.0],
+        &["Order"],
+        program_iterate,
+        sym_none,
+        None,
+    )
+};
+
+/// A type that draws the whole image (docs/specs/orbit-maps.md).
+const fn plot_type(
+    name: &'static str,
+    number: i16,
+    description: &'static str,
+    default_window: Window,
+    default_params: &'static [f64],
+    param_names: &'static [&'static str],
+    plot: crate::PlotFn,
+) -> FractalType {
+    FractalType {
+        uses_bailout: false,
+        resumable: false,
+        plot: Some(plot),
+        ..std_type(
+            name,
+            number,
+            description,
+            default_window,
+            default_params,
+            param_names,
+            program_iterate,
+            sym_none,
+            None,
+        )
+    }
+}
+
+use crate::orbit_maps as om;
+
+const ABC: &[&str] = &["a", "b", "c"];
+/// henon's x corners are single-precision ±1.4 (orbit-maps.md §1).
+const HENON_X: f64 = 1.399999976158142;
+
+pub static HENON: FractalType = plot_type(
+    "henon",
+    88,
+    "Hénon map: x → 1 + y − a·x², y → b·x",
+    Window::new(-HENON_X, HENON_X, -0.5, 0.5),
+    &[1.4, 0.3],
+    &["a", "b"],
+    om::henon,
+);
+pub static HOPALONG: FractalType = plot_type(
+    "hopalong",
+    120,
+    "Martin's hopalong map: x → y − sign(x)·√|b·x − c|, y → a − x",
+    Window::new(-2.0, 3.0, -1.625, 2.625),
+    &[0.4, 1.0, 0.0],
+    ABC,
+    om::hopalong,
+);
+// Fractint's default is 3.14, not π.
+#[allow(clippy::approx_constant)]
+pub static MARTIN: FractalType = plot_type(
+    "martin",
+    122,
+    "Martin map: x → y − sin x, y → a − x",
+    Window::new(-32.0, 32.0, -24.0, 24.0),
+    &[3.14],
+    &["a"],
+    om::martin,
+);
+pub static GINGERBREADMAN: FractalType = plot_type(
+    "gingerbreadman",
+    90,
+    "Gingerbread man: x → 1 − y + |x|, y → x, from (x, y) = (P1, P2)",
+    Window::new(-4.5, 8.5, -4.5, 8.5),
+    &[-0.1, 0.0],
+    &["Start x", "Start y"],
+    om::gingerbreadman,
+);
+pub static CHIP: FractalType = plot_type(
+    "chip",
+    166,
+    "Chip: a hopalong variant with log, cos and atan",
+    Window::new(-760.0, 760.0, -570.0, 570.0),
+    &[-15.0, -19.0, 1.0],
+    ABC,
+    om::chip,
+);
+pub static QUADRUPTWO: FractalType = plot_type(
+    "quadruptwo",
+    167,
+    "Quadruptwo: a hopalong variant with log, sin and atan",
+    Window::new(
+        -82.93364969889323,
+        112.27488199869792,
+        -55.76382827758789,
+        90.64257049560547,
+    ),
+    &[34.0, 1.0, 5.0],
+    ABC,
+    om::quadruptwo,
+);
+pub static THREEPLY: FractalType = plot_type(
+    "threeply",
+    168,
+    "Threeply: a hopalong variant with sin and cos",
+    Window::new(-8000.0, 8000.0, -6000.0, 6000.0),
+    &[-55.0, -1.0, -42.0],
+    ABC,
+    om::threeply,
+);
+pub static ICONS: FractalType = plot_type(
+    "icons",
+    159,
+    "Symmetric icons (Field and Golubitsky), coloured by hits",
+    STD_WINDOW,
+    &[-2.34, 2.0, 0.2, 0.1, 0.0, 3.0],
+    &["λ", "α", "β", "γ", "ω", "Degree"],
+    om::icons,
+);
+pub static LATOOCARFIAN: FractalType = plot_type(
+    "latoocarfian",
+    171,
+    "Latoocarfian: x → fn1(b·y) + c·fn2(b·x), y → fn3(a·x) + d·fn4(a·y)",
+    STD_WINDOW,
+    &[-0.966918, 2.879879, 0.765145, 0.744728],
+    &["a", "b", "c", "d"],
+    om::latoocarfian,
+);
+pub static KAMTORUS: FractalType = plot_type(
+    "kamtorus",
+    40,
+    "KAM torus: orbits of a quadratic area-preserving map",
+    Window::new(-1.0, 1.0, -0.75, 0.75),
+    &[1.3, 0.05, 1.5, 150.0],
+    &["Angle", "Step", "Stop", "Points per orbit"],
+    om::kamtorus,
+);
+pub static POPCORN: FractalType = plot_type(
+    "popcorn",
+    61,
+    "Pickover popcorn: the orbit of every pixel, coloured by row",
+    Window::new(-3.0, 3.0, -2.25, 2.25),
+    &[0.05, 0.0, 3.0],
+    &["Step h", "(unused)", "t"],
+    om::popcorn,
+);
+pub static POPCORNJUL: FractalType = FractalType {
+    uses_bailout: false,
+    ..std_type(
+        "popcornjul",
+        105,
+        "Popcorn map, coloured by escape time",
+        Window::new(-3.0, 3.0, -2.25, 2.25),
+        &[0.05, 0.0, 3.0],
+        &["Step h", "(unused)", "t"],
+        om::popcornjul,
+        sym_none,
+        None,
+    )
+};
+pub static DYNAMIC: FractalType = plot_type(
+    "dynamic",
+    139,
+    "Dynamic system: orbits from a grid of start points",
+    Window::new(-20.0, 20.0, -20.0, 20.0),
+    &[50.0, 0.1, 1.0, 3.0],
+    &["Grid size", "Time step", "a", "b"],
+    om::dynamic,
+);
+pub static MANDELCLOUD: FractalType = plot_type(
+    "mandelcloud",
+    146,
+    "Mandelbrot orbits from a grid of start points",
+    MANDEL_WINDOW,
+    &[50.0],
+    &["Grid size"],
+    om::mandelcloud,
+);
+pub static JULIA_INVERSE: FractalType = plot_type(
+    "julia_inverse",
+    145,
+    "Julia set of z² + c by inverse iteration, coloured by hits",
+    STD_WINDOW,
+    &[-0.11, 0.6557, 4.0, 1024.0],
+    &[
+        "Real part of c",
+        "Imaginary part of c",
+        "Hits per pixel",
+        "(unused)",
+    ],
+    om::julia_inverse,
+);
+
+use crate::attractors as at;
+
+const LORENZ_PARAMS: &[&str] = &["Time step", "a", "b", "c"];
+
+pub static LORENZ: FractalType = plot_type(
+    "lorenz",
+    63,
+    "Lorenz attractor, seen along y (x across, z up)",
+    Window::new(-15.0, 15.0, 0.0, 30.0),
+    &[0.02, 5.0, 15.0, 1.0],
+    LORENZ_PARAMS,
+    at::lorenz,
+);
+pub static LORENZ3D: FractalType = plot_type(
+    "lorenz3d",
+    84,
+    "Lorenz attractor in 3D (uses the 3D rotation)",
+    Window::new(-30.0, 30.0, -30.0, 30.0),
+    &[0.02, 5.0, 15.0, 1.0],
+    LORENZ_PARAMS,
+    at::lorenz3d,
+);
+pub static ROSSLER3D: FractalType = plot_type(
+    "rossler3d",
+    86,
+    "Rössler attractor in 3D",
+    Window::new(-30.0, 30.0, -20.0, 40.0),
+    &[0.04, 0.2, 0.2, 5.7],
+    LORENZ_PARAMS,
+    at::rossler3d,
+);
+pub static PICKOVER: FractalType = plot_type(
+    "pickover",
+    89,
+    "Pickover's 3D attractor, plotted as points",
+    Window::new(-8.0 / 3.0, 8.0 / 3.0, -2.0, 2.0),
+    &[2.24, 0.43, -0.65, -2.43],
+    &["a", "b", "c", "d"],
+    at::pickover,
+);
+pub static LORENZ3D1: FractalType = plot_type(
+    "lorenz3d1",
+    124,
+    "One-lobe Lorenz attractor in 3D",
+    Window::new(-30.0, 30.0, -30.0, 30.0),
+    &[0.02, 5.0, 15.0, 1.0],
+    LORENZ_PARAMS,
+    at::lorenz3d1,
+);
+pub static LORENZ3D3: FractalType = plot_type(
+    "lorenz3d3",
+    125,
+    "Three-lobe Lorenz attractor in 3D",
+    Window::new(-30.0, 30.0, -30.0, 30.0),
+    &[0.02, 10.0, 28.0, 2.66],
+    LORENZ_PARAMS,
+    at::lorenz3d3,
+);
+pub static LORENZ3D4: FractalType = plot_type(
+    "lorenz3d4",
+    126,
+    "Four-lobe Lorenz attractor in 3D",
+    Window::new(-30.0, 30.0, -30.0, 30.0),
+    &[0.02, 10.0, 28.0, 2.66],
+    LORENZ_PARAMS,
+    at::lorenz3d4,
+);
+pub static KAMTORUS3D: FractalType = plot_type(
+    "kamtorus3d",
+    42,
+    "KAM torus orbits stacked in 3D",
+    Window::new(-3.0, 3.0, -1.0, 3.5),
+    &[1.3, 0.05, 1.5, 150.0],
+    &["Angle", "Step", "Stop (unused)", "Points per orbit"],
+    at::kamtorus3d,
+);
+
+static ALL: [&FractalType; 43] = [
     &MANDEL,
     &JULIA,
     &LAMBDA,
@@ -642,7 +1048,55 @@ static ALL: [&FractalType; 18] = [
     &PHOENIX,
     &MANDPHOENIX,
     &FORMULA,
+    &IFS,
+    &LSYSTEM,
+    &HENON,
+    &HOPALONG,
+    &MARTIN,
+    &GINGERBREADMAN,
+    &CHIP,
+    &QUADRUPTWO,
+    &THREEPLY,
+    &ICONS,
+    &LATOOCARFIAN,
+    &KAMTORUS,
+    &POPCORN,
+    &POPCORNJUL,
+    &DYNAMIC,
+    &MANDELCLOUD,
+    &JULIA_INVERSE,
+    &LORENZ,
+    &LORENZ3D,
+    &ROSSLER3D,
+    &PICKOVER,
+    &LORENZ3D1,
+    &LORENZ3D3,
+    &LORENZ3D4,
+    &KAMTORUS3D,
 ];
+
+/// Parameter planes and their Julia sets: in each pair the second type
+/// iterates the first one's map with the pixel as the start value and the
+/// first type's pixel as the constant (its first two parameters).
+static JULIA_PAIRS: [(&FractalType, &FractalType); 7] = [
+    (&MANDEL, &JULIA),
+    (&MANDELLAMBDA, &LAMBDA),
+    (&MANDEL4, &JULIA4),
+    (&MANOWAR, &MANOWARJ),
+    (&BARNSLEYM1, &BARNSLEYJ1),
+    (&MAGNET1M, &MAGNET1J),
+    (&MANDPHOENIX, &PHOENIX),
+];
+
+/// The Julia-set type of a parameter-plane type.
+pub fn julia_of(t: &FractalType) -> Option<&'static FractalType> {
+    JULIA_PAIRS.iter().find(|(m, _)| *m == t).map(|(_, j)| *j)
+}
+
+/// The parameter-plane type of a Julia-set type.
+pub fn mandel_of(t: &FractalType) -> Option<&'static FractalType> {
+    JULIA_PAIRS.iter().find(|(_, j)| *j == t).map(|(m, _)| *m)
+}
 
 pub fn all() -> &'static [&'static FractalType] {
     &ALL
@@ -746,7 +1200,7 @@ mod tests {
 
     #[test]
     fn registry() {
-        assert_eq!(all().len(), 18);
+        assert!(all().len() >= 19);
         for t in all() {
             assert_eq!(lookup(t.name), Some(*t));
             assert_eq!(by_fractint_number(t.fractint_number.unwrap()), Some(*t));

@@ -5,7 +5,7 @@
 
 pub mod analysis;
 pub mod ast;
-pub mod funcs;
+pub use fractalforge_core::funcs;
 pub mod parser;
 mod vm;
 
@@ -149,41 +149,16 @@ impl Formula {
         }
     }
 
-    /// A per-pixel pseudo-random value. Fractint's generator is unknown
-    /// (§2.1), so this only has to be deterministic and position-dependent.
-    fn rand_value(at: &PixelContext) -> Complex {
-        let mut x = (at.row as u64) << 32 | at.col as u64;
-        let mut next = || {
-            x = x
-                .wrapping_mul(6364136223846793005)
-                .wrapping_add(1442695040888963407);
-            ((x >> 33) as f64) / (1u64 << 31) as f64 * 32768.0
-        };
-        Complex::new(next(), next())
-    }
-}
-
-impl FractalProgram for Formula {
-    fn name(&self) -> &str {
-        &self.name
-    }
-
-    fn source(&self) -> &str {
-        &self.source
-    }
-
-    fn new_carry(&self, params: &Params, width: u32, height: u32) -> Carry {
-        Carry(
-            self.slots
-                .iter()
-                .map(|n| Self::start_value(n, params, width, height))
-                .collect(),
-        )
-    }
-
     /// §1.1 and §8: run the initialisation, then iterate up to M − 1 times;
-    /// the last statement decides whether to continue.
-    fn iterate(&self, at: &PixelContext, params: &Params, carry: &mut Carry) -> u32 {
+    /// the last statement decides whether to continue. `visit` sees `z`
+    /// after each iteration.
+    fn run_point<F: FnMut(Complex) + ?Sized>(
+        &self,
+        at: &PixelContext,
+        params: &Params,
+        carry: &mut Carry,
+        visit: &mut F,
+    ) -> u32 {
         let vars = &mut carry.0;
         if vars.len() < self.slots.len() {
             vars.resize(self.slots.len(), Complex::ZERO);
@@ -220,7 +195,9 @@ impl FractalProgram for Formula {
         }
         for k in 1..params.max_iter {
             stack.clear();
-            match vm::run(&self.iter, vars, &mut stack, fns) {
+            let result = vm::run(&self.iter, vars, &mut stack, fns);
+            visit(z(vars));
+            match result {
                 Err(_) => return escaped(k, vars, &orbit),
                 // An empty iteration section never stops (frm-syntax.md §2.3).
                 Ok(v) if v.re == 0.0 && !self.iter.is_empty() => return escaped(k, vars, &orbit),
@@ -233,6 +210,55 @@ impl FractalProgram for Formula {
         match &orbit {
             Some(o) => o.inside(z(vars), params) as u32,
             None => INSIDE,
+        }
+    }
+
+    /// A per-pixel pseudo-random value. Fractint's generator is unknown
+    /// (§2.1), so this only has to be deterministic and position-dependent.
+    fn rand_value(at: &PixelContext) -> Complex {
+        let mut x = (at.row as u64) << 32 | at.col as u64;
+        let mut next = || {
+            x = x
+                .wrapping_mul(6364136223846793005)
+                .wrapping_add(1442695040888963407);
+            ((x >> 33) as f64) / (1u64 << 31) as f64 * 32768.0
+        };
+        Complex::new(next(), next())
+    }
+}
+
+impl FractalProgram for Formula {
+    fn name(&self) -> &str {
+        &self.name
+    }
+
+    fn source(&self) -> &str {
+        &self.source
+    }
+
+    fn new_carry(&self, params: &Params, width: u32, height: u32) -> Carry {
+        Carry(
+            self.slots
+                .iter()
+                .map(|n| Self::start_value(n, params, width, height))
+                .collect(),
+        )
+    }
+
+    fn iterate(&self, at: &PixelContext, params: &Params, carry: &mut Carry) -> u32 {
+        self.run_point(at, params, carry, &mut |_| {})
+    }
+
+    fn orbit(
+        &self,
+        at: &PixelContext,
+        params: &Params,
+        carry: &mut Carry,
+        visit: &mut dyn FnMut(Complex),
+    ) -> bool {
+        self.z.is_some() && {
+            self.run_point(at, params, carry, visit);
+            true
         }
     }
 

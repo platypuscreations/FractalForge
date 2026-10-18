@@ -1,0 +1,121 @@
+; SPDX-License-Identifier: GPL-3.0-or-later
+; FractalForge's own .par test file: IFS and L-system entries, file references
+; and embedded IFS / L-system bodies with candidate prefixes.
+arel {
+  type=ifs ifsfile=pf.ifs ifs=pf corners=0/1/0/1 viewwindows=2
+  }
+aabs {
+  type=ifs ifsfile=/work/pf.ifs ifs=pf corners=0/1/0/1 viewwindows=2
+  }
+anone {
+  type=ifs ifs=pf corners=0/1/0/1 viewwindows=2
+  }
+enoname {
+  type=ifs ifs=pq corners=0/1/0/1 viewwindows=2
+  }
+eself {
+  type=ifs ifsfile=ip.par ifs=pq corners=0/1/0/1 viewwindows=2
+  }
+eprefix {
+  type=ifs ifs=ifs:pq corners=0/1/0/1 viewwindows=2
+  }
+pplain {
+  type=ifs ifs=pr corners=0/1/0/1 viewwindows=2
+  }
+eupper {
+  type=ifs ifs=pu corners=0/1/0/1 viewwindows=2
+  }
+e3d {
+  type=ifs ifs=pq3 viewwindows=2
+  }
+eselfplain {
+  type=ifs ifsfile=ip.par ifs=pr corners=0/1/0/1 viewwindows=2
+  }
+leselfplain {
+  type=lsystem lfile=ip.par lname=lr viewwindows=2
+  }
+ifs:pq {
+  0.5 0 0 0.5 0   0   0.33
+  0.5 0 0 0.5 0.5 0   0.33
+  0.5 0 0 0.5 0   0.5 0.34
+}
+IFS:pu {
+  0.5 0 0 0.5 0   0   0.33
+  0.5 0 0 0.5 0.5 0   0.33
+  0.5 0 0 0.5 0   0.5 0.34
+}
+pr {
+  0.5 0 0 0.5 0   0   0.25
+  0.5 0 0 0.5 0.5 0   0.25
+  0.5 0 0 0.5 0   0.5 0.25
+  0.4 0 0 0.4 0.6 0.6 0.25
+}
+ifs:pq3 (3D) {
+  0.5 0 0 0 0.5 0 0 0 0.5  0   0   0    0.25
+  0.5 0 0 0 0.5 0 0 0 0.5  0.5 0   0    0.25
+  0.5 0 0 0 0.5 0 0 0 0.5  0   0.5 0    0.25
+  0.5 0 0 0 0.5 0 0 0 0.5  0   0   0.5  0.25
+}
+lrel {
+  type=lsystem lfile=lf.l lname=lk viewwindows=2
+  }
+labs {
+  type=lsystem lfile=/work/lf.l lname=lk viewwindows=2
+  }
+lnone {
+  type=lsystem lname=lk viewwindows=2
+  }
+lenoname {
+  type=lsystem lname=lq viewwindows=2
+  }
+leself {
+  type=lsystem lfile=ip.par lname=lq viewwindows=2
+  }
+leprefix {
+  type=lsystem lname=lsys:lq viewwindows=2
+  }
+lplain {
+  type=lsystem lname=lr viewwindows=2
+  }
+lalt1 {
+  type=lsystem lname=la1 viewwindows=2
+  }
+lalt2 {
+  type=lsystem lname=la2 viewwindows=2
+  }
+lalt3 {
+  type=lsystem lname=la3 viewwindows=2
+  }
+lsys:lq {
+  angle 4
+  axiom F+F+F+F
+  F=F+F-F-FF+F+F-F
+}
+lr {
+  angle 8
+  axiom F
+  F=F-F++F-F
+}
+lsystem:la1 {
+  angle 4
+  axiom F+F+F+F
+  F=F+F-F-FF+F+F-F
+}
+l:la2 {
+  angle 4
+  axiom F+F+F+F
+  F=F+F-F-FF+F+F-F
+}
+lsy:la3 {
+  angle 4
+  axiom F+F+F+F
+  F=F+F-F-FF+F+F-F
+}
+lupper {
+  type=lsystem lname=lu viewwindows=2
+  }
+LSYS:lu {
+  angle 4
+  axiom F+F+F+F
+  F=F+F-F-FF+F+F-F
+}

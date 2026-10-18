@@ -1,0 +1,6 @@
+wifs3d             { ; our comment one
+  reset=2004 type=ifs ifsfile=ref.ifs ifs=eq3 center-mag=0/5/0.1666667
+  params=0 float=y inside=0 rotation=10/20/30 perspective=0
+  xyshift=3/4 viewwindows=2/0.75/yes/0/0
+  }
+

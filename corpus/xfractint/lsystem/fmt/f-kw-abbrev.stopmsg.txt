@@ -1,0 +1,4 @@
+Syntax error line 2: ang
+Syntax error line 3: ax
+Error:  no axiom
+Error:  illegal or missing angle

@@ -2,7 +2,7 @@
 
 # FractalForge native GIF block
 
-Status: **payload version 3**. The block is written after the image data, before any Fractint-format blocks (implemented in `crates/formats/src/gif/native_block.rs`).
+Status: **payload version 4**. The block is written after the image data, before any Fractint-format blocks (implemented in `crates/formats/src/gif/native_block.rs`).
 
 FractalForge stores a complete render checkpoint in its own GIF89a application
 extension. Decoders that don't recognize an application extension skip it, so
@@ -24,14 +24,14 @@ The identifier and authentication code are part of the file format. Never
 change them. Payload versions are carried inside the payload, not in the
 authentication code.
 
-## Payload, version 3
+## Payload, version 4
 
 The sub-blocks, concatenated, form the payload. All integers and floats are
 little-endian; floats are IEEE 754 binary64.
 
 | Bytes | Field |
 |-------|-------|
-| 2 | payload version, `3`. Version 2 (FractalForge 0.1.0) is still read: it has 4 type parameters and no fields marked *v3*. Version 1 (pre-release) is rejected |
+| 2 | payload version, `4`. Versions 2 (FractalForge 0.1.0) and 3 are still read: version 2 has 4 type parameters and no fields marked *v3* or *v4*, version 3 none marked *v4*. Version 1 (pre-release) is rejected |
 | 1 | compression, `1` = raw DEFLATE (RFC 1951) |
 | 8 | uncompressed body length in bytes |
 | n | compressed body |
@@ -53,8 +53,11 @@ little-endian; floats are IEEE 754 binary64.
 | 1 | symmetry: `1` = copy mirrored pixels as Fractint does, `0` = compute every pixel |
 | 1 | *v3* forced symmetry: `0` = the type's own, `1` x-axis, `2` y-axis, `3` xy, `4` origin, `5` none, `6` PI_SYM |
 | 4 | *v3* fn1–fn4 bindings, as indices of Fractint's function table (gif-fractint-blocks.md §6.2) |
-| 4 + n | *v3* formula entry name: length, then UTF-8 bytes (0 for non-formula types) |
-| 4 + n | *v3* formula source: length, then the entry's full text, header to `}` (0 for non-formula types). FractalForge compiles it again on load, so formula GIFs don't need the `.frm` file |
+| 4 + n | *v3* program entry name: length, then UTF-8 bytes (0 for types without a program). Formulas (`formula`) and, from *v4*, IFS entries (`ifs`) and L-systems (`lsystem`) |
+| 4 + n | *v3* program source: length, then the entry's full text, header to `}` (0 for types without a program). FractalForge reads it again on load (as a formula, IFS entry or L-system, by the type), so these GIFs don't need the `.frm`, `.ifs` or `.l` file |
+| 3×2 | *v4* 3D rotation about x, y and z in degrees, signed 16-bit (default 60, 30, 0) |
+| 2 | *v4* 3D perspective distance, signed 16-bit (0 = none) |
+| 2×2 | *v4* 3D shift right and up in percent, signed 16-bit |
 | 4 | image width W |
 | 4 | image height H |
 | 1 | pass mode: `1` one pass, `2` two passes, `3` guessing |
@@ -76,6 +79,11 @@ origin symmetry leaves pixels unmirrored. Resuming at (stage, row) with the
 stored buffer gives exactly the pixels of an uninterrupted render. Any change
 to the stage derivation or the iteration code that alters results requires a
 new payload version.
+
+Types that draw the whole image (IFS, L-systems, orbit maps) have no stages: stage `0` row `0`
+means unfinished, stage `1` row `0` finished, with pass mode `1` and
+coarsest step 1. Their drawing state isn't stored, so an unfinished image
+is calculated again from the start, as Fractint does (ifs.md §5).
 
 When a file has this block, FractalForge resumes from it instead of from the
 Fractint-format blocks.

@@ -1,0 +1,45 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+/* Template for the arithmetic-order search (see README in mk_*.py). Own code. */
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#define W @W@
+#define H @H@
+static double dt,a,b,c; static double cx0,cx1,cy0,cy1; static double M[3][3];
+static unsigned char img[W*H]; static int REMAP=0;
+@FUNCS@
+static int colour(long i){ long j=i-1; long cc= j<=999?2:3+(j-1000)/1001; return (int)((cc-1)%255+1); }
+static int fdiv(long p,long m){ long q=p/m; if((p%m)&&((p<0)!=(m<0))) q--; return (int)q; }
+static long toi(double t){ if(!(t>-2147483648.0 && t<2147483648.0)) return -2147483648L; return (long)t; }
+static int ins(long x,long y){ return x>=0&&x<W&&y>=0&&y<H; }
+static int chk(long x,long y,int c){ int v=img[y*W+x]; if(REMAP){ if(v==0) v=16; else if(v==15) v=31; } return v>=c; }
+static int segok(long x0,long y0,long x1,long y1,int c){
+  if(!(ins(x0,y0)&&ins(x1,y1))){ if(ins(x1,y1)) return chk(x1,y1,c); return 1; }
+  long dx=x1-x0,dy=y1-y0; long Mx=labs(dx)>labs(dy)?labs(dx):labs(dy);
+  for(long i=0;i<=Mx;i++){ long px,py; if(Mx==0){px=x0;py=y0;} else { px=fdiv(2*(x0*Mx+i*dx)+Mx,2*Mx); py=fdiv(2*(y0*Mx+i*dy)+Mx,2*Mx);} if(!chk(px,py,c)) return 0; }
+  return 1;
+}
+int main(int argc,char**argv){
+  long N=atol(argv[1]); int NB=atoi(argv[2]); double P[4]={@P@}; double C[4]={@C@}; double MM[9]={@M@};
+  double sx=atof(argv[3]),sy=atof(argv[4]),sz=atof(argv[5]); REMAP=argc>6?atoi(argv[6]):0;
+  dt=P[0];a=P[1];b=P[2];c=P[3]; cx0=C[0];cx1=C[1];cy0=C[2];cy1=C[3];
+  for(int i=0;i<9;i++) M[i/3][i%3]=MM[i];
+  FILE*f=fopen("img.raw","rb"); fread(img,1,W*H,f); fclose(f);
+  for(int ix=0;ix<@NX@;ix++) for(int iy=0;iy<@NY@;iy++) for(int iz=0;iz<@NZ@;iz++){
+    double x=sx,y=sy,z=sz; double lo[2]={INFINITY,INFINITY},hi[2]={-INFINITY,-INFINITY};
+    for(int i=1;i<=NB;i++){ double nx=fx(ix,x,y,z),ny=fy(iy,x,y,z),nz=fz(iz,x,y,z); x=nx;y=ny;z=nz;
+      for(int k=0;k<2;k++){ double v=M[k][0]*x+M[k][1]*y+M[k][2]*z; if(v<lo[k]) lo[k]=v; else if(v>hi[k]) hi[k]=v; } if(i==NB-1){ double nx=fx(ix,x,y,z),ny=fy(iy,x,y,z),nz=fz(iz,x,y,z); (void)nx;(void)ny;(void)nz; } }
+    double cu=(lo[0]+hi[0])/2, cv=(lo[1]+hi[1])/2;
+    #define PX(x,y,z,px,py) { double u=M[0][0]*x+M[0][1]*y+M[0][2]*z-cu, v=M[1][0]*x+M[1][1]*y+M[1][2]*z-cv; px=toi((u-cx0)/(cx1-cx0)*(W-1)); py=toi((cy1-v)/(cy1-cy0)*(H-1)); }
+    { double nx=fx(ix,x,y,z),ny=fy(iy,x,y,z),nz=fz(iz,x,y,z); x=nx;y=ny;z=nz; }
+    long p0x,p0y,p1x,p1y; PX(x,y,z,p0x,p0y);
+    long bad=0,first=-1;
+    for(long i=NB+2;i<=N+1;i++){
+      double nx=fx(ix,x,y,z),ny=fy(iy,x,y,z),nz=fz(iz,x,y,z); x=nx;y=ny;z=nz;
+      PX(x,y,z,p1x,p1y);
+      if(!segok(p0x,p0y,p1x,p1y,colour(i))){ bad++; if(first<0) first=i; if(bad>20) break; }
+      p0x=p1x;p0y=p1y;
+    }
+    printf("%ld %ld X%d Y%d Z%d\n",bad,first,ix,iy,iz);
+  }
+}

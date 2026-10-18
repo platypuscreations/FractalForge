@@ -1,0 +1,40 @@
+; SPDX-License-Identifier: GPL-3.0-or-later
+; Black-box test entries for XFractint's IFS type (FractalForge, own file).
+; All entries draw (or try to draw) the same two-transform test system
+; x' = x/2 + {0, 1/2}, y' = y + 1/512.
+split {
+  0.5 0 0 1 0
+  0.001953125 0.5
+  0.5 0 0 1 0.5 0.001953125 0.5
+}
+trail {
+  0.5 0 0 1 0   0.001953125 0.5 ; comment after numbers
+  ; a comment line inside
+  0.5 0 0 1 0.5 0.001953125 0.5
+}
+Mixed {
+  .5 0 0 1e0 0 1.953125e-3 0.5
+  +0.5 -0 0 1 5e-1 0.001953125 .5
+}
+six {
+  0.5 0 0 1 0   0.001953125
+  0.5 0 0 1 0.5 0.001953125
+}
+eight {
+  0.5 0 0 1 0   0.001953125 0.5 7
+  0.5 0 0 1 0.5 0.001953125 0.5 7
+}
+tabs	{
+	0.5	0	0	1	0	0.001953125	0.5
+	0.5,0,0,1,0.5,0.001953125,0.5
+}
+close {
+  0.5 0 0 1 0   0.001953125 0.5
+  0.5 0 0 1 0.5 0.001953125 0.5 }
+dup {
+  0.5 0 0 1 0   0.001953125 0.5
+  0.5 0 0 1 0.5 0.001953125 0.5
+}
+dup {
+  0.5 0 0 1 0.25 0.001953125 1
+}

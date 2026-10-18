@@ -1,0 +1,2 @@
+Extra text after command line 1: axiom
+Error:  no axiom

@@ -1,0 +1,39 @@
+; SPDX-License-Identifier: GPL-3.0-or-later
+; Black-box test entries for XFractint's IFS type (FractalForge, own file).
+; 3D constant maps: every point goes to one fixed 3D point.
+p100 (3D) {
+  0 0 0 0 0 0 0 0 0  1 0 0  1
+}
+p010 (3D) {
+  0 0 0 0 0 0 0 0 0  0 1 0  1
+}
+p001 (3D) {
+  0 0 0 0 0 0 0 0 0  0 0 1  1
+}
+p200 (3D) {
+  0 0 0 0 0 0 0 0 0  2 0 0  1
+}
+p020 (3D) {
+  0 0 0 0 0 0 0 0 0  0 2 0  1
+}
+p002 (3D) {
+  0 0 0 0 0 0 0 0 0  0 0 2  1
+}
+p111 (3D) {
+  0 0 0 0 0 0 0 0 0  1 1 1  1
+}
+p321 (3D) {
+  0 0 0 0 0 0 0 0 0  3 2 1  1
+}
+p000 (3D) {
+  0 0 0 0 0 0 0 0 0  0 0 0  1
+}
+p400 (3D) {
+  0 0 0 0 0 0 0 0 0  4 0 0  1
+}
+p040 (3D) {
+  0 0 0 0 0 0 0 0 0  0 4 0  1
+}
+p004 (3D) {
+  0 0 0 0 0 0 0 0 0  0 0 4  1
+}
