@@ -5,7 +5,7 @@ resolver = "3"
 members = ["crates/core", "crates/render", "crates/formats", "crates/formula", "apps/cli", "apps/gui"]
 
 [workspace.package]
-version = "0.3.0"
+version = "0.4.0"
 edition = "2024"
 rust-version = "1.85"
 license = "GPL-3.0-or-later"
