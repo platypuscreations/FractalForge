@@ -70,9 +70,9 @@ struct RenderArgs {
     /// Palette from a Fractint-format .map file.
     #[arg(long, conflicts_with = "palette")]
     map: Option<PathBuf>,
-    /// Render an entry of this .frm (formula) or .ifs file (also where to
+    /// Render an entry of this .frm (formula), .ifs or .l (L-system) file (also where to
     /// look for the entry of a Fractint GIF or .par entry).
-    #[arg(long, visible_alias = "ifs", value_name = "FILE")]
+    #[arg(long, visible_aliases = ["ifs", "lsystem"], value_name = "FILE")]
     formula: Option<PathBuf>,
     /// The entry to use from --formula (default: its first entry).
     #[arg(
@@ -358,6 +358,16 @@ fn list_entries(path: &Path) -> Result<(), String> {
             };
             let dim = if e.three_d { "(3D)" } else { "" };
             println!("{:<19} {:<14} {status}", e.name, dim);
+        }
+        return Ok(());
+    }
+    if is_ext(path, "l") {
+        for e in fractalforge_core::lsystem::entries(&text) {
+            let status = match fractalforge_core::lsystem::parse(&e) {
+                Ok(l) => format!("angle {}", l.angle),
+                Err(err) => format!("error: {}", err.lines().next().unwrap_or("")),
+            };
+            println!("{:<19} {status}", e.name);
         }
         return Ok(());
     }

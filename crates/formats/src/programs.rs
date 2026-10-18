@@ -1,22 +1,23 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 //! Fractal types whose definition comes from an entry in a text file:
-//! formulas (`.frm`), IFS (`.ifs`) and, later, L-systems (`.l`). This
+//! formulas (`.frm`), IFS (`.ifs`) and L-systems (`.l`). This
 //! hides their differences from the file-handling code.
 
 use std::path::{Path, PathBuf};
 
-use fractalforge_core::{FractalType, Program, ifs, types};
+use fractalforge_core::{FractalType, Program, ifs, lsystem, types};
 use fractalforge_formula::read_text;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Kind {
     Formula,
     Ifs,
+    LSystem,
 }
 
 impl Kind {
-    pub const ALL: [Kind; 2] = [Kind::Formula, Kind::Ifs];
+    pub const ALL: [Kind; 3] = [Kind::Formula, Kind::Ifs, Kind::LSystem];
 
     /// The kind a fractal type needs, if it needs one.
     pub fn of_type(t: &FractalType) -> Option<Kind> {
@@ -36,6 +37,7 @@ impl Kind {
         match self {
             Kind::Formula => &types::FORMULA,
             Kind::Ifs => &types::IFS,
+            Kind::LSystem => &types::LSYSTEM,
         }
     }
 
@@ -43,6 +45,7 @@ impl Kind {
         match self {
             Kind::Formula => "frm",
             Kind::Ifs => "ifs",
+            Kind::LSystem => "l",
         }
     }
 
@@ -51,6 +54,7 @@ impl Kind {
         match self {
             Kind::Formula => ("formulafile", "formulaname"),
             Kind::Ifs => ("ifsfile", "ifs"),
+            Kind::LSystem => ("lfile", "lname"),
         }
     }
 
@@ -59,6 +63,7 @@ impl Kind {
         match self {
             Kind::Formula => "frm:",
             Kind::Ifs => ifs::PAR_PREFIX,
+            Kind::LSystem => lsystem::PAR_PREFIX,
         }
     }
 
@@ -67,6 +72,7 @@ impl Kind {
         match self {
             Kind::Formula => "formula",
             Kind::Ifs => "IFS",
+            Kind::LSystem => "L-system",
         }
     }
 
@@ -78,6 +84,7 @@ impl Kind {
                 .map(|e| e.name)
                 .collect(),
             Kind::Ifs => ifs::entries(text).into_iter().map(|e| e.name).collect(),
+            Kind::LSystem => lsystem::entries(text).into_iter().map(|e| e.name).collect(),
         }
     }
 
@@ -86,6 +93,7 @@ impl Kind {
         match self {
             Kind::Formula => fractalforge_formula::load(text, name),
             Kind::Ifs => ifs::load(text, name).map(|p| (p, Vec::new())),
+            Kind::LSystem => lsystem::load(text, name).map(|p| (p, Vec::new())),
         }
     }
 

@@ -53,8 +53,8 @@ little-endian; floats are IEEE 754 binary64.
 | 1 | symmetry: `1` = copy mirrored pixels as Fractint does, `0` = compute every pixel |
 | 1 | *v3* forced symmetry: `0` = the type's own, `1` x-axis, `2` y-axis, `3` xy, `4` origin, `5` none, `6` PI_SYM |
 | 4 | *v3* fn1–fn4 bindings, as indices of Fractint's function table (gif-fractint-blocks.md §6.2) |
-| 4 + n | *v3* program entry name: length, then UTF-8 bytes (0 for types without a program). Formulas (`formula`) and, from *v4*, IFS entries (`ifs`) |
-| 4 + n | *v3* program source: length, then the entry's full text, header to `}` (0 for types without a program). FractalForge reads it again on load (as a formula or an IFS entry, by the type), so these GIFs don't need the `.frm` or `.ifs` file |
+| 4 + n | *v3* program entry name: length, then UTF-8 bytes (0 for types without a program). Formulas (`formula`) and, from *v4*, IFS entries (`ifs`) and L-systems (`lsystem`) |
+| 4 + n | *v3* program source: length, then the entry's full text, header to `}` (0 for types without a program). FractalForge reads it again on load (as a formula, IFS entry or L-system, by the type), so these GIFs don't need the `.frm`, `.ifs` or `.l` file |
 | 3×2 | *v4* 3D rotation about x, y and z in degrees, signed 16-bit (default 60, 30, 0) |
 | 2 | *v4* 3D perspective distance, signed 16-bit (0 = none) |
 | 2×2 | *v4* 3D shift right and up in percent, signed 16-bit |
@@ -80,7 +80,7 @@ stored buffer gives exactly the pixels of an uninterrupted render. Any change
 to the stage derivation or the iteration code that alters results requires a
 new payload version.
 
-Types that draw the whole image (IFS) have no stages: stage `0` row `0`
+Types that draw the whole image (IFS, L-systems, orbit maps) have no stages: stage `0` row `0`
 means unfinished, stage `1` row `0` finished, with pass mode `1` and
 coarsest step 1. Their drawing state isn't stored, so an unfinished image
 is calculated again from the start, as Fractint does (ifs.md §5).

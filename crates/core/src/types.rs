@@ -746,6 +746,25 @@ pub static IFS: FractalType = FractalType {
     )
 };
 
+/// An L-system from a `.l` file (docs/specs/lsystem.md).
+pub static LSYSTEM: FractalType = FractalType {
+    needs_program: true,
+    uses_bailout: false,
+    resumable: false,
+    plot: Some(program_plot),
+    ..std_type(
+        "lsystem",
+        107,
+        "An L-system from a .l file",
+        Window::new(-1.0, 1.0, -1.0, 1.0),
+        &[2.0],
+        &["Order"],
+        program_iterate,
+        sym_none,
+        None,
+    )
+};
+
 /// A type that draws the whole image (docs/specs/orbit-maps.md).
 const fn plot_type(
     name: &'static str,
@@ -933,7 +952,7 @@ pub static JULIA_INVERSE: FractalType = plot_type(
     om::julia_inverse,
 );
 
-static ALL: [&FractalType; 34] = [
+static ALL: [&FractalType; 35] = [
     &MANDEL,
     &JULIA,
     &LAMBDA,
@@ -953,6 +972,7 @@ static ALL: [&FractalType; 34] = [
     &MANDPHOENIX,
     &FORMULA,
     &IFS,
+    &LSYSTEM,
     &HENON,
     &HOPALONG,
     &MARTIN,

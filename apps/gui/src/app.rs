@@ -330,7 +330,7 @@ impl App {
 
     fn open_dialog(&mut self, ctx: &egui::Context) {
         if let Some(path) = rfd::FileDialog::new()
-            .add_filter("Fractal files", &["gif", "par", "frm", "ifs", "map"])
+            .add_filter("Fractal files", &["gif", "par", "frm", "ifs", "l", "map"])
             .pick_file()
         {
             self.open(&path, ctx);
@@ -340,7 +340,7 @@ impl App {
     pub fn open(&mut self, path: &Path, ctx: &egui::Context) {
         let ext = path.extension().map(|e| e.to_string_lossy().to_lowercase());
         match ext.as_deref() {
-            Some("par" | "frm" | "ifs") => return self.open_par(path, ctx),
+            Some("par" | "frm" | "ifs" | "l") => return self.open_par(path, ctx),
             Some("map") => return self.open_map(path),
             _ => {}
         }

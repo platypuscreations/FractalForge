@@ -252,9 +252,13 @@ fn compile_program(
     name: &str,
     source: &str,
 ) -> Result<Program, Error> {
-    if *fractal == types::IFS {
-        return fractalforge_core::ifs::load(source, name)
-            .map_err(|e| bad(format!("stored IFS {name}: {e}")));
+    if let Some(kind) = crate::programs::Kind::of_type(fractal)
+        && kind != crate::programs::Kind::Formula
+    {
+        return kind
+            .load(source, name)
+            .map(|(p, _)| p)
+            .map_err(|e| bad(format!("stored {} {name}: {e}", kind.noun())));
     }
     let entries = parser::entries(source);
     let entry = parser::find(&entries, name)

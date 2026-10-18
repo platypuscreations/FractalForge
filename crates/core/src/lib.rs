@@ -8,9 +8,11 @@
 pub mod color;
 pub mod complex;
 pub mod crand;
+pub mod ext;
 pub mod funcs;
 pub mod ifs;
 pub mod iter;
+pub mod lsystem;
 pub mod orbit_color;
 mod orbit_maps;
 pub mod params;
