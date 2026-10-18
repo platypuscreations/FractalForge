@@ -1,0 +1,5 @@
+
+Error(30) at line 2:  Unmatched modulus operator "|" in this expression
+  k=|3
+      ^
+

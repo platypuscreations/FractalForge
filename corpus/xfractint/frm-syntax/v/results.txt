@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# python3 -I tools/blackbox/frm-syntax/summarise.py on round v (cases-v.txt)
+v-v1                       6d7d7c44 [(121, 120000)] t=73 sym=999 003='v1' f40..=48:1
+v-v10                      4207ea34 [(102, 120000)] t=73 sym=999 003='v10' f40..=48:1
+v-v11                      5b75a5b6 [(103, 120000)] t=73 sym=999 003='v11' f40..=48:1
+v-v12                      740c5da2 [(1, 120000)] t=73 sym=999 003='v12' f40..=48:1 STOPMSG: Error(5) at line 2:  Undefined Function |   k=100+real(asec(0.5)) |              ^^^^
+v-v13                      740c5da2 [(1, 120000)] t=73 sym=999 003='v13' f40..=48:1 STOPMSG: Error(5) at line 2:  Undefined Function |   k=100+real(atan2(0.5)) |              ^^^^^
+v-v14                      a7c56294 [(101, 120000)] t=73 sym=999 003='v14' f40..=46:1
+v-v15                      69eb943f [(0, 120000)] t=73 sym=999 003='v15' f40..=48:1
+v-v16                      1f5c5905 [(186, 120000)] t=73 sym=999 003='v16' f40..=48:1
+v-v17                      d9e35c0c [(132, 120000)] t=73 sym=999 003='v17' f40..=48:1
+v-v18                      751805ec [(128, 120000)] t=73 sym=999 003='v18' f40..=48:1
+v-v19                      NOIMAGE STOPMSG: Oops. I couldn't understand the argument: |   params=1/2/3/4/5/6/7/8/9/10/11/12 |  | (see the Startup Help screens or documentation for a complete |  argument list with descriptions) LOG: Oops. I couldn't understand the argument: params=1/2/3/4/5/6/7/8/9/10/11/12 (see the Startup Help screens or documentation for a complete argument list with descriptions) (exit status 1)
+v-v2                       6d7d7c44 [(121, 120000)] t=73 sym=999 003='v2' f40..=48:1
+v-v20                      6d7d7c44 [(121, 120000)] t=73 sym=999 003='v20' f40..=48:1
+v-v3                       859795e0 [(130, 120000)] t=73 sym=999 003='v3' f40..=48:1
+v-v4                       a7245789 [(201, 120000)] t=73 sym=999 003='v4' f40..=48:1
+v-v5                       078fc147 [(0, 119999), (6, 1)] t=73 sym=999 003='v5' f40..=48:1
+v-v6                       749d154b [(81, 3000), (82, 3000), (83, 3000), (84, 3000)] t=73 sym=999 003='v6' f40..=48:1
+v-v7                       6e70fbb3 [(105, 120000)] t=73 sym=999 003='v7' f40..=48:1
+v-v8                       f5a7b64c [(111, 120000)] t=73 sym=999 003='v8' f40..=40:1,48:1
+v-v9                       746ef5ef [(16, 120000)] t=73 sym=999 003='v9' f40..=48:1

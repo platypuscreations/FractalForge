@@ -1,0 +1,5 @@
+
+Error(3) at line 2:  Need more ')'
+  k=sin(1
+         ^
+

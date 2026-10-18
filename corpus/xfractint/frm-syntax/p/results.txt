@@ -1,0 +1,91 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# python3 -I tools/blackbox/frm-syntax/summarise.py on round p (cases-p.txt)
+p-and1                     5b75a5b6 [(103, 120000)] t=73 sym=999 003='and1' f40..=48:1
+p-and2                     a7c56294 [(101, 120000)] t=73 sym=999 003='and2' f40..=48:1
+p-and3                     4207ea34 [(102, 120000)] t=73 sym=999 003='and3' f40..=48:1
+p-and4                     4207ea34 [(102, 120000)] t=73 sym=999 003='and4' f40..=48:1
+p-and5                     a7c56294 [(101, 120000)] t=73 sym=999 003='and5' f40..=48:1
+p-and6                     a7c56294 [(101, 120000)] t=73 sym=999 003='and6' f40..=48:1
+p-and7                     740c5da2 [(1, 120000)] t=73 sym=999 003='and7' f40..=48:1 STOPMSG: Error(4) at line 2:  Undefined Operator |   k=100+(1&1) |           ^
+p-asg1                     740c5da2 [(1, 120000)] t=73 sym=999 003='asg1' f40..=48:1 STOPMSG: Error(25) at line 2:  Only variables are allowed to left of assignment |   k=100+(a=5) |           ^
+p-asg2                     61f59412 [(178, 120000)] t=73 sym=999 003='asg2' f40..=48:1
+p-asg3                     4207ea34 [(102, 120000)] t=73 sym=999 003='asg3' f40..=48:1
+p-cmp1                     4207ea34 [(102, 120000)] t=73 sym=999 003='cmp1' f40..=48:1
+p-cmp2                     740c5da2 [(1, 120000)] t=73 sym=999 003='cmp2' f40..=48:1
+p-cmp3                     a7c56294 [(101, 120000)] t=73 sym=999 003='cmp3' f40..=48:1
+p-cmp4                     4207ea34 [(102, 120000)] t=73 sym=999 003='cmp4' f40..=48:1
+p-cmp5                     4207ea34 [(102, 120000)] t=73 sym=999 003='cmp5' f40..=48:1
+p-cmp6                     4207ea34 [(102, 120000)] t=73 sym=999 003='cmp6' f40..=48:1
+p-cmp7                     4207ea34 [(102, 120000)] t=73 sym=999 003='cmp7' f40..=48:1
+p-cmp8                     4207ea34 [(102, 120000)] t=73 sym=999 003='cmp8' f40..=48:1
+p-cplx1                    6e70fbb3 [(105, 120000)] t=73 sym=999 003='cplx1' f40..=48:1
+p-cplx2                    5ca480f8 [(58, 120000)] t=73 sym=999 003='cplx2' f40..=48:1
+p-cplx3                    f5a7b64c [(111, 120000)] t=73 sym=999 003='cplx3' f40..=48:1
+p-cplx4                    740c5da2 [(1, 120000)] t=73 sym=999 003='cplx4' f40..=48:1 STOPMSG: Error(3) at line 2:  Need more ')' |   k=100+real((a |                ^ | Error(2) at line 2:  ')' needs a matching '(' |   0)) |    ^
+p-cplx5                    740c5da2 [(1, 120000)] t=73 sym=999 003='cplx5' f40..=48:1 STOPMSG: Error(3) at line 2:  Need more ')' |   k=100+real((1+2 |                  ^ | Error(2) at line 2:  ')' needs a matching '(' |   0)) |    ^
+p-cplx6                    6e70fbb3 [(105, 120000)] t=73 sym=999 003='cplx6' f40..=48:1
+p-cplx7                    e75556eb [(104, 120000)] t=73 sym=999 003='cplx7' f40..=48:1
+p-div3                     4c966e14 [(9, 120000)] t=73 sym=999 003='div3' f40..=48:1
+p-imul                     740c5da2 [(1, 120000)] t=73 sym=999 003='imul' f40..=48:1 STOPMSG: Error(1) at line 2:  Should be an Operator |   k=2(3) |      ^
+p-inside                   69eb943f [(0, 120000)] t=73 sym=999 003='inside' f40..=48:1
+p-lit1                     a7c56294 [(101, 120000)] t=73 sym=999 003='lit1' f40..=48:1
+p-lit10                    740c5da2 [(1, 120000)] t=73 sym=999 003='lit10' f40..=48:1 STOPMSG: Error(27) at line 2:  Invalid constant expression |   k=2.5.5 |     ^^^^
+p-lit11                    740c5da2 [(1, 120000)] t=73 sym=999 003='lit11' f40..=48:1 STOPMSG: Error(27) at line 2:  Invalid constant expression |   k=1e: |     ^^^
+p-lit12                    740c5da2 [(1, 120000)] t=73 sym=999 003='lit12' f40..=48:1 STOPMSG: Error(27) at line 2:  Invalid constant expression |   k=1e2.5 |     ^^^^
+p-lit13                    7d289d89 [(11, 120000)] t=73 sym=999 003='lit13' f40..=48:1
+p-lit14                    8ae2a3c9 [(8, 120000)] t=73 sym=999 003='lit14' f40..=48:1
+p-lit15                    4207ea34 [(102, 120000)] t=73 sym=999 003='lit15' f40..=48:1
+p-lit16                    96885c11 [(124, 120000)] t=73 sym=999 003='lit16' f40..=48:1
+p-lit17                    18bcce3b [(4, 120000)] t=73 sym=999 003='lit17' f40..=48:1
+p-lit18                    740c5da2 [(1, 120000)] t=73 sym=999 003='lit18' f40..=48:1
+p-lit19                    69eb943f [(0, 120000)] t=73 sym=999 003='lit19' f40..=48:1
+p-lit2                     a7c56294 [(101, 120000)] t=73 sym=999 003='lit2' f40..=48:1
+p-lit3                     746ef5ef [(16, 120000)] t=73 sym=999 003='lit3' f40..=48:1
+p-lit4                     c11b4b59 [(106, 120000)] t=73 sym=999 003='lit4' f40..=48:1
+p-lit5                     cf621e79 [(6, 120000)] t=73 sym=999 003='lit5' f40..=48:1
+p-lit6                     5b75a5b6 [(103, 120000)] t=73 sym=999 003='lit6' f40..=48:1
+p-lit7                     740c5da2 [(1, 120000)] t=73 sym=999 003='lit7' f40..=48:1
+p-lit8                     740c5da2 [(1, 120000)] t=73 sym=999 003='lit8' f40..=48:1 STOPMSG: Error(27) at line 2:  Invalid constant expression |   k=0x10 |     ^^
+p-lit9                     740c5da2 [(1, 120000)] t=73 sym=999 003='lit9' f40..=48:1 STOPMSG: Error(27) at line 2:  Invalid constant expression |   k=1d2 |     ^^
+p-modnest                  740c5da2 [(1, 120000)] t=73 sym=999 003='modnest' f40..=48:1 STOPMSG: Error(0) at line 2:  Should be an Argument |   k=|3+|(0,2)|| |        ^
+p-modnest2                 740c5da2 [(1, 120000)] t=73 sym=999 003='modnest2' f40..=48:1 STOPMSG: Error(0) at line 2:  Should be an Argument |   k=50+||(0,2)|+3| |        ^^
+p-modsq                    3d9fb727 [(126, 120000)] t=73 sym=999 003='modsq' f40..=48:1
+p-modsq2                   c2fe6c03 [(110, 120000)] t=73 sym=999 003='modsq2' f40..=48:1
+p-modsum                   2c555efd [(50, 120000)] t=73 sym=999 003='modsum' f40..=48:1
+p-mul                      530ce424 [(15, 120000)] t=73 sym=999 003='mul' f40..=48:1
+p-mulneg                   5cdedf51 [(95, 120000)] t=73 sym=999 003='mulneg' f40..=48:1
+p-neg2                     6e70fbb3 [(105, 120000)] t=73 sym=999 003='neg2' f40..=48:1
+p-neg2b                    72d5f3c3 [(97, 120000)] t=73 sym=999 003='neg2b' f40..=48:1
+p-neg2c                    6e70fbb3 [(105, 120000)] t=73 sym=999 003='neg2c' f40..=48:1
+p-neg3                     c5c0755d [(83, 120000)] t=73 sym=999 003='neg3' f40..=48:1
+p-negmul                   c2fe6c03 [(110, 120000)] t=73 sym=999 003='negmul' f40..=48:1
+p-negp1                    a7c56294 [(101, 120000)] t=73 sym=999 003='negp1' f40..=48:1
+p-negp2                    72d5f3c3 [(97, 120000)] t=73 sym=999 003='negp2' f40..=48:1
+p-negp3                    a7c56294 [(101, 120000)] t=73 sym=999 003='negp3' f40..=48:1
+p-negp4                    740c5da2 [(1, 120000)] t=73 sym=999 003='negp4' f40..=48:1
+p-negp5                    740c5da2 [(1, 120000)] t=73 sym=999 003='negp5' f40..=48:1
+p-negp6                    740c5da2 [(1, 120000)] t=73 sym=999 003='negp6' f40..=48:1
+p-negp7                    61fd4f36 [(99, 120000)] t=73 sym=999 003='negp7' f40..=48:1
+p-negp8                    a7c56294 [(101, 120000)] t=73 sym=999 003='negp8' f40..=48:1
+p-negp9                    6e70fbb3 [(105, 120000)] t=73 sym=999 003='negp9' f40..=48:1
+p-negpow2                  740c5da2 [(1, 120000)] t=73 sym=999 003='negpow2' f40..=48:1
+p-not1                     740c5da2 [(1, 120000)] t=73 sym=999 003='not1' f40..=48:1 STOPMSG: Error(4) at line 2:  Undefined Operator |   k=100+!0 |         ^
+p-or7                      740c5da2 [(1, 120000)] t=73 sym=999 003='or7' f40..=48:1 STOPMSG: Error(1) at line 2:  Should be an Operator |   k=100+(1|1) |           ^
+p-pct                      740c5da2 [(1, 120000)] t=73 sym=999 003='pct' f40..=48:1 STOPMSG: Error(28) at line 2:  This character not supported by parser |   k=7%4 |      ^
+p-pow2                     8ae2a3c9 [(8, 120000)] t=73 sym=999 003='pow2' f40..=48:1
+p-pow2b                    4c966e14 [(9, 120000)] t=73 sym=999 003='pow2b' f40..=48:1
+p-pow3                     c11b4b59 [(106, 120000)] t=73 sym=999 003='pow3' f40..=48:1
+p-powmul                   02dc4d4f [(19, 120000)] t=73 sym=999 003='powmul' f40..=48:1
+p-powneg                   740c5da2 [(1, 120000)] t=73 sym=999 003='powneg' f40..=48:1 STOPMSG: Error(32) at line 2:  Negative exponent must be enclosed in parens |   k=100+10*2^-1 |              ^
+p-powunary                 740c5da2 [(1, 120000)] t=73 sym=999 003='powunary' f40..=48:1 STOPMSG: Error(32) at line 2:  Negative exponent must be enclosed in parens |   k=100+2^-2*8 |           ^
+p-star2                    740c5da2 [(1, 120000)] t=73 sym=999 003='star2' f40..=48:1 STOPMSG: Error(0) at line 2:  Should be an Argument |   k=2**3 |       ^
+p-sub3                     18bcce3b [(4, 120000)] t=73 sym=999 003='sub3' f40..=48:1
+p-uneg2                    c11b4b59 [(106, 120000)] t=73 sym=999 003='uneg2' f40..=48:1
+p-uneg3                    c11b4b59 [(106, 120000)] t=73 sym=999 003='uneg3' f40..=48:1
+p-uplus                    740c5da2 [(1, 120000)] t=73 sym=999 003='uplus' f40..=48:1 STOPMSG: Error(0) at line 2:  Should be an Argument |   k=100++5 |         ^
+p-ws1                      4207ea34 [(102, 120000)] t=73 sym=999 003='ws1' f40..=48:1
+p-ws2                      4207ea34 [(102, 120000)] t=73 sym=999 003='ws2' f40..=48:1
+p-ws3                      740c5da2 [(1, 120000)] t=73 sym=999 003='ws3' f40..=48:1 STOPMSG: Error(25) at line 2:  Only variables are allowed to left of assignment |   k=100+(1=<2) |           ^
+p-ws4                      740c5da2 [(1, 120000)] t=73 sym=999 003='ws4' f40..=48:1 STOPMSG: Error(25) at line 2:  Only variables are allowed to left of assignment |   k=100+(2=>1) |           ^
+p-ws5                      740c5da2 [(1, 120000)] t=73 sym=999 003='ws5' f40..=48:1 STOPMSG: Error(0) at line 2:  Should be an Argument |   k=100+(1<>2) |            ^
+p-ws6                      4207ea34 [(102, 120000)] t=73 sym=999 003='ws6' f40..=48:1

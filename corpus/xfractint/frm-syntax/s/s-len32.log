@@ -1,0 +1,7 @@
+WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
+Oops. I couldn't understand the argument:
+  formulaname=n32abcdefghijklmnopqrstuvwxyzabc
+
+(see the Startup Help screens or documentation for a complete
+ argument list with descriptions)
+(exit status 1)

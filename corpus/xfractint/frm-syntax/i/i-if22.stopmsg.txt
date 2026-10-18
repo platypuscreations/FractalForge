@@ -1,0 +1,5 @@
+
+Error(1) at line 3:  Should be an Operator
+  if(1)then
+       ^^^^
+

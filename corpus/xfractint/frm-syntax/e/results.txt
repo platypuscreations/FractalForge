@@ -1,0 +1,39 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# python3 -I tools/blackbox/frm-syntax/summarise.py on round e (cases-e.txt)
+e-er1                      NOIMAGE LOG: qemu: uncaught target signal 11 (Segmentation fault) - core dumped /usr/local/bin/run-batch: line 23:    21 Segmentation fault      /usr/bin/xfractint batch=yes "$@" (exit status 139)
+e-er10                     740c5da2 [(1, 120000)] t=73 sym=999 003='er10' f40..=48:1 STOPMSG: Error(5) at line 2:  Undefined Function |   k=fn9(1) |     ^^^
+e-er11                     740c5da2 [(1, 120000)] t=73 sym=999 003='er11' f40..=48:1 STOPMSG: Error(0) at line 2:  Should be an Argument |   k=1++2 |       ^
+e-er12                     740c5da2 [(1, 120000)] t=73 sym=999 003='er12' f40..=48:1 STOPMSG: Error(2) at line 2:  ')' needs a matching '(' |   k=) |     ^
+e-er13                     740c5da2 [(1, 120000)] t=73 sym=999 003='er13' f40..=48:1 STOPMSG: Error(3) at line 2:  Need more ')' |   k=( |      ^
+e-er14                     740c5da2 [(1, 120000)] t=73 sym=999 003='er14' f40..=48:1 STOPMSG: Error(0) at line 2:  Should be an Argument |   k=1+*2+*3+*4+*5+*6+*7+*8+*9+*10+*11+*12 |       ^
+e-er15                     740c5da2 [(1, 120000)] t=73 sym=999 003='er15' f40..=48:1 STOPMSG: Error(28) at line 2:  This character not supported by parser |   k=~1 |     ^
+e-er16                     740c5da2 [(1, 120000)] t=73 sym=999 003='er16' f40..=48:1 STOPMSG: Error(28) at line 2:  This character not supported by parser |   k=?1 |     ^
+e-er17                     740c5da2 [(1, 120000)] t=73 sym=999 003='er17' f40..=48:1 STOPMSG: Error(28) at line 2:  This character not supported by parser |   k=[1] |     ^
+e-er18                     740c5da2 [(1, 120000)] t=73 sym=999 003='er18' f40..=48:1 STOPMSG: Error(28) at line 2:  This character not supported by parser |   k=`1 |     ^
+e-er19                     740c5da2 [(1, 120000)] t=73 sym=999 003='er19' f40..=48:1 STOPMSG: Error(28) at line 2:  This character not supported by parser |   k="1" |     ^
+e-er2                      740c5da2 [(1, 120000)] t=73 sym=999 003='er2' f40..=48:1 STOPMSG: Error(25) at line 2:  Only variables are allowed to left of assignment |   3=k |    ^
+e-er20                     740c5da2 [(1, 120000)] t=73 sym=999 003='er20' f40..=48:1 STOPMSG: Error(28) at line 2:  This character not supported by parser |   k=@1 |     ^
+e-er21                     740c5da2 [(1, 120000)] t=73 sym=999 003='er21' f40..=48:1 STOPMSG: Error(0) at line 2:  Should be an Argument |   k=1^^2 |       ^
+e-er22                     740c5da2 [(1, 120000)] t=73 sym=999 003='er22' f40..=48:1
+e-er23                     740c5da2 [(1, 120000)] t=73 sym=999 003='er23' f40..=48:1 STOPMSG: Error(31) at line 2:  Can't use function name as variable |   k=sin |     ^^^
+e-er24                     740c5da2 [(1, 120000)] t=73 sym=999 003='er24' f40..=48:1 STOPMSG: Error(0) at line 2:  Should be an Argument |   k=1<<2 |       ^
+e-er25                     740c5da2 [(1, 120000)] t=73 sym=999 003='er25' f40..=48:1 STOPMSG: Error(0) at line 2:  Should be an Argument |   k=1>>2 |       ^
+e-er26                     3b688d0d [(2, 120000)] t=73 sym=999 003='er26' f40..=48:1
+e-er27                     740c5da2 [(1, 120000)] t=73 sym=999 003='er27' f40..=48:1
+e-er28                     740c5da2 [(1, 120000)] t=73 sym=999 003='er28' f40..=48:1 STOPMSG: Error(32) at line 2:  Negative exponent must be enclosed in parens |   k=100+-2^-(1) |            ^
+e-er29                     740c5da2 [(1, 120000)] t=73 sym=999 003='er29' f40..=48:1 STOPMSG: Error(32) at line 2:  Negative exponent must be enclosed in parens |   k=100+2^-(1)*10 |           ^
+e-er3                      740c5da2 [(1, 120000)] t=73 sym=999 003='er3' f40..=48:1 STOPMSG: Error(0) at line 2:  Should be an Argument |   k= |     ^
+e-er30                     740c5da2 [(1, 120000)] t=73 sym=999 003='er30' f40..=48:1 STOPMSG: Error(17) at line 2:  Next jump after "else" must be "endif" |   elseif(1) |   ^^^^^^
+e-er31                     740c5da2 [(1, 120000)] t=73 sym=999 003='er31' f40..=48:1 STOPMSG: Error(1) at line 2:  Should be an Operator |   k=sqr(1)(2) |           ^
+e-er32                     740c5da2 [(1, 120000)] t=73 sym=999 003='er32' f40..=48:1 STOPMSG: Error(1) at line 2:  Should be an Operator |   k=(1)(2) |        ^
+e-er33                     740c5da2 [(1, 120000)] t=73 sym=999 003='er33' f40..=48:1 STOPMSG: Error(1) at line 2:  Should be an Operator |   k=1(2) |      ^
+e-er34                     740c5da2 [(1, 120000)] t=73 sym=999 003='er34' f40..=48:1 STOPMSG: Error(5) at line 2:  Undefined Function |   k=pi(1) |     ^^
+e-er35                     7c58f5cb [(10, 120000)] t=73 sym=999 003='er35' f40..=48:1
+e-er36                     c11b4b59 [(106, 120000)] t=73 sym=999 003='er36' f40..=48:1
+e-er37                     740c5da2 [(1, 120000)] t=73 sym=999 003='er37' f40..=48:1 STOPMSG: Error(32) at line 2:  Negative exponent must be enclosed in parens |   k=100+2^-1 |           ^
+e-er4                      740c5da2 [(1, 120000)] t=73 sym=999 003='er4' f40..=48:1 STOPMSG: Error(3) at line 2:  Need more ')' |   k=(1 |       ^
+e-er5                      740c5da2 [(1, 120000)] t=73 sym=999 003='er5' f40..=48:1 STOPMSG: Error(30) at line 2:  Unmatched modulus operator "|" in this expression |   k=|3 |       ^
+e-er6                      740c5da2 [(1, 120000)] t=73 sym=999 003='er6' f40..=48:1 STOPMSG: Error(1) at line 2:  Should be an Operator |   k=3| |      ^
+e-er7                      740c5da2 [(1, 120000)] t=73 sym=999 003='er7' f40..=48:1 STOPMSG: Error(3) at line 2:  Need more ')' |   k=(1 |       ^ | Error(2) at line 2:  ')' needs a matching '(' |   3) |    ^
+e-er8                      740c5da2 [(1, 120000)] t=73 sym=999 003='er8' f40..=48:1 STOPMSG: Error(3) at line 2:  Need more ')' |   k=sin(1 |          ^
+e-er9                      740c5da2 [(1, 120000)] t=73 sym=999 003='er9' f40..=48:1 STOPMSG: Error(25) at line 2:  Only variables are allowed to left of assignment |   k=5=6 |      ^

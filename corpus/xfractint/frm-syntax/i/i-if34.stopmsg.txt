@@ -1,0 +1,8 @@
+
+Error(19) at line 3:  Misplaced "else" or "elseif()"
+  elseif(1)
+  ^^^^^^
+Error(18) at line 4:  "endif" has no matching "if"
+  endif
+  ^^^^^
+

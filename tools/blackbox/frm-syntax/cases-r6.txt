@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Round 6: characters that may end an entry name.
+r6-brk-full formulafile=r6.frm formulaname=x[y maxiter=1000
+r6-brk-short formulafile=r6.frm formulaname=x maxiter=1000
+r6-brk2-full formulafile=r6.frm formulaname=w[1] maxiter=1000
+r6-brk2-short formulafile=r6.frm formulaname=w maxiter=1000
+r6-eq-full formulafile=r6.frm formulaname=v=w maxiter=1000
+r6-eq-short formulafile=r6.frm formulaname=v maxiter=1000
+r6-paren formulafile=r6.frm formulaname=u maxiter=1000
+r6-symjunk formulafile=r6.frm formulaname=t maxiter=1000
+r6-junksym formulafile=r6.frm formulaname=s maxiter=1000

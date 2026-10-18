@@ -1,0 +1,17 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Round 4: iteration-section errors and formulas inside .par files.
+r4-it-ie1 formulafile=r4.frm formulaname=ie1
+r4-it-ie2 formulafile=r4.frm formulaname=ie2
+r4-it-ie3 formulafile=r4.frm formulaname=ie3
+r4-it-ie4 formulafile=r4.frm formulaname=ie4
+r4-it-ie5 formulafile=r4.frm formulaname=ie5
+r4-it-ie6 formulafile=r4.frm formulaname=ie6
+r4-par-img4 @p2.par/img4
+r4-par-img5 @p2.par/img5
+r4-par-img6 @p2.par/img6
+r4-par-img7 formulafile=s08.frm @p2.par/img7
+r4-par-img8 @p2.par/img8
+r4-par-img9 @p2.par/img9
+r4-par-img10 @p2.par/img10
+r4-par-img10f formulafile=a.frm @p2.par/img10
+r4-par-img5f formulafile=s01.frm @p2.par/img5

@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Calibration of the value encoding (maxiter=1000)
+cal-k0 formulafile=cal.frm formulaname=k0 maxiter=1000
+cal-k1 formulafile=cal.frm formulaname=k1 maxiter=1000
+cal-k2 formulafile=cal.frm formulaname=k2 maxiter=1000
+cal-k3 formulafile=cal.frm formulaname=k3 maxiter=1000
+cal-k5 formulafile=cal.frm formulaname=k5 maxiter=1000
+cal-k10 formulafile=cal.frm formulaname=k10 maxiter=1000
+cal-k2p5 formulafile=cal.frm formulaname=k2p5 maxiter=1000
+cal-km1 formulafile=cal.frm formulaname=km1 maxiter=1000
+cal-k100 formulafile=cal.frm formulaname=k100 maxiter=1000
+cal-k200 formulafile=cal.frm formulaname=k200 maxiter=1000
+cal-k300 formulafile=cal.frm formulaname=k300 maxiter=1000

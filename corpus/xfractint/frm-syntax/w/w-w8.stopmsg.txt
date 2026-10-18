@@ -1,0 +1,5 @@
+
+Error(33) at line 2:  Variable or constant exceeds 32 character limit
+  k=100+1.0000000000000000000000000000000
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+

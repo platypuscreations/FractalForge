@@ -1,0 +1,6 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Round 5: lastsqr and the missing-file fallback.
+r5-lastsqr1 formulafile=r5.frm formulaname=ls1 maxiter=1000
+r5-lastsqr2 formulafile=r5.frm formulaname=ls2 maxiter=1000
+r5-fallback-par formulafile=zz.frm formulaname=pr maxiter=1000
+r5-fallback-frm formulafile=zz.frm formulaname=ls1 maxiter=1000

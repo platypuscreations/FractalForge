@@ -1,0 +1,13 @@
+frm:pq {
+  z = 0, k = 30:
+  z = z + 1
+  real(z) <= real(k)
+}
+img1 { reset type=formula formulaname=pq maxiter=1000 viewwindows=2 passes=1 periodicity=0 map=uniq.map }
+img2 { reset type=formula formulafile=p1.par formulaname=pq maxiter=1000 viewwindows=2 passes=1 periodicity=0 map=uniq.map }
+img3 { reset type=formula formulaname=frm:pq maxiter=1000 viewwindows=2 passes=1 periodicity=0 map=uniq.map }
+pr {
+  z = 0, k = 31:
+  z = z + 1
+  real(z) <= real(k)
+}

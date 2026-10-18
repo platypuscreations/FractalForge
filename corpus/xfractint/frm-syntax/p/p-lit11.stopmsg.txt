@@ -1,0 +1,5 @@
+
+Error(27) at line 2:  Invalid constant expression
+  k=1e:
+    ^^^
+

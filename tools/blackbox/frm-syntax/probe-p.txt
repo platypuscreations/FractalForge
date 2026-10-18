@@ -1,0 +1,91 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Precedence / associativity probes: name<TAB>init<TAB>extra args. Value v -> colour floor(v)+1.
+mul	k = 2 + 3 * 4
+pow2	k = (2 ^ 3 ^ 2) / 8
+neg2	k = 100 + -2 ^ 2
+neg2b	k = 100 - 2 ^ 2
+neg2c	k = 100 + (-2) ^ 2
+mulneg	k = 100 + 2 * -3
+sub3	k = 10 - 4 - 3
+div3	k = 64 / 4 / 2
+powneg	k = 100 + 10 * 2 ^ -1
+powmul	k = 2 * 3 ^ 2
+powunary	k = 100 + 2 ^ -2 * 8
+modsq	k = 100 + |(3,4)|
+modsum	k = |3 + 4|
+cmp1	k = 100 + (3 < 4)
+cmp2	k = 100 + 3 < 4
+cmp3	k = 100 + (3 > 2 > 1)
+cmp4	k = 100 + (0 < 3 == 1)
+cmp5	k = 100 + (1 == 1)
+cmp6	k = 100 + (1 != 2)
+cmp7	k = 100 + (2 >= 2) + 2*(2 <= 1)
+and1	k = 100 + (1 && 0) + 2*(1 || 0)
+and2	k = 100 + (1 || 1 && 0)
+and3	k = 100 + (0 && 0 || 1)
+and4	k = 100 + (1 < 2 && 3 < 4)
+and5	k = 100 + (2 + 1 && 0)
+asg1	k = 100 + (a = 5)
+asg2	a = b = 7, k = 100 + a + 10*b
+asg3	k = 100, k = k + 1
+uplus	k = 100 + +5
+uneg2	k = 100 - -5
+uneg3	k = 100 + - - 5
+star2	k = 2 ** 3
+pct	k = 7 % 4
+imul	k = 2(3)
+negmul	k = 100 + -3 * -3
+negpow2	k = 100 + -(2) ^ 2
+pow2b	k = (2 ^ 3 ^ 2) / 8 + 0.5
+pow3	k = 100 + 2 ^ (-1) * 10
+cmp8	k = 100 + (5 == 1 < 2)
+and6	k = 100 + (1 || 0 && 0)
+negp1	k = 100 + -(2)
+negp2	k = 100 - (2) ^ 2
+negp3	k = 100 + -(2) * 3
+negp4	k = 100 + (-(2) ^ 2)
+negp5	k = 100 + -(2 ^ 2)
+negp6	k = -(2) ^ 2 + 100
+negp7	k = 100 + -2
+negp8	k = 100 + (-(3))
+negp9	k = 50 * 2 + -(2) ^ 2
+neg3	k = 100 + -2 * 3 ^ 2
+inside	k = 5000
+modsq2	k = 100 + |3|
+modnest	k = | 3 + |(0,2)| |
+modnest2	k = 50 + | |(0,2)| + 3 |
+cplx1	k = 100 + imag((3,4))
+cplx2	k = 100 + real((-3,4)) + 10 * imag((3,-4))
+cplx3	k = 100 + real((1e1, 0))
+cplx4	a = 3, k = 100 + real((a, 0))
+cplx5	k = 100 + real((1 + 2, 0))
+cplx6	k = 100 + imag(( 3 , 4 ))
+cplx7	k = 100 + real((3,4)*(1,0))
+not1	k = 100 + !0
+and7	k = 100 + (1 & 1)
+or7	k = 100 + (1 | 1)
+lit1	k = 1e2
+lit2	k = 1E2
+lit3	k = 1.5e1
+lit4	k = 100 + .5 * 10
+lit5	k = 5.
+lit6	k = 1e+2
+lit7	k = 1e-1 * 1000
+lit8	k = 0x10
+lit9	k = 1d2
+lit10	k = 2.5.5
+lit11	k = 1e
+lit12	k = 1e2.5
+lit13	k = 1 0
+lit14	k = 007
+lit15	k = 100 + 1.
+lit16	k = 12345678901234567890 / 1e17
+lit17	k = 3.75
+lit18	k = 100 + 1e-400
+lit19	k = 1e400
+ws1	k = 100 + (1 < = 2)
+ws2	k = 100 + (1 & & 1)
+ws3	k = 100 + (1 =< 2)
+ws4	k = 100 + (2 => 1)
+ws5	k = 100 + (1 <> 2)
+ws6	k = 100 + (1 = = 1)

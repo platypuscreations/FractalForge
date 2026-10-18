@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Last probes: modulus bars, identifier and literal length. name<TAB>init<TAB>extra args.
+w1	k = 100 + |3 + (|(0,2)|)|
+w2	k = 100 + |2| * |3|
+w3	abcdefghijklmnopqrstuvwxyzabcdefg = 5, k = 100 + abcdefghijklmnopqrstuvwxyzabcdefg
+w4	k = 100 + 000000000000000000000000000000001
+w5	k = 100 + 0000000000000000000000000000000001
+w6	k = 100 + sqr(|2|)
+w7	k = 100 + 1.000000000000000000000000000000
+w8	k = 100 + 1.0000000000000000000000000000000
+w9	k = 100 + ||2| - 1|
+w10	k = 100 + |(|2| - 1)|

@@ -1,0 +1,8 @@
+
+Error(33) at line 2:  Variable or constant exceeds 32 character limit
+  abcdefghijklmnopqrstuvwxyzabcdefg=5
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Error(33) at line 2:  Variable or constant exceeds 32 character limit
+  k=100+abcdefghijklmnopqrstuvwxyzabcdefg
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+

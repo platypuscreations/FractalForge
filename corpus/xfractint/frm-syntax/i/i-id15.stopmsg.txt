@@ -1,0 +1,8 @@
+
+Error(33) at line 2:  Variable or constant exceeds 32 character limit
+  abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuv
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Error(33) at line 2:  Variable or constant exceeds 32 character limit
+  abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuv
+  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+

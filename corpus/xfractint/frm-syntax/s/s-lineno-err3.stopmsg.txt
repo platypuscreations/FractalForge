@@ -1,0 +1,11 @@
+
+Error(0) at line 2:  Should be an Argument
+  k=1+*2
+      ^
+Error(0) at line 3:  Should be an Argument
+  z=z+*1
+      ^
+Error(0) at line 4:  Should be an Argument
+  real(z)<=real(k)+*
+                   ^
+
