@@ -21,6 +21,7 @@ mod orbit_maps;
 pub mod params;
 pub mod plot;
 pub mod program;
+pub mod stereogram;
 pub mod three_d;
 pub mod types;
 

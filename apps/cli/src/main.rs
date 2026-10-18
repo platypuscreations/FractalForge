@@ -37,6 +37,31 @@ enum Command {
     /// Fractint-style 3D transform of an image: its colours become heights
     /// (docs/specs/3d-transform.md). Settings use Fractint's keys, e.g.
     /// `rotation=60/30/0 filltype=5 lightsource=1/-1/1 stereo=2`.
+    /// Random-dot stereogram of an image, its colours giving the depth
+    /// (docs/specs/stereogram.md).
+    Stereogram {
+        input: PathBuf,
+        #[arg(short, long)]
+        output: PathBuf,
+        /// Depth effect; negative swaps near and far.
+        #[arg(long, default_value_t = 100, allow_hyphen_values = true)]
+        depth: i32,
+        /// Width of the picture on screen, in inches.
+        #[arg(long, default_value_t = 10.0)]
+        width: f64,
+        /// Depth from the colours' brightness instead of their index.
+        #[arg(long)]
+        grayscale: bool,
+        /// Calibration bars: middle, top or none.
+        #[arg(long, default_value = "middle", value_parser = ["middle", "top", "none"])]
+        bars: String,
+        /// Seed of the random dots (default: the current time, as Fractint).
+        #[arg(long)]
+        seed: Option<u32>,
+        /// A GIF to tile instead of random dots.
+        #[arg(long, value_name = "FILE.gif")]
+        pattern: Option<PathBuf>,
+    },
     #[command(name = "3d")]
     ThreeD {
         input: PathBuf,
@@ -296,6 +321,34 @@ fn main() -> ExitCode {
             colors,
         } => compare(&a, &b, tolerance, colors),
         Command::Entries { file } => list_entries(&file),
+        Command::Stereogram {
+            input,
+            output,
+            depth,
+            width,
+            grayscale,
+            bars,
+            seed,
+            pattern,
+        } => {
+            use fractalforge_core::stereogram::{Bars, Settings};
+            let s = Settings {
+                depth,
+                width_inches: width,
+                grayscale,
+                bars: match bars.as_str() {
+                    "top" => Bars::Top,
+                    "none" => Bars::None,
+                    _ => Bars::Middle,
+                },
+                seed: seed.unwrap_or_else(|| {
+                    std::time::SystemTime::now()
+                        .duration_since(std::time::UNIX_EPOCH)
+                        .map_or(1, |d| d.as_secs() as u32)
+                }),
+            };
+            stereogram(&input, &output, &s, pattern.as_deref())
+        }
         Command::ThreeD {
             input,
             output,
@@ -543,6 +596,53 @@ fn load_source(path: &Path, entry: Option<&str>, formula: Option<&Path>) -> Resu
             path.display()
         )),
     }
+}
+
+fn read_gif(path: &Path) -> Result<gif::GifImage, String> {
+    let bytes = std::fs::read(path).map_err(|e| format!("{}: {e}", path.display()))?;
+    gif::GifImage::read(&bytes).map_err(|e| format!("{}: {e}", path.display()))
+}
+
+fn stereogram(
+    input: &Path,
+    output: &Path,
+    s: &fractalforge_core::stereogram::Settings,
+    pattern: Option<&Path>,
+) -> Result<(), String> {
+    use fractalforge_core::stereogram::{Pattern, render};
+    let mut img = read_gif(input)?;
+    let pat = pattern.map(read_gif).transpose()?;
+    let pat = pat.as_ref().map(|p| Pattern {
+        pixels: &p.pixels,
+        width: p.width.into(),
+        height: p.height.into(),
+    });
+    img.pixels = render(
+        &img.pixels,
+        img.width.into(),
+        img.height.into(),
+        &img.palette,
+        s,
+        pat.as_ref(),
+    );
+    // Fractint keeps the image's blocks (stereogram.md §8). Our own block
+    // would reopen the original fractal, so it goes.
+    img.extensions
+        .retain(|e| &e.identifier != gif::native_block::APP_IDENTIFIER);
+    let bytes = if is_ext(output, "png") {
+        let rgb: Vec<u8> = img
+            .pixels
+            .iter()
+            .flat_map(|&i| img.palette.get(i as usize).copied().unwrap_or([0; 3]))
+            .collect();
+        fractalforge_formats::png::encode_rgb(img.width.into(), img.height.into(), &rgb)
+            .map_err(|e| e.to_string())?
+    } else {
+        img.write().map_err(|e| e.to_string())?
+    };
+    std::fs::write(output, bytes).map_err(|e| format!("{}: {e}", output.display()))?;
+    println!("stereogram (seed {}): {}", s.seed, output.display());
+    Ok(())
 }
 
 fn three_d(input: &Path, output: &Path, settings: &[String]) -> Result<(), String> {
