@@ -15,8 +15,8 @@ Fractint source code and is not affiliated with the Stone Soup Group.
 
 ## Status
 
-**v0.2** (macOS). FractalForge has a desktop app and a command-line
-renderer.
+**v0.2** (macOS), with Phase 5 (deep zoom, 3D, stereograms) in progress.
+FractalForge has a desktop app and a command-line renderer.
 
 - 18 escape-time types (mandel, julia, lambda, mandellambda, mandel4, julia4,
   manowar, manowarj, barnsleym1, barnsleyj1, spider, magnet1m, magnet1j,
@@ -29,6 +29,14 @@ renderer.
   mandelcloud and julia_inverse, and the strange attractors lorenz,
   lorenz3d, rossler3d, pickover, lorenz3d1, lorenz3d3, lorenz3d4 and
   kamtorus3d, with 3D rotation, shift and perspective.
+- Deep zoom for mandel and julia: zoom far past double precision by
+  perturbation around an arbitrary-precision reference orbit.
+  Deep views move both ways between FractalForge and XFractint at full
+  precision, in GIFs and PAR files.
+- Fractint's 3D transforms (Image > 3D Transform…): the picture's colours
+  become heights, drawn as points, lines or surfaces, lit by a light
+  source, projected onto a sphere, or as a red/cyan stereo pair.
+- Random-dot stereograms of the picture (Image > Stereogram…).
 - An orbit window (press O) that draws the orbit of the point under the
   pointer, and a Mandelbrot/Julia toggle (Space) for the types that pair up.
 - Inside/outside colouring modes, decomposition and biomorph (mandel and
@@ -53,13 +61,17 @@ cargo run --release -p fractalforge-cli -- render --formula my.frm --formula-nam
 cargo run --release -p fractalforge-cli -- render --lsystem plants.l --lsystem-name fern --params 5 -o fern.gif
 cargo run --release -p fractalforge-cli -- render --ifs ferns.ifs -o fern.png
 cargo run --release -p fractalforge-cli -- render --type lorenz3d -o lorenz.png
+cargo run --release -p fractalforge-cli -- render --center-mag=-0.743643887037158704752191506114774/0.131825904205311970493132056385139/1e25 --maxiter 30000 -o deep.png
+cargo run --release -p fractalforge-cli -- 3d picture.gif -o picture-3d.gif filltype=5 lightsource=1/-1/1
+cargo run --release -p fractalforge-cli -- stereogram picture.gif -o picture-rds.png --depth 100
 cargo run --release -p fractalforge-cli -- entries my.frm
 ```
 
 Ctrl-C during a render also saves a resumable GIF.
 
 Not yet: other Fractint types (such as bifurcation, lyapunov, plasma and
-icons3d); rotated views; Fractint's `rand` sequence in formulas; resuming
+icons3d); deep zoom for types other than mandel and julia, and with the
+inside/outside colouring options; rotated views; Fractint's `rand` sequence in formulas; resuming
 unfinished orbit-plotting images (they are recalculated, as Fractint does
 for most of them); screen-reader support; notarized macOS builds.
 
@@ -87,6 +99,16 @@ everything is bit-exact, though:
 - **mandelcloud, julia_inverse, kamtorus3d** and the three- and four-lobe
   Lorenz systems follow our best black-box models, which match 96–99.9% of
   pixels.
+- **Deep zooms** at magnification 1e40 and beyond: XFractint's own
+  arbitrary-precision arithmetic is limited, so about 1% of its pixels
+  differ from the mathematically exact ones FractalForge computes.
+- **3D transforms:** the interpolated and light-source surfaces (fill
+  types 2, 5 and 6) use a simplified colour rule, and with ambient light
+  some colours are one palette index off; sphere roughness and ties at
+  fractional scales are approximate. Stereo pairs use FractalForge's own
+  red/cyan palette.
+- **Stereograms** are exact for the same random seed; FractalForge, like
+  Fractint, seeds with the time, so each one is new.
 
 Roadmap:
 
