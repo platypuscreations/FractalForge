@@ -15,8 +15,9 @@ Fractint source code and is not affiliated with the Stone Soup Group.
 
 ## Status
 
-**v0.3** (macOS). FractalForge has a desktop app and a command-line
-renderer.
+**v0.4** (macOS, Ubuntu and Windows). FractalForge has a desktop app and a
+command-line renderer. The Linux and Windows packages are new and haven't
+had much testing yet; please report what you find.
 
 - 18 escape-time types (mandel, julia, lambda, mandellambda, mandel4, julia4,
   manowar, manowarj, barnsleym1, barnsleyj1, spider, magnet1m, magnet1j,
@@ -120,7 +121,7 @@ Roadmap:
 | 3 | Formula (`.frm`) parser |
 | 4 | L-systems, IFS, strange attractors, orbits, and **v0.2** |
 | 5 | Deep zoom (perturbation), 3D, stereograms, and **v0.3** |
-| 6 | Linux and Windows releases |
+| 6 | Linux and Windows releases, and **v0.4** |
 
 ## Layout
 
