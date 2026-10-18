@@ -2,13 +2,15 @@
 #
 # On a version tag (v1.2.3), builds the macOS, Linux and Windows packages and
 # creates a draft GitHub release with them, for the notes to be written and
-# the release published by hand.
+# the release published by hand. Run by hand (workflow_dispatch) it only
+# builds the packages, as artifacts of the run.
 
 name: Release
 
 on:
   push:
     tags: ["v*"]
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -65,6 +67,7 @@ jobs:
 
   draft:
     needs: [macos, linux, windows]
+    if: startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v4
