@@ -1,0 +1,77 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+# Batch renders for docs/specs/attractors-3d.md.
+# Each line: NAME XFRACTINT-ARGS. tools/blackbox/attractors-3d/render.sh adds
+# viewwindows=2 (400x300) and savename=ff.gif; a leading FULL means no
+# viewwindows (800x600). Regenerate with:
+#   tools/blackbox/attractors-3d/gen.sh OUTDIR corpus/xfractint/attractors-3d/cases.txt
+#
+# --- lorenz (type 63, 2D projection x/z)
+lorenz-def type=lorenz
+lorenz-mi2 type=lorenz maxiter=2
+lorenz-mi10 type=lorenz maxiter=10
+lorenz-mi300 type=lorenz maxiter=300
+lorenz-mi1000 type=lorenz maxiter=1000
+lorenz-mi2-dt01 type=lorenz maxiter=2 params=0.01/5/15/1
+lorenz-mi20-r10 type=lorenz maxiter=20 params=0.02/5/10/1
+lorenz-mi2-float type=lorenz maxiter=2 float=yes
+lorenz-mi2-zoom10 type=lorenz maxiter=2 corners=-5/5/10/17.5
+lorenz-mi2-zoom1 type=lorenz maxiter=2 corners=0/1/10/10.75
+lorenz-800-mi2 FULL type=lorenz maxiter=2
+# --- lorenz3d (type 84)
+lorenz3d-def type=lorenz3d
+lorenz3d-mi2 type=lorenz3d maxiter=2
+lorenz3d-mi2-rot0 type=lorenz3d maxiter=2 rotation=0/0/0
+lorenz3d-mi2-rotx90 type=lorenz3d maxiter=2 rotation=90/0/0
+lorenz3d-mi2-roty80 type=lorenz3d maxiter=2 rotation=0/80/0
+lorenz3d-mi2-rotz90 type=lorenz3d maxiter=2 rotation=0/0/90
+lorenz3d-mi2-rot10-20-30 type=lorenz3d maxiter=2 rotation=10/20/30
+lorenz3d-mi2-rotbig type=lorenz3d maxiter=2 rotation=200/-45/370
+lorenz3d-mi2-shift type=lorenz3d maxiter=2 xyshift=20/10
+lorenz3d-mi2-shiftneg type=lorenz3d maxiter=2 xyshift=-15/25 corners=-20/40/-10/35
+lorenz3d-mi2-persp150 type=lorenz3d maxiter=2 perspective=150
+lorenz3d-mi2-persp100 type=lorenz3d maxiter=2 perspective=100
+lorenz3d-mi2-persp300 type=lorenz3d maxiter=2 perspective=300
+lorenz3d-mi2-persp75 type=lorenz3d maxiter=2 perspective=75
+lorenz3d-mi2-persp50 type=lorenz3d maxiter=2 perspective=50
+lorenz3d-mi2-probe type=lorenz3d maxiter=2 params=0.002/20/2/16 rotation=0/0/0 corners=-0.5/0.5/-0.375/0.375
+lorenz3d-mi20-fixed type=lorenz3d maxiter=20 params=0.02/20/2/16 rotation=0/0/0
+lorenz3d-mi20-origin type=lorenz3d maxiter=20 params=0.02/5/0.5/1 rotation=0/0/0
+lorenz3d-mi2-zoom08 type=lorenz3d maxiter=2 rotation=0/0/90 corners=-3.4888976617691837/-2.6888976617691837/2.583340280265094/3.183340280265094
+lorenz3d-mi2-zoom06 type=lorenz3d maxiter=2 rotation=0/0/90 corners=-3.3888976617691837/-2.7888976617691837/2.658340280265094/3.108340280265094
+lorenz3d-800-mi5 FULL type=lorenz3d maxiter=5
+# --- rossler3d (type 86)
+rossler3d-def type=rossler3d
+rossler3d-mi2 type=rossler3d maxiter=2
+rossler3d-mi2-rot0 type=rossler3d maxiter=2 rotation=0/0/0
+rossler3d-mi2-probe type=rossler3d maxiter=2 params=0.001/0.2/0.2/5.7 rotation=0/0/90 corners=-3/3/-2.25/2.25
+rossler3d-mi2-probe0 type=rossler3d maxiter=2 params=0.001/0.2/0.2/5.7 rotation=0/0/0 corners=-3/3/-2.25/2.25
+# --- pickover (type 89)
+pickover-def type=pickover
+pickover-mi2 type=pickover maxiter=2
+pickover-mi2-rot0 type=pickover maxiter=2 rotation=0/0/0
+# --- lorenz3d1 / lorenz3d3 / lorenz3d4 (types 124, 125, 126)
+lorenz3d1-def type=lorenz3d1
+lorenz3d1-mi2 type=lorenz3d1 maxiter=2
+lorenz3d1-mi2-rot0 type=lorenz3d1 maxiter=2 rotation=0/0/0
+lorenz3d1-mi3-dt01 type=lorenz3d1 maxiter=3 params=0.01/5/15/1 rotation=0/0/0
+lorenz3d3-def type=lorenz3d3
+lorenz3d3-mi2-rot0 type=lorenz3d3 maxiter=2 rotation=0/0/0
+lorenz3d4-def type=lorenz3d4
+lorenz3d4-mi2-rot0 type=lorenz3d4 maxiter=2 rotation=0/0/0
+# --- kamtorus3d (type 42)
+kamtorus3d-def type=kamtorus3d
+kamtorus3d-rot0 type=kamtorus3d rotation=0/0/0
+kamtorus3d-rot0-stop3 type=kamtorus3d rotation=0/0/0 params=1.3/0.05/3/150
+kamtorus3d-rot0-step01 type=kamtorus3d rotation=0/0/0 params=1.3/0.1/1.5/150
+# --- icons3d (type 160)
+icons3d-def type=icons3d
+icons3d-mi3-rot0 type=icons3d maxiter=3 rotation=0/0/0
+#
+# --- interrupt / resume (tools/blackbox/attractors-3d/intr.sh, not batch):
+# lorenz-int     run-interrupt 12 type=lorenz maxiter=30000 viewwindows=2 savename=ff.gif
+# lorenz3d-int   run-interrupt 12 type=lorenz3d maxiter=30000 viewwindows=2 savename=ff.gif
+# pickover-int   run-interrupt 12 type=pickover maxiter=30000 viewwindows=2 savename=ff.gif
+# lorenz-rload   lorenz-int.gif loaded with the "r" command: run-keys.sh "s10 kr s3 tin.gif s1 kReturn s8 ks"
+#                type=mandel maxiter=10 viewwindows=2 savename=ff.gif
+# lorenz3d-rload same for lorenz3d-int.gif
