@@ -514,36 +514,6 @@ impl Walk {
     }
 }
 
-/// A Bresenham line whose ties go to the larger coordinate (§6.5).
-fn line(buf: &mut IterBuffer, (x0, y0): (i64, i64), (x1, y1): (i64, i64), colour: u32) {
-    let (w, h) = (buf.width() as i64, buf.height() as i64);
-    let mut set = |x: i64, y: i64| {
-        if (0..w).contains(&x) && (0..h).contains(&y) {
-            buf.set(x as u32, y as u32, colour);
-        }
-    };
-    let (dx, dy) = (x1 - x0, y1 - y0);
-    let n = dx.abs().max(dy.abs());
-    if n == 0 {
-        return set(x0, y0);
-    }
-    // ⌊a + t·d/D + ½⌋ exactly, with D > 0.
-    let along = |a: i64, t: i64, d: i64, big: i64| -> i64 {
-        let (d, big) = if big < 0 { (-d, -big) } else { (d, big) };
-        let num = (2 * a as i128 * big as i128) + 2 * t as i128 * d as i128 + big as i128;
-        num.div_euclid(2 * big as i128) as i64
-    };
-    for i in 0..=n {
-        if dx.abs() >= dy.abs() {
-            let x = x0 + i * dx.signum();
-            set(x, along(y0, x - x0, dy, dx));
-        } else {
-            let y = y0 + i * dy.signum();
-            set(along(x0, y - y0, dx, dy), y);
-        }
-    }
-}
-
 /// The pixel of a coordinate: rounded half up (§6.5).
 fn pixel(v: Ext) -> i64 {
     (v + Ext::from_f64(0.5)).floor()
@@ -671,7 +641,7 @@ impl Plotter for Drawing {
         let walk = self.draw.as_mut().unwrap();
         walk.run(&mut self.turtle, budget, |st, x, y, draw| {
             if draw {
-                line(
+                crate::plot::line(
                     buf,
                     (pixel(st.x), pixel(st.y)),
                     (pixel(x), pixel(y)),

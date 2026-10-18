@@ -5,6 +5,7 @@
 //!
 //! See `docs/CLEANROOM.md` before contributing.
 
+mod attractors;
 pub mod color;
 pub mod complex;
 pub mod crand;

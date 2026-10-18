@@ -392,7 +392,9 @@ mod tests {
 
     #[test]
     fn all_types_fill_every_pixel_and_resume_identically() {
-        for base in all_types() {
+        // Plotted types can't resume from a checkpoint (see
+        // plotted_renders_continue_in_memory_only).
+        for base in all_types().into_iter().filter(|p| p.fractal.resumable) {
             for params in [base.clone(), off_centre(base)] {
                 for mode in [PassMode::One, PassMode::Guess] {
                     let expected = full(&params, 61, 47, mode);

@@ -952,7 +952,84 @@ pub static JULIA_INVERSE: FractalType = plot_type(
     om::julia_inverse,
 );
 
-static ALL: [&FractalType; 35] = [
+use crate::attractors as at;
+
+const LORENZ_PARAMS: &[&str] = &["Time step", "a", "b", "c"];
+
+pub static LORENZ: FractalType = plot_type(
+    "lorenz",
+    63,
+    "Lorenz attractor, seen along y (x across, z up)",
+    Window::new(-15.0, 15.0, 0.0, 30.0),
+    &[0.02, 5.0, 15.0, 1.0],
+    LORENZ_PARAMS,
+    at::lorenz,
+);
+pub static LORENZ3D: FractalType = plot_type(
+    "lorenz3d",
+    84,
+    "Lorenz attractor in 3D (uses the 3D rotation)",
+    Window::new(-30.0, 30.0, -30.0, 30.0),
+    &[0.02, 5.0, 15.0, 1.0],
+    LORENZ_PARAMS,
+    at::lorenz3d,
+);
+pub static ROSSLER3D: FractalType = plot_type(
+    "rossler3d",
+    86,
+    "Rössler attractor in 3D",
+    Window::new(-30.0, 30.0, -20.0, 40.0),
+    &[0.04, 0.2, 0.2, 5.7],
+    LORENZ_PARAMS,
+    at::rossler3d,
+);
+pub static PICKOVER: FractalType = plot_type(
+    "pickover",
+    89,
+    "Pickover's 3D attractor, plotted as points",
+    Window::new(-8.0 / 3.0, 8.0 / 3.0, -2.0, 2.0),
+    &[2.24, 0.43, -0.65, -2.43],
+    &["a", "b", "c", "d"],
+    at::pickover,
+);
+pub static LORENZ3D1: FractalType = plot_type(
+    "lorenz3d1",
+    124,
+    "One-lobe Lorenz attractor in 3D",
+    Window::new(-30.0, 30.0, -30.0, 30.0),
+    &[0.02, 5.0, 15.0, 1.0],
+    LORENZ_PARAMS,
+    at::lorenz3d1,
+);
+pub static LORENZ3D3: FractalType = plot_type(
+    "lorenz3d3",
+    125,
+    "Three-lobe Lorenz attractor in 3D",
+    Window::new(-30.0, 30.0, -30.0, 30.0),
+    &[0.02, 10.0, 28.0, 2.66],
+    LORENZ_PARAMS,
+    at::lorenz3d3,
+);
+pub static LORENZ3D4: FractalType = plot_type(
+    "lorenz3d4",
+    126,
+    "Four-lobe Lorenz attractor in 3D",
+    Window::new(-30.0, 30.0, -30.0, 30.0),
+    &[0.02, 10.0, 28.0, 2.66],
+    LORENZ_PARAMS,
+    at::lorenz3d4,
+);
+pub static KAMTORUS3D: FractalType = plot_type(
+    "kamtorus3d",
+    42,
+    "KAM torus orbits stacked in 3D",
+    Window::new(-3.0, 3.0, -1.0, 3.5),
+    &[1.3, 0.05, 1.5, 150.0],
+    &["Angle", "Step", "Stop (unused)", "Points per orbit"],
+    at::kamtorus3d,
+);
+
+static ALL: [&FractalType; 43] = [
     &MANDEL,
     &JULIA,
     &LAMBDA,
@@ -988,6 +1065,14 @@ static ALL: [&FractalType; 35] = [
     &DYNAMIC,
     &MANDELCLOUD,
     &JULIA_INVERSE,
+    &LORENZ,
+    &LORENZ3D,
+    &ROSSLER3D,
+    &PICKOVER,
+    &LORENZ3D1,
+    &LORENZ3D3,
+    &LORENZ3D4,
+    &KAMTORUS3D,
 ];
 
 /// Parameter planes and their Julia sets: in each pair the second type
