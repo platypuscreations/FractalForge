@@ -1,0 +1,678 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+# Evidence for docs/specs/3d-lighting.md. One case per line:
+#   NAME INPUT ARGS...
+# Each NAME.gif here was produced by tools/blackbox/3d-lighting/render.sh, i.e.
+#   xfractint batch=yes 3d=yes filename=in.gif ARGS savename=ff.gif
+# run in a fresh mktemp directory holding only in.gif (a copy of
+# tools/blackbox/3d-lighting/inputs/INPUT) and uniq.map. Cases marked
+# REJECTED made XFractint stop with an 'unknown argument' message (no image).
+
+## flat-lights
+fl5L0_0_1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 lightsource=0/0/1
+fl5L1_0_1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 lightsource=1/0/1
+fl5L0_1_1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 lightsource=0/1/1
+fl5Lm1_0_1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 lightsource=-1/0/1
+fl5L0_m1_1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 lightsource=0/-1/1
+fl5L1_1_1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 lightsource=1/1/1
+fl5L1_0_0 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 lightsource=1/0/0
+fl5L0_0_m1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 lightsource=0/0/-1
+fl5L2_0_1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 lightsource=2/0/1
+fl5L1_0_2 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 lightsource=1/0/2
+fl5L0_0_5 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 lightsource=0/0/5
+fl5L1_0_3 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 lightsource=1/0/3
+fl5L3_0_1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 lightsource=3/0/1
+fl5A0 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0
+fl5A50 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=50
+fl5A100 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=100
+fl6L0_0_1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=6 lightsource=0/0/1
+fl6L1_0_1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=6 lightsource=1/0/1
+fl6L0_1_1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=6 lightsource=0/1/1
+fl6Lm1_0_1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=6 lightsource=-1/0/1
+fl6L0_m1_1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=6 lightsource=0/-1/1
+fl6L1_1_1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=6 lightsource=1/1/1
+fl6L1_0_0 flat100.gif viewwindows=2 rotation=0/0/0 filltype=6 lightsource=1/0/0
+fl6L0_0_m1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=6 lightsource=0/0/-1
+fl6L2_0_1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=6 lightsource=2/0/1
+fl6L1_0_2 flat100.gif viewwindows=2 rotation=0/0/0 filltype=6 lightsource=1/0/2
+fl6L0_0_5 flat100.gif viewwindows=2 rotation=0/0/0 filltype=6 lightsource=0/0/5
+fl6L1_0_3 flat100.gif viewwindows=2 rotation=0/0/0 filltype=6 lightsource=1/0/3
+fl6L3_0_1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=6 lightsource=3/0/1
+fl6A0 flat100.gif viewwindows=2 rotation=0/0/0 filltype=6 ambient=0
+fl6A50 flat100.gif viewwindows=2 rotation=0/0/0 filltype=6 ambient=50
+fl6A100 flat100.gif viewwindows=2 rotation=0/0/0 filltype=6 ambient=100
+
+## ambient-coarse
+sw5k0 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=0/0/10
+sw5k1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=1/0/10
+sw5k2 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=2/0/10
+sw5k3 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=3/0/10
+sw5k4 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=4/0/10
+sw5k5 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=5/0/10
+sw5k6 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=6/0/10
+sw5k7 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=7/0/10
+sw5k8 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=8/0/10
+sw5k9 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=9/0/10
+sw5k10 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=10/0/10
+sw5k12 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=12/0/10
+sw5k14 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=14/0/10
+sw5k16 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=16/0/10
+sw5k18 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=18/0/10
+sw5k20 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=20/0/10
+sw5k25 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=25/0/10
+sw5k30 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=30/0/10
+sw5k40 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=40/0/10
+sw5k60 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=60/0/10
+sw5k100 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=100/0/10
+am5a1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=1 lightsource=1/0/0
+an5a1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=1 lightsource=1/0/1
+am5a5 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=5 lightsource=1/0/0
+an5a5 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=5 lightsource=1/0/1
+am5a10 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=10 lightsource=1/0/0
+an5a10 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=10 lightsource=1/0/1
+am5a15 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=15 lightsource=1/0/0
+an5a15 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=15 lightsource=1/0/1
+am5a25 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=25 lightsource=1/0/0
+an5a25 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=25 lightsource=1/0/1
+am5a30 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=30 lightsource=1/0/0
+an5a30 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=30 lightsource=1/0/1
+am5a40 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=40 lightsource=1/0/0
+an5a40 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=40 lightsource=1/0/1
+am5a60 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=60 lightsource=1/0/0
+an5a60 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=60 lightsource=1/0/1
+am5a70 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=70 lightsource=1/0/0
+an5a70 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=70 lightsource=1/0/1
+am5a80 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=80 lightsource=1/0/0
+an5a80 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=80 lightsource=1/0/1
+am5a90 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=90 lightsource=1/0/0
+an5a90 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=90 lightsource=1/0/1
+am5a95 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=95 lightsource=1/0/0
+an5a95 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=95 lightsource=1/0/1
+am5a99 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=99 lightsource=1/0/0
+an5a99 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=99 lightsource=1/0/1
+
+## ambient-grid
+g_a0_k2 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=2/0/10
+g_a0_k5 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=5/0/10
+g_a0_k10 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=10/0/10
+g_a0_k20 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=20/0/10
+g_a0_k40 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=40/0/10
+g_a0_k100 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=100/0/10
+g_a10_k2 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=10 lightsource=2/0/10
+g_a10_k5 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=10 lightsource=5/0/10
+g_a10_k10 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=10 lightsource=10/0/10
+g_a10_k20 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=10 lightsource=20/0/10
+g_a10_k40 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=10 lightsource=40/0/10
+g_a10_k100 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=10 lightsource=100/0/10
+g_a25_k2 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=25 lightsource=2/0/10
+g_a25_k5 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=25 lightsource=5/0/10
+g_a25_k10 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=25 lightsource=10/0/10
+g_a25_k20 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=25 lightsource=20/0/10
+g_a25_k40 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=25 lightsource=40/0/10
+g_a25_k100 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=25 lightsource=100/0/10
+g_a50_k2 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=50 lightsource=2/0/10
+g_a50_k5 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=50 lightsource=5/0/10
+g_a50_k10 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=50 lightsource=10/0/10
+g_a50_k20 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=50 lightsource=20/0/10
+g_a50_k40 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=50 lightsource=40/0/10
+g_a50_k100 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=50 lightsource=100/0/10
+g_a75_k2 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=75 lightsource=2/0/10
+g_a75_k5 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=75 lightsource=5/0/10
+g_a75_k10 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=75 lightsource=10/0/10
+g_a75_k20 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=75 lightsource=20/0/10
+g_a75_k40 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=75 lightsource=40/0/10
+g_a75_k100 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=75 lightsource=100/0/10
+g_a90_k2 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=90 lightsource=2/0/10
+g_a90_k5 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=90 lightsource=5/0/10
+g_a90_k10 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=90 lightsource=10/0/10
+g_a90_k20 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=90 lightsource=20/0/10
+g_a90_k40 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=90 lightsource=40/0/10
+g_a90_k100 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=90 lightsource=100/0/10
+d_k0 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=0/0/1000
+d_k1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=1/0/1000
+d_k2 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=2/0/1000
+d_k3 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=3/0/1000
+d_k5 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=5/0/1000
+d_k7 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=7/0/1000
+d_k10 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=10/0/1000
+d_k15 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=15/0/1000
+d_k20 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=20/0/1000
+d_k30 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=30/0/1000
+d_k50 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=50/0/1000
+d_k70 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=70/0/1000
+d_k100 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=100/0/1000
+d_k150 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=150/0/1000
+d_k200 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=200/0/1000
+d_k300 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=300/0/1000
+d_k500 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=500/0/1000
+d_k1000 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=1000/0/1000
+d_k2000 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=2000/0/1000
+d_k5000 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=5000/0/1000
+d_k10000 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=10000/0/1000
+d_k30000 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=30000/0/1000
+
+## stereo-first
+st0 pyramid.gif viewwindows=2 rotation=0/0/0 filltype=0
+st1 pyramid.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1
+st2 pyramid.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=2
+st3 pyramid.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=3
+st1f5 pyramid.gif viewwindows=2 rotation=0/0/0 filltype=5 stereo=1
+st2f5 pyramid.gif viewwindows=2 rotation=0/0/0 filltype=5 stereo=2
+st3f5 pyramid.gif viewwindows=2 rotation=0/0/0 filltype=5 stereo=3
+st1fl flat100.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1
+st2fl flat100.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=2
+st3fl flat100.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=3
+
+## keys
+k_fullcolor_yes flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 fullcolor=yes
+k_background_10_20_30 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 background=10/20/30
+k_lightname_fftga flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 lightname=ff.tga
+k_preview_yes flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 preview=yes
+k_showbox_yes flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 showbox=yes
+k_coarse_10 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 coarse=10
+k_ray_1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ray=1
+k_brief_yes flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 brief=yes
+k_usegrayscale_yes flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 usegrayscale=yes
+k_monitorwidth_10 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 monitorwidth=10
+# REJECTED k_targa_out_yes flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 targa_out=yes
+k_3dmode_monocular flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 3dmode=monocular
+k_sphere_no flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 sphere=no
+# REJECTED k_light_1_1_1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 light=1/1/1
+# REJECTED k_lightsource_1_1_1_1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 lightsource=1/1/1/1
+k_smoothing_3 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 smoothing=3
+# REJECTED k_ambient_m5 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=-5
+# REJECTED k_ambient_101 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=101
+# REJECTED k_haze_101 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 haze=101
+# REJECTED k_randomize_8 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 randomize=8
+# REJECTED k_randomize_m1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 randomize=-1
+k_filltype_m1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 filltype=-1
+k_stereo_4 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 stereo=4
+# REJECTED k_stereo_m1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 stereo=-1
+k_interocular_m5 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 interocular=-5
+k_converge_m5 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 converge=-5
+# REJECTED k_crop_1_2_3 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 crop=1/2/3
+k_bright_200_200 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 bright=200/200
+# REJECTED k_bright_1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 bright=1
+k_transparent_1_2 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 transparent=1/2
+# REJECTED k_ambient_a flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=a
+# REJECTED k_glassestype_1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 glassestype=1
+k_latitude_1_2 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 latitude=1/2
+k_longitude_1_2 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 longitude=1/2
+k_radius_50 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 radius=50
+# REJECTED k_grayscale_yes flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 grayscale=yes
+
+## determinism
+rp1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=10 lightsource=100/0/10
+rp2 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=10 lightsource=100/0/10
+rp3 flat0.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=10 lightsource=100/0/10
+rp4 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=10 lightsource=10/0/1
+rp5 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=10 lightsource=1000/0/100
+rp6 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=10 lightsource=0/100/10
+rp7 flat100.gif viewwindows=2 filltype=5 ambient=10 lightsource=100/0/10
+rp8 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=10 lightsource=100/0/10 scalexyz=100/100
+
+## ambient-fine
+h100_0 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=100/0/10
+h10_0 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=10/0/10
+h100_1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=1 lightsource=100/0/10
+h10_1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=1 lightsource=10/0/10
+h100_2 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=2 lightsource=100/0/10
+h10_2 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=2 lightsource=10/0/10
+h100_3 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=3 lightsource=100/0/10
+h10_3 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=3 lightsource=10/0/10
+h100_4 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=4 lightsource=100/0/10
+h10_4 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=4 lightsource=10/0/10
+h100_5 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=5 lightsource=100/0/10
+h10_5 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=5 lightsource=10/0/10
+h100_6 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=6 lightsource=100/0/10
+h10_6 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=6 lightsource=10/0/10
+h100_7 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=7 lightsource=100/0/10
+h10_7 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=7 lightsource=10/0/10
+h100_8 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=8 lightsource=100/0/10
+h10_8 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=8 lightsource=10/0/10
+h100_9 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=9 lightsource=100/0/10
+h10_9 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=9 lightsource=10/0/10
+h100_10 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=10 lightsource=100/0/10
+h10_10 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=10 lightsource=10/0/10
+h100_11 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=11 lightsource=100/0/10
+h10_11 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=11 lightsource=10/0/10
+h100_12 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=12 lightsource=100/0/10
+h10_12 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=12 lightsource=10/0/10
+h100_13 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=13 lightsource=100/0/10
+h10_13 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=13 lightsource=10/0/10
+h100_14 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=14 lightsource=100/0/10
+h10_14 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=14 lightsource=10/0/10
+h100_15 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=15 lightsource=100/0/10
+h10_15 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=15 lightsource=10/0/10
+h100_16 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=16 lightsource=100/0/10
+h10_16 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=16 lightsource=10/0/10
+h100_17 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=17 lightsource=100/0/10
+h10_17 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=17 lightsource=10/0/10
+h100_18 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=18 lightsource=100/0/10
+h10_18 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=18 lightsource=10/0/10
+h100_19 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=19 lightsource=100/0/10
+h10_19 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=19 lightsource=10/0/10
+h100_20 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=20 lightsource=100/0/10
+h10_20 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=20 lightsource=10/0/10
+h100_21 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=21 lightsource=100/0/10
+h10_21 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=21 lightsource=10/0/10
+h100_22 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=22 lightsource=100/0/10
+h10_22 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=22 lightsource=10/0/10
+h100_23 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=23 lightsource=100/0/10
+h10_23 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=23 lightsource=10/0/10
+h100_24 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=24 lightsource=100/0/10
+h10_24 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=24 lightsource=10/0/10
+h100_25 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=25 lightsource=100/0/10
+h10_25 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=25 lightsource=10/0/10
+h100_26 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=26 lightsource=100/0/10
+h10_26 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=26 lightsource=10/0/10
+h100_27 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=27 lightsource=100/0/10
+h10_27 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=27 lightsource=10/0/10
+h100_28 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=28 lightsource=100/0/10
+h10_28 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=28 lightsource=10/0/10
+h100_29 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=29 lightsource=100/0/10
+h10_29 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=29 lightsource=10/0/10
+h100_30 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=30 lightsource=100/0/10
+h10_30 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=30 lightsource=10/0/10
+h100_31 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=31 lightsource=100/0/10
+h10_31 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=31 lightsource=10/0/10
+h100_32 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=32 lightsource=100/0/10
+h10_32 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=32 lightsource=10/0/10
+h100_33 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=33 lightsource=100/0/10
+h10_33 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=33 lightsource=10/0/10
+h100_34 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=34 lightsource=100/0/10
+h10_34 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=34 lightsource=10/0/10
+h100_35 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=35 lightsource=100/0/10
+h10_35 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=35 lightsource=10/0/10
+h100_36 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=36 lightsource=100/0/10
+h10_36 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=36 lightsource=10/0/10
+h100_37 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=37 lightsource=100/0/10
+h10_37 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=37 lightsource=10/0/10
+h100_38 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=38 lightsource=100/0/10
+h10_38 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=38 lightsource=10/0/10
+h100_39 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=39 lightsource=100/0/10
+h10_39 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=39 lightsource=10/0/10
+h100_40 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=40 lightsource=100/0/10
+h10_40 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=40 lightsource=10/0/10
+h100_41 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=41 lightsource=100/0/10
+h10_41 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=41 lightsource=10/0/10
+h100_42 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=42 lightsource=100/0/10
+h10_42 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=42 lightsource=10/0/10
+h100_43 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=43 lightsource=100/0/10
+h10_43 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=43 lightsource=10/0/10
+h100_44 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=44 lightsource=100/0/10
+h10_44 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=44 lightsource=10/0/10
+h100_45 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=45 lightsource=100/0/10
+h10_45 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=45 lightsource=10/0/10
+h100_46 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=46 lightsource=100/0/10
+h10_46 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=46 lightsource=10/0/10
+h100_47 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=47 lightsource=100/0/10
+h10_47 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=47 lightsource=10/0/10
+h100_48 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=48 lightsource=100/0/10
+h10_48 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=48 lightsource=10/0/10
+h100_49 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=49 lightsource=100/0/10
+h10_49 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=49 lightsource=10/0/10
+h100_50 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=50 lightsource=100/0/10
+h10_50 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=50 lightsource=10/0/10
+h100_51 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=51 lightsource=100/0/10
+h10_51 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=51 lightsource=10/0/10
+h100_52 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=52 lightsource=100/0/10
+h10_52 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=52 lightsource=10/0/10
+h100_53 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=53 lightsource=100/0/10
+h10_53 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=53 lightsource=10/0/10
+h100_54 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=54 lightsource=100/0/10
+h10_54 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=54 lightsource=10/0/10
+h100_55 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=55 lightsource=100/0/10
+h10_55 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=55 lightsource=10/0/10
+h100_56 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=56 lightsource=100/0/10
+h10_56 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=56 lightsource=10/0/10
+h100_57 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=57 lightsource=100/0/10
+h10_57 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=57 lightsource=10/0/10
+h100_58 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=58 lightsource=100/0/10
+h10_58 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=58 lightsource=10/0/10
+h100_59 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=59 lightsource=100/0/10
+h10_59 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=59 lightsource=10/0/10
+h100_60 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=60 lightsource=100/0/10
+h10_60 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=60 lightsource=10/0/10
+h100_61 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=61 lightsource=100/0/10
+h10_61 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=61 lightsource=10/0/10
+h100_62 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=62 lightsource=100/0/10
+h10_62 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=62 lightsource=10/0/10
+h100_63 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=63 lightsource=100/0/10
+h10_63 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=63 lightsource=10/0/10
+h100_64 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=64 lightsource=100/0/10
+h10_64 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=64 lightsource=10/0/10
+h100_65 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=65 lightsource=100/0/10
+h10_65 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=65 lightsource=10/0/10
+h100_66 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=66 lightsource=100/0/10
+h10_66 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=66 lightsource=10/0/10
+h100_67 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=67 lightsource=100/0/10
+h10_67 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=67 lightsource=10/0/10
+h100_68 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=68 lightsource=100/0/10
+h10_68 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=68 lightsource=10/0/10
+h100_69 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=69 lightsource=100/0/10
+h10_69 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=69 lightsource=10/0/10
+h100_70 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=70 lightsource=100/0/10
+h10_70 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=70 lightsource=10/0/10
+h100_71 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=71 lightsource=100/0/10
+h10_71 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=71 lightsource=10/0/10
+h100_72 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=72 lightsource=100/0/10
+h10_72 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=72 lightsource=10/0/10
+h100_73 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=73 lightsource=100/0/10
+h10_73 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=73 lightsource=10/0/10
+h100_74 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=74 lightsource=100/0/10
+h10_74 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=74 lightsource=10/0/10
+h100_75 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=75 lightsource=100/0/10
+h10_75 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=75 lightsource=10/0/10
+h100_76 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=76 lightsource=100/0/10
+h10_76 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=76 lightsource=10/0/10
+h100_77 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=77 lightsource=100/0/10
+h10_77 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=77 lightsource=10/0/10
+h100_78 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=78 lightsource=100/0/10
+h10_78 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=78 lightsource=10/0/10
+h100_79 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=79 lightsource=100/0/10
+h10_79 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=79 lightsource=10/0/10
+h100_80 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=80 lightsource=100/0/10
+h10_80 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=80 lightsource=10/0/10
+h100_81 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=81 lightsource=100/0/10
+h10_81 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=81 lightsource=10/0/10
+h100_82 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=82 lightsource=100/0/10
+h10_82 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=82 lightsource=10/0/10
+h100_83 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=83 lightsource=100/0/10
+h10_83 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=83 lightsource=10/0/10
+h100_84 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=84 lightsource=100/0/10
+h10_84 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=84 lightsource=10/0/10
+h100_85 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=85 lightsource=100/0/10
+h10_85 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=85 lightsource=10/0/10
+h100_86 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=86 lightsource=100/0/10
+h10_86 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=86 lightsource=10/0/10
+h100_87 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=87 lightsource=100/0/10
+h10_87 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=87 lightsource=10/0/10
+h100_88 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=88 lightsource=100/0/10
+h10_88 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=88 lightsource=10/0/10
+h100_89 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=89 lightsource=100/0/10
+h10_89 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=89 lightsource=10/0/10
+h100_90 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=90 lightsource=100/0/10
+h10_90 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=90 lightsource=10/0/10
+h100_91 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=91 lightsource=100/0/10
+h10_91 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=91 lightsource=10/0/10
+h100_92 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=92 lightsource=100/0/10
+h10_92 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=92 lightsource=10/0/10
+h100_93 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=93 lightsource=100/0/10
+h10_93 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=93 lightsource=10/0/10
+h100_94 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=94 lightsource=100/0/10
+h10_94 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=94 lightsource=10/0/10
+h100_95 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=95 lightsource=100/0/10
+h10_95 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=95 lightsource=10/0/10
+h100_96 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=96 lightsource=100/0/10
+h10_96 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=96 lightsource=10/0/10
+h100_97 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=97 lightsource=100/0/10
+h10_97 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=97 lightsource=10/0/10
+h100_98 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=98 lightsource=100/0/10
+h10_98 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=98 lightsource=10/0/10
+h100_99 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=99 lightsource=100/0/10
+h10_99 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=99 lightsource=10/0/10
+m0_1_0_3 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=1/0/3
+m20_1_0_3 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=20 lightsource=1/0/3
+m0_10_0_30 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=10/0/30
+m20_10_0_30 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=20 lightsource=10/0/30
+m0_100_0_300 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=100/0/300
+m20_100_0_300 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=20 lightsource=100/0/300
+m0_1_0_1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=1/0/1
+m20_1_0_1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=20 lightsource=1/0/1
+m0_100_0_100 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=100/0/100
+m20_100_0_100 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=20 lightsource=100/0/100
+m0_1_1_1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=1/1/1
+m20_1_1_1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=20 lightsource=1/1/1
+m0_10_10_10 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=0 lightsource=10/10/10
+m20_10_10_10 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 ambient=20 lightsource=10/10/10
+
+## stereo-palette
+s1_p100_0_0_0 pal/p100_0_0_0.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1
+s2_p100_0_0_0 pal/p100_0_0_0.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=2
+s1_p100_0_0_252 pal/p100_0_0_252.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1
+s2_p100_0_0_252 pal/p100_0_0_252.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=2
+s1_p100_0_252_0 pal/p100_0_252_0.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1
+s2_p100_0_252_0 pal/p100_0_252_0.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=2
+s1_p100_128_128_128 pal/p100_128_128_128.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1
+s2_p100_128_128_128 pal/p100_128_128_128.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=2
+s1_p100_192_192_192 pal/p100_192_192_192.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1
+s2_p100_192_192_192 pal/p100_192_192_192.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=2
+s1_p100_252_0_0 pal/p100_252_0_0.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1
+s2_p100_252_0_0 pal/p100_252_0_0.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=2
+s1_p100_252_128_0 pal/p100_252_128_0.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1
+s2_p100_252_128_0 pal/p100_252_128_0.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=2
+s1_p100_252_252_252 pal/p100_252_252_252.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1
+s2_p100_252_252_252 pal/p100_252_252_252.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=2
+s1_p100_64_64_64 pal/p100_64_64_64.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1
+s2_p100_64_64_64 pal/p100_64_64_64.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=2
+s1_p200_252_252_252 pal/p200_252_252_252.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1
+s2_p200_252_252_252 pal/p200_252_252_252.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=2
+s1_p50_252_252_252 pal/p50_252_252_252.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1
+s2_p50_252_252_252 pal/p50_252_252_252.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=2
+s1_rampx rampx.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1
+s1_rampxg rampxg.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1
+s2_rampx rampx.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=2
+s2_rampxg rampxg.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=2
+
+## one-to-one
+e_fl0 flat100.gif viewwindows=2 rotation=0/0/0 filltype=0 scalexyz=100/100
+e_fl5 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 scalexyz=100/100
+e_sx5 stepx.gif viewwindows=2 rotation=0/0/0 filltype=5 scalexyz=100/100 lightsource=1/0/1 ambient=0
+e_sy5 stepy.gif viewwindows=2 rotation=0/0/0 filltype=5 scalexyz=100/100 lightsource=0/1/1 ambient=0
+e_sp5 spike.gif viewwindows=2 rotation=0/0/0 filltype=5 scalexyz=100/100 lightsource=1/1/1 ambient=0
+e_sp5b spike.gif viewwindows=2 rotation=0/0/0 filltype=5 scalexyz=100/100 lightsource=1/-1/1 ambient=0
+e_sp5c spike.gif viewwindows=2 rotation=0/0/0 filltype=5 scalexyz=100/100 lightsource=-1/1/1 ambient=0
+e_sp5d spike.gif viewwindows=2 rotation=0/0/0 filltype=5 scalexyz=100/100 lightsource=-1/-1/1 ambient=0
+e_sp6 spike.gif viewwindows=2 rotation=0/0/0 filltype=6 scalexyz=100/100 lightsource=1/1/1 ambient=0
+e_sx1 sx1.gif viewwindows=2 rotation=0/0/0 filltype=5 scalexyz=100/100 lightsource=1/0/1 ambient=0
+
+## scale-steps
+x_sc50 stepx.gif viewwindows=2 rotation=0/0/0 filltype=5 scalexyz=50/50 lightsource=1/0/1 ambient=0
+y_sc50 stepy.gif viewwindows=2 rotation=0/0/0 filltype=5 scalexyz=50/50 lightsource=0/1/1 ambient=0
+p_sc50 spike.gif viewwindows=2 rotation=0/0/0 filltype=5 scalexyz=50/50 lightsource=1/1/1 ambient=0
+x_sc150 stepx.gif viewwindows=2 rotation=0/0/0 filltype=5 scalexyz=150/150 lightsource=1/0/1 ambient=0
+y_sc150 stepy.gif viewwindows=2 rotation=0/0/0 filltype=5 scalexyz=150/150 lightsource=0/1/1 ambient=0
+p_sc150 spike.gif viewwindows=2 rotation=0/0/0 filltype=5 scalexyz=150/150 lightsource=1/1/1 ambient=0
+x_sc200 stepx.gif viewwindows=2 rotation=0/0/0 filltype=5 scalexyz=200/200 lightsource=1/0/1 ambient=0
+y_sc200 stepy.gif viewwindows=2 rotation=0/0/0 filltype=5 scalexyz=200/200 lightsource=0/1/1 ambient=0
+p_sc200 spike.gif viewwindows=2 rotation=0/0/0 filltype=5 scalexyz=200/200 lightsource=1/1/1 ambient=0
+x_sc300 stepx.gif viewwindows=2 rotation=0/0/0 filltype=5 scalexyz=300/300 lightsource=1/0/1 ambient=0
+y_sc300 stepy.gif viewwindows=2 rotation=0/0/0 filltype=5 scalexyz=300/300 lightsource=0/1/1 ambient=0
+p_sc300 spike.gif viewwindows=2 rotation=0/0/0 filltype=5 scalexyz=300/300 lightsource=1/1/1 ambient=0
+x_sc400 stepx.gif viewwindows=2 rotation=0/0/0 filltype=5 scalexyz=400/400 lightsource=1/0/1 ambient=0
+y_sc400 stepy.gif viewwindows=2 rotation=0/0/0 filltype=5 scalexyz=400/400 lightsource=0/1/1 ambient=0
+p_sc400 spike.gif viewwindows=2 rotation=0/0/0 filltype=5 scalexyz=400/400 lightsource=1/1/1 ambient=0
+x_r3 stepx.gif viewwindows=2 rotation=0/0/0 filltype=5 scalexyz=100/100/3 lightsource=1/0/1 ambient=0
+y_r3 stepy.gif viewwindows=2 rotation=0/0/0 filltype=5 scalexyz=100/100/3 lightsource=0/1/1 ambient=0
+p_r3 spike.gif viewwindows=2 rotation=0/0/0 filltype=5 scalexyz=100/100/3 lightsource=1/1/1 ambient=0
+x_sm stepx.gif viewwindows=2 rotation=0/0/0 filltype=5 scalexyz=100/100 lightsource=1/0/1 ambient=0 smoothing=3
+
+## fill2-steps
+f1_sc100 stepx.gif viewwindows=2 rotation=0/0/0 filltype=1 scalexyz=100/100
+f1_sc200 stepx.gif viewwindows=2 rotation=0/0/0 filltype=1 scalexyz=200/200
+f2_sc100 stepx.gif viewwindows=2 rotation=0/0/0 filltype=2 scalexyz=100/100
+f2_sc200 stepx.gif viewwindows=2 rotation=0/0/0 filltype=2 scalexyz=200/200
+f3_sc100 stepx.gif viewwindows=2 rotation=0/0/0 filltype=3 scalexyz=100/100
+f3_sc200 stepx.gif viewwindows=2 rotation=0/0/0 filltype=3 scalexyz=200/200
+f4_sc100 stepx.gif viewwindows=2 rotation=0/0/0 filltype=4 scalexyz=100/100
+f4_sc200 stepx.gif viewwindows=2 rotation=0/0/0 filltype=4 scalexyz=200/200
+
+## misc
+n_s50 sx1.gif viewwindows=2 lightsource=1/0/1 ambient=0 rotation=0/0/0 filltype=5 scalexyz=50/50
+n_s200 sx1.gif viewwindows=2 lightsource=1/0/1 ambient=0 rotation=0/0/0 filltype=5 scalexyz=200/200
+n_r60 sx1.gif viewwindows=2 lightsource=1/0/1 ambient=0 rotation=0/0/0 filltype=5 scalexyz=100/100/60
+n_xy50 sx1.gif viewwindows=2 lightsource=1/0/1 ambient=0 rotation=0/0/0 filltype=5 scalexyz=100/50/30
+n_x50 sx1.gif viewwindows=2 lightsource=1/0/1 ambient=0 rotation=0/0/0 filltype=5 scalexyz=50/100/30
+n_y1 sy1.gif viewwindows=2 lightsource=0/1/1 ambient=0 rotation=0/0/0 filltype=5 scalexyz=100/100/30
+n_y50 sy1.gif viewwindows=2 lightsource=0/1/1 ambient=0 rotation=0/0/0 filltype=5 scalexyz=100/50/30
+o_z90f5 flat100.gif viewwindows=2 lightsource=1/0/1 ambient=0 rotation=0/0/90 filltype=5
+o_z90f6 flat100.gif viewwindows=2 lightsource=1/0/1 ambient=0 rotation=0/0/90 filltype=6
+o_x30f5 flat100.gif viewwindows=2 lightsource=1/0/1 ambient=0 rotation=30/0/0 filltype=5
+o_x30f6 flat100.gif viewwindows=2 lightsource=1/0/1 ambient=0 rotation=30/0/0 filltype=6
+o_y30f5 flat100.gif viewwindows=2 lightsource=1/0/1 ambient=0 rotation=0/30/0 filltype=5
+o_y30f6 flat100.gif viewwindows=2 lightsource=1/0/1 ambient=0 rotation=0/30/0 filltype=6
+o_sxz90f5 sx1.gif viewwindows=2 lightsource=1/0/1 ambient=0 rotation=0/0/90 filltype=5 scalexyz=100/100/30
+o_sxz90f6 sx1.gif viewwindows=2 lightsource=1/0/1 ambient=0 rotation=0/0/90 filltype=6 scalexyz=100/100/30
+q_f6a flat100.gif viewwindows=2 lightsource=1/0/1 ambient=0 rotation=0/0/0 filltype=6 scalexyz=100/100/30
+q_f6b flat100.gif viewwindows=2 lightsource=1/0/1 ambient=0 rotation=0/0/0 filltype=6 scalexyz=50/50/30
+q_f6c flat100.gif viewwindows=2 lightsource=1/0/1 ambient=0 rotation=0/0/0 filltype=6 scalexyz=100/100/100
+q_f6d flat100.gif viewwindows=2 lightsource=1/0/1 ambient=0 rotation=0/0/0 filltype=6 scalexyz=100/50/30
+q_f6e sx1.gif viewwindows=2 lightsource=1/0/1 ambient=0 rotation=0/0/0 filltype=6 scalexyz=100/100/30
+hz0 rampx.gif viewwindows=2 rotation=0/0/0 filltype=5 haze=0
+hz20 rampx.gif viewwindows=2 rotation=0/0/0 filltype=5 haze=20
+hz50 rampx.gif viewwindows=2 rotation=0/0/0 filltype=5 haze=50
+hz100 rampx.gif viewwindows=2 rotation=0/0/0 filltype=5 haze=100
+hzf0 flat0.gif viewwindows=2 rotation=0/0/0 filltype=5 haze=50
+hzf100 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 haze=50
+hzp pyramid.gif viewwindows=2 filltype=5 haze=50
+hzp0 pyramid.gif viewwindows=2 filltype=5
+hzpp pyramid.gif viewwindows=2 filltype=5 haze=50 perspective=150
+hzpp0 pyramid.gif viewwindows=2 filltype=5 perspective=150
+rz1 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 randomize=1
+rz3 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 randomize=3
+rz7 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 randomize=7
+rz7b flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 randomize=7
+rz7s flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 randomize=7 rseed=1
+rz7f0 flat100.gif viewwindows=2 rotation=0/0/0 filltype=0 randomize=7
+rz7f2 flat100.gif viewwindows=2 rotation=0/0/0 filltype=2 randomize=7
+sm1 stepx.gif viewwindows=2 lightsource=1/0/1 ambient=0 rotation=0/0/0 filltype=5 scalexyz=100/100 smoothing=1
+sm2 stepx.gif viewwindows=2 lightsource=1/0/1 ambient=0 rotation=0/0/0 filltype=5 scalexyz=100/100 smoothing=2
+sm5 stepx.gif viewwindows=2 lightsource=1/0/1 ambient=0 rotation=0/0/0 filltype=5 scalexyz=100/100 smoothing=5
+smy3 stepy.gif viewwindows=2 lightsource=0/1/1 ambient=0 rotation=0/0/0 filltype=5 scalexyz=100/100 smoothing=3
+
+## fill2-noise
+nz2 noise.gif viewwindows=2 rotation=0/0/0 filltype=2 scalexyz=100/100/0
+nz0 noise.gif viewwindows=2 rotation=0/0/0 filltype=0 scalexyz=100/100/0
+nz2s90 noise.gif viewwindows=2 rotation=0/0/0 filltype=2 scalexyz=90/90/0
+
+## stereo
+t1_r0 rampx.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1 roughness=0
+t2_r0 rampx.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=2 roughness=0
+t1_ry0 rampy.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1 roughness=0
+t2_ry0 rampy.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=2 roughness=0
+t1_pl plateau.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1
+t2_pl plateau.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=2
+t1_pl_i5 plateau.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1 interocular=5
+t1_pl_i10 plateau.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1 interocular=10
+t1_pl_c5 plateau.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1 converge=5
+t1_pl_cm5 plateau.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1 converge=-5
+t1_pl_r60 plateau.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1 roughness=60
+t1_pl_r0 plateau.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1 roughness=0
+t1_fl0 flat0.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1
+t1_crop1 plateau.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1 crop=10/0/0/10
+t1_crop2 plateau.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1 crop=0/10/10/0
+t1_crop3 plateau.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1 crop=0/0/0/0
+t2_br1 plateau.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=2 bright=50/100
+t2_br2 plateau.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=2 bright=100/50
+t1_br1 plateau.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1 bright=50/100
+t2_f5 plateau.gif viewwindows=2 rotation=0/0/0 filltype=5 stereo=2
+t4_pl plateau.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=4
+t3_pl plateau.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=3
+t1_def plateau.gif viewwindows=2 stereo=1
+t1_full plateau.gif rotation=0/0/0 filltype=0 stereo=1
+t1_pers plateau.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1 perspective=150
+
+## stereo-shift
+t0_ry0 rampy.gif viewwindows=2 rotation=0/0/0 filltype=0 roughness=0
+t2_pl_i5 plateau.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=2 interocular=5
+t1_pl_i5c5 plateau.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1 interocular=5 converge=5
+t1_pl_i3 plateau.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1 interocular=3
+t1_pl_c1 plateau.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1 converge=1
+t1_pl_i5p plateau.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1 interocular=5 perspective=150
+t0_pl_p plateau.gif viewwindows=2 rotation=0/0/0 filltype=0 perspective=150
+t1_pl_i5c5p plateau.gif viewwindows=2 rotation=0/0/0 filltype=0 stereo=1 interocular=5 converge=5 perspective=150
+
+## blocks
+bm_ft5 mandel.gif viewwindows=2 filltype=5 rotation=0/0/0 ambient=10 haze=5 randomize=3 smoothing=2 lightsource=3/-2/4 transparent=1/2
+bm_ft0 mandel.gif viewwindows=2
+bm_st1 mandel.gif viewwindows=2 stereo=1 interocular=4 converge=2 crop=1/2/3/4 bright=60/90
+pl_ft5 plateau.gif viewwindows=2 filltype=5 rotation=0/0/0 ambient=10 haze=5 randomize=3 smoothing=2 lightsource=3/-2/4
+
+## verify
+v_nz5 noise.gif viewwindows=2 rotation=0/0/0 scalexyz=100/100 filltype=5 roughness=3 lightsource=2/-1/3 ambient=0
+v_nz5s noise.gif viewwindows=2 rotation=0/0/0 scalexyz=100/100 filltype=5 roughness=3 lightsource=-1/2/2 ambient=0 smoothing=2
+v_nz6 noise.gif viewwindows=2 rotation=0/0/0 scalexyz=100/100 filltype=6 roughness=5 lightsource=1/1/1 ambient=0
+v_nz5a noise.gif viewwindows=2 rotation=0/0/0 scalexyz=100/100 filltype=5 roughness=3 lightsource=2/-1/3 ambient=35
+v_py5 pyramid.gif viewwindows=2 rotation=0/0/0 scalexyz=100/100 filltype=5 lightsource=1/-1/1 ambient=0
+v_py6 pyramid.gif viewwindows=2 rotation=0/0/0 scalexyz=100/100 filltype=6 lightsource=1/-1/1 ambient=0
+v_py5d pyramid.gif viewwindows=2 rotation=0/0/0 scalexyz=100/100 filltype=5
+v_py5r pyramid.gif viewwindows=2 rotation=0/0/0 scalexyz=100/100 filltype=5 randomize=7
+v_md5 mandel.gif viewwindows=2 rotation=0/0/0 scalexyz=100/100 filltype=5 roughness=10 ambient=0
+v_md5w mandel.gif viewwindows=2 rotation=0/0/0 scalexyz=100/100 filltype=5 roughness=10 ambient=0 waterline=40
+
+## top view at the default 90/90/30 scale
+fl5 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5
+fl6 flat100.gif viewwindows=2 rotation=0/0/0 filltype=6
+rx5 rampx.gif viewwindows=2 rotation=0/0/0 filltype=5
+rx6 rampx.gif viewwindows=2 rotation=0/0/0 filltype=6
+ry5 rampy.gif viewwindows=2 rotation=0/0/0 filltype=5
+ry6 rampy.gif viewwindows=2 rotation=0/0/0 filltype=6
+pl5 plateau.gif viewwindows=2 rotation=0/0/0 filltype=5
+py5 pyramid.gif viewwindows=2 rotation=0/0/0 filltype=5
+fl0 flat100.gif viewwindows=2 rotation=0/0/0 filltype=0
+rx0 rampx.gif viewwindows=2 rotation=0/0/0 filltype=0
+
+## slope ramps at 90/90 scale
+sx1f5r0 sx1.gif viewwindows=2 rotation=0/0/0 filltype=5 roughness=0
+sx1f5r10 sx1.gif viewwindows=2 rotation=0/0/0 filltype=5 roughness=10
+sx1f5r30 sx1.gif viewwindows=2 rotation=0/0/0 filltype=5 roughness=30
+sx1f5r60 sx1.gif viewwindows=2 rotation=0/0/0 filltype=5 roughness=60
+sx1f5r100 sx1.gif viewwindows=2 rotation=0/0/0 filltype=5 roughness=100
+sx1f5r200 sx1.gif viewwindows=2 rotation=0/0/0 filltype=5 roughness=200
+sxmf5r0 sxm.gif viewwindows=2 rotation=0/0/0 filltype=5 roughness=0
+sxmf5r10 sxm.gif viewwindows=2 rotation=0/0/0 filltype=5 roughness=10
+sxmf5r30 sxm.gif viewwindows=2 rotation=0/0/0 filltype=5 roughness=30
+sxmf5r60 sxm.gif viewwindows=2 rotation=0/0/0 filltype=5 roughness=60
+sxmf5r100 sxm.gif viewwindows=2 rotation=0/0/0 filltype=5 roughness=100
+sxmf5r200 sxm.gif viewwindows=2 rotation=0/0/0 filltype=5 roughness=200
+sy1f5r0 sy1.gif viewwindows=2 rotation=0/0/0 filltype=5 roughness=0
+sy1f5r10 sy1.gif viewwindows=2 rotation=0/0/0 filltype=5 roughness=10
+sy1f5r30 sy1.gif viewwindows=2 rotation=0/0/0 filltype=5 roughness=30
+sy1f5r60 sy1.gif viewwindows=2 rotation=0/0/0 filltype=5 roughness=60
+sy1f5r100 sy1.gif viewwindows=2 rotation=0/0/0 filltype=5 roughness=100
+sy1f5r200 sy1.gif viewwindows=2 rotation=0/0/0 filltype=5 roughness=200
+symf5r0 sym.gif viewwindows=2 rotation=0/0/0 filltype=5 roughness=0
+symf5r10 sym.gif viewwindows=2 rotation=0/0/0 filltype=5 roughness=10
+symf5r30 sym.gif viewwindows=2 rotation=0/0/0 filltype=5 roughness=30
+symf5r60 sym.gif viewwindows=2 rotation=0/0/0 filltype=5 roughness=60
+symf5r100 sym.gif viewwindows=2 rotation=0/0/0 filltype=5 roughness=100
+symf5r200 sym.gif viewwindows=2 rotation=0/0/0 filltype=5 roughness=200
+sx1f6r0 sx1.gif viewwindows=2 rotation=0/0/0 filltype=6 roughness=0
+sx1f6r10 sx1.gif viewwindows=2 rotation=0/0/0 filltype=6 roughness=10
+sx1f6r30 sx1.gif viewwindows=2 rotation=0/0/0 filltype=6 roughness=30
+sx1f6r60 sx1.gif viewwindows=2 rotation=0/0/0 filltype=6 roughness=60
+sx1f6r100 sx1.gif viewwindows=2 rotation=0/0/0 filltype=6 roughness=100
+sx1f6r200 sx1.gif viewwindows=2 rotation=0/0/0 filltype=6 roughness=200
+sxmf6r0 sxm.gif viewwindows=2 rotation=0/0/0 filltype=6 roughness=0
+sxmf6r10 sxm.gif viewwindows=2 rotation=0/0/0 filltype=6 roughness=10
+sxmf6r30 sxm.gif viewwindows=2 rotation=0/0/0 filltype=6 roughness=30
+sxmf6r60 sxm.gif viewwindows=2 rotation=0/0/0 filltype=6 roughness=60
+sxmf6r100 sxm.gif viewwindows=2 rotation=0/0/0 filltype=6 roughness=100
+sxmf6r200 sxm.gif viewwindows=2 rotation=0/0/0 filltype=6 roughness=200
+sy1f6r0 sy1.gif viewwindows=2 rotation=0/0/0 filltype=6 roughness=0
+sy1f6r10 sy1.gif viewwindows=2 rotation=0/0/0 filltype=6 roughness=10
+sy1f6r30 sy1.gif viewwindows=2 rotation=0/0/0 filltype=6 roughness=30
+sy1f6r60 sy1.gif viewwindows=2 rotation=0/0/0 filltype=6 roughness=60
+sy1f6r100 sy1.gif viewwindows=2 rotation=0/0/0 filltype=6 roughness=100
+sy1f6r200 sy1.gif viewwindows=2 rotation=0/0/0 filltype=6 roughness=200
+symf6r0 sym.gif viewwindows=2 rotation=0/0/0 filltype=6 roughness=0
+symf6r10 sym.gif viewwindows=2 rotation=0/0/0 filltype=6 roughness=10
+symf6r30 sym.gif viewwindows=2 rotation=0/0/0 filltype=6 roughness=30
+symf6r60 sym.gif viewwindows=2 rotation=0/0/0 filltype=6 roughness=60
+symf6r100 sym.gif viewwindows=2 rotation=0/0/0 filltype=6 roughness=100
+symf6r200 sym.gif viewwindows=2 rotation=0/0/0 filltype=6 roughness=200
+
+## palette independence and rejected fill type
+pal-rev pal/flat100rev.gif viewwindows=2 rotation=0/0/0 filltype=5
+pal-grey pal/flat100grey.gif viewwindows=2 rotation=0/0/0 filltype=5
+# REJECTED t7 plateau.gif viewwindows=2 filltype=7
+
+## zero light vector
+z_l000 flat100.gif viewwindows=2 rotation=0/0/0 filltype=5 lightsource=0/0/0
+z_l000s sx1.gif viewwindows=2 rotation=0/0/0 filltype=5 lightsource=0/0/0 scalexyz=100/100
+
+## reload and type number (not via render.sh)
+# reload-pl_ft5: pl_ft5.gif copied to in.gif, then
+#   run-load 8 6 filename=in.gif savename=ff.gif      (interactive: Enter after 8 s, s after 6 s)
+# plasma-base: xfractint batch=yes type=plasma viewwindows=2 savename=ff.gif (no 3D)
