@@ -1,0 +1,49 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Random-dot stereogram cases (docs/specs/stereogram.md). One line per saved file out/NAME.gif.
+# Columns: name, depth map (depth/NAME.gif), width in inches, depth effect, bars (middle/top/none;
+# "gray" = grayscale option on, bars middle), glibc srand seed found by search ("-" = none used),
+# then the XFractint arguments and the key actions (tools/blackbox/stereogram/run-keys-fb.sh syntax:
+# sN sleep, kKEY key, tTEXT type). "render" cases (r-*) compute depth/rdsrows.gif with the
+# formula in tools/blackbox/stereogram/inputs/rds.frm; "load" cases (l-*) load depth/NAME.gif
+# copied to depth.gif. In the stereogram screen the cursor starts on the depth field:
+# t<n> types the depth, kDown moves down, kRight toggles yes/no or cycles middle->top->none.
+r-d100          rdsrows       10   100   middle 1792327069  args: type=formula formulafile=rds.frm formulaname=rdsrows map=uniq.map viewwindows=2 maxiter=400 savename=ff.gif | actions: s30 kctrl+s s5 s2 kReturn s40 ks
+r-d50           rdsrows       10   50    middle 1792327070  args: type=formula formulafile=rds.frm formulaname=rdsrows map=uniq.map viewwindows=2 maxiter=400 savename=ff.gif | actions: s30 kctrl+s s5 t50 s2 kReturn s40 ks
+r-w5            rdsrows       5    100   middle 1792327069  args: type=formula formulafile=rds.frm formulaname=rdsrows map=uniq.map viewwindows=2 maxiter=400 savename=ff.gif monitorwidth=5 | actions: s30 kctrl+s s5 s2 kReturn s40 ks
+r-d0            rdsrows       10   0     middle 1792327244  args: type=formula formulafile=rds.frm formulaname=rdsrows map=uniq.map viewwindows=2 maxiter=400 savename=ff.gif | actions: s30 kctrl+s s5 t0 s2 kReturn s40 ks
+r-d20           rdsrows       10   20    middle 1792327243  args: type=formula formulafile=rds.frm formulaname=rdsrows map=uniq.map viewwindows=2 maxiter=400 savename=ff.gif | actions: s30 kctrl+s s5 t20 s2 kReturn s40 ks
+r-d200          rdsrows       10   200   middle 1792327244  args: type=formula formulafile=rds.frm formulaname=rdsrows map=uniq.map viewwindows=2 maxiter=400 savename=ff.gif | actions: s30 kctrl+s s5 t200 s2 kReturn s40 ks
+r-dm100         rdsrows       10   -100  middle 1792327244  args: type=formula formulafile=rds.frm formulaname=rdsrows map=uniq.map viewwindows=2 maxiter=400 savename=ff.gif | actions: s30 kctrl+s s5 kminus t100 s2 kReturn s40 ks
+r-w3            rdsrows       3    100   middle 1792327243  args: type=formula formulafile=rds.frm formulaname=rdsrows map=uniq.map viewwindows=2 maxiter=400 savename=ff.gif monitorwidth=3 | actions: s30 kctrl+s s5 s2 kReturn s40 ks
+r-w13           rdsrows       13   100   middle 1792327243  args: type=formula formulafile=rds.frm formulaname=rdsrows map=uniq.map viewwindows=2 maxiter=400 savename=ff.gif monitorwidth=13 | actions: s30 kctrl+s s5 s2 kReturn s40 ks
+l-mix           mix           10   100   middle 1792327624  args: filename=depth.gif savename=ff.gif | actions: s20 kctrl+s s5 s2 kReturn s45 ks
+l-rows          rows          10   100   middle 1792327949  args: filename=depth.gif savename=ff.gif | actions: s20 kctrl+s s5 s2 kReturn s45 ks
+l-rows-neg      rows          10   -100  middle 1792327951  args: filename=depth.gif savename=ff.gif | actions: s20 kctrl+s s5 kminus t100 s2 kReturn s45 ks
+l-r64           r64           10   100   middle 1792328072  args: filename=depth.gif savename=ff.gif | actions: s20 kctrl+s s5 s2 kReturn s45 ks
+l-flat128       flat128       10   100   middle 1792327949  args: filename=depth.gif savename=ff.gif | actions: s20 kctrl+s s5 s2 kReturn s45 ks
+l-box           box           10   100   middle 1792328267  args: filename=depth.gif savename=ff.gif | actions: s20 kctrl+s s5 s2 kReturn s45 ks
+l-lefthalf      lefthalf      10   100   middle 1792328267  args: filename=depth.gif savename=ff.gif | actions: s20 kctrl+s s5 s2 kReturn s45 ks
+l-tophalf       tophalf       10   100   middle 1792328268  args: filename=depth.gif savename=ff.gif | actions: s20 kctrl+s s5 s2 kReturn s45 ks
+l-row150        row150        10   100   middle 1792328267  args: filename=depth.gif savename=ff.gif | actions: s20 kctrl+s s5 s2 kReturn s45 ks
+l-xge180        xge180        10   100   middle 1792328399  args: filename=depth.gif savename=ff.gif | actions: s20 kctrl+s s5 s2 kReturn s45 ks
+l-xge220        xge220        10   100   middle 1792328399  args: filename=depth.gif savename=ff.gif | actions: s20 kctrl+s s5 s2 kReturn s45 ks
+l-yge130        yge130        10   100   middle 1792328479  args: filename=depth.gif savename=ff.gif | actions: s20 kctrl+s s5 s2 kReturn s45 ks
+l-yge170        yge170        10   100   middle 1792328479  args: filename=depth.gif savename=ff.gif | actions: s20 kctrl+s s5 s2 kReturn s45 ks
+l-des0          des0          10   100   middle 1792328694  args: filename=depth.gif savename=ff.gif | actions: s20 kctrl+s s5 s2 kReturn s45 ks
+l-des1          des1          10   100   middle 1792328694  args: filename=depth.gif savename=ff.gif | actions: s20 kctrl+s s5 s2 kReturn s45 ks
+l-des2          des2          10   100   middle 1792328694  args: filename=depth.gif savename=ff.gif | actions: s20 kctrl+s s5 s2 kReturn s45 ks
+l-des3          des3          10   100   middle 1792328694  args: filename=depth.gif savename=ff.gif | actions: s20 kctrl+s s5 s2 kReturn s45 ks
+l-des4          des4          10   100   middle 1792328694  args: filename=depth.gif savename=ff.gif | actions: s20 kctrl+s s5 s2 kReturn s45 ks
+l-des5          des5          10   100   middle 1792328694  args: filename=depth.gif savename=ff.gif | actions: s20 kctrl+s s5 s2 kReturn s45 ks
+l-des6          des6          10   100   middle 1792328694  args: filename=depth.gif savename=ff.gif | actions: s20 kctrl+s s5 s2 kReturn s45 ks
+l-top           rows          10   100   top    1792328903  args: filename=depth.gif savename=ff.gif | actions: s20 kctrl+s s5 kDown kDown kDown kRight s2 kReturn s45 ks
+l-top-yge9      tyge9         10   100   top    1792329302  args: filename=depth.gif savename=ff.gif | actions: s20 kctrl+s s5 kDown kDown kDown kRight s2 kReturn s45 ks
+l-nobars        rows          10   100   none   1792328904  args: filename=depth.gif savename=ff.gif | actions: s20 kctrl+s s5 kDown kDown kDown kRight kRight s2 kReturn s45 ks
+l-tiepal        rows-tiepal   10   100   middle 1792328902  args: filename=depth.gif savename=ff.gif | actions: s20 kctrl+s s5 s2 kReturn s45 ks
+l-randpal       rows-randpal  10   100   middle 1792328902  args: filename=depth.gif savename=ff.gif | actions: s20 kctrl+s s5 s2 kReturn s45 ks
+l-gray          rows          10   100   gray   1792328903  args: filename=depth.gif savename=ff.gif | actions: s20 kctrl+s s5 kDown kDown kRight s2 kReturn s45 ks
+l-gray-randpal  rows-randpal  10   100   gray   1792328903  args: filename=depth.gif savename=ff.gif | actions: s20 kctrl+s s5 kDown kDown kRight s2 kReturn s45 ks
+l-d500          rows          10   500   middle 1792329302  args: filename=depth.gif savename=ff.gif | actions: s20 kctrl+s s5 t500 s2 kReturn s45 ks
+l-big-w7.5      big           7.5  100   middle 1792329301  args: filename=depth.gif savename=ff.gif monitorwidth=7.5 | actions: s20 kctrl+s s5 s2 kReturn s45 ks
+l-keypress      rows          10   100   none   1792329298  args: filename=depth.gif savename=ff.gif | actions: s20 kctrl+s s5 kReturn s45 kReturn s5 ks
+l-imagemap      rows          10   100   middle -           args: filename=depth.gif savename=ff.gif | actions: s20 kctrl+s s5 kDown kDown kDown kDown kRight kReturn s5 tpat.gif s2 kReturn s60 ks (pat.gif in the work dir)
